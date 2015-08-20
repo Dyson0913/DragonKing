@@ -84,14 +84,15 @@ package View.ViewComponent
 		public function display_coin():void
 		{
 			var a:MultiObject = Get("CoinOb");			
-			_regular.Fadeout(a.container, 0, 1);
+			_regular.FadeIn(a.container, 0, 1,null);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function hide_coin():void
 		{
 			var a:MultiObject = Get("CoinOb");
-			_regular.FadeIn(a.container as MovieClip, 0, 1,null);
+			_regular.Fadeout(a.container, 0, 1);
+			
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "updateCoin")]
