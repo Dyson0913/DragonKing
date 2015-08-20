@@ -6,6 +6,7 @@ package Command
 	import util.DI;
 	import util.utilFun;
 	import View.GameView.*;
+	import Res.*;
 	/**
 	 * user bet action
 	 * @author hhg4092
@@ -36,11 +37,25 @@ package Command
 			_model.putValue("coin_selectIdx", 0);
 			_model.putValue("coin_list", [100, 500, 1000, 5000, 10000]);
 			_model.putValue("after_bet_credit", 0);
+			
+			//閒對,閒,和,莊,莊對
+			var betzone:Array = [1, 2];// _model.getValue(modelName.BET_ZONE);
+			var allzone:Array = [ResName.unibetZone, ResName.unibetZone];// , ResName.betzone_tie, ResName.betzone_banker_pair, ResName.betzone_player_pari];
+			var avaliblezone:Array = [];
+			for each (var i:int in betzone)
+			{
+				avaliblezone.push ( allzone[i - 1]);
+			}			
+			_model.putValue(modelName.AVALIBLE_ZONE, avaliblezone);
+			
+			_model.putValue("BetBWPlayer", 0);
+			_model.putValue("BetBWBanker", 1);			
+			
 		}
 		
 		public function betTypeMain(e:Event,idx:int):Boolean
 		{			
-			idx += 1;
+			//idx += 1;
 			
 			if ( _Actionmodel.length() > 0) return false;
 			
@@ -50,9 +65,10 @@ package Command
 				dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.NO_CREDIT));
 				return false;
 			}
-			
+			utilFun.Log("betType = "+idx);
 			var bet:Object = { "betType": idx, 
-			                               "bet_amount":  get_total_bet(idx) + _opration.array_idx("coin_list", "coin_selectIdx")
+			                               "bet_amount": _opration.array_idx("coin_list", "coin_selectIdx"),
+										    "total_bet_amount": get_total_bet(idx) +_opration.array_idx("coin_list", "coin_selectIdx")
 			};
 			
 			dispatcher( new ActionEvent(bet, "bet_action"));
@@ -64,11 +80,11 @@ package Command
 		public function empty_reaction(e:Event, idx:int):Boolean
 		{
 			return true;
-		}
+		}	
 		
 		public function bet_local(e:Event,idx:int):Boolean
 		{			
-			idx += 1;
+			//idx += 1;
 			utilFun.Log("idx ="+idx);
 			
 			var bet:Object = { "betType": idx, 
@@ -88,7 +104,7 @@ package Command
 		public function accept_bet():void
 		{
 			var bet_ob:Object = _Actionmodel.excutionMsg();
-			bet_ob["bet_amount"] -= get_total_bet(bet_ob["betType"]);
+			//bet_ob["bet_amount"] -= get_total_bet(bet_ob["betType"]);
 			if ( _Bet_info.getValue("self") == null)
 			{
 				_Bet_info.putValue("self", [bet_ob]);

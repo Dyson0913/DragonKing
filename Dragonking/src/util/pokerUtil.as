@@ -15,6 +15,11 @@ package util
 			
 		}
 		
+		public static function showpoker(mc:MovieClip, idx:int, data:Array):void
+		{			
+			mc.visible = true;
+		}	
+		
 		public static function hidepoker(mc:MovieClip, idx:int, data:Array):void
 		{			
 			mc.visible = false;

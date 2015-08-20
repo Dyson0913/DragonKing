@@ -12,7 +12,7 @@ package View.GameView
 		public static const Tie:int = 3;
 		
 		public static const BET_BANKER:int = 1;
-		public static const BET_PLAYER:int = 2;
+		public static const BET_PLAYER:int = 0;
 		
 		public function CardType() 
 		{

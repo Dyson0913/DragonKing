@@ -13,9 +13,14 @@ package Res
 		
 		//swc res
 		public static const Poker:String = "poker";
-		public static const playerInfo:String = "playerinfo";
+		public static const poker_back:String = "pokerback";
+		public static const flippoker:String = "flip_poker";
+		
+		
 		public static const Timer:String = "countDowntimer";
 		public static const Hint:String = "HintMsg";
+		public static const Bigwinmsg:String = "big_win_msg";
+		
 		public static const coin1:String = "coin_1";
 		public static const coin2:String = "coin_2";
 		public static const coin3:String = "coin_3";
@@ -30,9 +35,11 @@ package Res
 		
 		public static const playerScore:String = "PlayerScore";
 		public static const bankerScore:String = "BankerScore";
-		public static const dealpokerani:String = "DealPokerAni";
-		public static const CleanBtn:String = "rebetbtn";
-		public static const betcomfirmBtn:String = "betcomfirmbtn";
+		public static const TieScore:String = "tieScore";	
+		
+		public static const rebet_btn:String = "btn_rebet";
+		public static const betcancel_btn:String = "btn_betcancel";
+		public static const paytable_btn:String = "btn_paytable";
 		
 		public static const emptymc:String = "Emptymc";
 		

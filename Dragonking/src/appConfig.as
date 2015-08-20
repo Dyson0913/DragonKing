@@ -45,8 +45,6 @@ package
 		
 		//util
 		public var _path:Path_Generator = new Path_Generator();
-		public var _object:objectProperty = new objectProperty();
-		
 		
 		//visual
 		public var _pokerhandler:Visual_poker = new Visual_poker();
@@ -55,12 +53,12 @@ package
 		public var _playerinfo:Visual_PlayerInfo = new Visual_PlayerInfo();
 		public var _coin:Visual_Coin = new Visual_Coin();
 		public var _betzone:Visual_betZone = new Visual_betZone();
+		public var _btn:Visual_BtnHandle = new Visual_BtnHandle();
 		public var _settle:Visual_Settle = new Visual_Settle();
 		
 		//test
 		public var _test:Visual_testInterface = new Visual_testInterface();
-		public var _primitive:Visual_primitive = new Visual_primitive();
-		public var _objectinfo:Visual_objectInfo = new Visual_objectInfo();
+		
 		
 		//[ProcessSuperclass]
 		//public var _vibase:ViewBase = new ViewBase();

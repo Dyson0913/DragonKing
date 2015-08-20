@@ -198,8 +198,14 @@ package View.Viewutil
 		{
 			for (var i:int = 0; i < _ItemList.length; i++)
 			{
-				if ( i == idx ) continue;
-				else _ItemList[i].gotoAndStop(gotoFrame);
+				if ( i == idx ) 
+				{					
+					continue;
+				}
+				else
+				{					
+					_ItemList[i].gotoAndStop(gotoFrame);
+				}
 			}
 		}
 		

@@ -30,11 +30,13 @@ package View.ViewComponent
 			hintmsg.Create_by_list(1, [ResName.Hint], 0, 0, 1, 0, 0, "time_");
 			hintmsg.container.x = 627.3;
 			hintmsg.container.y = 459.3;
+			hintmsg.container.visible = false;
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
 		{
+			Get(modelName.HINT_MSG).container.visible = true;
 			GetSingleItem(modelName.HINT_MSG).gotoAndStop(1);	
 			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);		
 		}
@@ -42,6 +44,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function timer_hide():void
 		{
+			Get(modelName.HINT_MSG).container.visible = true;
 			var mypoker:Array =   _model.getValue(modelName.PLAYER_POKER);
 			if (mypoker.length > 0) GetSingleItem(modelName.HINT_MSG).gotoAndStop(6);
 			else GetSingleItem(modelName.HINT_MSG).gotoAndStop(2);
@@ -51,6 +54,7 @@ package View.ViewComponent
 		[MessageHandler(type = "ConnectModule.websocket.WebSoketInternalMsg", selector = "CreditNotEnough")]
 		public function no_credit():void
 		{
+			Get(modelName.HINT_MSG).container.visible = true;
 			GetSingleItem(modelName.HINT_MSG).gotoAndStop(3);
 			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);
 		}

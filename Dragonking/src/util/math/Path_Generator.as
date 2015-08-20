@@ -56,7 +56,7 @@ package util.math
 			for (var i:int = 0; i < pathPoint.length; i++)
 			{
 				var arr:Array = pathPoint[i];
-				var obj:Object = { x: arr[0] + 30 * xdiff, y: arr[1] };
+				var obj:Object = { x: arr[0] + 168 * xdiff, y: arr[1] };
 				path.push (obj);
 			}       
 			

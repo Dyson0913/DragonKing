@@ -1,5 +1,6 @@
 package Command 
 {
+	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	import util.utilFun;
@@ -45,12 +46,17 @@ package Command
 			utilFun.SetText(mc["_Text"],data[idx])
 		}
 		
-		public function FadeIn(mc:MovieClip,  in_t:int , out_t:int, onComF:Function):void
+		public function FadeIn(mc:DisplayObjectContainer,  in_t:int , out_t:int, onComF:Function):void
 		{
 			Tweener.addTween(mc, { alpha:1, time:in_t, onCompleteParams:[mc,0,out_t],onComplete:onComF } );
 		}
 		
-		public function Fadeout(mc:MovieClip, a:int, t:int):void
+		public function empty_FadeInfun(mc:MovieClip, a:int, t:int):void
+		{
+			
+		}
+		
+		public function Fadeout(mc:DisplayObjectContainer, a:int, t:int):void
 		{
 			Tweener.addTween(mc, {alpha:a, time:t});
 		}		
@@ -68,7 +74,7 @@ package Command
 		public function strdotloop(s:TextField,Mytime:int ,Mycount:int):void
 		{
 			Tweener.addCaller( s.text, { time:Mytime , count: Mycount , transition:"linear", onUpdateParams:[ s,s.length,4], onUpdate: this.dotloop } );
-		}
+		}		
 		
 		public function dotloop(s:TextField, orlength:int, limit:int):void
 		{

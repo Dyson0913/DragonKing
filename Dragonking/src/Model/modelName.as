@@ -20,8 +20,10 @@ package Model
 		public static const HINT_MSG:int = Num++;
 		public static const REMAIN_TIME:int = Num++;
 		public static const GAMES_STATE:int = Num++;
-		public static const SPLIT_SYMBOL:int = Num++;
+		
 		public static const BET_ZONE:int = Num++;
+		public static const AVALIBLE_ZONE:int = Num++;
+		
 		
 		public static const PLAYER_POKER:int = Num++;
 		public static const BANKER_POKER:int = Num++;

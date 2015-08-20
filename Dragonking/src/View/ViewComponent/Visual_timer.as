@@ -29,9 +29,13 @@ package View.ViewComponent
 		{
 			var countDown:MultiObject = prepare(modelName.REMAIN_TIME,new MultiObject()  , GetSingleItem("_view").parent.parent);
 		   countDown.Create_by_list(1, [ResName.Timer], 0, 0, 1, 0, 0, "time_");
-		   countDown.container.x = 350;
-		   countDown.container.y = 280;
+		   countDown.container.x = 1284;
+		   countDown.container.y = 420;
 		   countDown.container.visible = false;
+		   
+		   	//_tool.SetControlMc(playerzone.ItemList[0]);
+			//_tool.SetControlMc(countDown.container);
+			//add(_tool);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
