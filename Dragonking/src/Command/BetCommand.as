@@ -39,14 +39,21 @@ package Command
 			_model.putValue("after_bet_credit", 0);
 			
 			//閒對,閒,和,莊,莊對
-			var betzone:Array = [1, 2];// _model.getValue(modelName.BET_ZONE);
-			var allzone:Array = [ResName.unibetZone, ResName.unibetZone];// , ResName.betzone_tie, ResName.betzone_banker_pair, ResName.betzone_player_pari];
+			var betzone:Array = [0, 1, ];// 2, 3, 4, 5];
+			var allzone:Array = [ResName.betzone_player, ResName.betzone_banker,ResName.betzone_tie,ResName.betzone_banker_pair,ResName.betzone_player_pari,ResName.special_Zone];			
 			var avaliblezone:Array = [];
+			var avaliblezone_s:Array = [];
 			for each (var i:int in betzone)
 			{
-				avaliblezone.push ( allzone[i - 1]);
-			}			
+				avaliblezone.push ( allzone[i]);
+				avaliblezone_s.push ( allzone[i ]+"_sence");
+			}
+			
 			_model.putValue(modelName.AVALIBLE_ZONE, avaliblezone);
+			_model.putValue(modelName.AVALIBLE_ZONE_S, avaliblezone_s);
+						
+			_model.putValue(modelName.AVALIBLE_ZONE_XY,  [[0, 0], [771, 0], [420, 100], [730, -72], [128, -66], [469, 2]]);
+			_model.putValue(modelName.COIN_STACK_XY,   [ [0, 0], [690, -20],  [360, 53], [640, -110], [50, -120], [360, -62]]);
 			
 			_model.putValue("BetBWPlayer", 0);
 			_model.putValue("BetBWBanker", 1);			
@@ -79,6 +86,7 @@ package Command
 		
 		public function empty_reaction(e:Event, idx:int):Boolean
 		{
+			//utilFun.Log("emtpey reaction ="+e.currentTarget.name);
 			return true;
 		}	
 		
@@ -88,7 +96,8 @@ package Command
 			utilFun.Log("idx ="+idx);
 			
 			var bet:Object = { "betType": idx, 
-			                               "bet_amount":  get_total_bet(idx) + _opration.array_idx("coin_list", "coin_selectIdx")
+			                               "bet_amount": _opration.array_idx("coin_list", "coin_selectIdx"),
+										    "total_bet_amount": get_total_bet(idx) +_opration.array_idx("coin_list", "coin_selectIdx")
 			};
 			
 			dispatcher( new ActionEvent(bet, "bet_action"));
@@ -145,7 +154,8 @@ package Command
 			}
 			return total;
 		}
-		private function get_total_bet(type:int):Number
+		
+		public function get_total_bet(type:int):Number
 		{
 			if ( _Bet_info.getValue("self") == null) return 0;
 			var total:Number = 0;
@@ -191,6 +201,11 @@ package Command
 				}
 			}			
 			return arr;
+		}
+		
+		public function get_my_betlist():Array
+		{		
+			return _Bet_info.getValue("self");		
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]

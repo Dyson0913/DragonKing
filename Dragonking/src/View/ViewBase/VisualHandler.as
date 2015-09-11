@@ -5,7 +5,7 @@ package View.ViewBase
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import Model.Model;
-	import Command.ViewCommand;
+	import Command.*;
 	import Interface.ViewComponentInterface;
 	import util.*;
 	import Model.*;
@@ -27,6 +27,12 @@ package View.ViewBase
 		
 		[Inject]
 		public var _viewcom:ViewCommand;
+		
+		[Inject]
+		public var _regular:RegularSetting;
+		
+		[Inject]
+		public var _opration:DataOperation;
 		
 		public var _tool:AdjustTool;
 		
@@ -54,6 +60,12 @@ package View.ViewBase
 				return ob.ItemList[idx];
 			}
 			return null;
+		}
+		
+		protected function changeBG(name:String):void
+		{
+			utilFun.Clear_ItemChildren(GetSingleItem("_view"));
+			GetSingleItem("_view").addChild(utilFun.GetClassByString(name) );
 		}
 		
 		protected function add(item:*):void

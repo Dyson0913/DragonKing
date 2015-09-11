@@ -43,9 +43,16 @@ package View.Viewutil
 		
 		public function SetControlMc(mc:DisplayObject):void
 		{
+			
 			_ControlMc = mc;
 			
 			//功能表
+			if ( _Menu )
+			{
+				removeChild(_Menu);
+				_Menu = null;
+			}
+			
 			_Menu = Createitem(mc.name, _RollOutColor);
 			addChild(_Menu);
 			utilFun.AddMouseListen(_Menu, this.MenuEffect);

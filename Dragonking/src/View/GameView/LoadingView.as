@@ -32,31 +32,12 @@ package View.GameView
 
 	 
 	public class LoadingView extends ViewBase
-	{	
+	{		
 		[Inject]
-		public var _regular:RegularSetting;	
+		public var _betCommand:BetCommand;
 		
 		[Inject]
-		public var _visual_test:Visual_testInterface;
-		
-		[Inject]
-		public var _poker:Visual_poker;
-		
-		[Inject]
-		public var _coin:Visual_Coin;
-		
-		[Inject]
-		public var _betzone:Visual_betZone;
-		
-		[Inject]
-		public var _timer:Visual_timer;
-		
-		[Inject]
-		public var _btn:Visual_BtnHandle;
-		
-		
-		[Inject]
-		public var _settle:Visual_Settle;
+		public var _test:Visual_testInterface;
 		
 		public function LoadingView()  
 		{
@@ -66,11 +47,19 @@ package View.GameView
 			//result:Object
 		public function FirstLoad(para:Array ):void
  		{			
+			utilFun.Log("FirstLoad =" + para);
 			//_model.putValue(modelName.LOGIN_INFO, para[0]);
 			_model.putValue(modelName.UUID,  para[0]);
 			_model.putValue(modelName.CREDIT, para[1]);
 			_model.putValue(modelName.Client_ID, para[2]);
 			_model.putValue(modelName.HandShake_chanel, para[3]);
+			_model.putValue(modelName.Domain_Name, para[4]);
+			
+			_betCommand.bet_init();
+			
+			_model.putValue("history_win_list", []);				
+			_model.putValue("game_round", 1);			
+			
 			dispatcher(new Intobject(modelName.Loading, ViewCommand.SWITCH));			
 		}
 		
@@ -80,29 +69,14 @@ package View.GameView
 			if (View.Value != modelName.Loading) return;
 			super.EnterView(View);
 			var view:MultiObject = prepare("_view", new MultiObject() , this);
-			view.Create_by_list(1, [ResName.Loading_Scene], 0, 0, 1, 0, 0, "a_");
-			//
-			_regular.strdotloop(view.ItemList[0]["_Text"], 20, 40);		
-			utilFun.SetTime(connet, 1);		
-			//
-			//_visual_test.init();
-			//
-			//_coin.init();
-			//_poker.init();
-			//_settle.init();
-			
-		//	_btn.init();
-			//
-			//_settle.init();
-			//
-			
-			
-			//_betzone.init();
-			//_timer.init();
+			view.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "a_");
+					
+			utilFun.SetTime(connet, 0.1);
+			//_test.init();			
 		}
 		private function connet():void
 		{	
-				dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.CONNECT));
+			dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.CONNECT));
 		}
 		
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="LeaveView")]

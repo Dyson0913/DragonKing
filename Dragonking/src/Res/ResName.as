@@ -15,23 +15,48 @@ package Res
 		public static const Poker:String = "poker";
 		public static const poker_back:String = "pokerback";
 		public static const flippoker:String = "flip_poker";
+		public static const just_turnpoker:String = "just_turn_poker";
+		public static const Mipoker_zone:String = "Mi_poker_zone";
+		public static const pokermask:String = "poker_mask";
+		
+		public static const TextInfo:String = "Text_Info";	
+		public static const Betcoin:String = "Bet_coin";	
+		public static const Wincoin:String = "Win_coin";	
+		
+		public static const paytablemain:String = "paytable_main"		
+		public static const paytable_baridx:String = "paytable_bar_idx";
+		
+		public static const angelball:String = "angel_ball";
+		public static const evilball:String = "evil_ball";
+		public static const Noneball:String = "None_ball";
+		public static const history_Item_select:String = "historyItem_select";
+		public static const historytable:String = "history_table";		
+		public static const history_select_itembar:String = "history_select_item_bar";
+		public static const history_select_item_sencebar:String = "history_select_item_sence_bar";
+		
+		public static const powerbar:String = "power_bar";
+		public static const power_bar3:String = "power_bar_3";
+		public static const power_bar_2pair:String = "power_bar_2_pair";
+		public static const contractpower:String = "contract_power";
 		
 		
 		public static const Timer:String = "countDowntimer";
 		public static const Hint:String = "HintMsg";
-		public static const Bigwinmsg:String = "big_win_msg";
+		public static const Bigwinmsg:String = "big_win_msg";	
 		
-		public static const coin1:String = "coin_1";
-		public static const coin2:String = "coin_2";
-		public static const coin3:String = "coin_3";
-		public static const coin4:String = "coin_4";
-		public static const coin5:String = "coin_5";
-		public static const betzone_player:String = "playerZone";
+		public static const betzone_player:String = "playerzone";
 		public static const betzone_banker:String = "bankerzone";
-		public static const betzone_tie:String = "tiezone";
+		public static const betzone_tie:String = "tiezone";		
 		public static const betzone_banker_pair:String = "bankerzone_pair";
-		public static const betzone_player_pari:String = "playerZone_pair";
-		public static const unibetZone:String = "uni_betZone";
+		public static const betzone_player_pari:String = "playerzone_pair";		
+		public static const special_Zone:String = "specialzone";		
+		
+		//public static const playerZone_s:String = "playerZone_sence";
+		//public static const bankerZone_s:String = "bankerZone_sence";
+		//public static const tiezone_s:String = "tiezone_sence";
+		//public static const bankerzone_pair_s:String = "bankerzone_pair_sence";
+		//public static const playerZone_pair_s:String = "playerZone_pair_sence";		
+		//public static const specialZone_s:String = "specialZone_sence";		
 		
 		public static const playerScore:String = "PlayerScore";
 		public static const bankerScore:String = "BankerScore";

@@ -10,6 +10,7 @@ package Model
 		
 		public static const Client_ID:int = Num++;
 		public static const HandShake_chanel:int = Num++;
+		public static const Domain_Name:int = Num++;
 		
 		public static const LOGIN_INFO:int = Num++;
 		
@@ -23,6 +24,9 @@ package Model
 		
 		public static const BET_ZONE:int = Num++;
 		public static const AVALIBLE_ZONE:int = Num++;
+		public static const AVALIBLE_ZONE_S:int = Num++;
+		public static const AVALIBLE_ZONE_XY:int = Num++;
+		public static const COIN_STACK_XY:int = Num++;
 		
 		
 		public static const PLAYER_POKER:int = Num++;

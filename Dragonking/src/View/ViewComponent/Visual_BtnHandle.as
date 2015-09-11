@@ -18,10 +18,7 @@ package View.ViewComponent
 	public class Visual_BtnHandle  extends VisualHandler
 	{
 		[Inject]
-		public var _betCommand:BetCommand;
-		
-		[Inject]
-		public var _regular:RegularSetting;
+		public var _betCommand:BetCommand;		
 		
 		public function Visual_BtnHandle() 
 		{
@@ -30,12 +27,12 @@ package View.ViewComponent
 		
 		public function init():void
 		{
-			var btnlist:Array = [ResName.paytable_btn, ResName.rebet_btn, ResName.betcancel_btn];
+			var btnlist:Array = [ResName.paytable_btn];// , ResName.rebet_btn, ResName.betcancel_btn];
 			//下注區
 			var btn_group:MultiObject = prepare("btn_group", new MultiObject() , GetSingleItem("_view").parent.parent);
 			btn_group.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,3,1]);
-			btn_group.container.x = -44;
-			btn_group.container.y = 932;
+			btn_group.container.x = -4;
+			btn_group.container.y = 952;
 			btn_group.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			btn_group.Post_CustomizedData = [[0, 0], [1580, -10], [1780, -10]];
 			btn_group.Create_by_list(btnlist.length, btnlist, 0, 0, btnlist.length, 200, 0, "time_");		

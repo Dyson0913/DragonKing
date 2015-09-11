@@ -30,6 +30,7 @@ package
 		private var _clientidx:Number =-1;
 		private var _handshake:Function = null;
 		private var _uuid:String = "";
+		private var _DomainName:String = "";
 		
 		public function Main():void 
 		{
@@ -42,16 +43,15 @@ package
 			result = pass;
 		}
 		
-		//public function handshake(credit:Number, Clientidx:int, handshake:Function, playerinfo:Object):void
-		public function handshake(credit:Number,Clientidx:int,handshake:Function,uuid:String):void
+		public function handshake(handshakeinfo:Array):void
 		{
-			_credit = credit;
-			_clientidx = Clientidx;
-			_handshake = handshake;
-			//result = playerinfo;
-			_uuid = uuid;
-			utilFun.Log("_credit = " + _credit + " client id = " +_clientidx + "_handshake = "+_handshake+ "_uuid = "+_uuid);
-			
+			// credit:Number, Clientidx:int, handshake:Function, uuid:String, DomainName:String
+			_credit = handshakeinfo[0];
+			_clientidx = handshakeinfo[1];
+			_handshake = handshakeinfo[2];	
+			_uuid = handshakeinfo[3];			
+			_DomainName = handshakeinfo[4];
+			utilFun.Log("_credit = " + _credit + " client id = " +_clientidx + "_handshake = "+_handshake+ "_uuid = "+_uuid +" _DomainName ="+_DomainName );			
 		}
 		
 		private function init(e:Event = null):void 
@@ -67,15 +67,13 @@ package
 			//no thing ,ok
 			_context  = ActionScriptContextBuilder.build(appConfig);
 			
-			addChild(_context.getObjectByType(LoadingView) as LoadingView);
-			//addChild(_context.getObjectByType(Lobby) as Lobby);
+			addChild(_context.getObjectByType(LoadingView) as LoadingView);			
 			addChild(_context.getObjectByType(betView) as betView);
 			addChild(_context.getObjectByType(HudView) as HudView);			
 			
 			var Enter:LoadingView = _context.getObject("Enter") as LoadingView;
-			utilFun.Log("Enter = "+Enter);
-			//Enter.FirstLoad([result,_credit,_clientidx,_handshake]);
-			Enter.FirstLoad([_uuid,_credit,_clientidx,_handshake]);
+			utilFun.Log("Enter = "+Enter);			
+			Enter.FirstLoad([_uuid,_credit,_clientidx,_handshake,_DomainName]);
 		}
 	}
 	

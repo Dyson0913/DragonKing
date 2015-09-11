@@ -85,6 +85,39 @@ package Command
 			s.text = str;
 		}
 		
+		//_regular.Call(Get("aa").container, { onUpdate:this.test_ok,onUpdateParams:[Get("aa").container] }, 1, 0, 5, "linear");
+		//_regular.Call(Get("aa").container, { onComplete:this.test_ok,onCompleteParams:[Get("aa").container] }, 1, 0, 1, "linear");
+		public function Call(mc:DisplayObjectContainer,pa:Object , t:int,delay:int =0,cnt:int = 1,transition_p:String = "linear"):void
+		{
+			var tweenOb:Object  = { time:t,
+													  count:cnt,
+													  transition:transition_p
+													};
+										 
+			if ( pa["onComplete"] != undefined) 
+			{
+				tweenOb["onComplete"] = pa["onComplete"];
+				if (  pa["onCompleteParams"] != undefined) tweenOb["onCompleteParams"] = pa["onCompleteParams"];				
+			}
+			
+			if ( pa["onUpdate"] != undefined) 
+			{
+				tweenOb["onUpdate"] = pa["onUpdate"];
+				if (  pa["onUpdateParams"] != undefined) tweenOb["onUpdateParams"] = pa["onUpdateParams"];				
+			}
+			
+			Tweener.addCaller(mc, tweenOb  );
+		}
+		
+		public function Posi_Colum_first_Setting(mc:MovieClip, idx:int, data:Array):void
+		{			
+			var ColumnCnt:int = data[0];
+			var xdiff:int = data[1];
+			var ydiff:int = data[2];
+			mc.x = ( Math.floor(idx / ColumnCnt) * data[1]);		
+			mc.y = (idx % ColumnCnt * ydiff);
+		}
+		
 	}
 
 }

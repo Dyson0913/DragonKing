@@ -52,9 +52,13 @@ package
 		public var _hint:Visual_Hintmsg = new Visual_Hintmsg();
 		public var _playerinfo:Visual_PlayerInfo = new Visual_PlayerInfo();
 		public var _coin:Visual_Coin = new Visual_Coin();
+		public var _coin_stack:Visual_Coin_stack = new Visual_Coin_stack();
 		public var _betzone:Visual_betZone = new Visual_betZone();
 		public var _btn:Visual_BtnHandle = new Visual_BtnHandle();
 		public var _settle:Visual_Settle = new Visual_Settle();
+		public var _sencer:Visual_betZone_Sence = new Visual_betZone_Sence();
+		public var _gameinfo:Visual_Game_Info = new Visual_Game_Info();
+		public var _paytable:Visual_Paytable = new Visual_Paytable();
 		
 		//test
 		public var _test:Visual_testInterface = new Visual_testInterface();

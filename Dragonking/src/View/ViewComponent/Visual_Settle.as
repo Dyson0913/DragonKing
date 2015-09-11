@@ -17,8 +17,12 @@ package View.ViewComponent
 	 */
 	public class Visual_Settle  extends VisualHandler
 	{
+	
 		[Inject]
-		public var _regular:RegularSetting;
+		public var _paytable:Visual_Paytable;
+		
+		[Inject]
+		public var _betCommand:BetCommand;
 		
 		public function Visual_Settle() 
 		{
@@ -29,16 +33,14 @@ package View.ViewComponent
 		{
 			var zoneCon:MultiObject = prepare("zone", new MultiObject(), GetSingleItem("_view").parent.parent);
 			zoneCon.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			zoneCon.Post_CustomizedData = [[0, 0], [880, 0], [520, 0]];
-			zoneCon.Create_by_list(3, [ResName.playerScore, ResName.bankerScore,ResName.TieScore], 0 , 0, 3, 500, 0, "Bet_");		
-			zoneCon.container.visible = false;
-			zoneCon.container.x = 420;
-			zoneCon.container.y = 460;
+			zoneCon.Post_CustomizedData = [[0, 0], [980, 0], [550, 0]];
+			zoneCon.Create_by_list(3, [ResName.playerScore, ResName.bankerScore,ResName.TieScore], 0 , 0, 3, 500, 0, "Bet_");					
+			zoneCon.container.x = 390;
+			zoneCon.container.y = 430;
 			
 			var bigwinCon:MultiObject = prepare("bigwinmsg", new MultiObject(), GetSingleItem("_view").parent.parent);
-			bigwinCon.Create_by_list(1, [ResName.Bigwinmsg], 0 , 0, 1, 0, 0, "Bet_");
-			bigwinCon.container.visible = false;
-			bigwinCon.container.x = 600;
+			bigwinCon.Create_by_list(1, [ResName.Bigwinmsg], 0 , 0, 1, 0, 0, "Bet_");			
+			bigwinCon.container.x = 690;
 			bigwinCon.container.y = 420;		
 			
 			//_tool.SetControlMc(zoneCon.container);
@@ -71,6 +73,9 @@ package View.ViewComponent
 			var result:Array = [];
 			var clean:Array = [];
 			var lostcount:int = 0;
+			var playerwin:int = 0;
+			var bankerwin:int = 0;
+			var winst:String = "";
 			for ( var i:int = 0; i < num; i++)
 			{
 				var resultob:Object = result_list[i];
@@ -99,13 +104,28 @@ package View.ViewComponent
 				if ( winstate >= 4)
 				{
 					Get("bigwinmsg").container.visible = true;
-					GetSingleItem("bigwinmsg").gotoAndStop(winstate-3);	
-					_regular.FadeIn( GetSingleItem("bigwinmsg"), 2, 2, _regular.Fadeout);						
+					GetSingleItem("bigwinmsg").gotoAndStop(winstate-3);
+					GetSingleItem("bigwinmsg")["_fire"].gotoAndPlay(1);
+					_regular.FadeIn( GetSingleItem("bigwinmsg"), 2, 2, _regular.Fadeout);
 				}
 				else
 				{
 					//誰贏?
 				}
+				
+			
+				
+				if ( resultob.win_state != "WSLost" &&  resultob.bet_type == "BetBWPlayer" ) 
+				{
+					playerwin = 1;
+					winst = resultob.win_state;
+				}
+				else if (  resultob.win_state != "WSLost" &&  resultob.bet_type == "BetBWBanker") 
+				{
+					bankerwin = 1;				
+					winst = resultob.win_state;
+				}
+				
 				
 				
 				if ( winstate == 1)
@@ -144,6 +164,30 @@ package View.ViewComponent
 				utilFun.Clear_ItemChildren(GetSingleItem("coinstakeZone", clean[i]));
 			}
 			
+			if( _betCommand.get_my_betlist().length !=0)
+			{
+				//_regular.Call(Get("coinstakeZone").container, { onComplete:this.start_settle }, 1, 2);
+				utilFun.Log("winst = ");
+				_paytable.win_frame_hint(winst);
+			}
+			
+			
+				//history recode 
+				var arr:Array = _model.getValue("history_win_list");
+				if ( !playerwin && !bankerwin) 
+				{
+					arr.push(ResName.Noneball);
+				}
+				else 
+				{
+					if ( playerwin == 1) arr.push(ResName.angelball);
+					else if ( bankerwin == 1) arr.push(ResName.evilball);
+				}
+				
+				utilFun.Log("arr = "+arr);
+				if ( arr.length > 60) arr.shift();			
+				_model.putValue("history_win_list",arr);
+				_paytable.history_display(1);
 			
 		}
 		
@@ -183,8 +227,7 @@ package View.ViewComponent
 			var Mypoker:Array =   _model.getValue(type.Value);
 			
 			if ( Mypoker.length == 2 )
-			{
-				
+			{				
 				var point:Array = utilFun.arrFormat(countPoint(Mypoker), 1);
 				if ( point[0] == 0 ) point[0] = 10;				
 				var zone:int = -1;

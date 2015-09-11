@@ -9,6 +9,7 @@ package View.ViewComponent
 	import View.Viewutil.MultiObject;
 	import Res.ResName;
 	import caurina.transitions.Tweener;
+	import View.GameView.gameState;
 	
 	/**
 	 * hintmsg present way
@@ -16,8 +17,6 @@ package View.ViewComponent
 	 */
 	public class Visual_Hintmsg  extends VisualHandler
 	{
-		[Inject]
-		public var _regular:RegularSetting;
 		
 		public function Visual_Hintmsg() 
 		{
@@ -27,10 +26,14 @@ package View.ViewComponent
 		public function init():void
 		{
 			var hintmsg:MultiObject = prepare(modelName.HINT_MSG, new MultiObject()  , GetSingleItem("_view").parent.parent);
-			hintmsg.Create_by_list(1, [ResName.Hint], 0, 0, 1, 0, 0, "time_");
-			hintmsg.container.x = 627.3;
-			hintmsg.container.y = 459.3;
+			hintmsg.Create_by_list(1, [ResName.Hint], 0, 0, 1, 0, 0, "hintmsg");
+			hintmsg.container.x = 960.3;
+			hintmsg.container.y = 439.3;
 			hintmsg.container.visible = false;
+			
+			//_tool.SetControlMc(coinob.ItemList[0]);
+			//_tool.SetControlMc(hintmsg.container);
+			//add(_tool);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
@@ -45,9 +48,10 @@ package View.ViewComponent
 		public function timer_hide():void
 		{
 			Get(modelName.HINT_MSG).container.visible = true;
-			var mypoker:Array =   _model.getValue(modelName.PLAYER_POKER);
-			if (mypoker.length > 0) GetSingleItem(modelName.HINT_MSG).gotoAndStop(6);
-			else GetSingleItem(modelName.HINT_MSG).gotoAndStop(2);
+			var state:int = _model.getValue(modelName.GAMES_STATE);
+			if( state == gameState.START_OPEN) GetSingleItem(modelName.HINT_MSG).gotoAndStop(4);
+			if( state == gameState.NEW_ROUND) GetSingleItem(modelName.HINT_MSG).gotoAndStop(1);
+			if( state == gameState.END_BET) GetSingleItem(modelName.HINT_MSG).gotoAndStop(2);
 			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);			
 		}
 		

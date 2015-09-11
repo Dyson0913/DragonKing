@@ -27,8 +27,6 @@ package View.GameView
 	 */
 	public class betView extends ViewBase
 	{
-		[Inject]
-		public var _betCommand:BetCommand;
 		
 		[Inject]
 		public var _regular:RegularSetting;
@@ -54,6 +52,18 @@ package View.GameView
 		[Inject]
 		public var _btn:Visual_BtnHandle;
 		
+		[Inject]
+		public var _sencer:Visual_betZone_Sence;
+		
+		[Inject]
+		public var _gameinfo:Visual_Game_Info;
+		
+		[Inject]
+		public var _paytable:Visual_Paytable;
+		
+		[Inject]
+		public var _coin_stack:Visual_Coin_stack;
+		
 		public function betView()  
 		{
 			utilFun.Log("betView");
@@ -67,28 +77,23 @@ package View.GameView
 			//清除前一畫面
 			utilFun.Log("in to EnterBetview=");			
 			
-			_tool = new AdjustTool();
-			_betCommand.bet_init();
+			_tool = new AdjustTool();			
 			
 			var view:MultiObject = prepare("_view", new MultiObject() , this);
 			view.Create_by_list(1, [ResName.Bet_Scene], 0, 0, 1, 0, 0, "a_");	
 			
-		
-			
+			_gameinfo.init();
+			_paytable.init();
 			_timer.init();		
 			_hint.init();			
+			
 			_betzone.init();
+			_coin_stack.init();
 			_coin.init();
 			_poker.init();
 			_btn.init();
 			_settle.init();
-			
-			
-			
-			//_tool.SetControlMc(coinstack.ItemList[0]);
-			//addChild(_tool);		
-			
-		
+			_sencer.init();		
 		}
 		
 		

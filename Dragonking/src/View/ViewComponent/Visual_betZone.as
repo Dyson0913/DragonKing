@@ -1,5 +1,6 @@
 package View.ViewComponent 
 {
+	import flash.events.Event;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -15,9 +16,7 @@ package View.ViewComponent
 	 * @author ...
 	 */
 	public class Visual_betZone  extends VisualHandler
-	{
-		[Inject]
-		public var _regular:RegularSetting;
+	{	
 		
 		[Inject]
 		public var _betCommand:BetCommand;	
@@ -30,18 +29,25 @@ package View.ViewComponent
 		public function init():void
 		{
 			var avaliblezone:Array = _model.getValue(modelName.AVALIBLE_ZONE);
+			var zone_xy:Array = _model.getValue(modelName.AVALIBLE_ZONE_XY);
 			
 			//下注區
-			var playerzone:MultiObject = prepare("betzone", new MultiObject() , GetSingleItem("_view").parent.parent);
-			playerzone.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[0,0,3,1]); //1 ,2,3,2
-			playerzone.container.x = 366;
-			playerzone.container.y = 602;
-			playerzone.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			playerzone.Post_CustomizedData = [[233,148],[789,142]] //[[0,0],[233,148],[512,186],[789,142],[1016,-6]];
-			playerzone.Create_by_list(avaliblezone.length, avaliblezone, 0, 0, avaliblezone.length, 50, 0, "time_");		
+			var pz:MultiObject = prepare("betzone", new MultiObject() , GetSingleItem("_view").parent.parent);
+			pz.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,2,0]);
+			pz.container.x = 353;
+			pz.container.y = 805;
+			pz.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
+			pz.Post_CustomizedData = zone_xy;
+			pz.Create_by_list(avaliblezone.length, avaliblezone, 0, 0, avaliblezone.length, 50, 0, "betzone_");		
 			
-			//_tool.SetControlMc(coinob.ItemList[0]);
-			//_tool.SetControlMc(coinob.container);
+			//pz.ItemList[0].gotoAndStop(2);
+			//for (var i:int = 0; i < avaliblezone.length; i++)
+			//{
+				//pz.ItemList[i].gotoAndStop(2);
+			//}					
+			
+			//_tool.SetControlMc(pz.ItemList[5]);
+			//_tool.SetControlMc(pz.container);
 			//add(_tool);
 		}		
 		
@@ -49,15 +55,27 @@ package View.ViewComponent
 		public function display():void
 		{
 			var betzone:MultiObject = Get("betzone");
-			betzone.mousedown = _betCommand.betTypeMain;
-			betzone.mouseup = _betCommand.empty_reaction;
+			betzone.mousedown = _betCommand.empty_reaction;			
+			betzone.rollout = _betCommand.empty_reaction;
+			betzone.rollover = _betCommand.empty_reaction;
 		}
+		
+		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function timer_hide():void
 		{
 			var betzone:MultiObject = Get("betzone");
-			betzone.mousedown = null;
+			betzone.mousedown = null;				
+			
+			betzone.rollout = _betCommand.empty_reaction;
+			betzone.rollover = _betCommand.empty_reaction;
+			
+			var frame:Array = [];
+			for ( var i:int = 0; i  <  betzone.ItemList.length; i++) frame.push(1);
+			betzone.CustomizedFun = _regular.FrameSetting;
+			betzone.CustomizedData = frame;
+			betzone.FlushObject();
 		}
 		
 		

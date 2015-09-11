@@ -9,11 +9,12 @@ package Command
 	{
 		static public var Num:int = 0;
 		
+		//math
 		public static const sub:int = Num++;
 		public static const add:int = Num++;
 		public static const multiply:int = Num++;
 		public static const divide:int = Num++;
-		public static const mod:int = Num++;
+		public static const mod:int = Num++;		
 		
 		[Inject]
 		public var _model:Model;
@@ -23,7 +24,7 @@ package Command
 			
 		}
 		
-		public function  operator(data_name:*,operation:int ,value:int = 1):* 
+		public function  operator(data_name:*,operation:int ,value:*):* 
 		{
 			var data:* = _model.getValue(data_name);
 			switch (operation)
@@ -42,7 +43,7 @@ package Command
 				break;
 				case mod:
 					data %= value;
-				break;
+				break;			
 			}
 			
 			_model.putValue(data_name,data);

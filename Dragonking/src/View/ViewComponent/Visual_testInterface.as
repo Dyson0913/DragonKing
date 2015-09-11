@@ -4,9 +4,11 @@ package View.ViewComponent
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.geom.Transform;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
+	import flash.text.TextField;
 	import util.math.Path_Generator;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
@@ -28,10 +30,7 @@ package View.ViewComponent
 	 * @author ...
 	 */
 	public class Visual_testInterface  extends VisualHandler
-	{
-		[Inject]
-		public var _coin:Visual_Coin;
-		
+	{		
 		[Inject]
 		public var _betCommand:BetCommand;
 		
@@ -41,6 +40,41 @@ package View.ViewComponent
 		[Inject]
 		public var _MsgModel:MsgQueue;		
 		
+		[Inject]
+		public var _paytable:Visual_Paytable;
+		
+		[Inject]
+		public var _gameinfo:Visual_Game_Info;
+		
+		[Inject]
+		public var _hint:Visual_Hintmsg;
+		
+		[Inject]
+		public var _timer:Visual_timer;
+		
+		[Inject]
+		public var _poker:Visual_poker;
+		
+		[Inject]
+		public var _betzone:Visual_betZone;	
+		
+		[Inject]
+		public var _coin:Visual_Coin;
+		
+		[Inject]
+		public var _sencer:Visual_betZone_Sence;
+		
+		[Inject]
+		public var _coin_stack:Visual_Coin_stack;
+		
+		[Inject]
+		public var _settle:Visual_Settle;	
+		
+		[Inject]
+		public var _btn:Visual_BtnHandle;
+		
+		
+		private var _script_item:MultiObject;
 		
 		public function Visual_testInterface() 
 		{
@@ -48,86 +82,74 @@ package View.ViewComponent
 		}
 		
 		public function init():void
+		{			
+			
+			var script_list:MultiObject = prepare("script_list", new MultiObject() ,GetSingleItem("_view").parent.parent );			
+			script_list.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
+			script_list.stop_Propagation = true;
+			script_list.mousedown = script_list_test;			
+			script_list.mouseup = up;			
+			script_list.CustomizedData = [18,"下注腳本","開牌腳本","結算腳本"]
+			script_list.CustomizedFun = _gameinfo.textSetting;			
+			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
+			
+			
+			
+			_script_item = prepare("script_item", new MultiObject() ,GetSingleItem("_view").parent.parent );			
+			_script_item.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
+			_script_item.stop_Propagation = true;
+			_script_item.mousedown = _script_item_test;
+			_script_item.mouseup = up;
+			
+			_model.putValue("allScript",[ [18, "時間", "提示訊息","注區"],
+														   [18, "閒家一張牌", "莊家一張牌", "閒家第二張(報點數)", "閒家第二張(報點數)"],
+														   [18, "出現發公牌字樣", "公牌第一張", "公牌第二張", "出現特殊牌型"],
+														   [18, "結算表呈現","能量BAR集氣","能量BAR集滿效果"]														   
+														  ]);
+			
+			_model.putValue("Script_idx", 0);
+			_model.putValue("Script_item_idx", 0);
+			_tool.y = 200;
+			add(_tool);
+			
+		}				
+		
+		public function script_list_test(e:Event, idx:int):Boolean
+		{
+			utilFun.Log("script_list_test=" + idx);
+			_model.putValue("Script_idx", idx);
+			_script_item.CustomizedData = _model.getValue("allScript")[idx];
+			_script_item.CustomizedFun = _gameinfo.textSetting;			
+			_script_item.Create_by_list(_script_item.CustomizedData.length -1, [ResName.TextInfo], 0, 100, 1, 0, 20, "Btn_");
+			
+			dispatcher(new TestEvent(_model.getValue("Script_idx").toString()));
+			
+			
+			return true;
+		}
+	
+		
+		public function _script_item_test(e:Event, idx:int):Boolean
 		{
 			
-			var btn:MultiObject = prepare("aa", new MultiObject() ,GetSingleItem("_view").parent.parent );			
-			btn.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
-			btn.stop_Propagation = true;
-			btn.mousedown = test;			
-			btn.mouseup = up;			
-			btn.Create_by_list(4, ["coin_1"], 0, 0, 4, 110, 0, "Btn_");
+			_model.putValue("Script_item_idx", idx);
 			
-			_path.init();
-			_betCommand.bet_init();
-						
+			utilFun.Log("scirpt_id = "+ _model.getValue("Script_idx") + _model.getValue("Script_item_idx"));	
+			var str:String = _model.getValue("Script_idx").toString() + _model.getValue("Script_item_idx").toString();			
 			
-			//var playerzone:MultiObject = prepare("anitets", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			//playerzone.container.x = 200;
-			//playerzone.container.y = 200;
-			//playerzone.Create_by_list(1, ["flip_poker"], 0, 0, 1,0, 0, "time_");		
-			//playerzone.ItemList
+			dispatcher(new TestEvent(str));
 			
-			//_model.putValue(modelName.PLAYER_POKER, ["1d","2d"]);
-			
-		
-			
-		}		
-		
-		public function test(e:Event, idx:int):Boolean
-		{
-			utilFun.Log("test=" + idx);	
-			
+			return true;
 			if ( idx == 0) 
 			{				
-				_model.putValue(modelName.PLAYER_POKER, ["1d,","2d"]);
-				_model.putValue(modelName.BANKER_POKER, ["1s"]);
-				dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_No_mi"));
-				//dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_mi"));
-				//dispatcher(new Intobject(modelName.PLAYER_POKER, "pokerupdate"));
-				//dispatcher(new Intobject(modelName.BANKER_POKER, "pokerupdate"));
-				//var mypoker:MovieClip = GetSingleItem("anitets");
-				//mypoker.gotoAndStop(1);				
-				//mypoker["_poker"].gotoAndStop(2);	
-				//mypoker["_poker_a"].gotoAndStop(2);	
-				//mypoker.gotoAndPlay(2);			
-				//Tweener.addTween(mypoker["_poker"], { rotationZ:24.5, time:0.3,onCompleteParams:[mypoker["_poker"],0],onComplete:this.pullback} );
 				
-				//var mymatrix:Matrix = new Matrix(1, 1, 0, 1, 0, 0);
-				//var myTransfrom:Transform = new Transform(mypoker);
-				//myTransfrom.matrix = mymatrix;				
+				//================================================command btn
+				//_btn.init();
 				
-				//_tool.SetControlMc(coinob.ItemList[0]);
-				//_tool.SetControlMc(mypoker);
-				//add(_tool);
+				//================================================settle info
+				//_settle.init();			
+				
             }
-			  else if (idx == 1)
-			  {
-				 _model.putValue(modelName.PLAYER_POKER, ["1d", "2d"]);
-				_model.putValue(modelName.BANKER_POKER, ["1s"]);
-				dispatcher(new Intobject(modelName.PLAYER_POKER, "pokerupdate"));
-				dispatcher(new Intobject(modelName.BANKER_POKER, "pokerupdate"));
-				//var mypoker:MovieClip = GetSingleItem("anitets");
-				//mypoker.gotoAndStop(1);				
-				//mypoker["_poker"].gotoAndStop(32);
-				//mypoker["_poker_a"].gotoAndStop(32);	
-				//mypoker.gotoAndPlay(2);			
-				//Tweener.addTween(mypoker["_poker"], { rotationZ:24.5, time:0.3,onCompleteParams:[mypoker["_poker"],0],onComplete:this.pullback} );
-			  }
-			   else if (idx == 2)
-			  {
-				//var mypoker:MovieClip = GetSingleItem("anitets");
-				//mypoker.gotoAndStop(1);				
-				//mypoker["_poker"].gotoAndStop(47);	
-				//mypoker["_poker_a"].gotoAndStop(47);	
-				//mypoker.gotoAndPlay(2);			
-				//Tweener.addTween(mypoker["_poker"], { rotationZ:24.5, time:0.3, onCompleteParams:[mypoker["_poker"], 0], onComplete:this.pullback } );
-				
-				 _model.putValue(modelName.PLAYER_POKER, ["1d", "2d"]);
-				_model.putValue(modelName.BANKER_POKER, ["1s","2s"]);
-				_model.putValue(modelName.BANKER_POKER, ["3d","7d"]);
-				dispatcher(new Intobject(modelName.PLAYER_POKER, "pokerupdate"));
-				dispatcher(new Intobject(modelName.BANKER_POKER, "pokerupdate"));
-			  }
             else if (idx == 3)
 			{				
 				var fakePacket:Object =  { "result_list": [
@@ -154,16 +176,128 @@ package View.ViewComponent
 		}			
 		
 		
-		public function pullback(mc:MovieClip,angel:int):void
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "0")]
+		public function betScript():void
+		{
+			changeBG(ResName.Bet_Scene);
+			
+			//=============================================gameinfo			
+			_gameinfo.init();
+			
+			//=============================================paytable
+			var arr:Array = _model.getValue("history_win_list");			
+			for ( var i:int = 0; i < 10; i++)
+			{
+				var ran:int = utilFun.Random(3);
+				if ( ran == 1) arr.push(ResName.angelball);
+				else if ( ran == 2) arr.push(ResName.evilball);
+				else arr.push(ResName.Noneball);
+				_model.putValue("history_win_list", arr);
+			}
+			_paytable.init();
+			
+			//================================================betzone
+			_betzone.init();			
+			_coin_stack.init();
+			_coin.init();
+			_sencer.init();
+			dispatcher(new ModelEvent("display"));
+			
+			//=============================================Hintmsg
+			_hint.init();
+			_hint.display();
+			
+			//================================================timer
+			if ( !_timer.already_countDown)
+			{
+				_model.putValue(modelName.REMAIN_TIME, 20);					
+				_timer.init();
+				_timer.display();
+			}
+			
+		}	
+		
+		
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "00")]
+		public function test00():void
+		{			
+			//_tool.SetControlMc(playerzone.ItemList[0]);
+			_tool.SetControlMc(Get(modelName.REMAIN_TIME).container);			
+		}
+		
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "01")]
+		public function test01():void
+		{			
+			_tool.SetControlMc(Get(modelName.HINT_MSG).container);			
+		}
+		
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "02")]
+		public function test02():void
+		{			
+			changeBG(ResName.Bet_Scene);
+			//================================================timer
+			if ( !_timer.already_countDown)
+			{
+				_model.putValue(modelName.REMAIN_TIME, 20);					
+				_timer.init();
+				_timer.display();
+			}
+		}
+		
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "1")]
+		public function opencardScript():void
 		{
 			
-				var mypoker:MovieClip = GetSingleItem("anitets");
-				mypoker.gotoAndPlay(7);
-				
-				//_tool.SetControlMc(mc);
-				//add(_tool);
-				Tweener.addTween(mc, { rotationZ:angel, time:1, delay:1 } );			
+			
+			_model.putValue(modelName.PLAYER_POKER, []);				
+			_model.putValue(modelName.BANKER_POKER, []);		
+			_model.putValue(modelName.RIVER_POKER, []);		
+			_model.putValue("scirpt_pai", ["1s","2d","3s","5c","6h","9d"]);		
+			
+			changeBG(ResName.Bet_Scene);
+			//================================================poker
+			_poker.init();
+			dispatcher(new ModelEvent("hide"));
+			
+			var arr:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
+			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[arr] }, 25, 0, 6, "linear");			
+			
+			//================================================settle info
+			_settle.init();
 		}
+		
+		public function fackeDeal(type:Array):void
+		{
+			var cardlist:Array = _model.getValue("scirpt_pai");
+			
+			var card_type:String = type[0];
+			var card:String = cardlist[0];
+			type.shift();
+			cardlist.shift();
+			
+			if ( card_type == "Player")
+			{										
+				var mypoker:Array = _model.getValue(modelName.PLAYER_POKER);										
+				mypoker.push(card);
+				_model.putValue(modelName.PLAYER_POKER, mypoker);										
+				dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_mi"));				
+			}
+			else if ( card_type == "Banker")
+			{							
+				var mypoker:Array = _model.getValue(modelName.BANKER_POKER);										
+				mypoker.push( card);										
+				_model.putValue(modelName.BANKER_POKER, mypoker);									
+				dispatcher(new Intobject(modelName.BANKER_POKER, "poker_mi"));
+			}					
+			else if ( card_type == "River")
+			{							
+				var mypoker:Array = _model.getValue(modelName.RIVER_POKER);										
+				mypoker.push( card);										
+				_model.putValue(modelName.RIVER_POKER, mypoker);										
+				dispatcher(new Intobject(modelName.RIVER_POKER, "poker_mi"));
+			}					
+		}
+		
 		
 		public function up(e:Event, idx:int):Boolean
 		{			

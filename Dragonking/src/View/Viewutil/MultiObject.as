@@ -164,7 +164,7 @@ package View.Viewutil
 			Listen();
 		}		
 		
-		private function customized():void
+		public function customized():void
 		{
 			var ItemNum:int = ItemList.length;
 			for (var i:int = 0 ; i < ItemNum; i++)
@@ -269,6 +269,36 @@ package View.Viewutil
 				if ( MouseFrame[3] != 0) ItemList[i].removeEventListener(MouseEvent.MOUSE_UP, eventListen);
 			}
 		}
+		
+		public function eventTriger(trigerFun:Function,e:Event,idx:int):void
+		{
+			utilFun.Log("triger ="+trigerFun );
+			utilFun.Log("name ="+e.currentTarget.name );
+			if ( trigerFun != null) 
+			{
+				_contido = trigerFun(e, idx);
+				utilFun.Log("_contido ="+_contido );
+				utilFun.Log("MouseFrame[2] ="+MouseFrame[2] );
+				if ( _contido ) 
+				{
+					utilFun.GotoAndStop(e, MouseFrame[2]);
+				}
+				
+				if( stop_Propagation) e.stopPropagation();
+			}			
+		}
+		
+		public function eventTriger_mousedown(trigerFun:Function, e:Event, idx:int):void
+		{
+			if ( mousedown != null) 
+					{
+						_contido = mousedown(e, idx);
+						if ( _contido ) utilFun.GotoAndStop(e, MouseFrame[2]);
+						
+						if( stop_Propagation) e.stopPropagation();
+					}
+		}
+		
 		
 		public function eventListen(e:Event):void
 		{
