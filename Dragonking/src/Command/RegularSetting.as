@@ -61,6 +61,13 @@ package Command
 			Tweener.addTween(mc, {alpha:a, time:t});
 		}		
 		
+		public function rubber_effect(mc:DisplayObjectContainer,scale_X:Number,scale_Y:Number,  in_t:int ,diff:Number, onComF:Function):void
+		{
+			utilFun.Log(" scale_X+dif ="+  (scale_X+diff));
+			if ( scale_X+diff == 1) return;
+			Tweener.addTween(mc, { scaleX: scale_X+diff,scaleY:scale_Y+diff, time:in_t, onCompleteParams:[mc,1- (diff/2),1-(diff/2),0.5, (diff/2),null],onComplete:onComF } );
+		}
+		
 		public function Twinkle(mc:MovieClip, t:int, cnt:int,frameNum:int):void
 		{
 			Tweener.addCaller(mc, { time:3 , count: 10 , transition:"linear", onUpdateParams:[mc,frameNum], onUpdate: this.flash } );

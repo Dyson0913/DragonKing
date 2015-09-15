@@ -135,6 +135,30 @@ package View.Viewutil
 			Listen();
 		}		
 		
+		public function Create_by_bitmap(ItemNum:int, Item:*, StartX:Number, StartY:Number, RowCnt:int, Xdiff:Number, Ydiff:Number, ItemName:String):void
+		{
+			CleanList();
+			
+			for (var i:int = 0 ; i < ItemNum; i++)
+			{			
+				var mc:* = new SpriteSheet(Item, Xdiff, Ydiff);				
+				//TODO position customized
+				mc.x = StartX + (i % RowCnt * Xdiff);
+				mc.y = StartY + ( Math.floor(i / RowCnt) * Ydiff);			
+				
+				mc.drawTile(2);
+				mc.name = ItemName + i;
+				_ItemName = ItemName;
+				ItemList.push(mc);
+				_Container.addChild(mc);
+			}
+			
+			//customized area		
+			customized();			
+			Listen();
+			
+		}
+		
 		public function Create_by_list(ItemNum:int,ItemNameList:Array,StartX:Number,StartY:Number,RowCnt:int,Xdiff:Number,Ydiff:Number,ItemName:String):void
 		{
 			CleanList();

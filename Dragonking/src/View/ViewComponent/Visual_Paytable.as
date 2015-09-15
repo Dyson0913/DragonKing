@@ -38,7 +38,6 @@ package View.ViewComponent
 			paytable_baridx.Create_by_list(1, [ResName.paytable_baridx], 0, 0, 1, 0, 0, "time_");			
 			//paytable_baridx.ItemList[0].gotoAndStop(2);			
 			
-			
 			//賠率提示
 			var paytable:MultiObject = prepare("paytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
 			paytable.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 1]);			
@@ -47,40 +46,16 @@ package View.ViewComponent
 			paytable.Create_by_list(1, [ResName.paytablemain], 0, 0, 1, 0, 0, "time_");
 			
 			//歷史記錄bar 選項底圖
-			//var itembar:MultiObject = prepare("history_select_item_bar", new MultiObject() ,  GetSingleItem("_view").parent.parent);
-			//itembar.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 0]);			
-			//itembar.container.x = 1353;
-			//itembar.container.y =  139;
-			//itembar.Create_by_list(2, [ResName.history_select_itembar], 0, 0, 2, 70, 0, "time_");
-			//itembar.mousedown = historySelect;
-			//itembar.ItemList[0].gotoAndStop(2);
-			
-			//歷史記錄bar 選項名
-			//var history:MultiObject = prepare("History", new MultiObject() ,  GetSingleItem("_view").parent.parent);			
-			//history.container.x = 1360;
-			//history.container.y =  140;
-			//history.Create_by_list(1, [ResName.history_Item_select], 0, 0, 1, 0, 0, "time_");
+			var pro:MultiObject = prepare("prob", new MultiObject() , paytable.container);			
+			pro.container.x = 310;
+			pro.container.y =  50;
+			pro.Create_by_list(8, [ResName.prob_square], 0, 0, 1, 0, 32, "time_");				
 			
 			//歷史記錄bar 點擊呈現區
 			var historytable:MultiObject = prepare("Historytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
 			historytable.container.x = 1350;
 			historytable.container.y =  150;
 			historytable.Create_by_list(1, [ResName.historytable], 0, 0, 1, 0, 0, "time_");
-			
-			//歷史記錄bar sencer
-			//var itembar_s:MultiObject = prepare("history_select_itembar_sencer", new MultiObject() ,  GetSingleItem("_view").parent.parent);
-			//itembar_s.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 1]);			
-			//itembar_s.container.x = 1353;
-			//itembar_s.container.y =  139;
-			//itembar_s.Create_by_list(2, [ResName.history_select_item_sencebar], 0, 0, 2, 70, 0, "time_");
-			//itembar_s.mousedown = history_sence;
-			//itembar_s.mouseup = _betCommand.empty_reaction;		
-			
-			
-			//var paytable_colorbar:MultiObject = prepare("paytable_colorbar", new MultiObject() ,  GetSingleItem("_view").parent.parent);						
-			//paytable_colorbar.container.x = 242;
-			//paytable_colorbar.container.y =  141;
-			//paytable_colorbar.Create_by_list(1, [ResName.paytable_colorbar], 0, 0, 1, 0, 0, "time_");			
 			
 			//結果歷史記錄
 			var history_model:Array = _model.getValue("history_win_list");
@@ -91,43 +66,32 @@ package View.ViewComponent
 			historyball.Post_CustomizedData = [6,33,33 ];
 			historyball.Create_by_list(history_model.length, history_model, 0, 0, 1, 0, 0, "histor");
 			
-			
+			//集氣吧
 			var powerbar:MultiObject = prepare("powerbar", new MultiObject() ,   GetSingleItem("_view").parent.parent);
 			powerbar.container.x = 1358;
 			powerbar.container.y = 370;			
-			powerbar.Create_by_list(1, [ResName.powerbar], 0, 0, 1, 0, 0, "histor");
+			powerbar.Create_by_list(1, [ResName.powerbar], 0, 0, 1, 0, 0, "histor");			
 			
 			var powerbar_3:MultiObject = prepare("powerbar_3", new MultiObject() ,  powerbar.container);
 			powerbar_3.container.x = 3;
 			powerbar_3.container.y = 21;			
 			powerbar_3.Create_by_list(5, [ResName.power_bar3], 0, 0, 5, 64, 0, "histor");		
-			
-			
+						
 			var powerbar_2pair:MultiObject = prepare("power_bar_2pair", new MultiObject() ,  powerbar.container);
 			powerbar_2pair.container.x = 3;
 			powerbar_2pair.container.y = 65;			
 			powerbar_2pair.Create_by_list(5, [ResName.power_bar_2pair], 0, 0, 5, 64, 0, "histor");
 			
-			//開牌 歷史記錄	( 閒家 )	
-			//var historyPai_model:Array = _model.getValue("history_Play_Pai_list");			
-			//var history_play_pai:MultiObject = prepare("history_Pai_list", new MultiObject() , GetSingleItem("_view").parent.parent);
-			//history_play_pai.CustomizedFun = sprite_idx_setting_player;			
-			//history_play_pai.CustomizedData = historyPai_model;			
-			//history_play_pai.container.x = 1362;
-			//history_play_pai.container.y = 170;
-			//history_play_pai.Create_by_bitmap(historyPai_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, historyPai_model.length, 22, 25, "o_");				
+			//next grid 65
+			var contractpower:MultiObject = prepare("contractpower", new MultiObject() ,  powerbar.container);
+			contractpower.container.x = -270;
+			contractpower.container.y = -210;			
+			contractpower.Create_by_list(1, [ResName.contractpower], 0, 0, 1, 0, 45, "histor");			
+			
+			
 			//
-			//var historyPai_banker_model:Array = _model.getValue("history_banker_Pai_list");			
-			//var history_bank_pai:MultiObject = prepare("history_banker_Pai_list", new MultiObject() , GetSingleItem("_view").parent.parent);
-			//history_bank_pai.CustomizedFun = sprite_idx_setting_banker;			
-			//history_bank_pai.CustomizedData = historyPai_model;			
-			//history_bank_pai.container.x = 1528;
-			//history_bank_pai.container.y = 170;
-			//history_bank_pai.Create_by_bitmap(historyPai_banker_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, historyPai_banker_model.length, 22, 25, "o_");				
-			//
-			//
-			//_tool.SetControlMc(historyball.container);
-			//_tool.SetControlMc(paytable_baridx.ItemList[0]);
+			//_tool.SetControlMc(contractpower.container);
+			//_tool.SetControlMc(contractpower.ItemList[0]);
 			//_tool.y = 200;
 			//add(_tool);			
 		}
@@ -136,6 +100,53 @@ package View.ViewComponent
 		public function display():void
 		{
 			GetSingleItem("paytable_baridx").gotoAndStop(1);
+		}
+		
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
+		public function timer_hide():void
+		{
+			_model.putValue("percent_prob",[0,0,0,0,0,0,0,0]);
+			
+			var probpercet:MultiObject = Get("prob");
+			var ln:int = probpercet.ItemList.length;
+			
+			var percentlist:Array = _model.getValue("percent_prob");
+			
+			for ( var i:int = 0; i < ln; i ++ )
+			{
+				var per:int = percentlist[i];
+				var gowithd:int =  125 * (per /100);
+				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), per, 5] } );
+			}
+			
+		}
+		
+		[MessageHandler(type = "Model.valueObject.Intobject",selector="caculate_prob")]
+		public function prob_percentupdate():void
+		{			
+			var probpercet:MultiObject = Get("prob");
+			var ln:int = probpercet.ItemList.length;
+			
+			var percentlist:Array = _model.getValue("percent_prob");
+			
+			for ( var i:int = 0; i < ln; i ++ )
+			{
+				var per:int = utilFun.Random(50);
+				var gowithd:int =  125 * (per /100);
+				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), per, 5] } );
+			}
+			
+		}
+		
+		public function percent(mc:MovieClip,per:int,start:int ):void
+		{			
+			var po:Number = mc["_mask"].x + mc["_mask"].width;
+			if  ( mc["_Text"].text == "")  mc["_Text"].text = "1";
+			var p:int = (parseInt( mc["_Text"].text) +start );
+			if (p >= per) p = per;
+			mc["_Text"].text = p.toString() + "%";
+			mc["_Text"].x = po;
 		}
 		
 		public function win_frame_hint(wintype:String):void

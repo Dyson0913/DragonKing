@@ -22,6 +22,7 @@ package Res
 		public static const TextInfo:String = "Text_Info";	
 		public static const Betcoin:String = "Bet_coin";	
 		public static const Wincoin:String = "Win_coin";	
+		public static const pokeratlas:String = "poker_atlas";	
 		
 		public static const paytablemain:String = "paytable_main"		
 		public static const paytable_baridx:String = "paytable_bar_idx";
@@ -29,9 +30,10 @@ package Res
 		public static const angelball:String = "angel_ball";
 		public static const evilball:String = "evil_ball";
 		public static const Noneball:String = "None_ball";
+		public static const prob_square:String = "prob";
+		
 		public static const history_Item_select:String = "historyItem_select";
-		public static const historytable:String = "history_table";		
-		public static const history_select_itembar:String = "history_select_item_bar";
+		public static const historytable:String = "history_table";				
 		public static const history_select_item_sencebar:String = "history_select_item_sence_bar";
 		
 		public static const powerbar:String = "power_bar";
@@ -43,6 +45,8 @@ package Res
 		public static const Timer:String = "countDowntimer";
 		public static const Hint:String = "HintMsg";
 		public static const Bigwinmsg:String = "big_win_msg";	
+		public static const bigwinfire:String = "bigwin_fire";	
+		public static const settletable:String = "settle_table";	
 		
 		public static const betzone_player:String = "playerzone";
 		public static const betzone_banker:String = "bankerzone";

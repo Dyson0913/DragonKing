@@ -243,8 +243,144 @@ package View.ViewComponent
 		public function showjudge(type:int):void
 		{
 			dispatcher(new Intobject(type, "show_judge"));
+			
+			dispatcher(new Intobject(type, "caculate_prob"));
+			//prob_cal();
+			
+			//check display 開公牌
+			check_open_wild_card();
+			
+			//TODO move to settle
+			//check_power_up_effect();
+			//
 		}
 		
+		public function check_open_wild_card():void
+		{
+			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
+			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
+			var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);
+			
+			if ( (ppoker.length + bpoker.length + rpoker.length )== 4)
+			{				
+				dispatcher(new ModelEvent("public_card"));
+			}
+		}
+		
+		public function check_power_up_effect():void
+		{			
+			var re:int = utilFun.Random(2);
+			
+			if ( re)
+			{
+				var idx:int = _model.getValue("power_pair_idx");
+				var arr:Array = _model.getValue("power_pair_posi")[idx];			
+				GetSingleItem("contractpower").x = arr[0];
+				GetSingleItem("contractpower").y = arr[1];			
+				GetSingleItem("contractpower").gotoAndPlay(2);
+				
+				
+				GetSingleItem("power_bar_2pair", idx).gotoAndStop(2)
+				GetSingleItem("power_bar_2pair", idx).alpha = 0;
+				_regular.FadeIn ( GetSingleItem("power_bar_2pair", idx), 3, 3,null);
+				_opration.operator("power_pair_idx", DataOperation.add, 1);
+				
+			}						
+			else
+			{
+				var idx:int = _model.getValue("power_3_idx");
+				var arr:Array = _model.getValue("power_3_posi")[idx];
+			
+				GetSingleItem("contractpower").x = arr[0];
+				GetSingleItem("contractpower").y = arr[1];			
+				GetSingleItem("contractpower").gotoAndPlay(2);
+				
+				GetSingleItem("powerbar_3", idx).gotoAndStop(2);
+				GetSingleItem("powerbar_3", idx).alpha = 0;
+				_regular.FadeIn ( GetSingleItem("powerbar_3", idx), 3, 3,null);
+				_opration.operator("power_3_idx", DataOperation.add, 1);
+				
+			}			
+		
+			
+			
+			
+			
+			
+		//
+			//GetSingleItem("powerbar_3", 0).gotoAndStop(2);
+			//_model.getValue("power_pair_idx")
+		}
+		
+		public function prob_cal():void
+		{
+			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
+			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
+			var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);
+			
+			var totalPoker:Array = [];			
+			totalPoker = totalPoker.concat(ppoker);
+			totalPoker = totalPoker.concat(bpoker);
+			totalPoker = totalPoker.concat(rpoker);
+			var rest_poker_num:int = 52 - totalPoker.length;
+			utilFun.Log("rest_poker_num = " + rest_poker_num);
+			utilFun.Log("totalpoker = " + totalPoker);
+			totalPoker.sort(order);
+			utilFun.Log("after sort = " + totalPoker);
+			var num_amount:Array = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			var color_amount:Array = [0,0,0,0];
+			
+			for ( var i:int = 0; i < totalPoker.length; i++)
+			{
+				var point:String = totalPoker[i].substr(0, 1);
+				var color:String = totalPoker[i].substr(1, 1);
+				if ( color == "d") color_amount[0] += 1;	
+				if ( color == "h") color_amount[1] += 1;	
+				if ( color == "s") color_amount[2] += 1;	
+				if ( color == "c") color_amount[3] += 1;	
+				
+				if ( point == "i" ) point = "10";
+				if ( point == "j" ) point = "11";
+				if ( point == "q" ) point = "12";
+				if ( point == "k" ) point = "13";				
+				num_amount[parseInt(point)] += 1;				
+			}
+			utilFun.Log("num_amount= " + num_amount);
+			utilFun.Log("color_amount= " + color_amount);
+			
+			//3條 (每個張數都要算)
+			var three:int = 0;			
+			var maxValue:Number = Math.max.apply(null, num_amount);
+			//var minValue:Number = Math.min.apply(null, num_amount);
+			utilFun.Log("maxValue= " + maxValue);			
+			utilFun.Log("three_prob  = (4- samepoint_max_cnt/rest_poker_num)= " + (4 - maxValue) / rest_poker_num * 100);
+			
+			
+			
+			//dispatcher(new Intobject(type, "caculate_prob"));
+		}		
+		
+		//傳回值 -1 表示第一個參數 a 是在第二個參數 b 之前。
+		//傳回值 1 表示第二個參數 b 是在第一個參數 a 之前。
+		//傳回值 0 指出元素都具有相同的排序優先順序。
+		private function order(a, b):int 
+		{
+			var apoint:String = a.substr(0, 1);
+			var bpoint:String = b.substr(0, 1);
+			if ( apoint == "i" ) apoint = "10";
+			if ( apoint == "j" ) apoint = "11";
+			if ( apoint == "q" ) apoint = "12";
+			if ( apoint == "k" ) apoint = "13";
+			
+			if ( bpoint == "i" ) bpoint = "10";
+			if ( bpoint == "j" ) bpoint = "11";
+			if ( bpoint == "q" ) bpoint = "12";
+			if ( bpoint == "k" ) bpoint = "13";
+			
+			if ( parseInt( apoint)  < parseInt( bpoint) ) return -1;
+			else if (  parseInt( apoint) > parseInt( bpoint )) return 1;
+			else return 0;			
+		}
 		
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="playerpokerAni")]
 		public function playerpokerani(type:Intobject):void

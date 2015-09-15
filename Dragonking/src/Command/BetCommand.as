@@ -39,7 +39,36 @@ package Command
 			_model.putValue("after_bet_credit", 0);
 			
 			//閒對,閒,和,莊,莊對
-			var betzone:Array = [0, 1, ];// 2, 3, 4, 5];
+			var betzone:Array = [0, 1 ];// 2, 3, 4, 5];			
+			var betzone_name:Array = ["BetBWPlayer", "BetBWBanker", "BetBWTie", "BetBWBankerPair", "BetBWPlayerPair", "BetBWSpecial"];
+			
+			var bet_name_to_idx:DI = new DI();
+			var bet_idx_to_name:DI = new DI();
+			for ( var i:int = 0; i < betzone.length ; i++)
+			{
+				bet_name_to_idx.putValue(betzone_name[i], i);
+				bet_idx_to_name.putValue(i, betzone_name[i]);
+			}
+			
+			var _idx_to_result_idx:DI = new DI();
+			
+			_idx_to_result_idx.putValue("0", 1);
+			_idx_to_result_idx.putValue("1", 0);
+			_idx_to_result_idx.putValue("2", 5);
+			_idx_to_result_idx.putValue("3", 2);
+			_idx_to_result_idx.putValue("4", 3);
+			_idx_to_result_idx.putValue("5", 4);
+			_model.putValue("idx_to_result_idx", _idx_to_result_idx);		
+			//_model.putValue("BetBWPlayer", 0);
+			//_model.putValue("BetBWBanker", 1);			
+			//_model.putValue("BetBWTie", 2);			
+			//_model.putValue("BetBWBankerPair", 3);			
+			//_model.putValue("BetBWPlayerPair", 4);						
+			//_model.putValue("BetBWSpecial", 5);		
+			
+			_model.putValue("Bet_name_to_idx", bet_name_to_idx);		
+			_model.putValue("Bet_idx_to_name", bet_idx_to_name);
+			
 			var allzone:Array = [ResName.betzone_player, ResName.betzone_banker,ResName.betzone_tie,ResName.betzone_banker_pair,ResName.betzone_player_pari,ResName.special_Zone];			
 			var avaliblezone:Array = [];
 			var avaliblezone_s:Array = [];
@@ -49,15 +78,33 @@ package Command
 				avaliblezone_s.push ( allzone[i ]+"_sence");
 			}
 			
+			_model.putValue(modelName.AVALIBLE_ZONE_IDX, betzone);
 			_model.putValue(modelName.AVALIBLE_ZONE, avaliblezone);
 			_model.putValue(modelName.AVALIBLE_ZONE_S, avaliblezone_s);
 						
 			_model.putValue(modelName.AVALIBLE_ZONE_XY,  [[0, 0], [771, 0], [420, 100], [730, -72], [128, -66], [469, 2]]);
 			_model.putValue(modelName.COIN_STACK_XY,   [ [0, 0], [690, -20],  [360, 53], [640, -110], [50, -120], [360, -62]]);
 			
-			_model.putValue("BetBWPlayer", 0);
-			_model.putValue("BetBWBanker", 1);			
+			var poermapping:DI = new DI();			
+			poermapping.putValue("WSBWStraight", 2);
+			poermapping.putValue("WSBWFlush", 3);
+			poermapping.putValue("WSBWFullHouse", 4);
+			poermapping.putValue("WSBWFourOfAKind", 5);
+			poermapping.putValue("WSBWStraightFlush", 6);
+			poermapping.putValue("WSBWRoyalFlush", 7);
+			_model.putValue(modelName.BIG_POKER_MSG , poermapping);
 			
+			var poer_msg:DI = new DI();		
+			poer_msg.putValue("WSBWStraight", "順子");
+			poer_msg.putValue("WSBWFlush", "同花");
+			poer_msg.putValue("WSBWFullHouse", "葫蘆");
+			poer_msg.putValue("WSBWFourOfAKind", "四條");
+			poer_msg.putValue("WSBWStraightFlush", "同花順");
+			poer_msg.putValue("WSBWRoyalFlush", "同花大順");
+			_model.putValue(modelName.BIG_POKER_TEXT , poer_msg);
+			
+			
+			_Bet_info.putValue("self", [] ) ;
 		}
 		
 		public function betTypeMain(e:Event,idx:int):Boolean
@@ -212,6 +259,7 @@ package Command
 		public function Clean_bet():void
 		{
 			_Bet_info.clean();
+			_Bet_info.putValue("self", [] ) ;
 		}
 	}
 

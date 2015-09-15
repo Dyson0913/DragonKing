@@ -45,7 +45,7 @@ package View.ViewComponent
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function timer_hide():void
+		public function hide():void
 		{
 			Get(modelName.HINT_MSG).container.visible = true;
 			var state:int = _model.getValue(modelName.GAMES_STATE);
@@ -53,6 +53,15 @@ package View.ViewComponent
 			if( state == gameState.NEW_ROUND) GetSingleItem(modelName.HINT_MSG).gotoAndStop(1);
 			if( state == gameState.END_BET) GetSingleItem(modelName.HINT_MSG).gotoAndStop(2);
 			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);			
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "public_card")]
+		public function card():void
+		{
+			utilFun.Log("show msg = ");
+			GetSingleItem(modelName.HINT_MSG).alpha = 1;
+			Get(modelName.HINT_MSG).container.visible = true;
+			GetSingleItem(modelName.HINT_MSG).gotoAndStop(5);			
 		}
 		
 		[MessageHandler(type = "ConnectModule.websocket.WebSoketInternalMsg", selector = "CreditNotEnough")]

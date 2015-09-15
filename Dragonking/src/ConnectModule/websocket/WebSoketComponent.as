@@ -12,6 +12,7 @@ package ConnectModule.websocket
 	import flash.utils.ByteArray;
 	import flash.system.Security;
 	import Model.*;	
+	import util.DI;
 	
 	import Model.valueObject.*;
 		
@@ -371,11 +372,7 @@ package ConnectModule.websocket
 		public function SendBet():void
 		{			
 			var ob:Object = _actionqueue.getMsg();
-			var bettype:String = "";
-			if ( ob["betType"] == 0) bettype = "BetBWPlayer";
-			if ( ob["betType"] == 1) bettype = "BetBWBanker";
-								
-					
+			var idx_to_name:DI = _model.getValue("Bet_idx_to_name");					
 			
 			var bet:Object = {  "id": String(_model.getValue(modelName.UUID)),
 			                                "timestamp":1111,
@@ -383,7 +380,7 @@ package ConnectModule.websocket
 			                               "game_id":_model.getValue("game_id"),
 										   "game_type":"BigWin",
 										   "game_round":_model.getValue("game_round"),
-										   "bet_type": bettype,
+										   "bet_type": idx_to_name.getValue( ob["betType"]),
 										    "bet_amount":ob["bet_amount"],
 											"total_bet_amount":ob["total_bet_amount"]
 											};
