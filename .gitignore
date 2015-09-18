@@ -11,5 +11,5 @@ bin-release/
 # information for Eclipse / Flash Builder.
 *.swf
 *.bak
-bigwin/obj/*
-bigwin/bin/*
+Dragonking/obj/*
+Dragonking/bin/*
