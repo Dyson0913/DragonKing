@@ -95,7 +95,7 @@ package View.ViewComponent
 			script_list.stop_Propagation = true;
 			script_list.mousedown = script_list_test;			
 			script_list.mouseup = up;			
-			script_list.CustomizedData = [[18],"下注腳本","開牌腳本","結算腳本"]
+			script_list.CustomizedData = [{size:18},"下注腳本","開牌腳本","結算腳本"]
 			script_list.CustomizedFun = _gameinfo.textSetting;			
 			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
 			
@@ -107,10 +107,10 @@ package View.ViewComponent
 			_script_item.mousedown = _script_item_test;
 			_script_item.mouseup = up;
 			
-			_model.putValue("allScript",[ [[18], "時間", "提示訊息","注區"],
-														   [[18], "閒家一張牌", "莊家一張牌", "閒家第二張(報點數)", "閒家第二張(報點數)"],
-														   [[18], "出現發公牌字樣", "公牌第一張", "公牌第二張", "出現特殊牌型"],
-														   [[18], "結算表呈現","能量BAR集氣","能量BAR集滿效果"]														   
+			_model.putValue("allScript",[ [{size:18}, "時間", "提示訊息","注區"],
+														   [{size:18}, "閒家一張牌", "莊家一張牌", "閒家第二張(報點數)", "閒家第二張(報點數)"],
+														   [{size:18}, "出現發公牌字樣", "公牌第一張", "公牌第二張", "出現特殊牌型"],
+														   [{size:18}, "結算表呈現","能量BAR集氣","能量BAR集滿效果"]														   
 														  ]);
 			
 			_model.putValue("Script_idx", 0);
@@ -244,6 +244,7 @@ package View.ViewComponent
 			
 			//=============================================gameinfo			
 			_gameinfo.init();
+			_gameinfo.bet_parse();
 			
 			//=============================================paytable
 			var arr:Array = _model.getValue("history_win_list");			
@@ -257,31 +258,37 @@ package View.ViewComponent
 			}
 			_paytable.init();
 			
+			
 			//=============================================Hintmsg
 			_hint.init();
 			_model.putValue(modelName.GAMES_STATE,gameState.END_BET);
-			_hint.hide();			
+			//_hint.hide();			
 			
 			//================================================poker
 			_poker.init();
 			dispatcher(new ModelEvent("hide"));
 			
-			var arr:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
-			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[arr] }, 25, 0, 6, "linear");			
+			
 			
 			//================================================settle info
-			_settle.init();
+			//_settle.init();
+			
+			
+			//================================================ simu deal
+			var arr:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
+			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[arr] }, 25, 0, 6, "linear");						
 		}
 		
 		public function fackeDeal(type:Array):void
 		{
+			utilFun.Log("fackeDeal = "+fackeDeal);
 			var cardlist:Array = _model.getValue("scirpt_pai");
 			
 			var card_type:String = type[0];
 			var card:String = cardlist[0];
 			type.shift();
 			cardlist.shift();
-			
+			utilFun.Log("card = "+card);
 			if ( card_type == "Player")
 			{										
 				var mypoker:Array = _model.getValue(modelName.PLAYER_POKER);										
@@ -319,6 +326,11 @@ package View.ViewComponent
 			
 			//=============================================gameinfo			
 			_gameinfo.init();
+			_gameinfo.settle_parse();
+			
+			
+			//=============================================Hintmsg
+			_hint.init();			
 			
 			//=============================================paytable
 			var arr:Array = _model.getValue("history_win_list");			
@@ -331,33 +343,22 @@ package View.ViewComponent
 				_model.putValue("history_win_list", arr);
 			}
 			_paytable.init();		
+			_paytable.settle_parse();
 			
-			//=============================================Hintmsg
-			_hint.init();
-			
-			//================================================poker
-			_poker.init();
-			_poker.poker_display();
-			dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_No_mi"));
-			dispatcher(new Intobject(modelName.BANKER_POKER, "poker_No_mi"));
-			dispatcher(new Intobject(modelName.RIVER_POKER, "poker_No_mi"));			
-			dispatcher(new ModelEvent("public_card"));
-			//
 			//================================================settle info
-			_settle.init();
+			_settle.init();			
 			dispatcher(new Intobject(modelName.PLAYER_POKER, "show_judge"));
 			dispatcher(new Intobject(modelName.BANKER_POKER, "show_judge"));			
-			
 			//摸擬押注
-			_betzone.init();			
-			_coin_stack.init();
-			_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
-			_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
+			//_betzone.init();			
+			//_coin_stack.init();
+			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
+			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
-			
+			//
 			var fakePacket:Object =  { "result_list": [
-			                                                                {"bet_type": "BetBWPlayer", "settle_amount": 200, "odds": 2, "win_state": "WSLost", "bet_amount": 100 },
-																			{"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSBWStraight", "bet_amount": 100 } ],
+			                                                                {"bet_type": "BetBWPlayer", "settle_amount": 200, "odds": 2, "win_state": "WSBWFullHouse", "bet_amount": 100 },
+																			{"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 100 } ],
 																			"game_state": "EndRoundState", 
 																			"game_result_id": "225761", 
 																			"timestamp": 1439967961.396191, 
@@ -369,7 +370,7 @@ package View.ViewComponent
 																			"MsgBPEndRound", 
 			"id": "bfc643be464011e599caf23c9189e2a9" } ;
 			
-			_MsgModel.push(fakePacket);
+			_MsgModel.push(fakePacket);			
 			
 		}
 		

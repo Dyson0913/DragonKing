@@ -28,14 +28,20 @@ package View.ViewComponent
 		
 		public function init():void
 		{
+			
+			var tableitem:MultiObject = prepare("tableitem", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			tableitem.container.x = 193;
+			tableitem.container.y = 655;
+			tableitem.Create_by_list(1,[ResName.bet_tableitem], 0, 0, 1, 50, 0, "betzone_");	
+			
 			var avaliblezone:Array = _model.getValue(modelName.AVALIBLE_ZONE);
-			var zone_xy:Array = _model.getValue(modelName.AVALIBLE_ZONE_XY);
+			var zone_xy:Array = _model.getValue(modelName.AVALIBLE_ZONE_XY);						
 			
 			//下注區
 			var pz:MultiObject = prepare("betzone", new MultiObject() , GetSingleItem("_view").parent.parent);
 			pz.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,2,0]);
-			pz.container.x = 353;
-			pz.container.y = 805;
+			pz.container.x = 457;
+			pz.container.y = 662;
 			pz.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			pz.Post_CustomizedData = zone_xy;
 			pz.Create_by_list(avaliblezone.length, avaliblezone, 0, 0, avaliblezone.length, 50, 0, "betzone_");		
@@ -45,9 +51,10 @@ package View.ViewComponent
 			//{
 				//pz.ItemList[i].gotoAndStop(2);
 			//}					
-			
-			//_tool.SetControlMc(pz.ItemList[5]);
+			//
+			//_tool.SetControlMc(pz.ItemList[1]);
 			//_tool.SetControlMc(pz.container);
+			//_tool.y = 200;
 			//add(_tool);
 		}		
 		

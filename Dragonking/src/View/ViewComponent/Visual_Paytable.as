@@ -4,6 +4,7 @@ package View.ViewComponent
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextFormat;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -43,13 +44,13 @@ package View.ViewComponent
 			paytable.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 1]);			
 			paytable.container.x = 220;
 			paytable.container.y =  134;
-			paytable.Create_by_list(1, [ResName.paytablemain], 0, 0, 1, 0, 0, "time_");
+			paytable.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "time_");
 			
 			//歷史記錄bar 選項底圖
 			var pro:MultiObject = prepare("prob", new MultiObject() , paytable.container);			
-			pro.container.x = 310;
-			pro.container.y =  50;
-			pro.Create_by_list(8, [ResName.prob_square], 0, 0, 1, 0, 32, "time_");				
+			pro.container.x = 157;
+			pro.container.y =  42;
+			pro.Create_by_list(8, [ResName.prob_square], 0, 0, 1, 0, 35, "time_");				
 			
 			//歷史記錄bar 點擊呈現區
 			var historytable:MultiObject = prepare("Historytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
@@ -73,14 +74,14 @@ package View.ViewComponent
 			powerbar.Create_by_list(1, [ResName.powerbar], 0, 0, 1, 0, 0, "histor");			
 			
 			var powerbar_3:MultiObject = prepare("powerbar_3", new MultiObject() ,  powerbar.container);
-			powerbar_3.container.x = 3;
+			powerbar_3.container.x = 2.85;
 			powerbar_3.container.y = 21;			
-			powerbar_3.Create_by_list(5, [ResName.power_bar3], 0, 0, 5, 64, 0, "histor");		
+			powerbar_3.Create_by_list(5, [ResName.power_bar3], 0, 0, 5, 65, 0, "histor");		
 						
 			var powerbar_2pair:MultiObject = prepare("power_bar_2pair", new MultiObject() ,  powerbar.container);
-			powerbar_2pair.container.x = 3;
-			powerbar_2pair.container.y = 65;			
-			powerbar_2pair.Create_by_list(5, [ResName.power_bar_2pair], 0, 0, 5, 64, 0, "histor");
+			powerbar_2pair.container.x = 3.35;
+			powerbar_2pair.container.y = 64.5;			
+			powerbar_2pair.Create_by_list(5, [ResName.power_bar_2pair], 0, 0, 5, 64.5, 0, "histor");
 			
 			//next grid 65
 			var contractpower:MultiObject = prepare("contractpower", new MultiObject() ,  powerbar.container);
@@ -90,7 +91,7 @@ package View.ViewComponent
 			
 			
 			//
-			//_tool.SetControlMc(contractpower.container);
+			//_tool.SetControlMc(pro.container);
 			//_tool.SetControlMc(contractpower.ItemList[0]);
 			//_tool.y = 200;
 			//add(_tool);			
@@ -106,47 +107,56 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function timer_hide():void
 		{
-			_model.putValue("percent_prob",[0,0,0,0,0,0,0,0]);
-			
+			_model.putValue("percent_prob",[0,0,0,0,0,0,0,0]);						
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
+		public function settle_parse():void
+		{
 			var probpercet:MultiObject = Get("prob");
-			var ln:int = probpercet.ItemList.length;
-			
-			var percentlist:Array = _model.getValue("percent_prob");
-			
-			for ( var i:int = 0; i < ln; i ++ )
-			{
-				var per:int = percentlist[i];
-				var gowithd:int =  125 * (per /100);
-				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), per, 5] } );
-			}
-			
+			probpercet.container.visible = false;
 		}
 		
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="caculate_prob")]
 		public function prob_percentupdate():void
 		{			
 			var probpercet:MultiObject = Get("prob");
+			probpercet.container.visible = true;
 			var ln:int = probpercet.ItemList.length;
 			
 			var percentlist:Array = _model.getValue("percent_prob");
-			
+			var hiest:int = utilFun.Random(ln);			
 			for ( var i:int = 0; i < ln; i ++ )
-			{
+			{				
 				var per:int = utilFun.Random(50);
 				var gowithd:int =  125 * (per /100);
-				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), per, 5] } );
+				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), per, 5,hiest == i] } );
 			}
 			
 		}
 		
-		public function percent(mc:MovieClip,per:int,start:int ):void
-		{			
-			var po:Number = mc["_mask"].x + mc["_mask"].width;
-			if  ( mc["_Text"].text == "")  mc["_Text"].text = "1";
+		public function percent(mc:MovieClip,per:int,start:int ,hist:Boolean ):void
+		{
+			
+			if ( !hist) 
+			{
+				mc["_Text"].text = "";				
+				mc["_probBar"].gotoAndStop(1);
+				return;
+			}			
+			if ( mc["_Text"].text == "") mc["_Text"].text = "1";
+			
+			mc["_probBar"].gotoAndStop(2);
+			
 			var p:int = (parseInt( mc["_Text"].text) +start );
 			if (p >= per) p = per;
-			mc["_Text"].text = p.toString() + "%";
-			mc["_Text"].x = po;
+			
+			mc["_Text"].text = p.toString();// + "%";
+			mc["_Text"].textColor = 0xFFDD00;
+			
+			//position follow
+			//var po:Number = mc["_mask"].x + mc["_mask"].width;
+			//mc["_Text"].x = po;
 		}
 		
 		public function win_frame_hint(wintype:String):void

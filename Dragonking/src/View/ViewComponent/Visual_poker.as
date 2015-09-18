@@ -29,30 +29,37 @@ package View.ViewComponent
 		}
 		
 		public function init():void
-		{
+		{			
+			var table_hint:MultiObject = prepare("table_hint", new MultiObject(), GetSingleItem("_view").parent.parent);
+			table_hint.autoClean = true;
+			table_hint.CleanList();
+			table_hint.Create_by_list(1, [ResName.open_tableitem], 0 , 0, 1, 0, 0, "Bet_");
+			table_hint.container.x = 272;
+			table_hint.container.y = 560;			
+			
 			var pokerkind:Array = [ResName.just_turnpoker];
 			var playerCon:MultiObject = prepare(modelName.PLAYER_POKER, new MultiObject(), GetSingleItem("_view").parent.parent);
 			playerCon.autoClean = true;
 			playerCon.CleanList();
-			playerCon.Create_by_list(2, pokerkind, 0 , 0, 2, 175, 0, "Bet_");
-			playerCon.container.x = 270;
-			playerCon.container.y = 490;
+			playerCon.Create_by_list(2, pokerkind, 0 , 0, 2, 184, 0, "Bet_");
+			playerCon.container.x = 283;
+			playerCon.container.y = 627;
 			playerCon.container.alpha = 0;
 			
 			var bankerCon:MultiObject =  prepare(modelName.BANKER_POKER, new MultiObject(), GetSingleItem("_view").parent.parent);
 			bankerCon.autoClean = true;
 			bankerCon.CleanList();		
-			bankerCon.Create_by_list(2, pokerkind, 0 , 0, 2, 175, 0, "Bet_");
-			bankerCon.container.x = 1310;
-			bankerCon.container.y = 490;
+			bankerCon.Create_by_list(2, pokerkind, 0 , 0, 2, 184, 0, "Bet_");
+			bankerCon.container.x = 1298;
+			bankerCon.container.y = 627;
 			bankerCon.container.alpha = 0;
 			
 			var riverCon:MultiObject = prepare(modelName.RIVER_POKER, new MultiObject(), GetSingleItem("_view").parent.parent);
 			riverCon.autoClean = true;
 			riverCon.CleanList();
-			riverCon.Create_by_list(2,pokerkind, 0 , 0, 2, 175, 0, "Bet_");			
-			riverCon.container.x = 800;
-			riverCon.container.y = 490;			
+			riverCon.Create_by_list(2,pokerkind, 0 , 0, 2, 184, 0, "Bet_");			
+			riverCon.container.x = 792;
+			riverCon.container.y = 627;			
 			riverCon.container.alpha = 0;
 			
 			var mipoker:MultiObject =  prepare("mipoker", new MultiObject(), GetSingleItem("_view").parent.parent);			
@@ -62,6 +69,7 @@ package View.ViewComponent
 			mipoker.container.alpha = 0;
 			
 			//_tool.SetControlMc(riverCon.container);
+			//_tool.SetControlMc(playerCon.ItemList[1]);
 			//add(_tool);
 		}
 		

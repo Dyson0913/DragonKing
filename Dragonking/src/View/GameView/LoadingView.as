@@ -1,9 +1,6 @@
 package View.GameView
 {	
-	import com.adobe.utils.DictionaryUtil;
-	import Command.BetCommand;
-	import Command.RegularSetting;
-	import Command.ViewCommand;
+	import Command.*;
 	import ConnectModule.websocket.WebSoketInternalMsg;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
@@ -12,6 +9,7 @@ package View.GameView
 	import flash.events.MouseEvent;	
 	import flash.text.TextField;
 	import Model.valueObject.Intobject;
+	import Model.valueObject.StringObject;
 	import Res.ResName;
 	import util.DI;
 	import util.node;
@@ -37,6 +35,9 @@ package View.GameView
 		public var _betCommand:BetCommand;
 		
 		[Inject]
+		public var _sound:SoundCommand;
+		
+		[Inject]
 		public var _test:Visual_testInterface;
 		
 		public function LoadingView()  
@@ -56,6 +57,7 @@ package View.GameView
 			_model.putValue(modelName.Domain_Name, para[4]);
 			
 			_betCommand.bet_init();
+			_sound.init();
 			
 			_model.putValue("history_win_list", []);				
 			_model.putValue("result_Pai_list", []);
@@ -78,6 +80,7 @@ package View.GameView
 			view.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "a_");
 					
 			//utilFun.SetTime(connet, 0.1);
+			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
 			_test.init();			
 		}
 		private function connet():void

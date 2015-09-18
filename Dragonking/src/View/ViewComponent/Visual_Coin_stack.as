@@ -46,7 +46,10 @@ package View.ViewComponent
 			coinstack.Post_CustomizedData =  coin_xy;
 			coinstack.Create_by_list(avaliblezone.length, [ResName.emptymc], 0, 0, avaliblezone.length, 0, 0, "time_");		
 			
-			//_tool.SetControlMc(coinstack.ItemList[5]);
+			
+							
+			//
+			//_tool.SetControlMc(coinstack.ItemList[1]);
 			//_tool.SetControlMc(coinstack.container);
 			//_tool.y  = 200;
 			//add(_tool);		

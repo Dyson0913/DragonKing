@@ -82,8 +82,8 @@ package Command
 			_model.putValue(modelName.AVALIBLE_ZONE, avaliblezone);
 			_model.putValue(modelName.AVALIBLE_ZONE_S, avaliblezone_s);
 						
-			_model.putValue(modelName.AVALIBLE_ZONE_XY,  [[0, 0], [771, 0], [420, 100], [730, -72], [128, -66], [469, 2]]);
-			_model.putValue(modelName.COIN_STACK_XY,   [ [0, 0], [690, -20],  [360, 53], [640, -110], [50, -120], [360, -62]]);
+			_model.putValue(modelName.AVALIBLE_ZONE_XY,  [[0, 0], [644, 3], [420, 100], [730, -72], [128, -66], [469, 2]]);
+			_model.putValue(modelName.COIN_STACK_XY,   [ [30, 0], [670, -10],  [360, 53], [640, -110], [50, -120], [360, -62]]);
 			
 			var poermapping:DI = new DI();			
 			poermapping.putValue("WSBWStraight", 2);
@@ -95,6 +95,8 @@ package Command
 			_model.putValue(modelName.BIG_POKER_MSG , poermapping);
 			
 			var poer_msg:DI = new DI();		
+			poer_msg.putValue("WS_Twopair", "兩對");
+			poer_msg.putValue("WS_Three", "三條");
 			poer_msg.putValue("WSBWStraight", "順子");
 			poer_msg.putValue("WSBWFlush", "同花");
 			poer_msg.putValue("WSBWFullHouse", "葫蘆");

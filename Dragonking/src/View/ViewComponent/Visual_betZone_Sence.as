@@ -35,8 +35,8 @@ package View.ViewComponent
 			
 			var playerzone_s:MultiObject = prepare("betzone_s", new MultiObject() , GetSingleItem("_view").parent.parent);
 			playerzone_s.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,1,2,1]);
-			playerzone_s.container.x = 353;
-			playerzone_s.container.y = 805;
+			playerzone_s.container.x = 457;
+			playerzone_s.container.y = 662;
 			playerzone_s.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			playerzone_s.Post_CustomizedData = zone_xy;
 		
