@@ -1,5 +1,6 @@
 package  
 {	
+	
 	import org.spicefactory.parsley.asconfig.processor.ActionScriptConfigurationProcessor;
 	import org.spicefactory.parsley.core.registry.ObjectDefinition;
 	
@@ -13,6 +14,7 @@ package
 	import View.ViewComponent.*;
 	import View.Viewutil.Visual_debugTool;
 	import View.GameView.*;
+	import Model.CommonModel.*;	
 	/**
 	 * ...
 	 * @author hhg
@@ -25,13 +27,15 @@ package
 		[ObjectDefinition(id="Enter")]
 		public var _LoadingView:LoadingView = new LoadingView();		
 		public var _betView:betView = new betView();
-		public var _HudView:HudView = new HudView();		
+		public var _HudView:HudView = new HudView();
 		
-		//model		
+		//model
 		public var _Model:Model = new Model();
 		public var _MsgModel:MsgQueue = new MsgQueue();
 		public var _Actionmodel:ActionQueue = new ActionQueue();
 		
+		//common model
+		public var _m_timer:Model_Timer = new Model_Timer();
 		
 		//connect module
 		public var _socket:WebSoketComponent = new WebSoketComponent();
@@ -42,7 +46,7 @@ package
 		public var _dataoperation:DataOperation = new DataOperation();
 		public var _betcom:BetCommand = new BetCommand();
 		public var _regular:RegularSetting = new RegularSetting();
-		public var _sound:SoundCommand = new SoundCommand();
+		public var _sound:SoundCommand = new SoundCommand(); 
 		
 		//util
 		public var _path:Path_Generator = new Path_Generator();

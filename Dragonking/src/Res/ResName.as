@@ -40,9 +40,7 @@ package Res
 		public static const power_bar3:String = "power_bar_3";
 		public static const power_bar_2pair:String = "power_bar_2_pair";
 		public static const contractpower:String = "contract_power";
-		
-		
-		public static const Timer:String = "countDowntimer";
+				
 		public static const Hint:String = "HintMsg";
 		public static const Bigwinmsg:String = "big_win_msg";	
 		public static const bigwinfire:String = "bigwin_fire";	

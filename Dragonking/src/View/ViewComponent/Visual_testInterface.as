@@ -9,6 +9,7 @@ package View.ViewComponent
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.text.TextField;
+	import Model.CommonModel.Model_Timer;
 	import util.math.Path_Generator;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
@@ -73,6 +74,9 @@ package View.ViewComponent
 		[Inject]
 		public var _btn:Visual_BtnHandle;
 		
+		
+		[Inject]
+		public var _m_timer:Model_Timer;
 		
 		private var _script_item:MultiObject;
 		
@@ -190,12 +194,15 @@ package View.ViewComponent
 			_hint.display();
 			
 			//================================================timer
-			if ( !_timer.already_countDown)
-			{
-				_model.putValue(modelName.REMAIN_TIME, 20);					
-				_timer.init();
-				_timer.display();
-			}
+			_model.putValue(_m_timer.ModelTag, 20);		
+			_timer.init();
+			dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));
+			//if ( !_timer.already_countDown)
+			//{
+						
+				//_timer.init();
+				//_timer.display();
+			//}
 			
 		}	
 		
@@ -224,12 +231,9 @@ package View.ViewComponent
 		{			
 			changeBG(ResName.Bet_Scene);
 			//================================================timer
-			if ( !_timer.already_countDown)
-			{
-				_model.putValue(modelName.REMAIN_TIME, 20);					
-				_timer.init();
-				_timer.display();
-			}
+			_model.putValue(_m_timer.ModelTag, 20);		
+			_timer.init();
+			dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));		
 		}
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "1")]

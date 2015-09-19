@@ -8,6 +8,7 @@ package ConnectModule.websocket
 	import Command.*;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import Model.CommonModel.Model_Timer;
 
 	import flash.utils.ByteArray;
 	import Model.*;	
@@ -42,6 +43,9 @@ package ConnectModule.websocket
 		
 		[Inject]
 		public var _opration:DataOperation;
+		
+		[Inject]
+		public var _m_timer:Model_Timer;
 		
 		private var websocket:WebSocket;
 		
@@ -108,7 +112,7 @@ package ConnectModule.websocket
 			{
 				case Message.MSG_TYPE_INTO_GAME:
 				{
-						dispatcher(new ValueObject(  result.remain_time, modelName.REMAIN_TIME) );														
+						dispatcher(new ValueObject(  result.remain_time, _m_timer.ModelTag) );														
 						dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );			
 						
 						dispatcher( new ValueObject(result.cards_info["player_card_list"], modelName.PLAYER_POKER) );
@@ -121,6 +125,10 @@ package ConnectModule.websocket
 						dispatcher(new Intobject(modelName.Bet, ViewCommand.SWITCH) );								
 						
 						dispatcher(new ModelEvent("update_state"));
+						
+						//TODO state check 
+						dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));
+						
 						dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_No_mi"));
 						dispatcher(new Intobject(modelName.BANKER_POKER, "poker_No_mi"));
 						dispatcher(new Intobject(modelName.RIVER_POKER, "poker_No_mi"));
@@ -164,7 +172,7 @@ package ConnectModule.websocket
 				
 				case Message.MSG_TYPE_STATE_INFO:
 				{
-					dispatcher(new ValueObject(  result.remain_time, modelName.REMAIN_TIME) );													
+					dispatcher(new ValueObject(  result.remain_time, _m_timer.ModelTag) );													
 					dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );			
 						
 					 dispatcher(new ModelEvent("update_state"));

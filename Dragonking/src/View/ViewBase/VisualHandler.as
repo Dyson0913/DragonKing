@@ -78,9 +78,9 @@ package View.ViewBase
 		
 		protected function GetSingleItem(name:*,idx:int = 0):*
 		{
-			if( _viewcom.currentViewDI .getValue(name) )
-			{
-				var ob:* = _viewcom.currentViewDI .getValue(name);
+			var ob:* = _viewcom.currentViewDI.getValue(name);
+			if( ob )
+			{				
 				return ob.ItemList[idx];
 			}
 			return null;
