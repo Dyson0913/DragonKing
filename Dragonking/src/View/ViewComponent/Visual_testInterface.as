@@ -216,7 +216,7 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "01")]
 		public function test01():void
 		{			
-			_tool.SetControlMc(Get(modelName.HINT_MSG).container);			
+			//_tool.SetControlMc(Get(modelName.HINT_MSG).container);			
 		}
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "02")]
@@ -275,8 +275,8 @@ package View.ViewComponent
 			
 			
 			//================================================ simu deal
-			var arr:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
-			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[arr] }, 25, 0, 6, "linear");						
+			var testpoker:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
+			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[testpoker] }, 25, 0, 6, "linear");						
 		}
 		
 		public function fackeDeal(type:Array):void
@@ -288,24 +288,25 @@ package View.ViewComponent
 			var card:String = cardlist[0];
 			type.shift();
 			cardlist.shift();
-			utilFun.Log("card = "+card);
+			utilFun.Log("card = " + card);
+			var mypoker:Array;
 			if ( card_type == "Player")
 			{										
-				var mypoker:Array = _model.getValue(modelName.PLAYER_POKER);										
+				mypoker= _model.getValue(modelName.PLAYER_POKER);										
 				mypoker.push(card);
 				_model.putValue(modelName.PLAYER_POKER, mypoker);										
 				dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_mi"));				
 			}
 			else if ( card_type == "Banker")
 			{							
-				var mypoker:Array = _model.getValue(modelName.BANKER_POKER);										
+				mypoker = _model.getValue(modelName.BANKER_POKER);										
 				mypoker.push( card);										
 				_model.putValue(modelName.BANKER_POKER, mypoker);									
 				dispatcher(new Intobject(modelName.BANKER_POKER, "poker_mi"));
 			}					
 			else if ( card_type == "River")
 			{							
-				var mypoker:Array = _model.getValue(modelName.RIVER_POKER);										
+				mypoker = _model.getValue(modelName.RIVER_POKER);										
 				mypoker.push( card);										
 				_model.putValue(modelName.RIVER_POKER, mypoker);										
 				dispatcher(new Intobject(modelName.RIVER_POKER, "poker_mi"));

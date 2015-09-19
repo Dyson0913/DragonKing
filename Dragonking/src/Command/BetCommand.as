@@ -72,10 +72,10 @@ package Command
 			var allzone:Array = [ResName.betzone_player, ResName.betzone_banker,ResName.betzone_tie,ResName.betzone_banker_pair,ResName.betzone_player_pari,ResName.special_Zone];			
 			var avaliblezone:Array = [];
 			var avaliblezone_s:Array = [];
-			for each (var i:int in betzone)
+			for each (var k:int in betzone)
 			{
-				avaliblezone.push ( allzone[i]);
-				avaliblezone_s.push ( allzone[i ]+"_sence");
+				avaliblezone.push ( allzone[k]);
+				avaliblezone_s.push ( allzone[k]+"_sence");
 			}
 			
 			_model.putValue(modelName.AVALIBLE_ZONE_IDX, betzone);

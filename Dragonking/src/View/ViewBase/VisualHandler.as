@@ -9,7 +9,7 @@ package View.ViewBase
 	import Interface.ViewComponentInterface;
 	import util.*;
 	import Model.*;
-	import View.Viewutil.AdjustTool;
+	import View.Viewutil.*;
 	
 	/**
 	 * handle display item how to presentation
@@ -33,13 +33,37 @@ package View.ViewBase
 		
 		[Inject]
 		public var _opration:DataOperation;
-		
+
+		[Inject]
+		public var _debugTool:Visual_debugTool;
+
 		public var _tool:AdjustTool;
 		
 		public function VisualHandler() 
 		{
-			_tool = new AdjustTool();
+			
 		}
+		
+		protected function put_to_lsit(viewcompo:MultiObject):void
+		{
+			if ( CONFIG::release ) return;
+			
+			_debugTool.put_to_lsit(viewcompo);			
+		}
+		
+		public function debug():void
+		{
+			if ( CONFIG::release ) return;	
+			_debugTool.create_tool();
+			add(_debugTool);
+		}
+		
+		protected function changeBG(name:String):void
+		{
+			utilFun.Clear_ItemChildren(GetSingleItem("_view"));
+			GetSingleItem("_view").addChild(utilFun.GetClassByString(name) );
+		}
+ 
 		
 		//only for same view clean item
 		protected function Del(name:*):void
@@ -62,12 +86,6 @@ package View.ViewBase
 			return null;
 		}
 		
-		protected function changeBG(name:String):void
-		{
-			utilFun.Clear_ItemChildren(GetSingleItem("_view"));
-			GetSingleItem("_view").addChild(utilFun.GetClassByString(name) );
-		}
-		
 		protected function add(item:*):void
 		{
 			//item ->container ->view
@@ -85,6 +103,18 @@ package View.ViewBase
 			return utilFun.prepare(name,ob , _viewcom.currentViewDI , container);
 		}
 		
+		//========================= better way		
+		protected function create(name:*,resNameArr:Array, Stick_in_container:DisplayObjectContainer = null):*
+		{
+			if ( Stick_in_container == null) Stick_in_container = GetSingleItem("_view").parent.parent;
+			var ob:MultiObject = new MultiObject();
+			ob.resList = resNameArr;
+			
+			var sp:Sprite = new Sprite();
+			sp.name  = name;
+			ob.setContainer(sp);
+			return utilFun.prepare(name,ob , _viewcom.currentViewDI , Stick_in_container);
+		}		
 	}
 
 }

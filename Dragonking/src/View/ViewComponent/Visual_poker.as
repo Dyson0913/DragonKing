@@ -278,11 +278,12 @@ package View.ViewComponent
 		public function check_power_up_effect():void
 		{			
 			var re:int = utilFun.Random(2);
-			
+			var idx:int;
+			var arr:Array;
 			if ( re)
 			{
-				var idx:int = _model.getValue("power_pair_idx");
-				var arr:Array = _model.getValue("power_pair_posi")[idx];			
+				idx = _model.getValue("power_pair_idx");
+				arr = _model.getValue("power_pair_posi")[idx];			
 				GetSingleItem("contractpower").x = arr[0];
 				GetSingleItem("contractpower").y = arr[1];			
 				GetSingleItem("contractpower").gotoAndPlay(2);
@@ -296,8 +297,8 @@ package View.ViewComponent
 			}						
 			else
 			{
-				var idx:int = _model.getValue("power_3_idx");
-				var arr:Array = _model.getValue("power_3_posi")[idx];
+				idx = _model.getValue("power_3_idx");
+				arr = _model.getValue("power_3_posi")[idx];
 			
 				GetSingleItem("contractpower").x = arr[0];
 				GetSingleItem("contractpower").y = arr[1];			
@@ -371,7 +372,7 @@ package View.ViewComponent
 		//傳回值 -1 表示第一個參數 a 是在第二個參數 b 之前。
 		//傳回值 1 表示第二個參數 b 是在第一個參數 a 之前。
 		//傳回值 0 指出元素都具有相同的排序優先順序。
-		private function order(a, b):int 
+		private function order(a:String, b:String):int 
 		{
 			var apoint:String = a.substr(0, 1);
 			var bpoint:String = b.substr(0, 1);

@@ -1,17 +1,17 @@
 package  
-{
-	import com.hexagonstar.util.debug.Debug;
-	import Command.*;
-	import flash.display.MovieClip;
-	import Model.*;
+{	
 	import org.spicefactory.parsley.asconfig.processor.ActionScriptConfigurationProcessor;
 	import org.spicefactory.parsley.core.registry.ObjectDefinition;
-	import util.math.Path_Generator;
-	import util.*;
-	import View.ViewBase.ViewBase;
-	import ConnectModule.websocket.WebSoketComponent;
-	import View.ViewComponent.*;
 	
+	import ConnectModule.websocket.WebSoketComponent;
+	
+	import Command.*;	
+	import Model.*;	
+	import util.math.*;
+	import util.*;
+	import View.ViewBase.*;
+	import View.ViewComponent.*;
+	import View.Viewutil.Visual_debugTool;
 	import View.GameView.*;
 	/**
 	 * ...
@@ -47,6 +47,10 @@ package
 		//util
 		public var _path:Path_Generator = new Path_Generator();
 		
+		//visual base
+		public var _text:Visual_Text = new Visual_Text();
+		public var _debugTool:Visual_debugTool = new Visual_debugTool();
+		
 		//visual
 		public var _pokerhandler:Visual_poker = new Visual_poker();
 		public var _timer:Visual_timer = new Visual_timer();
@@ -71,7 +75,7 @@ package
 		
 		public function appConfig() 
 		{
-			Debug.trace("DK init");
+			
 		}
 	
 	}
