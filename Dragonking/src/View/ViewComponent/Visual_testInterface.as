@@ -9,7 +9,7 @@ package View.ViewComponent
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.text.TextField;
-	import Model.CommonModel.Model_Timer;
+	import Model.CommonModel.*;
 	import util.math.Path_Generator;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
@@ -74,9 +74,12 @@ package View.ViewComponent
 		[Inject]
 		public var _btn:Visual_BtnHandle;
 		
-		
+		//--------------------------------------------------------model		
 		[Inject]
 		public var _m_timer:Model_Timer;
+		
+		[Inject]
+		public var _m_hintmsg:Model_HintMsg;
 		
 		private var _script_item:MultiObject;
 		
@@ -189,21 +192,15 @@ package View.ViewComponent
 			_sencer.init();
 			dispatcher(new ModelEvent("display"));
 			
-			//=============================================Hintmsg
+			//=============================================Hintmsg			
+			_model.putValue( modelName.GAMES_STATE, gameState.NEW_ROUND);
 			_hint.init();
-			_hint.display();
+			dispatcher(new ModelEvent(_m_hintmsg.PropertyEvent(0)));			
 			
 			//================================================timer
 			_model.putValue(_m_timer.ModelTag, 20);		
 			_timer.init();
-			dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));
-			//if ( !_timer.already_countDown)
-			//{
-						
-				//_timer.init();
-				//_timer.display();
-			//}
-			
+			dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));			
 		}	
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "00")]

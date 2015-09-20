@@ -36,6 +36,7 @@ package
 		
 		//common model
 		public var _m_timer:Model_Timer = new Model_Timer();
+		public var _m_hintmsg:Model_HintMsg = new Model_HintMsg();
 		
 		//connect module
 		public var _socket:WebSoketComponent = new WebSoketComponent();

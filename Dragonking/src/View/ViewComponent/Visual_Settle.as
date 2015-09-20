@@ -19,7 +19,7 @@ package View.ViewComponent
 	import flash.text.TextFormatAlign;
 	
 	/**
-	 * hintmsg present way
+	 *  present way
 	 * @author ...
 	 */
 	public class Visual_Settle  extends VisualHandler

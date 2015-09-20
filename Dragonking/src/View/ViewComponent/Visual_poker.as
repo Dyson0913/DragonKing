@@ -255,24 +255,9 @@ package View.ViewComponent
 			dispatcher(new Intobject(type, "caculate_prob"));
 			//prob_cal();
 			
-			//check display 開公牌
-			check_open_wild_card();
-			
 			//TODO move to settle
 			//check_power_up_effect();
 			//
-		}
-		
-		public function check_open_wild_card():void
-		{
-			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
-			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
-			var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);
-			
-			if ( (ppoker.length + bpoker.length + rpoker.length )== 4)
-			{				
-				dispatcher(new ModelEvent("public_card"));
-			}
 		}
 		
 		public function check_power_up_effect():void

@@ -41,7 +41,7 @@ package Res
 		public static const power_bar_2pair:String = "power_bar_2_pair";
 		public static const contractpower:String = "contract_power";
 				
-		public static const Hint:String = "HintMsg";
+
 		public static const Bigwinmsg:String = "big_win_msg";	
 		public static const bigwinfire:String = "bigwin_fire";	
 		public static const settletable:String = "settle_table";	

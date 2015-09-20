@@ -8,7 +8,7 @@ package ConnectModule.websocket
 	import Command.*;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import Model.CommonModel.Model_Timer;
+	import Model.CommonModel.*;
 
 	import flash.utils.ByteArray;
 	import Model.*;	
@@ -46,6 +46,10 @@ package ConnectModule.websocket
 		
 		[Inject]
 		public var _m_timer:Model_Timer;
+		
+		[Inject]
+		public var _m_hintmsg:Model_HintMsg;
+		
 		
 		private var websocket:WebSocket;
 		
@@ -129,6 +133,9 @@ package ConnectModule.websocket
 						//TODO state check 
 						dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));
 						
+						//TODO msg event
+						dispatcher(new ModelEvent(_m_hintmsg.PropertyEvent(0)));
+						
 						dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_No_mi"));
 						dispatcher(new Intobject(modelName.BANKER_POKER, "poker_No_mi"));
 						dispatcher(new Intobject(modelName.RIVER_POKER, "poker_No_mi"));
@@ -176,6 +183,12 @@ package ConnectModule.websocket
 					dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );			
 						
 					 dispatcher(new ModelEvent("update_state"));
+					 
+					 //TODO state check 
+					dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));
+					
+					 //TODO msg event
+					dispatcher(new ModelEvent(_m_hintmsg.PropertyEvent(0)));
 				}
 				break;
 				
