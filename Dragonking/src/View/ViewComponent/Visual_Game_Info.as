@@ -5,6 +5,7 @@ package View.ViewComponent
 	import flash.globalization.DateTimeFormatter;
 	import flash.text.TextField;
 	import flash.utils.Timer;
+	import Model.CommonModel.Model_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -14,10 +15,13 @@ package View.ViewComponent
 	import View.Viewutil.MultiObject;
 	import Res.ResName;
 	import caurina.transitions.Tweener;
+	import View.ViewBase.Visual_Text;
 	
 	import flash.text.TextFormat;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormatAlign;
+	
+	
 	
 	/**
 	 * Visual_Game_Info present way
@@ -25,13 +29,11 @@ package View.ViewComponent
 	 */
 	public class Visual_Game_Info  extends VisualHandler
 	{
+		[Inject]
+		public var _text:Visual_Text = new Visual_Text();
 		
 		[Inject]
-		public var _betCommand:BetCommand;
-		
-		private var mcTimer:Timer;
-		
-		private var now:Date;
+		public var myModel:Model_Text;
 		
 		public function Visual_Game_Info() 
 		{
@@ -40,63 +42,63 @@ package View.ViewComponent
 		
 		public function init():void
 		{			
-			var bet:MultiObject = prepare("game_title_info", new MultiObject() , GetSingleItem("_view").parent.parent);
-			bet.CustomizedFun = textSetting;
+			var bet:MultiObject = create("game_title_info", [myModel.ResName]);
+			bet.CustomizedFun = _text.textSetting;
 			bet.CustomizedData = [{size:22,color:0xCCCCCC}, "局號:"];
 			bet.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			bet.Post_CustomizedData = [[0,0],[1020,0],[1130,0],[1300,0]];
-			bet.Create_by_list(bet.CustomizedData.length-1, [ResName.TextInfo], 0, 0, bet.CustomizedData.length-1, 200, 0, "info_");
+			bet.Post_CustomizedData = [[0, 0], [1020, 0], [1130, 0], [1300, 0]];
+			bet.Create(bet.CustomizedData.length-1,"game_title_info");
 			bet.container.x = 292;
 			bet.container.y = 88;
-				
-			//now = new Date();
-			//var dtf:DateTimeFormatter = new DateTimeFormatter("zh-TW");
-			//dtf.setDateTimePattern("yyyy/MM/dd  hh:mm:ss");
-			var str:String = "";// dtf.format(now);
-			var game_info_data:MultiObject = prepare("game_title_info_data", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			game_info_data.CustomizedFun = textSetting;
+			
+			var game_info_data:MultiObject = create("game_title_info_data",[myModel.ResName]);	
+			game_info_data.CustomizedFun = _text.textSetting;
 			game_info_data.CustomizedData = [{size:18,color:0xCCCCCC},_model.getValue("game_round").toString(), "", ""];
 			game_info_data.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			game_info_data.Post_CustomizedData = [[0,0],[310,0],[1230,0],[1400,0]];
-			game_info_data.Create_by_list(1, [ResName.TextInfo], 0, 0, 1, 200, 0, "info_");
+			game_info_data.Create(1, "game_title_info_data");
 			game_info_data.container.x = 372;
 			game_info_data.container.y = 90;
 			
 			
 			//手寫賠率表
 			var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
-			var bet_text:MultiObject = prepare("pay_text", new MultiObject() , GetSingleItem("_view").parent.parent);
-			bet_text.CustomizedFun = textSetting;
-			bet_text.CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight"),paytext.getValue("WS_Three"), paytext.getValue("WS_Twopair")];		
-			bet_text.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
+			var bet_text:MultiObject = create("pay_text", [myModel.ResName]);
+			bet_text.CustomizedFun = _text.textSetting;
+			bet_text.CustomizedData = [ { size:24, color:0x00b4ff, bold:true }, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight"), paytext.getValue("WS_Three"), paytext.getValue("WS_Twopair")];		
+			bet_text.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			bet_text.Post_CustomizedData = [bet_text.CustomizedData.length -1,0,35];
+			bet_text.Create(bet_text.CustomizedData.length -1, "pay_text");
 			bet_text.container.x = 242;
 			bet_text.container.y = 165;
-
 			
-			var pay_mark:MultiObject = prepare("pay_mark", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			pay_mark.CustomizedFun = textSetting;
-			pay_mark.CustomizedData = [{size:24,color:0x00b4ff,bold:true},"X","X","X","X","X","X","X","X","X","X"];		
-			pay_mark.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
+			var pay_mark:MultiObject = create("pay_mark", [myModel.ResName]);
+			pay_mark.CustomizedFun = _text.textSetting;
+			pay_mark.CustomizedData = [ { size:24, color:0x00b4ff, bold:true }, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"];
+			pay_mark.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			pay_mark.Post_CustomizedData = [bet_text.CustomizedData.length -1,0,35];
+			pay_mark.Create(bet_text.CustomizedData.length -1, "pay_mark");
 			pay_mark.container.x = 482;
 			pay_mark.container.y = 165;
 			
-			var pay_odd:MultiObject = prepare("pay_odd", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			pay_odd.CustomizedFun = textSetting;
-			pay_odd.CustomizedData = [{size:24,color:0x00b4ff,bold:true,align:TextFormatAlign.RIGHT},"200","50","20","3","2","1","0.1","0.05","X","X"];		
-			pay_odd.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
+			var pay_odd:MultiObject = create("pay_odd", [myModel.ResName]);		
+			pay_odd.CustomizedFun = _text.textSetting;
+			pay_odd.CustomizedData = [ { size:24, color:0x00b4ff, bold:true, align:TextFormatAlign.RIGHT }, "200", "50", "20", "3", "2", "1", "0.1", "0.05", "X", "X"];
+			pay_odd.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			pay_odd.Post_CustomizedData = [bet_text.CustomizedData.length -1,0,35];
+			pay_odd.Create(bet_text.CustomizedData.length -1, "pay_odd");
 			pay_odd.container.x = 32;
 			pay_odd.container.y = 165;
 			
-			var pay_title:MultiObject = prepare("pay_title", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			pay_title.CustomizedFun = textSetting;
-			pay_title.CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型賠率"];		
-			pay_title.Create_by_list(1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
+			var pay_title:MultiObject = create("pay_title", [myModel.ResName]);		
+			pay_title.CustomizedFun = _text.textSetting;
+			pay_title.CustomizedData = [ { size:24, color:0xCCCCCC }, "特殊牌型賠率"];
+			pay_title.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			pay_title.Post_CustomizedData = [bet_text.CustomizedData.length -1,0,35];
+			pay_title.Create(1, "pay_title");
 			pay_title.container.x = 424;
 			pay_title.container.y = 129;
 			
-			//mcTimer = new Timer(1000);  
-			//mcTimer.addEventListener(TimerEvent.TIMER, timerHandler);  
-			//mcTimer.start();  
 			
 			var zone_limit_bet:MultiObject = prepare("zone_limit_bet", new MultiObject() , GetSingleItem("_view").parent.parent);			
 			zone_limit_bet.container.x = 3;
@@ -114,17 +116,6 @@ package View.ViewComponent
 			//add(_tool);	
 			
 		}
-		
-		public function timerHandler(event:TimerEvent):void 
-		{  						
-			//now = new Date();
-			//var dtf:DateTimeFormatter = new DateTimeFormatter("zh-TW");
-			//dtf.setDateTimePattern("yyyy/MM/dd  hh:mm:ss");
-			//var str:String = dtf.format(now);			
-			//utilFun.Clear_ItemChildren(Get("game_title_info_data").ItemList[0]);
-			//var textfi:TextField = dynamic_text(str,18);
-			//Get("game_title_info_data").ItemList[0].addChild(textfi);			
-		}  
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function bet_parse():void
@@ -148,52 +139,13 @@ package View.ViewComponent
 			Get("pay_title").FlushObject();
 		}
 		
-		public function textSetting(mc:MovieClip, idx:int, data:Array):void
-		{						
-			var str:TextField = dynamic_text(data[idx+1],data[0]);			
-			mc.addChild(str);
-		}		
-		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
 		{
 			utilFun.Clear_ItemChildren(Get("game_title_info_data").ItemList[1]);			
 			var round_code:int = _opration.operator("game_round", DataOperation.add,1);
-			var textfi:TextField = dynamic_text(round_code.toString(),[18]);
+			var textfi:TextField = _text.dynamic_text(round_code.toString(),{size:18});
 			Get("game_title_info_data").ItemList[1].addChild(textfi);	
-		}
-		
-		public function dynamic_text(text:String,para:Object):TextField
-		{		
-			//utilFun.Log("para ="+para.size);
-			var size:int = para.size;
-			var textColor:uint = 0xFFFFFF;
-			var align:String = TextFormatAlign.LEFT;
-			var bold:Boolean = false;
-			
-			if ( para["color"] != undefined)  textColor = para.color;
-			if( para["align"] != undefined)  align = para.align;
-			if( para["bold"] != undefined)  bold = para.bold;
-						
-			var _NickName:TextField = new TextField();
-			_NickName.width = 626.95;
-			_NickName.height = 134;
-			_NickName.textColor = textColor;
-			_NickName.selectable = false;		
-			//_NickName.autoSize = TextFieldAutoSize.LEFT;				
-			_NickName.wordWrap = true; //auto change line
-			_NickName.multiline = true; //multi line
-			_NickName.maxChars = 300;
-			//"微軟正黑體"
-			var myFormat:TextFormat = new TextFormat();
-			myFormat.size = size;
-			myFormat.align = align;
-			myFormat.bold = bold;
-			myFormat.font = "Microsoft JhengHei";			
-			
-			_NickName.defaultTextFormat = myFormat;				
-			_NickName.text = text;			
-			return _NickName;
 		}
 		
 	}

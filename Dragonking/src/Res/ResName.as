@@ -18,7 +18,7 @@ package Res
 		public static const just_turnpoker:String = "just_turn_poker";
 		public static const Mipoker_zone:String = "Mi_poker_zone";
 		public static const pokermask:String = "poker_mask";
-		
+				
 		public static const TextInfo:String = "Text_Info";	
 		public static const Betcoin:String = "Bet_coin";	
 		public static const Wincoin:String = "Win_coin";	

@@ -42,23 +42,24 @@ package View.ViewBase
 			mc.addChild(str);
 		}
 		
-		public function dynamic_text(text:String,para:Array):TextField
+		public function dynamic_text(text:String,para:Object):TextField
 		{		
-			var size:int = para[0];
+			//utilFun.Log("para ="+para.size);
+			var size:int = para.size;
 			var textColor:uint = 0xFFFFFF;
 			var align:String = TextFormatAlign.LEFT;
-			if ( para.length > 1)  
-			{
-				textColor = para[1];
-				align = para[2];
-			}
+			var bold:Boolean = false;
+			
+			if ( para["color"] != undefined)  textColor = para.color;
+			if( para["align"] != undefined)  align = para.align;
+			if( para["bold"] != undefined)  bold = para.bold;
 						
 			var _NickName:TextField = new TextField();
 			_NickName.width = 626.95;
 			_NickName.height = 134;
 			_NickName.textColor = textColor;
 			_NickName.selectable = false;		
-			_NickName.autoSize = TextFieldAutoSize.LEFT;				
+			//_NickName.autoSize = TextFieldAutoSize.LEFT;				
 			_NickName.wordWrap = true; //auto change line
 			_NickName.multiline = true; //multi line
 			_NickName.maxChars = 300;
@@ -66,6 +67,7 @@ package View.ViewBase
 			var myFormat:TextFormat = new TextFormat();
 			myFormat.size = size;
 			myFormat.align = align;
+			myFormat.bold = bold;
 			myFormat.font = "Microsoft JhengHei";			
 			
 			_NickName.defaultTextFormat = myFormat;				

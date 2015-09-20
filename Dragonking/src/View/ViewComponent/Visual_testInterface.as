@@ -11,6 +11,7 @@ package View.ViewComponent
 	import flash.text.TextField;
 	import Model.CommonModel.*;
 	import util.math.Path_Generator;
+	import View.ViewBase.Visual_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -76,6 +77,9 @@ package View.ViewComponent
 		
 		//--------------------------------------------------------model		
 		[Inject]
+		public var _text:Visual_Text = new Visual_Text();
+		
+		[Inject]
 		public var _m_timer:Model_Timer;
 		
 		[Inject]
@@ -103,7 +107,7 @@ package View.ViewComponent
 			script_list.mousedown = script_list_test;			
 			script_list.mouseup = up;			
 			script_list.CustomizedData = [{size:18},"下注腳本","開牌腳本","結算腳本"]
-			script_list.CustomizedFun = _gameinfo.textSetting;			
+			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
 			
 			
@@ -132,7 +136,7 @@ package View.ViewComponent
 			utilFun.Log("script_list_test=" + idx);
 			_model.putValue("Script_idx", idx);
 			_script_item.CustomizedData = _model.getValue("allScript")[idx];
-			_script_item.CustomizedFun = _gameinfo.textSetting;			
+			_script_item.CustomizedFun = _text.textSetting;			
 			_script_item.Create_by_list(_script_item.CustomizedData.length -1, [ResName.TextInfo], 0, 100, 1, 0, 20, "Btn_");
 			
 			dispatcher(new TestEvent(_model.getValue("Script_idx").toString()));
@@ -192,7 +196,7 @@ package View.ViewComponent
 			_sencer.init();
 			dispatcher(new ModelEvent("display"));
 			
-			//=============================================Hintmsg			
+			//=============================================Hintmsg
 			_model.putValue( modelName.GAMES_STATE, gameState.NEW_ROUND);
 			_hint.init();
 			dispatcher(new ModelEvent(_m_hintmsg.PropertyEvent(0)));			
