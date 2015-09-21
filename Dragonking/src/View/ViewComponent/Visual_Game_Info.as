@@ -117,19 +117,7 @@ package View.ViewComponent
 			
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function bet_parse():void
-		{
-			Get("pay_mark").container.visible = false;
-			Get("pay_odd").container.visible = false;
-			
-			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
-			
-			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型機率"];		
-			Get("pay_title").FlushObject();
-		}
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "Text_betText")]
 		public function settle_parse():void
 		{			
 			Get("pay_mark").container.visible = true;
@@ -139,7 +127,19 @@ package View.ViewComponent
 			Get("pay_title").FlushObject();
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "Text_openCardText")]
+		public function bet_parse():void
+		{
+			Get("pay_mark").container.visible = false;
+			Get("pay_odd").container.visible = false;
+			
+			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
+			
+			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型機率"];		
+			Get("pay_title").FlushObject();
+		}	
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "Text_updateRoundcode")]
 		public function display():void
 		{
 			utilFun.Clear_ItemChildren(Get("game_title_info_data").ItemList[1]);			

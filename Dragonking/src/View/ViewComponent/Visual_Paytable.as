@@ -22,9 +22,6 @@ package View.ViewComponent
 	public class Visual_Paytable  extends VisualHandler
 	{
 		
-		[Inject]
-		public var _betCommand:BetCommand;
-		
 		public function Visual_Paytable() 
 		{
 			
@@ -97,25 +94,12 @@ package View.ViewComponent
 			//add(_tool);			
 		}
 	
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "Show_bet")]
 		public function display():void
 		{
 			GetSingleItem("paytable_baridx").gotoAndStop(1);
-		}
-		
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
-		public function timer_hide():void
-		{
-			_model.putValue("percent_prob",[0,0,0,0,0,0,0,0]);						
-		}
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
-		public function settle_parse():void
-		{
-			var probpercet:MultiObject = Get("prob");
-			probpercet.container.visible = false;
-		}
+			Get("prob").container.visible = false;
+		}	
 		
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="caculate_prob")]
 		public function prob_percentupdate():void
@@ -187,19 +171,6 @@ package View.ViewComponent
 			return true;
 		}
 		
-		//public function historySelect(e:Event, idx:int):Boolean
-		//{			
-			//var betzone:MultiObject = Get("history_select_item_bar");						
-			//betzone.exclusive(idx, 1);
-			//
-			//var hisoty_show_info:MultiObject = Get("Historytable");		
-			//hisoty_show_info.ItemList[0].gotoAndStop(idx+1);
-			//hisoty_show_info.customized();
-			//
-			//history_display(idx + 1);
-			//return true;
-			//
-		//}
 		
 		public function history_display(select:int):void
 		{
@@ -209,57 +180,6 @@ package View.ViewComponent
 			Get("historyball").Create_by_list(history_model.length, history_model, 0, 0, 1, 0, 0, "histor");
 			Get("historyball").customized();
 		}
-		
-		//public function history_display(select:int):void
-		//{
-			//if ( select == 1)
-			//{
-				//Get("history_Pai_list").container.visible = false;
-				//Get("history_banker_Pai_list").container.visible = false;
-				//
-				//var history_model:Array = _model.getValue("history_win_list");
-				//Get("historyball").container.visible = true;
-				//Get("historyball").Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-				//Get("historyball").Post_CustomizedData = [6, -33, 33 ];
-				//Get("historyball").Create_by_list(history_model.length, history_model, 0, 0, 1, 0, 0, "histor");
-				//Get("historyball").customized();
-			//}
-			//else if (select == 2)
-			//{
-				//Get("historyball").container.visible = false;
-				//
-				//var historyPai_model:Array = _model.getValue("history_Play_Pai_list");
-				//Get("history_Pai_list").container.visible = true;
-				//Get("history_Pai_list").CustomizedFun = sprite_idx_setting_player;			
-				//Get("history_Pai_list").CustomizedData = historyPai_model;				
-				//Get("history_Pai_list").Create_by_bitmap(historyPai_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, historyPai_model.length, 22, 25, "o_");				
-				//
-				//
-				//var historyPai_banker_model:Array = _model.getValue("history_banker_Pai_list");
-				//Get("history_banker_Pai_list").container.visible = true;			
-				//Get("history_banker_Pai_list").CustomizedFun = sprite_idx_setting_banker;			
-				//Get("history_banker_Pai_list").CustomizedData = historyPai_banker_model;				
-				//Get("history_banker_Pai_list").Create_by_bitmap(historyPai_banker_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, historyPai_banker_model.length, 22, 25, "o_");		
-			//
-			//}
-			//
-		//}		
-		
-		//滑入bar 效果
-		//public function paytable_sence(e:Event, idx:int):Boolean
-		//{			
-			//if ( idx == 0)
-			//{
-				//GetSingleItem("paytable").gotoAndStop(idx+1);
-				//Tweener.addTween(GetSingleItem("paytable_colorbar"), { x:0,time:0.5, transition:"easeOutCubic"} );
-			//}
-			//else if (idx  == 1)
-			//{
-				//GetSingleItem("paytable").gotoAndStop(idx+1);
-				//Tweener.addTween(GetSingleItem("paytable_colorbar"), { x:220,time:0.5, transition:"easeOutCubic"} );
-			//}
-			//return false;
-		//}		
 		
 	}
 

@@ -38,6 +38,7 @@ package
 		public var _m_timer:Model_Timer = new Model_Timer();
 		public var _m_hintmsg:Model_HintMsg = new Model_HintMsg();
 		public var _m_Text:Model_Text = new Model_Text();
+		public var _m_Show:Model_Show = new Model_Show();
 		
 		//connect module
 		public var _socket:WebSoketComponent = new WebSoketComponent();

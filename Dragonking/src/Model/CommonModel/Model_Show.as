@@ -8,25 +8,25 @@ package Model.CommonModel
 	import caurina.transitions.Tweener;
 	
 	/**
-	 * most of test no need to process or logic handle, unitfy to handle in this model,using way like belong
+	 * control most object show hind event
 	 * 
-	 * _model.putValue( _m_Text.ModelTag, N);
-	 * dispatcher(new ModelEvent(_m_Text.PropertyEvent(N)));			
+	 * _model.putValue( _m_Show.ModelTag, N);
+	 * dispatcher(new ModelEvent(_m_Show.PropertyEvent(N)));			
 	 * @author Dyson0913
 	 */
-	public class Model_Text extends ModelBase
+	public class Model_Show extends ModelBase
 	{		
 		
-		public function Model_Text() 
+		public function Model_Show() 
 		{			
-			_ResName = "Text_Info";
+			_ResName = "Model_Show";
 			_ModelTag = _ResName;			
-			_SetPropertyEvent = ["Text_value"]
-			_UpdateEvent = ["Text_betText", "Text_openCardText", "Text_updateRoundcode"];
+			_SetPropertyEvent = ["Show_value"]
+			_UpdateEvent = ["Show_bet","Show_openCard"];
 		}
 		
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "Text_value")]		
+		[MessageHandler(type = "Model.ModelEvent", selector = "Show_value")]		
 		public function set_attribute():void
 		{
 			var stage:int = _model.getValue(ModelTag);

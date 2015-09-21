@@ -85,6 +85,12 @@ package View.ViewComponent
 		[Inject]
 		public var _m_hintmsg:Model_HintMsg;
 		
+		[Inject]
+		public var _m_Text:Model_Text;
+		
+		[Inject]
+		public var _m_Show:Model_Show;
+		
 		private var _script_item:MultiObject;
 		
 		public function Visual_testInterface() 
@@ -175,7 +181,9 @@ package View.ViewComponent
 			changeBG(ResName.Bet_Scene);
 			
 			//=============================================gameinfo			
+			_model.putValue( _m_Text.ModelTag, 0);
 			_gameinfo.init();
+			dispatcher(new ModelEvent(_m_Text.PropertyEvent(0)));			
 			
 			//=============================================paytable
 			var arr:Array = _model.getValue("history_win_list");			
@@ -187,8 +195,9 @@ package View.ViewComponent
 				else arr.push(ResName.Noneball);
 				_model.putValue("history_win_list", arr);
 			}
+			_model.putValue( _m_Show.ModelTag, 0);
 			_paytable.init();
-			
+			dispatcher(new ModelEvent(_m_Show.PropertyEvent(0)));		
 			//================================================betzone
 			_betzone.init();			
 			_coin_stack.init();
@@ -248,8 +257,9 @@ package View.ViewComponent
 			changeBG(ResName.Bet_Scene);
 			
 			//=============================================gameinfo			
+			_model.putValue( _m_Text.ModelTag, 1);
 			_gameinfo.init();
-			_gameinfo.bet_parse();
+			dispatcher(new ModelEvent(_m_Text.PropertyEvent(0)));			
 			
 			//=============================================paytable
 			var arr:Array = _model.getValue("history_win_list");			
@@ -261,13 +271,15 @@ package View.ViewComponent
 				else arr.push(ResName.Noneball);
 				_model.putValue("history_win_list", arr);
 			}
+			_model.putValue( _m_Show.ModelTag, 1);
 			_paytable.init();
+			dispatcher(new ModelEvent(_m_Show.PropertyEvent(0)));	
 			
 			
 			//=============================================Hintmsg
 			_hint.init();
 			_model.putValue(modelName.GAMES_STATE,gameState.END_BET);
-			//_hint.hide();			
+			dispatcher(new ModelEvent(_m_hintmsg.PropertyEvent(0)));
 			
 			//================================================poker
 			_poker.init();
@@ -349,7 +361,7 @@ package View.ViewComponent
 				_model.putValue("history_win_list", arr);
 			}
 			_paytable.init();		
-			_paytable.settle_parse();
+			//_paytable.settle_parse();
 			
 			//================================================settle info
 			_settle.init();			
