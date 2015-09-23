@@ -9,9 +9,7 @@ package View.ViewComponent
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.text.TextField;
-	import Model.CommonModel.*;
 	import util.math.Path_Generator;
-	import View.ViewBase.Visual_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -75,21 +73,6 @@ package View.ViewComponent
 		[Inject]
 		public var _btn:Visual_BtnHandle;
 		
-		//--------------------------------------------------------model		
-		[Inject]
-		public var _text:Visual_Text = new Visual_Text();
-		
-		[Inject]
-		public var _m_timer:Model_Timer;
-		
-		[Inject]
-		public var _m_hintmsg:Model_HintMsg;
-		
-		[Inject]
-		public var _m_Text:Model_Text;
-		
-		[Inject]
-		public var _m_Show:Model_Show;
 		
 		private var _script_item:MultiObject;
 		
@@ -113,7 +96,7 @@ package View.ViewComponent
 			script_list.mousedown = script_list_test;			
 			script_list.mouseup = up;			
 			script_list.CustomizedData = [{size:18},"下注腳本","開牌腳本","結算腳本"]
-			script_list.CustomizedFun = _text.textSetting;			
+			script_list.CustomizedFun = _gameinfo.textSetting;			
 			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
 			
 			
@@ -142,7 +125,7 @@ package View.ViewComponent
 			utilFun.Log("script_list_test=" + idx);
 			_model.putValue("Script_idx", idx);
 			_script_item.CustomizedData = _model.getValue("allScript")[idx];
-			_script_item.CustomizedFun = _text.textSetting;			
+			_script_item.CustomizedFun = _gameinfo.textSetting;			
 			_script_item.Create_by_list(_script_item.CustomizedData.length -1, [ResName.TextInfo], 0, 100, 1, 0, 20, "Btn_");
 			
 			dispatcher(new TestEvent(_model.getValue("Script_idx").toString()));
@@ -181,9 +164,7 @@ package View.ViewComponent
 			changeBG(ResName.Bet_Scene);
 			
 			//=============================================gameinfo			
-			_model.putValue( _m_Text.ModelTag, 0);
 			_gameinfo.init();
-			dispatcher(new ModelEvent(_m_Text.PropertyEvent(0)));			
 			
 			//=============================================paytable
 			var arr:Array = _model.getValue("history_win_list");			
@@ -195,9 +176,8 @@ package View.ViewComponent
 				else arr.push(ResName.Noneball);
 				_model.putValue("history_win_list", arr);
 			}
-			_model.putValue( _m_Show.ModelTag, 0);
 			_paytable.init();
-			dispatcher(new ModelEvent(_m_Show.PropertyEvent(0)));		
+			
 			//================================================betzone
 			_betzone.init();			
 			_coin_stack.init();
@@ -206,14 +186,17 @@ package View.ViewComponent
 			dispatcher(new ModelEvent("display"));
 			
 			//=============================================Hintmsg
-			_model.putValue( modelName.GAMES_STATE, gameState.NEW_ROUND);
 			_hint.init();
-			dispatcher(new ModelEvent(_m_hintmsg.PropertyEvent(0)));			
+			_hint.display();
 			
 			//================================================timer
-			_model.putValue(_m_timer.ModelTag, 20);		
-			_timer.init();
-			dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));			
+			if ( !_timer.already_countDown)
+			{
+				_model.putValue(modelName.REMAIN_TIME, 20);					
+				_timer.init();
+				_timer.display();
+			}
+			
 		}	
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "00")]
@@ -233,7 +216,7 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "01")]
 		public function test01():void
 		{			
-			//_tool.SetControlMc(Get(modelName.HINT_MSG).container);			
+			_tool.SetControlMc(Get(modelName.HINT_MSG).container);			
 		}
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "02")]
@@ -241,9 +224,12 @@ package View.ViewComponent
 		{			
 			changeBG(ResName.Bet_Scene);
 			//================================================timer
-			_model.putValue(_m_timer.ModelTag, 20);		
-			_timer.init();
-			dispatcher(new ModelEvent(_m_timer.PropertyEvent(0)));		
+			if ( !_timer.already_countDown)
+			{
+				_model.putValue(modelName.REMAIN_TIME, 20);					
+				_timer.init();
+				_timer.display();
+			}
 		}
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "1")]
@@ -257,9 +243,8 @@ package View.ViewComponent
 			changeBG(ResName.Bet_Scene);
 			
 			//=============================================gameinfo			
-			_model.putValue( _m_Text.ModelTag, 1);
 			_gameinfo.init();
-			dispatcher(new ModelEvent(_m_Text.PropertyEvent(0)));			
+			_gameinfo.opencard_parse();
 			
 			//=============================================paytable
 			var arr:Array = _model.getValue("history_win_list");			
@@ -271,15 +256,14 @@ package View.ViewComponent
 				else arr.push(ResName.Noneball);
 				_model.putValue("history_win_list", arr);
 			}
-			_model.putValue( _m_Show.ModelTag, 1);
 			_paytable.init();
-			dispatcher(new ModelEvent(_m_Show.PropertyEvent(0)));	
+			_paytable.opencard_parse();
 			
 			
 			//=============================================Hintmsg
 			_hint.init();
 			_model.putValue(modelName.GAMES_STATE,gameState.END_BET);
-			dispatcher(new ModelEvent(_m_hintmsg.PropertyEvent(0)));
+			_hint.hide();			
 			
 			//================================================poker
 			_poker.init();
@@ -292,8 +276,8 @@ package View.ViewComponent
 			
 			
 			//================================================ simu deal
-			var testpoker:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
-			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[testpoker] }, 25, 0, 6, "linear");						
+			var arr:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
+			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[arr] }, 25, 0, 6, "linear");						
 		}
 		
 		public function fackeDeal(type:Array):void
@@ -305,25 +289,24 @@ package View.ViewComponent
 			var card:String = cardlist[0];
 			type.shift();
 			cardlist.shift();
-			utilFun.Log("card = " + card);
-			var mypoker:Array;
+			utilFun.Log("card = "+card);
 			if ( card_type == "Player")
 			{										
-				mypoker= _model.getValue(modelName.PLAYER_POKER);										
+				var mypoker:Array = _model.getValue(modelName.PLAYER_POKER);										
 				mypoker.push(card);
 				_model.putValue(modelName.PLAYER_POKER, mypoker);										
 				dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_mi"));				
 			}
 			else if ( card_type == "Banker")
 			{							
-				mypoker = _model.getValue(modelName.BANKER_POKER);										
+				var mypoker:Array = _model.getValue(modelName.BANKER_POKER);										
 				mypoker.push( card);										
 				_model.putValue(modelName.BANKER_POKER, mypoker);									
 				dispatcher(new Intobject(modelName.BANKER_POKER, "poker_mi"));
 			}					
 			else if ( card_type == "River")
 			{							
-				mypoker = _model.getValue(modelName.RIVER_POKER);										
+				var mypoker:Array = _model.getValue(modelName.RIVER_POKER);										
 				mypoker.push( card);										
 				_model.putValue(modelName.RIVER_POKER, mypoker);										
 				dispatcher(new Intobject(modelName.RIVER_POKER, "poker_mi"));
@@ -348,7 +331,7 @@ package View.ViewComponent
 			
 			
 			//=============================================Hintmsg
-			_hint.init();			
+			//_hint.init();			
 			
 			//=============================================paytable
 			var arr:Array = _model.getValue("history_win_list");			
@@ -361,7 +344,7 @@ package View.ViewComponent
 				_model.putValue("history_win_list", arr);
 			}
 			_paytable.init();		
-			//_paytable.settle_parse();
+			_paytable.settle_parse();
 			
 			//================================================settle info
 			_settle.init();			
