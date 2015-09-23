@@ -8,8 +8,6 @@ package Interface
 	 */
 	public interface ViewComponentInterface 
 	{
-		function getDisplayobject():DisplayObjectContainer
-		function getName():String;
 		function setContainer(sp:DisplayObjectContainer):void;
 		function getContainer():DisplayObjectContainer;
 		function OnExit():void;

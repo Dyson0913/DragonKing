@@ -59,15 +59,6 @@ package View.GameView
 			_betCommand.bet_init();
 			_sound.init();
 			
-			var state:DI = new DI();
-			state.putValue("NewRoundState", gameState.NEW_ROUND);
-			state.putValue("EndBetState", gameState.END_BET);
-			state.putValue("OpenState", gameState.START_OPEN);
-			state.putValue("EndRoundState", gameState.END_ROUND);			
-			_model.putValue("state_mapping", state);
-			
-			_model.putValue(modelName.Game_name, "BigWin");
-			
 			_model.putValue("history_win_list", []);				
 			_model.putValue("result_Pai_list", []);
 			_model.putValue("game_round", 1);			
@@ -88,9 +79,9 @@ package View.GameView
 			var view:MultiObject = prepare("_view", new MultiObject() , this);
 			view.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "a_");
 					
-			//utilFun.SetTime(connet, 0.1);
+			utilFun.SetTime(connet, 0.1);
 			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
-			_test.init();			
+			//_test.init();			
 		}
 		private function connet():void
 		{	

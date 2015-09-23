@@ -65,6 +65,8 @@ package View.ViewComponent
 			betzone.mousedown = _betCommand.empty_reaction;			
 			betzone.rollout = _betCommand.empty_reaction;
 			betzone.rollover = _betCommand.empty_reaction;
+			
+			Get("tableitem").container.visible = true;
 		}
 		
 		
@@ -83,6 +85,9 @@ package View.ViewComponent
 			betzone.CustomizedFun = _regular.FrameSetting;
 			betzone.CustomizedData = frame;
 			betzone.FlushObject();
+			
+			Get("tableitem").container.visible = false;
+			
 		}
 		
 		

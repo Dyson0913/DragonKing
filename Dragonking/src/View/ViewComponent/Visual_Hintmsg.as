@@ -1,6 +1,5 @@
 package View.ViewComponent 
 {
-	import Model.CommonModel.Model_HintMsg;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -18,8 +17,6 @@ package View.ViewComponent
 	 */
 	public class Visual_Hintmsg  extends VisualHandler
 	{
-		[Inject]
-		public var myModel:Model_HintMsg;
 		
 		public function Visual_Hintmsg() 
 		{
@@ -28,25 +25,49 @@ package View.ViewComponent
 		
 		public function init():void
 		{
-			var hintmsg:MultiObject = create(myModel.ResName, [myModel.ResName]);
-			hintmsg.Create(1,myModel.ResName);
+			var hintmsg:MultiObject = prepare(modelName.HINT_MSG, new MultiObject()  , GetSingleItem("_view").parent.parent);
+			hintmsg.Create_by_list(1, [ResName.Hint], 0, 0, 1, 0, 0, "hintmsg");
 			hintmsg.container.x = 960.3;
 			hintmsg.container.y = 439.3;
-			hintmsg.container.visible = false;		
+			hintmsg.container.visible = false;
 			
 			//_tool.SetControlMc(coinob.ItemList[0]);
 			//_tool.SetControlMc(hintmsg.container);
 			//add(_tool);
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "Hintmsg_update")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
 		{
-			Get(myModel.ResName).container.visible = true;
-			
-			var frame:int = _model.getValue(myModel.ModelTag);	
-			GetSingleItem(myModel.ResName).gotoAndStop(frame);	
-			_regular.FadeIn( GetSingleItem(myModel.ResName), 2, 2, _regular.Fadeout);		
+			Get(modelName.HINT_MSG).container.visible = true;
+			GetSingleItem(modelName.HINT_MSG).gotoAndStop(1);	
+			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);		
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
+		public function hide():void
+		{
+			Get(modelName.HINT_MSG).container.visible = true;
+			var state:int = _model.getValue(modelName.GAMES_STATE);
+			if( state == gameState.START_OPEN) GetSingleItem(modelName.HINT_MSG).gotoAndStop(4);
+			if( state == gameState.NEW_ROUND) GetSingleItem(modelName.HINT_MSG).gotoAndStop(1);
+			if( state == gameState.END_BET) GetSingleItem(modelName.HINT_MSG).gotoAndStop(2);
+			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);			
+		}		
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "public_ard")]
+		public function public_ard():void
+		{
+			Get(modelName.HINT_MSG).container.visible = true;
+			GetSingleItem(modelName.HINT_MSG).gotoAndStop(5);
+		}
+		
+		[MessageHandler(type = "ConnectModule.websocket.WebSoketInternalMsg", selector = "CreditNotEnough")]
+		public function no_credit():void
+		{
+			Get(modelName.HINT_MSG).container.visible = true;
+			GetSingleItem(modelName.HINT_MSG).gotoAndStop(3);
+			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);
 		}
 		
 	}

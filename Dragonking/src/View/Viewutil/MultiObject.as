@@ -28,18 +28,6 @@ package View.Viewutil
 		}
 		
 		public var stop_Propagation:Boolean = false;
-
-		private var _ItemNameList:Array = [];
-		
-		public function get resList():Array
-		{
-			return _ItemNameList;
-		}
-		
-		public function set resList(value:Array ):void
-		{
-			_ItemNameList = value;
-		}
 		
 		//客制化功能
 		public var CustomizedFun:Function = null;
@@ -98,29 +86,35 @@ package View.Viewutil
 		 * @param	ItemName	元件命名 XXX_id(判定事件為那個元件觸發,會取其ID做判斷)
 		 * @param	Container		父節點
 		 */
-		//public function Create(ItemNum:int,LinkName:String,StartX:Number,StartY:Number,RowCnt:int,Xdiff:Number,Ydiff:Number,ItemName:String,Container:DisplayObjectContainer):void
-		//{
-			//CleanList();
-			//_Container = Container;			
-			//for (var i:int = 0 ; i < ItemNum; i++)
-			//{
-				//var mc:MovieClip = utilFun.GetClassByString(LinkName);
-				//mc.x = StartX + (i % RowCnt * Xdiff);
-				//mc.y = StartY + ( Math.floor(i / RowCnt) * Ydiff);	
-				//
-				//mc.name = ItemName + i;
-				//_ItemName = ItemName;
-				//ItemList.push(mc);
-				//_Container.addChild(mc);
-			//}		
-			//customized();
-			//_Container = Container;
-			//Listen();
-		//}		
+		public function Create(ItemNum:int,LinkName:String,StartX:Number,StartY:Number,RowCnt:int,Xdiff:Number,Ydiff:Number,ItemName:String,Container:DisplayObjectContainer):void
+		{
+			CleanList();
+			_Container = Container;			
+			for (var i:int = 0 ; i < ItemNum; i++)
+			{
+				var mc:MovieClip = utilFun.GetClassByString(LinkName);
+				mc.x = StartX + (i % RowCnt * Xdiff);
+				mc.y = StartY + ( Math.floor(i / RowCnt) * Ydiff);	
+				
+				mc.name = ItemName + i;
+				_ItemName = ItemName;
+				ItemList.push(mc);
+				_Container.addChild(mc);
+			}		
+			customized();
+			_Container = Container;
+			Listen();
+		}
 		
 		public function Create_by_native(ItemNum:int,ItemNameList:Array,StartX:Number,StartY:Number,RowCnt:int,Xdiff:Number,Ydiff:Number,ItemName:String):void
 		{
 			CleanList();
+			var diff:int = ItemNum - ItemNameList.length;
+			if ( diff >0)
+			{
+				var lastItem:String = ItemNameList[ ItemNameList.length - 1];
+				for ( var j:int = 0; j < diff ;j++) ItemNameList.push(lastItem);
+			}
 			
 			for (var i:int = 0 ; i < ItemNum; i++)
 			{
@@ -194,36 +188,6 @@ package View.Viewutil
 			Listen();
 		}		
 		
-		public function Create(ItemNum:int,ItemName:String):void
-		{
-			CleanList();
-			
-			compensatory_diff(ItemNum);
-			_ItemName = ItemName;			
-			for (var i:int = 0 ; i < ItemNum; i++)
-			{
-				var mc:MovieClip = utilFun.GetClassByString(resList[i]);				
-				mc.name = ItemName + i;
-				
-				ItemList.push(mc);
-				_Container.addChild(mc);
-			}
-			
-			//customized area		
-			customized();			
-			Listen();
-		}		
-		
-		private function compensatory_diff(num:int):void
-		{
-			var diff:int = num - resList.length;
-			if ( diff >0)
-			{
-				var lastItem:String = resList[ resList.length - 1];
-				for ( var j:int = 0; j < diff ;j++) resList.push(lastItem);
-			}
-		}
-		
 		public function customized():void
 		{
 			var ItemNum:int = ItemList.length;
@@ -258,8 +222,14 @@ package View.Viewutil
 		{
 			for (var i:int = 0; i < _ItemList.length; i++)
 			{
-				if ( i == idx ) continue;
-				else _ItemList[i].gotoAndStop(gotoFrame);
+				if ( i == idx ) 
+				{					
+					continue;
+				}
+				else
+				{					
+					_ItemList[i].gotoAndStop(gotoFrame);
+				}
 			}
 		}
 		
@@ -280,16 +250,6 @@ package View.Viewutil
 			if( _autoClean ) CleanList();
 		}
 		
-		public function getName():String
-		{
-			return _Container.name;
-		}
-		
-		public function getDisplayobject():DisplayObjectContainer
-		{
-			return _Container;
-		}
-		
 		public function Clear_ItemChildren():void
 		{
 			//removeListen();
@@ -300,12 +260,6 @@ package View.Viewutil
 			
 				utilFun.Clear_ItemChildren(ItemList[i]);
 			}			
-		}
-		
-		
-		public function put_to_lsit(viewcomponent:MultiObject):void
-		{
-			ItemList.push(viewcomponent);
 		}
 		
 		public function Getidx(name:String):int 
@@ -339,6 +293,36 @@ package View.Viewutil
 				if ( MouseFrame[3] != 0) ItemList[i].removeEventListener(MouseEvent.MOUSE_UP, eventListen);
 			}
 		}
+		
+		public function eventTriger(trigerFun:Function,e:Event,idx:int):void
+		{
+			utilFun.Log("triger ="+trigerFun );
+			utilFun.Log("name ="+e.currentTarget.name );
+			if ( trigerFun != null) 
+			{
+				_contido = trigerFun(e, idx);
+				utilFun.Log("_contido ="+_contido );
+				utilFun.Log("MouseFrame[2] ="+MouseFrame[2] );
+				if ( _contido ) 
+				{
+					utilFun.GotoAndStop(e, MouseFrame[2]);
+				}
+				
+				if( stop_Propagation) e.stopPropagation();
+			}			
+		}
+		
+		public function eventTriger_mousedown(trigerFun:Function, e:Event, idx:int):void
+		{
+			if ( mousedown != null) 
+					{
+						_contido = mousedown(e, idx);
+						if ( _contido ) utilFun.GotoAndStop(e, MouseFrame[2]);
+						
+						if( stop_Propagation) e.stopPropagation();
+					}
+		}
+		
 		
 		public function eventListen(e:Event):void
 		{

@@ -1,14 +1,12 @@
 package View.Viewutil 
 {
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.utils.getDefinitionByName;
-	import Interface.ViewComponentInterface;
 	
 	import util.utilFun;	
 	import caurina.transitions.Tweener;
@@ -19,12 +17,9 @@ package View.Viewutil
 	 */
 	public class AdjustTool extends MovieClip
 	{
-		private var _ControlItem:DisplayObjectContainer;
-		private var _ControlMultiobject:MultiObject;
+		private var _ControlMc:DisplayObject;
 		
 		private var _Menu:TextField;
-		
-		private var _itemlist:Array = [];
 		
 		//滑入滑出顏色
 		private var _RollInColor:uint = 0x009966;
@@ -46,38 +41,22 @@ package View.Viewutil
 			
 		}
 		
-		public function adjust_add(mc:ViewComponentInterface):void
+		public function SetControlMc(mc:DisplayObject):void
 		{
-			_ControlItem = mc.getDisplayobject();
-			_ControlMultiobject = mc as MultiObject;
+			
+			_ControlMc = mc;
+			
 			//功能表
-			_Menu = Createitem(_ControlItem.name, _RollOutColor);
-			addChild(_Menu);
-			//utilFun.Log
-			for (var i:int = 0; i < _ControlMultiobject.ItemList.length; i++)
+			if ( _Menu )
 			{
-				//功能表
-				var child:TextField = Createitem(_ControlMultiobject.ItemList[i].name, _RollOutColor);
-				child.x = i * 50;
-				_itemlist.push( child);
-				addChild(child);
+				removeChild(_Menu);
+				_Menu = null;
 			}
 			
-			
+			_Menu = Createitem(mc.name, _RollOutColor);
+			addChild(_Menu);
 			utilFun.AddMouseListen(_Menu, this.MenuEffect);
 		}
-		
-		//public function SetControlMc(mc:DisplayObject):void
-		//{
-			//_ControlItem = mc;
-			//
-			//功能表
-			//_Menu = Createitem(mc.name, _RollOutColor);
-			//addChild(_Menu);
-			//utilFun.AddMouseListen(_Menu, this.MenuEffect);
-		//}
-		
-		
 		
 		private function MenuEffect(e:Event):void 
 		{			
@@ -103,9 +82,9 @@ package View.Viewutil
 			
 			//想要徵調的屬性
 			PopItemList(_AdValue, _AdjustUnit, TweenerY * _AttributeCnt);
-			PopItemList(_X, _ControlItem.x, TweenerY * _AttributeCnt);
-			PopItemList(_Y, _ControlItem.y, TweenerY * _AttributeCnt);
-			PopItemList(_Rotation, _ControlItem.rotation, TweenerY * _AttributeCnt);
+			PopItemList(_X, _ControlMc.x, TweenerY * _AttributeCnt);
+			PopItemList(_Y, _ControlMc.y, TweenerY * _AttributeCnt);
+			PopItemList(_Rotation, _ControlMc.rotation, TweenerY * _AttributeCnt);
 		}
 		
 		private function PopItemList(AttributeName:String, CurrentValue:Number,TweenerY:Number):void
@@ -161,18 +140,18 @@ package View.Viewutil
 							break;
 							
 							case _X:
-								_ControlItem.x -= _AdjustUnit;
-								Value.text = _ControlItem.x.toString();
+								_ControlMc.x -= _AdjustUnit;
+								Value.text = _ControlMc.x.toString();
 							break;
 							
 							case _Y:
-								_ControlItem.y -= _AdjustUnit;
-								Value.text = _ControlItem.y.toString();
+								_ControlMc.y -= _AdjustUnit;
+								Value.text = _ControlMc.y.toString();
 							break; 
 							
 							case _Rotation:
-								_ControlItem.rotation -= _AdjustUnit;
-								Value.text = _ControlItem.rotation.toString();
+								_ControlMc.rotation -= _AdjustUnit;
+								Value.text = _ControlMc.rotation.toString();
 							break; 
 						}
 					break;
@@ -201,18 +180,18 @@ package View.Viewutil
 							break;
 							
 							case _X:
-								_ControlItem.x += _AdjustUnit;
-								Value.text = _ControlItem.x.toString();
+								_ControlMc.x += _AdjustUnit;
+								Value.text = _ControlMc.x.toString();
 							break;
 							
 							case _Y:
-								_ControlItem.y += _AdjustUnit;
-								Value.text = _ControlItem.y.toString();
+								_ControlMc.y += _AdjustUnit;
+								Value.text = _ControlMc.y.toString();
 							break; 
 							
 							case _Rotation:
-								_ControlItem.rotation += _AdjustUnit;
-								Value.text = _ControlItem.rotation.toString();
+								_ControlMc.rotation += _AdjustUnit;
+								Value.text = _ControlMc.rotation.toString();
 							break; 
 						}
 					break;

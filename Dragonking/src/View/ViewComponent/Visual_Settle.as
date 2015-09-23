@@ -4,7 +4,6 @@ package View.ViewComponent
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import View.ViewBase.Visual_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -20,14 +19,12 @@ package View.ViewComponent
 	import flash.text.TextFormatAlign;
 	
 	/**
-	 *  present way
+	 * hintmsg present way
 	 * @author ...
 	 */
 	public class Visual_Settle  extends VisualHandler
 	{
-		[Inject]
-		public var _text:Visual_Text = new Visual_Text();
-		
+	
 		[Inject]
 		public var _paytable:Visual_Paytable;
 		
@@ -46,11 +43,11 @@ package View.ViewComponent
 		{
 			var zoneCon:MultiObject = prepare("zone", new MultiObject(), GetSingleItem("_view").parent.parent);
 			zoneCon.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			zoneCon.Post_CustomizedData = [[0, 0], [980, 0], [550, 0]];
+			zoneCon.Post_CustomizedData = [[0, 0], [1020, 0], [550, 0]];
 			zoneCon.Create_by_list(3, [ResName.playerScore, ResName.bankerScore,ResName.TieScore], 0 , 0, 3, 500, 0, "Bet_");					
-			zoneCon.container.x = 390;
-			zoneCon.container.y = 430;
-			zoneCon.container.visible = false;
+			zoneCon.container.x = 370;
+			zoneCon.container.y = 560;
+			//zoneCon.container.visible = false;
 			
 			var bigwinfire:MultiObject = prepare("bigwinfire", new MultiObject(), GetSingleItem("_view").parent.parent);
 			bigwinfire.Create_by_list(1, [ResName.bigwinfire], 0 , 0, 1, 0, 0, "Bet_");			
@@ -73,21 +70,21 @@ package View.ViewComponent
 			settletable_title.container.y = 40;
 			settletable_title.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			settletable_title.Post_CustomizedData = [[0,0],[270,0],[480,0]];
-			settletable_title.CustomizedFun = _text.textSetting;
+			settletable_title.CustomizedFun = _gameinfo.textSetting;
 			settletable_title.CustomizedData = [{size:24}, "投注內容","得分","開牌結果"];
 			settletable_title.Create_by_list(3, [ResName.TextInfo], 0 , 0, 3, 200, 0, "Bet_");		
 			
 			var settletable_zone:MultiObject = prepare("settletable_zone", new MultiObject(), settletable.container);		
 			settletable_zone.container.x = 70;
 			settletable_zone.container.y = 90;		
-			settletable_zone.CustomizedFun = _text.textSetting;
+			settletable_zone.CustomizedFun = _gameinfo.textSetting;
 			settletable_zone.CustomizedData = [{size:24}, "莊","閒","莊對","閒對","特殊牌型","和","合計"];
 			settletable_zone.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 50, "Bet_");		
 			
 			var settletable_zone_bet:MultiObject = prepare("settletable_zone_bet", new MultiObject(), settletable.container);		
 			settletable_zone_bet.container.x = 200;
 			settletable_zone_bet.container.y = 90;		
-			settletable_zone_bet.CustomizedFun = _text.textSetting;
+			settletable_zone_bet.CustomizedFun = _gameinfo.textSetting;
 			settletable_zone_bet.CustomizedData = [{size:24}, "100","100","1000","0","200","100000"];
 			settletable_zone_bet.Create_by_list(6, [ResName.TextInfo], 0 , 0, 1, 0, 50, "Bet_");		
 			
@@ -102,7 +99,7 @@ package View.ViewComponent
 			var settletable_desh:MultiObject = prepare("settletable_desh", new MultiObject(), settletable.container);		
 			settletable_desh.container.x = 40;
 			settletable_desh.container.y = 364;		
-			settletable_desh.CustomizedFun = _text.textSetting;
+			settletable_desh.CustomizedFun = _gameinfo.textSetting;
 			settletable_desh.CustomizedData = [{size:24},"--------------------------------------"];
 			settletable_desh.Create_by_list(1, [ResName.TextInfo], 0 , 0, 1, 7, 0, "Bet_");		
 			//settletable_desh.container.visible = false;
@@ -110,7 +107,7 @@ package View.ViewComponent
 			var settletable_H_desh:MultiObject = prepare("settletable_H_desh", new MultiObject(), settletable.container);		
 			settletable_H_desh.container.x = 454;
 			settletable_H_desh.container.y = 40;		
-			settletable_H_desh.CustomizedFun = _text.textSetting;
+			settletable_H_desh.CustomizedFun = _gameinfo.textSetting;
 			settletable_H_desh.CustomizedData = [ { size:24 }, "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|"];
 			settletable_H_desh.Create_by_list(14, [ResName.TextInfo], 0 , 0, 1, 0, 28, "Bet_");
 			
@@ -118,7 +115,7 @@ package View.ViewComponent
 			var result_pai:MultiObject = prepare("result_pai", new MultiObject(), settletable.container);		
 			result_pai.container.x = 288;
 			result_pai.container.y = 90;
-			result_pai.CustomizedFun = _text.textSetting;
+			result_pai.CustomizedFun = _gameinfo.textSetting;
 			result_pai.CustomizedData = [{size:24,align:TextFormatAlign.CENTER}, "閒","莊","公牌"];
 			result_pai.Create_by_list(3, [ResName.TextInfo], 0 , 0, 1, 0, 80, "Bet_");		
 			
@@ -136,15 +133,16 @@ package View.ViewComponent
 			_model.putValue("result_str_list", []);
 			var historystr_model:Array = _model.getValue("result_str_list");			
 			var result_str_list:MultiObject = prepare("result_str_list", new MultiObject() , settletable.container);
-			result_str_list.CustomizedFun =_text.textSetting;
+			result_str_list.CustomizedFun =_gameinfo.textSetting;
 			result_str_list.CustomizedData =[{size:20,align:TextFormatAlign.CENTER},historystr_model.join("、")];	
 			result_str_list.container.x = 287;
 			result_str_list.container.y = 344;
 			result_str_list.Create_by_list(1, [ResName.TextInfo], 0 , 0,1,0 , 0, "Bet_");		
 			
-			//_tool.SetControlMc(settletable_zone_settle.container);
-			//_tool.SetControlMc(settletable_title.ItemList[1]);
-			//add(_tool);
+			//_tool.SetControlMc(zoneCon.container);
+			_tool.SetControlMc(zoneCon.ItemList[1]);
+			_tool.y = 200;
+			add(_tool);
 			Clean();
 		}
 		
@@ -378,7 +376,7 @@ package View.ViewComponent
 			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
 			var font:Array = [{size:24}];
 			font = font.concat(zone_amount);			
-			Get("settletable_zone_bet").CustomizedFun = _text.textSetting;
+			Get("settletable_zone_bet").CustomizedFun = _gameinfo.textSetting;
 			Get("settletable_zone_bet").CustomizedData = font;
 			Get("settletable_zone_bet").Create_by_list(6, [ResName.TextInfo], 0 , 0, 1, 0, 50, "Bet_");		
 			
@@ -413,7 +411,7 @@ package View.ViewComponent
 			add_parse = add_parse.slice(0, 0) + "(" + add_parse.slice(0);
 			add_parse = add_parse +")";
 			
-			Get("result_str_list").CustomizedFun =_text.textSetting;
+			Get("result_str_list").CustomizedFun =_gameinfo.textSetting;
 			Get("result_str_list").CustomizedData =[{size:20,align:TextFormatAlign.CENTER},add_parse];				
 			Get("result_str_list").Create_by_list(1, [ResName.TextInfo], 0 , 0,1,0 , 0, "Bet_");		
 			
@@ -461,6 +459,47 @@ package View.ViewComponent
 				
 				GetSingleItem("zone",zone)["_num0"].gotoAndStop(point[0]);					
 			}			
+		}
+		
+		
+		[MessageHandler(type = "Model.valueObject.Intobject",selector="check_result")]
+		public function early_check_result(type:Intobject):void
+		{
+			//小 poker
+			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
+			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
+			var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);
+			
+			if ( ppoker.length + bpoker.length == 4)
+			{				
+				var ppoint:Array = utilFun.arrFormat(countPoint(ppoker), 1);
+				var bpoint:Array = utilFun.arrFormat(countPoint(bpoker), 1);
+				
+				var result:Array = [];
+				if ( ppoint > bpoint ) 
+				{
+					result.push(2);
+					result.push(1)
+				}
+				else if ( ppoint < bpoint )
+				{
+					result.push(1);
+					result.push(2);
+				}
+				else
+				{
+					result.push(1);
+					result.push(1);
+				}
+				
+				
+				GetSingleItem("zone", 0 ).gotoAndStop(result[0]);
+				GetSingleItem("zone", 1 ).gotoAndStop(result[1]);
+								
+				dispatcher(new ModelEvent("public_ard"));
+			}
+			
+		
 		}
 		
 		

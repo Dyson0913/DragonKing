@@ -72,10 +72,10 @@ package Command
 			var allzone:Array = [ResName.betzone_player, ResName.betzone_banker,ResName.betzone_tie,ResName.betzone_banker_pair,ResName.betzone_player_pari,ResName.special_Zone];			
 			var avaliblezone:Array = [];
 			var avaliblezone_s:Array = [];
-			for each (var k:int in betzone)
+			for each (var i:int in betzone)
 			{
-				avaliblezone.push ( allzone[k]);
-				avaliblezone_s.push ( allzone[k]+"_sence");
+				avaliblezone.push ( allzone[i]);
+				avaliblezone_s.push ( allzone[i ]+"_sence");
 			}
 			
 			_model.putValue(modelName.AVALIBLE_ZONE_IDX, betzone);
@@ -192,7 +192,7 @@ package Command
 			_model.putValue("after_bet_credit", credit - total);
 		}
 		
-		private function all_betzone_totoal():Number
+		public function all_betzone_totoal():Number
 		{
 			var betzone:Array = _model.getValue(modelName.BET_ZONE);
 			
@@ -250,6 +250,20 @@ package Command
 				}
 			}			
 			return arr;
+		}
+		
+		public function get_my_bet_info(type:String):Array
+		{
+			var arr:Array = _Bet_info.getValue("self");			
+			var data:Array = [];
+			
+			for ( var i:int = 0; i < arr.length ; i++)
+			{
+				var bet_ob:Object = arr[i];
+				if ( type == "table") data.push(bet_ob["betType"]);
+				if ( type == "amount") data.push(bet_ob["bet_amount"]);								
+			}
+			return data;
 		}
 		
 		public function get_my_betlist():Array

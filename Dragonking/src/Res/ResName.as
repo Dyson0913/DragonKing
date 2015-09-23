@@ -18,7 +18,7 @@ package Res
 		public static const just_turnpoker:String = "just_turn_poker";
 		public static const Mipoker_zone:String = "Mi_poker_zone";
 		public static const pokermask:String = "poker_mask";
-				
+		
 		public static const TextInfo:String = "Text_Info";	
 		public static const Betcoin:String = "Bet_coin";	
 		public static const Wincoin:String = "Win_coin";	
@@ -40,8 +40,10 @@ package Res
 		public static const power_bar3:String = "power_bar_3";
 		public static const power_bar_2pair:String = "power_bar_2_pair";
 		public static const contractpower:String = "contract_power";
-				
-
+		
+		
+		public static const Timer:String = "countDowntimer";
+		public static const Hint:String = "HintMsg";
 		public static const Bigwinmsg:String = "big_win_msg";	
 		public static const bigwinfire:String = "bigwin_fire";	
 		public static const settletable:String = "settle_table";	
@@ -71,6 +73,7 @@ package Res
 		public static const rebet_btn:String = "btn_rebet";
 		public static const betcancel_btn:String = "btn_betcancel";
 		public static const paytable_btn:String = "btn_paytable";
+		public static const ruletable:String = "rule_table";
 		
 		public static const emptymc:String = "Emptymc";
 		

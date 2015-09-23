@@ -68,7 +68,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display_coin():void
 		{			
-			_regular.FadeIn(_coin.container, 0, 1,null);
+			_regular.FadeIn(_coin.container, 0, 1, null);			
 		}
 		
 		

@@ -56,6 +56,18 @@ package View.ViewComponent
 			
 		}
 		
+		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		public function display():void
+		{
+			Get("coinstakeZone").container.visible = true;
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
+		public function timer_hide():void
+		{
+			Get("coinstakeZone").container.visible = false;
+		}
+		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean_poker():void
 		{
@@ -70,6 +82,8 @@ package View.ViewComponent
 			a.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			a.Post_CustomizedData =  _model.getValue(modelName.COIN_STACK_XY);
 			a.customized();
+			
+			
 		}
 				
 		[MessageHandler(type = "Model.ModelEvent", selector = "updateCoin")]

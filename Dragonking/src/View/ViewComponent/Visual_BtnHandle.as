@@ -20,6 +20,8 @@ package View.ViewComponent
 		[Inject]
 		public var _betCommand:BetCommand;		
 		
+		private var _rule_table:MultiObject ;
+		
 		public function Visual_BtnHandle() 
 		{
 			
@@ -38,8 +40,18 @@ package View.ViewComponent
 			btn_group.Create_by_list(btnlist.length, btnlist, 0, 0, btnlist.length, 200, 0, "time_");		
 			btn_group.rollout = test_reaction;
 			btn_group.rollover = test_reaction;
-			btn_group.mousedown = test_reaction;
+			btn_group.mousedown = table_true;
 			btn_group.mouseup = test_reaction;
+			
+			
+			_rule_table  = prepare("rule_table", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			_rule_table.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 1]);
+			_rule_table.mousedown = table_true;
+			_rule_table.mouseup = test_reaction;
+			_rule_table.container.x = -10;
+			_rule_table.container.y = 100;			
+			_rule_table.Create_by_list(1,[ResName.ruletable], 0, 0, 1, 0, 0, "time_");		
+			_rule_table.container.visible = false;
 			
 			//_tool.SetControlMc(btn_group.ItemList[1]);
 			//_tool.SetControlMc(btn_group.container);
@@ -48,6 +60,12 @@ package View.ViewComponent
 		
 		public function test_reaction(e:Event, idx:int):Boolean
 		{
+			return true;
+		}
+				
+		public function table_true(e:Event, idx:int):Boolean
+		{
+			_rule_table.container.visible = !_rule_table.container.visible;				
 			return true;
 		}
 		

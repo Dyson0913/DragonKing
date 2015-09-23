@@ -1,20 +1,18 @@
 package  
-{	
-	
+{
+	import com.hexagonstar.util.debug.Debug;
+	import Command.*;
+	import flash.display.MovieClip;
+	import Model.*;
 	import org.spicefactory.parsley.asconfig.processor.ActionScriptConfigurationProcessor;
 	import org.spicefactory.parsley.core.registry.ObjectDefinition;
-	
-	import ConnectModule.websocket.WebSoketComponent;
-	
-	import Command.*;	
-	import Model.*;	
-	import util.math.*;
+	import util.math.Path_Generator;
 	import util.*;
-	import View.ViewBase.*;
+	import View.ViewBase.ViewBase;
+	import ConnectModule.websocket.WebSoketComponent;
 	import View.ViewComponent.*;
-	import View.Viewutil.Visual_debugTool;
+	
 	import View.GameView.*;
-	import Model.CommonModel.*;	
 	/**
 	 * ...
 	 * @author hhg
@@ -27,18 +25,13 @@ package
 		[ObjectDefinition(id="Enter")]
 		public var _LoadingView:LoadingView = new LoadingView();		
 		public var _betView:betView = new betView();
-		public var _HudView:HudView = new HudView();
+		public var _HudView:HudView = new HudView();		
 		
-		//model
+		//model		
 		public var _Model:Model = new Model();
 		public var _MsgModel:MsgQueue = new MsgQueue();
 		public var _Actionmodel:ActionQueue = new ActionQueue();
 		
-		//common model
-		public var _m_timer:Model_Timer = new Model_Timer();
-		public var _m_hintmsg:Model_HintMsg = new Model_HintMsg();
-		public var _m_Text:Model_Text = new Model_Text();
-		public var _m_Show:Model_Show = new Model_Show();
 		
 		//connect module
 		public var _socket:WebSoketComponent = new WebSoketComponent();
@@ -49,14 +42,10 @@ package
 		public var _dataoperation:DataOperation = new DataOperation();
 		public var _betcom:BetCommand = new BetCommand();
 		public var _regular:RegularSetting = new RegularSetting();
-		public var _sound:SoundCommand = new SoundCommand(); 
+		public var _sound:SoundCommand = new SoundCommand();
 		
 		//util
 		public var _path:Path_Generator = new Path_Generator();
-		
-		//visual base
-		public var _text:Visual_Text = new Visual_Text();
-		public var _debugTool:Visual_debugTool = new Visual_debugTool();
 		
 		//visual
 		public var _pokerhandler:Visual_poker = new Visual_poker();
@@ -82,7 +71,7 @@ package
 		
 		public function appConfig() 
 		{
-			
+			Debug.trace("DK init");
 		}
 	
 	}

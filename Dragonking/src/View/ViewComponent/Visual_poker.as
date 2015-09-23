@@ -35,7 +35,8 @@ package View.ViewComponent
 			table_hint.CleanList();
 			table_hint.Create_by_list(1, [ResName.open_tableitem], 0 , 0, 1, 0, 0, "Bet_");
 			table_hint.container.x = 272;
-			table_hint.container.y = 560;			
+			table_hint.container.y = 560;	
+			table_hint.container.visible = false;
 			
 			var pokerkind:Array = [ResName.just_turnpoker];
 			var playerCon:MultiObject = prepare(modelName.PLAYER_POKER, new MultiObject(), GetSingleItem("_view").parent.parent);
@@ -81,14 +82,14 @@ package View.ViewComponent
 			{								
 				var playerCon:MultiObject = Get(modelName.PLAYER_POKER);
 				playerCon.CleanList();				
-				playerCon.Create_by_list(2,pokerkind, 0 , 0, 2, 175, 0, "Bet_");
+				playerCon.Create_by_list(2,pokerkind, 0 , 0, 2, 184, 0, "Bet_");
 				playerCon.container.alpha = 0;				
 			}
 			if ( Get(modelName.BANKER_POKER) != null) 
 			{								
 				var bankerCon:MultiObject = Get(modelName.BANKER_POKER);
 				bankerCon.CleanList();			    
-				bankerCon.Create_by_list(2,pokerkind, 0 , 0, 2, 175, 0, "Bet_");
+				bankerCon.Create_by_list(2,pokerkind, 0 , 0, 2, 184, 0, "Bet_");
 				bankerCon.container.alpha = 0;				
 			}
 			
@@ -96,7 +97,7 @@ package View.ViewComponent
 			{				
 				var riverCon:MultiObject = Get(modelName.RIVER_POKER);
 				riverCon.CleanList();				
-				riverCon.Create_by_list(2, pokerkind, 0 , 0, 2, 175, 0, "Bet_");
+				riverCon.Create_by_list(2, pokerkind, 0 , 0, 2, 184, 0, "Bet_");
 				riverCon.container.alpha = 0;				
 			}
 			
@@ -108,6 +109,7 @@ package View.ViewComponent
 			_model.putValue(modelName.BANKER_POKER, [] );
 			_model.putValue(modelName.RIVER_POKER, []);
 			
+			Get("table_hint").container.visible = false;
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
@@ -121,7 +123,9 @@ package View.ViewComponent
 			_regular.FadeIn(bankerCon.container, 1, 1,null);
 			
 			var riverCon:MultiObject = Get(modelName.RIVER_POKER);
-			_regular.FadeIn(riverCon.container, 1, 1,null);
+			_regular.FadeIn(riverCon.container, 1, 1, null);
+			
+			Get("table_hint").container.visible = true;
 			
 		}
 		
@@ -255,20 +259,22 @@ package View.ViewComponent
 			dispatcher(new Intobject(type, "caculate_prob"));
 			//prob_cal();
 			
+			dispatcher(new Intobject(type, "check_result"));
+			
 			//TODO move to settle
 			//check_power_up_effect();
+			
 			//
-		}
+		}	
 		
 		public function check_power_up_effect():void
 		{			
 			var re:int = utilFun.Random(2);
-			var idx:int;
-			var arr:Array;
+			
 			if ( re)
 			{
-				idx = _model.getValue("power_pair_idx");
-				arr = _model.getValue("power_pair_posi")[idx];			
+				var idx:int = _model.getValue("power_pair_idx");
+				var arr:Array = _model.getValue("power_pair_posi")[idx];			
 				GetSingleItem("contractpower").x = arr[0];
 				GetSingleItem("contractpower").y = arr[1];			
 				GetSingleItem("contractpower").gotoAndPlay(2);
@@ -282,8 +288,8 @@ package View.ViewComponent
 			}						
 			else
 			{
-				idx = _model.getValue("power_3_idx");
-				arr = _model.getValue("power_3_posi")[idx];
+				var idx:int = _model.getValue("power_3_idx");
+				var arr:Array = _model.getValue("power_3_posi")[idx];
 			
 				GetSingleItem("contractpower").x = arr[0];
 				GetSingleItem("contractpower").y = arr[1];			
@@ -357,7 +363,7 @@ package View.ViewComponent
 		//傳回值 -1 表示第一個參數 a 是在第二個參數 b 之前。
 		//傳回值 1 表示第二個參數 b 是在第一個參數 a 之前。
 		//傳回值 0 指出元素都具有相同的排序優先順序。
-		private function order(a:String, b:String):int 
+		private function order(a, b):int 
 		{
 			var apoint:String = a.substr(0, 1);
 			var bpoint:String = b.substr(0, 1);
