@@ -361,6 +361,7 @@ package View.ViewComponent
 		{
 			//history recode 
 			utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
+			utilFun.Log("playerwin  =  " + playPoint +" bankerwin  =  " + bankerPoint);	
 			var history:Array = _model.getValue("history_win_list");
 			var arr:Array = [];
 			if ( !playerwin && !bankerwin) 
@@ -385,6 +386,7 @@ package View.ViewComponent
 			
 			utilFun.Log("arr = " + arr);
 			history.push(arr);
+			utilFun.Log("history = " + history);
 			if ( history.length > 60) history.shift();			
 			_model.putValue("history_win_list",history);			
 		}

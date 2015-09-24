@@ -320,6 +320,17 @@ package util
 		}
 		
 		//隨機亂數
+		public static function Random_N(Range:int,Cnt:int):Array
+		{
+			var temp:Array = [];
+			for ( var k:int = 0; k< Cnt; k++)
+			{
+				temp.push(utilFun.Random(Range));
+			}
+			return temp;
+		}
+		
+		//隨機亂數
 		public static function Random(Range:int):int
 		{
 			return Math.random() * Range;

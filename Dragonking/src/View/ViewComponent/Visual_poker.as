@@ -246,11 +246,9 @@ package View.ViewComponent
 			
 			dispatcher(new Intobject(type, "show_judge"));
 			
-			dispatcher(new Intobject(type, "caculate_prob"));			
-			//判點數及字
-			//dispatcher(new Intobject(type, "check_result"));
+			prob_cal();
+			dispatcher(new Intobject(type, "caculate_prob"));	
 			
-			//prob_cal();
 			//TODO move to settle
 			//check_power_up_effect();
 			
@@ -294,11 +292,7 @@ package View.ViewComponent
 			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
 			
 			var ppoint:int = pokerUtil.countPoint(ppoker);
-			var bpoint:int = pokerUtil.countPoint(bpoker);
-			utilFun.Log("p ppoker="+ppoker);
-			utilFun.Log("p bpoker="+bpoker);
-			utilFun.Log("p ="+ppoint);
-			utilFun.Log("b ="+bpoint);
+			var bpoint:int = pokerUtil.countPoint(bpoker);			
 			if ( ppoint > bpoint ) 
 			{
 				utilFun.Log("p>b");
@@ -392,6 +386,11 @@ package View.ViewComponent
 		
 		public function prob_cal():void
 		{
+			var arr:Array = utilFun.Random_N(80, 8);
+			arr.push(utilFun.Random(8));
+			_model.putValue("percent_prob",arr);
+			return;
+			
 			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
 			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
 			var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);

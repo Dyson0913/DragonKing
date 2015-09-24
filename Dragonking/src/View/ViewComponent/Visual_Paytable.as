@@ -122,13 +122,15 @@ package View.ViewComponent
 			Get("Historytable").container.visible = true;
 			
 			Get("opencard_betinfo").container.visible = false;
-			Get("opencard_bet_amount").container.visible = false;	
-			update_history();
+			Get("opencard_bet_amount").container.visible = false;				
+			update_history();			
+			
+			
 		}
 		
 		public function update_history():void
 		{
-			var history_model:Array = _model.getValue("history_win_list");
+			var history_model:Array = _model.getValue("history_win_list");			
 			Get("historyball").CustomizedData = history_model;
 			Get("historyball").CustomizedFun = history_ball_Setting;
 			Get("historyball").FlushObject();
@@ -136,15 +138,14 @@ package View.ViewComponent
 		
 		public function history_ball_Setting(mc:MovieClip, idx:int, data:Array):void
 		{			
-			var info:Array =  data[idx];
-			utilFun.Log("history_ball_Setting " + data[idx]);
+			var info:Array =  data[idx];			
 			if ( data[idx] == undefined ) return;
 			var frame:int = info[0];
 			if ( info[0] != 5)
 			{				
 				mc["_Text"].text = info[1];
 			}
-			mc.gotoAndStop(frame);
+			mc.gotoAndStop(frame);			
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
@@ -176,19 +177,21 @@ package View.ViewComponent
 			utilFun.Log("font = "+font);
 			Get("opencard_bet_amount").CustomizedData = font;
 			Get("opencard_bet_amount").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
-		}
+		}		
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
-		public function timer_hide():void
+		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
+		public function hide():void
 		{
-			_model.putValue("percent_prob",[0,0,0,0,0,0,0,0]);						
+			var zero:Array = utilFun.Random_N(0, 8);
+			zero.push(-1);
+			_model.putValue("percent_prob",zero);		
+			prob_percentupdate();
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
 		public function settle_parse():void
-		{
-			var probpercet:MultiObject = Get("prob");
-			probpercet.container.visible = false;
+		{			
+			Get("prob").container.visible = false;
 			
 			//Get("Historytable").container.visible = false;
 		}
@@ -198,15 +201,12 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="caculate_prob")]
 		public function prob_percentupdate():void
 		{			
-			var probpercet:MultiObject = Get("prob");
-			probpercet.container.visible = true;
-			var ln:int = probpercet.ItemList.length;
-			
-			var percentlist:Array = _model.getValue("percent_prob");
-			var hiest:int = utilFun.Random(ln);			
+			var percentlist:Array = _model.getValue("percent_prob");	
+			var ln:int = percentlist.length - 1;				
+			var hiest:int = percentlist[percentlist.length-1];			
 			for ( var i:int = 0; i < ln; i ++ )
 			{				
-				var per:int = utilFun.Random(50);
+				var per:int = percentlist[i];
 				var gowithd:int =  125 * (per /100);
 				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), per, 5,hiest == i] } );
 			}
