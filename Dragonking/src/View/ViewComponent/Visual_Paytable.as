@@ -164,13 +164,8 @@ package View.ViewComponent
 			{				
 				var map:int = maping.getValue(zone[i]);				 
 				mylist.splice(map, 0,_betCommand.get_total_bet(zone[i]));
-			}
-			
-			//和,莊對,閒對,特殊牌型
-			mylist.push(0);
-			mylist.push(0);
-			mylist.push(0);
-			mylist.push(0);
+			}			
+			utilFun.Log("-----------------------"+_betCommand.all_betzone_totoal());
 			mylist.push(_betCommand.all_betzone_totoal());		
 			var font:Array = [{size:24,align:_gameinfo.align_right,color:0xFF0000}];
 			font = font.concat(mylist);

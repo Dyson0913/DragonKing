@@ -52,7 +52,7 @@ package View.ViewComponent
 				//pz.ItemList[i].gotoAndStop(2);
 			//}					
 			//
-			//_tool.SetControlMc(pz.ItemList[1]);
+			//_tool.SetControlMc(pz.ItemList[5]);
 			//_tool.SetControlMc(pz.container);
 			//_tool.y = 200;
 			//add(_tool);

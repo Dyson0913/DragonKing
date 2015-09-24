@@ -77,7 +77,7 @@ package View.ViewComponent
 			settletable_zone.container.x = 70;
 			settletable_zone.container.y = 90;		
 			settletable_zone.CustomizedFun = _gameinfo.textSetting;
-			settletable_zone.CustomizedData = [{size:24}, "莊","閒","莊對","閒對","特殊牌型","和","合計"];
+			settletable_zone.CustomizedData = [{size:24}, "莊","閒","和","莊對","閒對","特殊牌型","合計"];
 			settletable_zone.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 50, "Bet_");		
 			
 			var settletable_zone_bet:MultiObject = prepare("settletable_zone_bet", new MultiObject(), settletable.container);		
@@ -243,9 +243,8 @@ package View.ViewComponent
 			var clean:Array = [];
 			for ( var i:int = 0; i < num; i++)
 			{
-				var resultob:Object = result_list[i];
-				utilFun.Log("Win_state=" + resultob.win_state);
-				utilFun.Log("bet_type=" + resultob.bet_type);
+				var resultob:Object = result_list[i];				
+				utilFun.Log("bet_type=" + resultob.bet_type  + "  " + resultob.win_state);
 				
 				//coin 清除區
 				if ( resultob.win_state == "WSLost") clean.push (name_to_idx.getValue(resultob.bet_type));
@@ -360,8 +359,8 @@ package View.ViewComponent
 		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int):void
 		{
 			//history recode 
-			utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
-			utilFun.Log("playerwin  =  " + playPoint +" bankerwin  =  " + bankerPoint);	
+			//utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
+			//utilFun.Log("playerwin  =  " + playPoint +" bankerwin  =  " + bankerPoint);	
 			var history:Array = _model.getValue("history_win_list");
 			var arr:Array = [];
 			if ( !playerwin && !bankerwin) 
@@ -383,10 +382,9 @@ package View.ViewComponent
 				}
 			}
 			//TODO 特
-			
-			utilFun.Log("arr = " + arr);
+						
 			history.push(arr);
-			utilFun.Log("history = " + history);
+			//utilFun.Log("history = " + history);
 			if ( history.length > 60) history.shift();			
 			_model.putValue("history_win_list",history);			
 		}

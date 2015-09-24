@@ -39,8 +39,8 @@ package Command
 			_model.putValue("after_bet_credit", 0);
 			
 			//閒對,閒,和,莊,莊對
-			var betzone:Array = [0, 1 ];// 2, 3, 4, 5];			
-			var betzone_name:Array = ["BetBWPlayer", "BetBWBanker", "BetBWTie", "BetBWBankerPair", "BetBWPlayerPair", "BetBWSpecial"];
+			var betzone:Array = [0, 1, 2, 3, 4, 5];
+			var betzone_name:Array = ["BetBWPlayer", "BetBWBanker", "BetBWTiePoint", "BetBWBankerPair", "BetBWPlayerPair", "BetBWSpecial"];
 			
 			var bet_name_to_idx:DI = new DI();
 			var bet_idx_to_name:DI = new DI();
@@ -54,10 +54,10 @@ package Command
 			
 			_idx_to_result_idx.putValue("0", 1);
 			_idx_to_result_idx.putValue("1", 0);
-			_idx_to_result_idx.putValue("2", 5);
-			_idx_to_result_idx.putValue("3", 2);
-			_idx_to_result_idx.putValue("4", 3);
-			_idx_to_result_idx.putValue("5", 4);
+			_idx_to_result_idx.putValue("2", 2);
+			_idx_to_result_idx.putValue("3", 3);
+			_idx_to_result_idx.putValue("4", 4);
+			_idx_to_result_idx.putValue("5", 5);
 			_model.putValue("idx_to_result_idx", _idx_to_result_idx);		
 			//_model.putValue("BetBWPlayer", 0);
 			//_model.putValue("BetBWBanker", 1);			
@@ -82,8 +82,8 @@ package Command
 			_model.putValue(modelName.AVALIBLE_ZONE, avaliblezone);
 			_model.putValue(modelName.AVALIBLE_ZONE_S, avaliblezone_s);
 						
-			_model.putValue(modelName.AVALIBLE_ZONE_XY,  [[0, 0], [644, 3], [420, 100], [730, -72], [128, -66], [469, 2]]);
-			_model.putValue(modelName.COIN_STACK_XY,   [ [30, 0], [670, -10],  [360, 53], [640, -110], [50, -120], [360, -62]]);
+			_model.putValue(modelName.AVALIBLE_ZONE_XY,  [[0, 0], [644, 3], [356, 129], [973, 58], [-259, 48], [369, 3]]);
+			_model.putValue(modelName.COIN_STACK_XY,   [ [30, 0], [670, -10],  [350, 23], [970, -20], [-279, -12], [340, -182]]);
 			
 			var poermapping:DI = new DI();			
 			poermapping.putValue("WSBWStraight", 2);
@@ -194,7 +194,7 @@ package Command
 		
 		public function all_betzone_totoal():Number
 		{
-			var betzone:Array = _model.getValue(modelName.BET_ZONE);
+			var betzone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);
 			
 			var total:Number = 0;
 			for each (var i:int in betzone)

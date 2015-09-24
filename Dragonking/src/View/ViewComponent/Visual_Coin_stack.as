@@ -49,7 +49,7 @@ package View.ViewComponent
 			
 							
 			//
-			//_tool.SetControlMc(coinstack.ItemList[1]);
+			//_tool.SetControlMc(coinstack.ItemList[5]);
 			//_tool.SetControlMc(coinstack.container);
 			//_tool.y  = 200;
 			//add(_tool);		
