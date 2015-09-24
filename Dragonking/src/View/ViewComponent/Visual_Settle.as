@@ -39,9 +39,9 @@ package View.ViewComponent
 		{
 			var zoneCon:MultiObject = prepare("zone", new MultiObject(), GetSingleItem("_view").parent.parent);
 			zoneCon.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			zoneCon.Post_CustomizedData = [[0, 0], [1020, 0], [550, 0]];
+			zoneCon.Post_CustomizedData = [[0, 0], [1013, 0], [557, 0]];
 			zoneCon.Create_by_list(3, [ResName.playerScore, ResName.bankerScore,ResName.TieScore], 0 , 0, 3, 500, 0, "Bet_");					
-			zoneCon.container.x = 370;
+			zoneCon.container.x = 378;
 			zoneCon.container.y = 560;			
 			
 			var bigwinfire:MultiObject = prepare("bigwinfire", new MultiObject(), GetSingleItem("_view").parent.parent);
@@ -135,7 +135,7 @@ package View.ViewComponent
 			result_str_list.Create_by_list(1, [ResName.TextInfo], 0 , 0,1,0 , 0, "Bet_");		
 			
 			//_tool.SetControlMc(zoneCon.container);
-			//_tool.SetControlMc(zoneCon.ItemList[1]);
+			//_tool.SetControlMc(zoneCon.ItemList[2]);
 			//_tool.y = 200;
 			//add(_tool);
 			Clean();
@@ -297,6 +297,7 @@ package View.ViewComponent
 			_model.putValue("result_zonebet_amount",zonebet_amount);
 			_model.putValue("result_total", total);
 			_model.putValue("result_str_list", result_str);
+			_model.putValue("winstr", winst);
 			
 			var wintzone:Array = utilFun.Get_restItem(betZone, clean);
 			//utilFun.Log("clean zone =" + clean);
@@ -324,29 +325,28 @@ package View.ViewComponent
 			//大獎
 			if ( bigwin!=-1)
 			{				
-				//GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
-				//GetSingleItem("bigwinfire").gotoAndPlay(2);				
+				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
+				GetSingleItem("bigwinfire").gotoAndPlay(2);				
 				//_regular.FadeIn( GetSingleItem("bigwinmsg"), 2, 2, _regular.Fadeout);
 				//utilFun.scaleXY(GetSingleItem("bigwinmsg"), 0, 0);
-				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 1.2,scaleY:1.2, time:0.5,transition:"linear",onCompleteParams:[GetSingleItem("bigwinmsg")],onComplete:rubber_out } );
+				Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 1.2,scaleY:1.2, time:0.5,transition:"linear",onCompleteParams:[GetSingleItem("bigwinmsg")],onComplete:rubber_out } );
 				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 0.8,scaleY:0.8, time:0.5,transition:"easeOutCubic" } );
 				//_regular.rubber_effect(GetSingleItem("bigwinmsg"), 1, 1, 0.4, 0.4, _regular.rubber_effect);
 			}
+			else
+			{
+				//patytable提示框			
+				dispatcher(new StringObject(_model.getValue("winstr"), "winstr_hint"));
+				
+				//show誰贏
+				dispatcher(new Intobject(1, "show_who_win"));			
+				
+				//結算表
+				_regular.Call(this, { onComplete:this.showAni}, 1, 2, 1, "linear");
+			}
 						
-			//patytable提示框			
-			dispatcher(new StringObject(winst, "winstr_hint"));
-			
-			//show誰贏
-			dispatcher(new Intobject(1, "show_who_win"));
-			
 			//歷史記錄
 			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin);
-			
-			var delaytime:int = 2;
-			if ( bigwin != -1) delaytime = 3;
-			
-			//結算表
-			_regular.Call(this, { onComplete:this.showAni}, 1, delaytime, 1, "linear");
 		}
 		
 		public function showAni():void
@@ -364,7 +364,16 @@ package View.ViewComponent
 		
 		public function rubber_over(mc:MovieClip):void
 		{
-			Tweener.addTween(mc, { scaleX: 1,scaleY:1, time:0.5,transition:"linear" } );
+			Tweener.addTween(mc, { scaleX: 1, scaleY:1, time:0.5, transition:"linear" } );		
+			
+			//show誰贏
+			dispatcher(new Intobject(1, "show_who_win"));			
+			
+			//patytable提示框			
+			dispatcher(new StringObject(_model.getValue("winstr"), "winstr_hint"));
+			
+			//結算表
+			_regular.Call(this, { onComplete:this.showAni}, 1, 1, 1, "linear");
 		}
 		
 		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int,bigwin:int):void

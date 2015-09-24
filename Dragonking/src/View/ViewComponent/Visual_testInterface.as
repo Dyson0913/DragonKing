@@ -292,8 +292,8 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "2")]
 		public function settleScript():void
 		{
-			_model.putValue(modelName.PLAYER_POKER, ["4d","2s"]);				
-			_model.putValue(modelName.BANKER_POKER, ["2s","4s"]);		
+			_model.putValue(modelName.PLAYER_POKER, ["3d","2s"]);				
+			_model.putValue(modelName.BANKER_POKER, ["2h","3s"]);		
 			_model.putValue(modelName.RIVER_POKER, ["5c","6c",]);					
 			
 			
@@ -313,6 +313,9 @@ package View.ViewComponent
 			_paytable.init();		
 			_paytable.settle_parse();
 			
+			_poker.init();
+			dispatcher(new ModelEvent("hide"));
+			
 			//================================================settle info
 			_settle.init();			
 			dispatcher(new Intobject(modelName.PLAYER_POKER, "show_judge"));
@@ -324,19 +327,14 @@ package View.ViewComponent
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
 			//
-			var fakePacket:Object =  { "result_list": [
-			                                                                {"bet_type": "BetBWPlayer", "settle_amount": 200, "odds": 2, "win_state": "WSBWTwoPair", "bet_amount": 100 },
-																			{"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 100 } ],
-																			"game_state": "EndRoundState", 
-																			"game_result_id": "225761", 
-																			"timestamp": 1439967961.396191, 
-																			"remain_time": 4, 
-																			"game_type": "BigWin", 
-																			"game_round": 1, 
-																			"game_id": "BigWin-1", 
-																			"message_type": 
-																			"MsgBPEndRound", 
-			"id": "bfc643be464011e599caf23c9189e2a9" } ;
+			var fakePacket:Object =  { "result_list": [ 
+			{ "bet_type": "BetBWPlayer", "settle_amount": 390.0, "odds": 1.95, "win_state": "WSBWNormalWin", "bet_amount": 200 }, 
+			{"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 }, 
+			{"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 }, 
+			{"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 0, "win_state": "WSBWStraight", "bet_amount": 200 }, 
+			{"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 }, 
+			{"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 } ],
+			"game_state": "EndRoundState", "game_result_id": "290315", "timestamp": 1443110880.443993, "remain_time": 9, "game_type": "BigWin", "game_round": 241, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "6d822d4062d611e5b419f23c9189e2a9"}
 			
 			//var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 390.0, "odds": 1.95, "win_state": "WSBWNormalWin", "bet_amount": 200}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200}], "game_state": "EndRoundState", "game_result_id": "289437", "timestamp": 1443076591.380827, "remain_time": 4, "game_type": "BigWin", "game_round": 12, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "97a25b5e628611e59890f23c9189e2a9"}
 			

@@ -159,6 +159,8 @@ package View.ViewComponent
 			Get("pay_mark").container.visible = true;
 			Get("pay_odd").container.visible = true;
 			
+			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
+			
 			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型賠率"];		
 			Get("pay_title").FlushObject();
 		}
