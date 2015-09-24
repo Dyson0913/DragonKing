@@ -15,8 +15,7 @@ package ConnectModule.websocket
 	import util.DI;
 	
 	import Model.valueObject.*;
-		
-	import View.GameView.CardType;
+	
 	import View.GameView.gameState;
 	import util.utilFun;	
 	import ConnectModule.websocket.Message

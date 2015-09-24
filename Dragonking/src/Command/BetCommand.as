@@ -85,7 +85,9 @@ package Command
 			_model.putValue(modelName.AVALIBLE_ZONE_XY,  [[0, 0], [644, 3], [356, 129], [973, 58], [-259, 48], [369, 3]]);
 			_model.putValue(modelName.COIN_STACK_XY,   [ [30, 0], [670, -10],  [350, 23], [970, -20], [-279, -12], [340, -182]]);
 			
-			var poermapping:DI = new DI();			
+			var poermapping:DI = new DI();	
+			poermapping.putValue("WSBWTwoPair", 0);
+			poermapping.putValue("WSBWTripple", 1);
 			poermapping.putValue("WSBWStraight", 2);
 			poermapping.putValue("WSBWFlush", 3);
 			poermapping.putValue("WSBWFullHouse", 4);
@@ -93,6 +95,17 @@ package Command
 			poermapping.putValue("WSBWStraightFlush", 6);
 			poermapping.putValue("WSBWRoyalFlush", 7);
 			_model.putValue(modelName.BIG_POKER_MSG , poermapping);
+			
+			var history_str:DI = new DI();	
+			history_str.putValue(0, "2P");
+			history_str.putValue(1, "3K");
+			history_str.putValue(2, "STR");
+			history_str.putValue(3, "FLU");
+			history_str.putValue(4, "FUH");
+			history_str.putValue(5, "4K");
+			history_str.putValue(6, "STF");
+			history_str.putValue(7, "RTF");
+			_model.putValue(modelName.SMALL_POKER_MSG , history_str);
 			
 			var poer_msg:DI = new DI();		
 			poer_msg.putValue("WS_Twopair", "兩對");

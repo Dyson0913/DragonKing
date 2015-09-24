@@ -23,11 +23,7 @@ package View.ViewComponent
 	 * @author ...
 	 */
 	public class Visual_Settle  extends VisualHandler
-	{
-	
-		[Inject]
-		public var _paytable:Visual_Paytable;
-		
+	{		
 		[Inject]
 		public var _betCommand:BetCommand;
 		
@@ -337,18 +333,14 @@ package View.ViewComponent
 				//_regular.rubber_effect(GetSingleItem("bigwinmsg"), 1, 1, 0.4, 0.4, _regular.rubber_effect);
 			}
 						
-			//patytable提示框
-			utilFun.Log("winst = "+winst);
-			_paytable.win_frame_hint(winst);
+			//patytable提示框			
+			dispatcher(new StringObject(winst, "winstr_hint"));
 			
 			//show誰贏
 			dispatcher(new Intobject(1, "show_who_win"));
 			
 			//歷史記錄
-			var isTie:int = 0;
-			var isPlayPair:int = 0;
-			var isbankerPair:int = 0;
-			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair);
+			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin);
 			
 			var delaytime:int = 2;
 			if ( bigwin != -1) delaytime = 3;
@@ -375,20 +367,30 @@ package View.ViewComponent
 			Tweener.addTween(mc, { scaleX: 1,scaleY:1, time:0.5,transition:"linear" } );
 		}
 		
-		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int):void
+		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int,bigwin:int):void
 		{
 			//history recode 
 			//utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
 			//utilFun.Log("playerwin  =  " + playPoint +" bankerwin  =  " + bankerPoint);	
 			var history:Array = _model.getValue("history_win_list");
 			var arr:Array = [];
+			if ( bigwin != -1)
+			{
+				//寫字大獎
+				arr.push(5);
+				arr.push(0);
+				arr.push(0);
+				arr.push(0);
+				arr.push(bigwin);
+				
+			}
 			if ( !playerwin && !bankerwin) 
 			{
 				arr.push(5);
 				arr.push(playPoint);
 			
 			}
-			else 
+			else
 			{
 				if ( playerwin == 1) 
 				{

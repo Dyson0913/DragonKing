@@ -1,6 +1,7 @@
 package View.ViewComponent 
 {
 	import asunit.errors.AbstractError;
+	import caurina.transitions.properties.DisplayShortcuts;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -65,8 +66,8 @@ package View.ViewComponent
 			var historyball:MultiObject = prepare("historyball", new MultiObject() ,   historytable.container);
 			historyball.container.x = 10;
 			historyball.container.y = 10;
+			historyball.Post_CustomizedData = [6, 33, 33 ];
 			historyball.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-			historyball.Post_CustomizedData = [6,33,33 ];
 			historyball.Create_by_list(60, [ResName.historyball], 0, 0, 1, 0, 0, "histor");
 			
 			//集氣吧
@@ -106,10 +107,10 @@ package View.ViewComponent
 			opencard_bet_amount.container.y =  140;	
 						
 			//
-			//_tool.SetControlMc(paytable_baridx.container);
+			_tool.SetControlMc(paytable_baridx.container);
 			//_tool.SetControlMc(contractpower.ItemList[0]);
-			//_tool.y = 200;
-			//add(_tool);			
+			_tool.y = 200;
+			add(_tool);			
 		}
 	
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
@@ -138,19 +139,26 @@ package View.ViewComponent
 		
 		public function history_ball_Setting(mc:MovieClip, idx:int, data:Array):void
 		{	
-			//frame,point,playerPair,bankerPair
+			//frame,point,playerPair,bankerPair			
 			var info:Array =  data[idx];			
-			if ( data[idx] == undefined ) return;
-			var frame:int = info[0];
-			if ( info[0] != 5)
-			{				
-				mc["_Text"].text = info[1];
+			utilFun.Log("info "+info);
+			if (info == null ) return;
+			
+			if( info[4] !=-1)
+			{
+				var str:DI = _model.getValue(modelName.SMALL_POKER_MSG);				
+				mc.gotoAndStop(5);
+				utilFun.Log(" str.getValue(info[4]) "+ str.getValue(info[4]));
+				mc["_Text"].text = str.getValue(info[4])
+				return;
 			}
-			mc.gotoAndStop(frame);		
+			var frame:int = info[0];
+			mc.gotoAndStop(frame);						
+			mc["_Text"].text = info[1];
 			
 			if ( info[2] == 1 && info[3] == 1) mc["_pair"].gotoAndStop(4);
-			if ( info[2] == 1) mc["_pair"].gotoAndStop(3);		
-			if ( info[3] == 1) mc["_pair"].gotoAndStop(2);		
+			else if ( info[2] == 1) mc["_pair"].gotoAndStop(3);		
+			else if ( info[3] == 1) mc["_pair"].gotoAndStop(2);		
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
@@ -237,23 +245,24 @@ package View.ViewComponent
 			//mc["_Text"].x = po;
 		}
 		
-		public function win_frame_hint(wintype:String):void
+		[MessageHandler(type = "Model.valueObject.StringObject",selector="winstr_hint")]
+		public function win_frame_hint(winstr:StringObject):void
 		{
+			var wintype:String = winstr.Value;
+			utilFun.Log("winst = " + wintype);
+			
 			if ( wintype == "") return ;
 			if (wintype ==  "WSWin" || wintype == "WSBWNormalWin")  return;
 			
 			var y:int = 0;			
-			if ( wintype == "WSBWTwoPair") y=225;
-			if ( wintype == "WSBWTripple") y=193;
-			if (wintype == "WSBWStraight") y = 161;
-			if ( wintype == "WSBWFlush") y = 128;
-			if (wintype == "WSBWFullHouse") y = 96;
-			if ( wintype == "WSBWFourOfAKind")y = 64;
-			if ( wintype == "WSBWStraightFlush") y = 32;
-			if ( wintype == "WSBWRoyalFlush") y=0;	
-				
-			
-			
+			if ( wintype == "WSBWTwoPair") y = 245;
+			if ( wintype == "WSBWTripple") y = 210;
+			if (wintype == "WSBWStraight") y = 175;
+			if ( wintype == "WSBWFlush") y = 140;
+			if (wintype == "WSBWFullHouse") y = 105;
+			if ( wintype == "WSBWFourOfAKind")y = 70;
+			if ( wintype == "WSBWStraightFlush") y = 35;
+			if ( wintype == "WSBWRoyalFlush") y = 0;	
 			
 			GetSingleItem("paytable_baridx").y = y;
 			_regular.Twinkle(GetSingleItem("paytable_baridx"), 5, 15, 2);
