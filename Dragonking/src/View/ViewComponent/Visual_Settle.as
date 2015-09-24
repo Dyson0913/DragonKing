@@ -328,8 +328,8 @@ package View.ViewComponent
 			//大獎
 			if ( bigwin!=-1)
 			{				
-				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
-				GetSingleItem("bigwinfire").gotoAndPlay(2);				
+				//GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
+				//GetSingleItem("bigwinfire").gotoAndPlay(2);				
 				//_regular.FadeIn( GetSingleItem("bigwinmsg"), 2, 2, _regular.Fadeout);
 				//utilFun.scaleXY(GetSingleItem("bigwinmsg"), 0, 0);
 				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 1.2,scaleY:1.2, time:0.5,transition:"linear",onCompleteParams:[GetSingleItem("bigwinmsg")],onComplete:rubber_out } );

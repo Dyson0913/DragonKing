@@ -38,9 +38,9 @@ package View.ViewComponent
 			
 			var paytable_baridx:MultiObject = prepare("paytable_baridx", new MultiObject() ,  GetSingleItem("_view").parent.parent);
 			paytable_baridx.container.x = 224;
-			paytable_baridx.container.y =  169;
+			paytable_baridx.container.y =  161;
 			paytable_baridx.Create_by_list(1, [ResName.paytable_baridx], 0, 0, 1, 0, 0, "time_");			
-			//paytable_baridx.ItemList[0].gotoAndStop(2);			
+			paytable_baridx.ItemList[0].gotoAndStop(2);			
 			
 			//賠率提示
 			var paytable:MultiObject = prepare("paytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
@@ -106,7 +106,7 @@ package View.ViewComponent
 			opencard_bet_amount.container.y =  140;	
 						
 			//
-			//_tool.SetControlMc(opencard_bet_amount.container);
+			//_tool.SetControlMc(paytable_baridx.container);
 			//_tool.SetControlMc(contractpower.ItemList[0]);
 			//_tool.y = 200;
 			//add(_tool);			
@@ -243,12 +243,15 @@ package View.ViewComponent
 			if (wintype ==  "WSWin" || wintype == "WSBWNormalWin")  return;
 			
 			var y:int = 0;			
+			if ( wintype == "WSBWTwoPair") y=225;
+			if ( wintype == "WSBWTripple") y=193;
 			if (wintype == "WSBWStraight") y = 161;
 			if ( wintype == "WSBWFlush") y = 128;
 			if (wintype == "WSBWFullHouse") y = 96;
 			if ( wintype == "WSBWFourOfAKind")y = 64;
 			if ( wintype == "WSBWStraightFlush") y = 32;
 			if ( wintype == "WSBWRoyalFlush") y=0;	
+				
 			
 			
 			

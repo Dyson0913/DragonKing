@@ -221,8 +221,7 @@ package util
 				total += point;
 			}	
 			
-			total %= 10;
-			if ( total == 0) total = 10;
+			total %= 10;			
 			return total;
 		}
 	}
