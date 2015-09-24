@@ -137,7 +137,8 @@ package View.ViewComponent
 		}
 		
 		public function history_ball_Setting(mc:MovieClip, idx:int, data:Array):void
-		{			
+		{	
+			//frame,point,playerPair,bankerPair
 			var info:Array =  data[idx];			
 			if ( data[idx] == undefined ) return;
 			var frame:int = info[0];
@@ -145,7 +146,11 @@ package View.ViewComponent
 			{				
 				mc["_Text"].text = info[1];
 			}
-			mc.gotoAndStop(frame);			
+			mc.gotoAndStop(frame);		
+			
+			if ( info[2] == 1 && info[3] == 1) mc["_pair"].gotoAndStop(4);
+			if ( info[2] == 1) mc["_pair"].gotoAndStop(3);		
+			if ( info[3] == 1) mc["_pair"].gotoAndStop(2);		
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
@@ -165,11 +170,11 @@ package View.ViewComponent
 				var map:int = maping.getValue(zone[i]);				 
 				mylist.splice(map, 0,_betCommand.get_total_bet(zone[i]));
 			}			
-			utilFun.Log("-----------------------"+_betCommand.all_betzone_totoal());
+			
 			mylist.push(_betCommand.all_betzone_totoal());		
 			var font:Array = [{size:24,align:_gameinfo.align_right,color:0xFF0000}];
 			font = font.concat(mylist);
-			utilFun.Log("font = "+font);
+			//utilFun.Log("font = "+font);
 			Get("opencard_bet_amount").CustomizedData = font;
 			Get("opencard_bet_amount").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
 		}		

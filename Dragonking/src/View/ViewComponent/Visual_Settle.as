@@ -238,6 +238,10 @@ package View.ViewComponent
 			var bankerwin:int = 0;
 			var winst:String = "";
 			
+			var isTie:int = 0;
+			var isPlayPair:int = 0;
+			var isbankerPair:int = 0;
+			
 			var playerPoint:int = pokerUtil.ca_point(_model.getValue(modelName.PLAYER_POKER));
 			var bankerPoint:int = pokerUtil.ca_point(_model.getValue(modelName.BANKER_POKER));
 			var clean:Array = [];
@@ -266,6 +270,18 @@ package View.ViewComponent
 					{
 						bankerwin = 1;						
 						if( bigwin == -1) result_str.push("莊贏");
+					}
+					if ( resultob.bet_type == "BetBWTiePoint" ) 
+					{
+						isTie = 1;
+					}
+					if ( resultob.bet_type == "BetBWPlayerPair" ) 
+					{
+						isPlayPair = 1;
+					}
+					if ( resultob.bet_type == "BetBWBankerPair" ) 
+					{
+						isbankerPair = 1;
 					}
 					winst = resultob.win_state;
 				}
@@ -329,7 +345,10 @@ package View.ViewComponent
 			dispatcher(new Intobject(1, "show_who_win"));
 			
 			//歷史記錄
-			history_add(playerwin, bankerwin,playerPoint,bankerPoint);
+			var isTie:int = 0;
+			var isPlayPair:int = 0;
+			var isbankerPair:int = 0;
+			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair);
 			
 			var delaytime:int = 2;
 			if ( bigwin != -1) delaytime = 3;
@@ -356,7 +375,7 @@ package View.ViewComponent
 			Tweener.addTween(mc, { scaleX: 1,scaleY:1, time:0.5,transition:"linear" } );
 		}
 		
-		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int):void
+		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int):void
 		{
 			//history recode 
 			//utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
@@ -367,6 +386,7 @@ package View.ViewComponent
 			{
 				arr.push(5);
 				arr.push(playPoint);
+			
 			}
 			else 
 			{
@@ -380,8 +400,15 @@ package View.ViewComponent
 					arr.push(3);
 					arr.push(bankerPoint);
 				}
+				else if ( isTie == 1) 
+				{
+					arr.push(4);
+					arr.push(bankerPoint);
+				}
 			}
 			//TODO 特
+			arr.push(isPlayPair);
+			arr.push(isbankerPair);
 						
 			history.push(arr);
 			//utilFun.Log("history = " + history);
