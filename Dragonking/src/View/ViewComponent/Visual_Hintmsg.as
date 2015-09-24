@@ -55,7 +55,7 @@ package View.ViewComponent
 			_regular.FadeIn( GetSingleItem(modelName.HINT_MSG), 2, 2, _regular.Fadeout);			
 		}		
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "public_ard")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "show_public_card_hint")]
 		public function public_ard():void
 		{
 			Get(modelName.HINT_MSG).container.visible = true;

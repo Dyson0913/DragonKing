@@ -84,8 +84,7 @@ package View.ViewComponent
 		public function init():void
 		{			
 			
-			_betCommand.bet_init();
-			_model.putValue("history_win_list", []);				
+			_betCommand.bet_init();			
 			_model.putValue("result_Pai_list", []);
 			_model.putValue("game_round", 1);			
 			
@@ -247,27 +246,25 @@ package View.ViewComponent
 			_gameinfo.opencard_parse();
 			
 			//=============================================paytable
-			var arr:Array = _model.getValue("history_win_list");			
+				var arr:Array = _model.getValue("history_win_list");			
 			for ( var i:int = 0; i < 10; i++)
 			{
-				var ran:int = utilFun.Random(3);
-				if ( ran == 1) arr.push(ResName.angelball);
-				else if ( ran == 2) arr.push(ResName.evilball);
-				else arr.push(ResName.Noneball);
-				_model.putValue("history_win_list", arr);
-			}
+				var ran:int = utilFun.Random(4) +1;
+				var point:int = utilFun.Random(9);			
+				arr.push([ran, point]);				
+			}			
 			_paytable.init();
-			_paytable.opencard_parse();
-			
+			//_paytable.opencard_parse();
+				
 			
 			//=============================================Hintmsg
 			_hint.init();
 			_model.putValue(modelName.GAMES_STATE,gameState.END_BET);
 			_hint.hide();			
-			
+		
 			//================================================poker
 			_poker.init();
-			dispatcher(new ModelEvent("hide"));
+			
 			
 			
 			
@@ -275,9 +272,12 @@ package View.ViewComponent
 			//_settle.init();
 			
 			
+			dispatcher(new ModelEvent("hide"));
+			
+			
 			//================================================ simu deal
-			var arr:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
-			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[arr] }, 25, 0, 6, "linear");						
+			var testpoker:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
+			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[testpoker] }, 25, 0, 6, "linear");						
 		}
 		
 		public function fackeDeal(type:Array):void
@@ -289,24 +289,25 @@ package View.ViewComponent
 			var card:String = cardlist[0];
 			type.shift();
 			cardlist.shift();
-			utilFun.Log("card = "+card);
+			utilFun.Log("card = " + card);
+			var mypoker:Array = [];
 			if ( card_type == "Player")
 			{										
-				var mypoker:Array = _model.getValue(modelName.PLAYER_POKER);										
+				mypoker = _model.getValue(modelName.PLAYER_POKER);										
 				mypoker.push(card);
 				_model.putValue(modelName.PLAYER_POKER, mypoker);										
 				dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_mi"));				
 			}
 			else if ( card_type == "Banker")
 			{							
-				var mypoker:Array = _model.getValue(modelName.BANKER_POKER);										
+				mypoker = _model.getValue(modelName.BANKER_POKER);										
 				mypoker.push( card);										
 				_model.putValue(modelName.BANKER_POKER, mypoker);									
 				dispatcher(new Intobject(modelName.BANKER_POKER, "poker_mi"));
 			}					
 			else if ( card_type == "River")
 			{							
-				var mypoker:Array = _model.getValue(modelName.RIVER_POKER);										
+				mypoker = _model.getValue(modelName.RIVER_POKER);										
 				mypoker.push( card);										
 				_model.putValue(modelName.RIVER_POKER, mypoker);										
 				dispatcher(new Intobject(modelName.RIVER_POKER, "poker_mi"));
@@ -318,7 +319,7 @@ package View.ViewComponent
 		public function settleScript():void
 		{
 			_model.putValue(modelName.PLAYER_POKER, ["4d","2s"]);				
-			_model.putValue(modelName.BANKER_POKER, ["2s","3s"]);		
+			_model.putValue(modelName.BANKER_POKER, ["2s","4s"]);		
 			_model.putValue(modelName.RIVER_POKER, ["5c","6c",]);					
 			
 			
@@ -334,15 +335,14 @@ package View.ViewComponent
 			//_hint.init();			
 			
 			//=============================================paytable
-			var arr:Array = _model.getValue("history_win_list");			
+				var arr:Array = _model.getValue("history_win_list");			
 			for ( var i:int = 0; i < 10; i++)
 			{
-				var ran:int = utilFun.Random(3);
-				if ( ran == 1) arr.push(ResName.angelball);
-				else if ( ran == 2) arr.push(ResName.evilball);
-				else arr.push(ResName.Noneball);
-				_model.putValue("history_win_list", arr);
+				var ran:int = utilFun.Random(4) +1;
+				var point:int = utilFun.Random(9);			
+				arr.push([ran, point]);				
 			}
+			_model.putValue("history_win_list", arr);
 			_paytable.init();		
 			_paytable.settle_parse();
 			
@@ -357,20 +357,24 @@ package View.ViewComponent
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
 			//
-			var fakePacket:Object =  { "result_list": [
-			                                                                {"bet_type": "BetBWPlayer", "settle_amount": 200, "odds": 2, "win_state": "WSBWFullHouse", "bet_amount": 100 },
-																			{"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 100 } ],
-																			"game_state": "EndRoundState", 
-																			"game_result_id": "225761", 
-																			"timestamp": 1439967961.396191, 
-																			"remain_time": 4, 
-																			"game_type": "BigWin", 
-																			"game_round": 1, 
-																			"game_id": "BigWin-1", 
-																			"message_type": 
-																			"MsgBPEndRound", 
-			"id": "bfc643be464011e599caf23c9189e2a9" } ;
+			//var fakePacket:Object =  { "result_list": [
+			                                                                //{"bet_type": "BetBWPlayer", "settle_amount": 200, "odds": 2, "win_state": "WSBWFullHouse", "bet_amount": 100 },
+																			//{"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 100 } ],
+																			//"game_state": "EndRoundState", 
+																			//"game_result_id": "225761", 
+																			//"timestamp": 1439967961.396191, 
+																			//"remain_time": 4, 
+																			//"game_type": "BigWin", 
+																			//"game_round": 1, 
+																			//"game_id": "BigWin-1", 
+																			//"message_type": 
+																			//"MsgBPEndRound", 
+			//"id": "bfc643be464011e599caf23c9189e2a9" } ;
 			
+			//var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 390.0, "odds": 1.95, "win_state": "WSBWNormalWin", "bet_amount": 200}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200}], "game_state": "EndRoundState", "game_result_id": "289437", "timestamp": 1443076591.380827, "remain_time": 4, "game_type": "BigWin", "game_round": 12, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "97a25b5e628611e59890f23c9189e2a9"}
+			
+			//和
+			var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "289581", "timestamp": 1443081966.387974, "remain_time": 4, "game_type": "BigWin", "game_round": 94, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "1b635bda629311e59890f23c9189e2a9"}
 			_MsgModel.push(fakePacket);			
 			
 		}

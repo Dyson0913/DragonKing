@@ -129,19 +129,6 @@ package View.ViewComponent
 			
 		}
 		
-		[MessageHandler(type = "Model.valueObject.Intobject",selector="pokerupdate")]
-		public function playerpokerupdate(type:Intobject):void
-		{
-		
-			var Mypoker:Array =   _model.getValue(type.Value);				
-			for ( var pokernum:int = 0; pokernum < Mypoker.length; pokernum++)
-			{
-				//paipathinit(type.Value, pokernum);
-				var pokerid:int = pokerUtil.pokerTrans(Mypoker[pokernum])
-				paideal(pokerid, type.Value, pokernum,true);
-			}			
-			
-		}
 		
 		[MessageHandler(type = "Model.valueObject.Intobject", selector = "poker_No_mi")]
 		public function poker_no_mi(type:Intobject):void
@@ -154,50 +141,51 @@ package View.ViewComponent
 				anipoker.visible = true;
 				anipoker.gotoAndStop(1);
 				anipoker["_poker"].gotoAndStop(pokerid);				
-				anipoker.gotoAndStop(anipoker.totalFrames);
-				
-				if ( pokernum == 1) this.showjudge(type.Value);
-				
+				anipoker.gotoAndStop(anipoker.totalFrames);				
 				//Tweener.addTween(anipoker["_poker"], { rotationZ:24.5, time:0.3,onCompleteParams:[anipoker,anipoker["_poker"],0],onComplete:this.pullback} );
 			}				
+			dispatcher(new Intobject(type.Value, "show_judge"));
 		}
 		
 		[MessageHandler(type = "Model.valueObject.Intobject", selector = "poker_mi")]
 		public function poker_mi(type:Intobject):void
 		{
 			var mypoker:Array =   _model.getValue(type.Value);
-			var pokerid:int = pokerUtil.pokerTrans(mypoker[mypoker.length - 1])			
-			
-			//if ( mypoker.length == 2)
-			//{				
-				//var mipoker:MultiObject = Get("mipoker");
-				//var mc:MovieClip = mipoker.ItemList[0];
-				//
-				//var pokerf:MovieClip = utilFun.GetClassByString(ResName.Poker);				
-				//var pokerb:MovieClip = utilFun.GetClassByString(ResName.poker_back);				
-				//var pokerm:MovieClip = utilFun.GetClassByString(ResName.pokermask);
-				//pokerb.x  = 140;
-				//pokerb.y  = 64;
-				//pokerf.x = 140;
-				//pokerf.y  = 64;
-				//pokerm.x = 136.35;
-				//pokerm.y = 185.8;
-				//pokerf.gotoAndStop(pokerid);
-				//pokerf.visible = false;
-				//pokerf.addChild(pokerm);
-				//mc.addChild(pokerf);
-				//mc.addChild(pokerb);				
-				//Tweener.addTween(mipoker.container, { alpha:1, time:1, onCompleteParams:[pokerf,pokerid,type.Value],onComplete:this.poker_mi_ani } );
-				//
-				//return;
-			//}			
+			var pokerid:int = pokerUtil.pokerTrans(mypoker[mypoker.length - 1]);		
+			if ( mypoker.length == 2 && type.Value != modelName.RIVER_POKER )
+			{				
+				Get("mipoker").CleanList();		
+				Get("mipoker").Create_by_list(1, [ResName.Mipoker_zone], 0 , 0, 1, 130, 0, "Bet_");
+				Get("mipoker").container.alpha = 0;
+				
+				var mipoker:MultiObject = Get("mipoker");
+				var mc:MovieClip = mipoker.ItemList[0];
+				
+				var pokerf:MovieClip = utilFun.GetClassByString(ResName.Poker);				
+				var pokerb:MovieClip = utilFun.GetClassByString(ResName.poker_back);				
+				var pokerm:MovieClip = utilFun.GetClassByString(ResName.pokermask);
+				pokerb.x  = 140;
+				pokerb.y  = 64;
+				pokerf.x = 140;
+				pokerf.y  = 64;
+				pokerm.x = 136.35;
+				pokerm.y = 185.8;
+				pokerf.gotoAndStop(pokerid);
+				pokerf.visible = false;
+				pokerf.addChild(pokerm);
+				mc.addChild(pokerf);
+				mc.addChild(pokerb);				
+				Tweener.addTween(mipoker.container, { alpha:1, time:1, onCompleteParams:[pokerf,pokerid,type.Value],onComplete:this.poker_mi_ani } );
+				
+				return;
+			}			
 			
 			var anipoker:MovieClip = GetSingleItem(type.Value, mypoker.length - 1);
 			anipoker.visible = true;
 			anipoker.gotoAndStop(1);
 			anipoker["_poker"].gotoAndStop(pokerid);			
 			anipoker.gotoAndPlay(2);
-			_regular.Call(anipoker, { onComplete:this.showjudge, onCompleteParams:[type.Value] }, 1, 0, 1);
+			_regular.Call(anipoker, { onComplete:this.show_point_prob, onCompleteParams:[type.Value] }, 1, 0, 1);
 			//Tweener.addTween(anipoker["_poker"], { rotationZ:24.5, time:0.3,onCompleteParams:[anipoker,anipoker["_poker"],0,mypoker.length,type.Value],onComplete:this.pullback} );
 		}
 		
@@ -235,6 +223,7 @@ package View.ViewComponent
 			anipoker["_poker"].gotoAndStop(pokerid);	
 			anipoker.gotoAndStop(anipoker.totalFrames);
 			
+			show_point_prob(pokertype);
 		}
 		
 		
@@ -249,58 +238,147 @@ package View.ViewComponent
 		{	
 			anipoker.gotoAndPlay(7);				
 			Tweener.addTween(mc, { rotationZ:angel, time:1, delay:1 } );
-			Tweener.addCaller( anipoker, { time:1 , count: 1 , transition:"linear", onCompleteParams:[type], onComplete: this.showjudge } );	
+			Tweener.addCaller( anipoker, { time:1 , count: 1 , transition:"linear", onCompleteParams:[type], onComplete: this.show_point_prob } );	
 		}
 		
-		public function showjudge(type:int):void
-		{
+		public function show_point_prob(type:int):void
+		{			
+			
 			dispatcher(new Intobject(type, "show_judge"));
 			
-			dispatcher(new Intobject(type, "caculate_prob"));
+			dispatcher(new Intobject(type, "caculate_prob"));			
+			//判點數及字
+			//dispatcher(new Intobject(type, "check_result"));
+			
 			//prob_cal();
-			
-			dispatcher(new Intobject(type, "check_result"));
-			
 			//TODO move to settle
 			//check_power_up_effect();
 			
-			//
-		}	
+		}
+		
+		[MessageHandler(type = "Model.valueObject.Intobject",selector="show_judge")]
+		public function early_check_point(type:Intobject):void
+		{
+			var Mypoker:Array =   _model.getValue(type.Value);
+			
+			var zone:int = -1;
+			if ( modelName.PLAYER_POKER == type.Value)  zone = 0;
+			else if ( modelName.BANKER_POKER == type.Value) zone = 1;
+			if ( zone == -1 ) return;
+			
+			if ( Mypoker.length != 2) return;
+			
+			var point:int = pokerUtil.countPoint(Mypoker);
+			
+			GetSingleItem("zone", zone ).gotoAndStop(2);
+			GetSingleItem("zone", zone)["_num0"].gotoAndStop(point);
+			
+			//是否該提示公牌
+			dispatcher(new Intobject(type.Value, "check_opencard_msg"));			
+		}
+		
+		[MessageHandler(type = "Model.valueObject.Intobject",selector="check_opencard_msg")]
+		public function early_check_result(type:Intobject):void
+		{			
+			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
+			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);			
+			
+			if ( ppoker.length + bpoker.length != 4) return;
+			dispatcher(new ModelEvent("show_public_card_hint"));		
+		}
+		
+		[MessageHandler(type = "Model.valueObject.Intobject", selector = "show_who_win")]
+		public function show_who_win():void
+		{
+			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
+			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
+			
+			var ppoint:int = pokerUtil.countPoint(ppoker);
+			var bpoint:int = pokerUtil.countPoint(bpoker);
+			utilFun.Log("p ppoker="+ppoker);
+			utilFun.Log("p bpoker="+bpoker);
+			utilFun.Log("p ="+ppoint);
+			utilFun.Log("b ="+bpoint);
+			if ( ppoint > bpoint ) 
+			{
+				utilFun.Log("p>b");
+				GetSingleItem("zone", 0 ).gotoAndStop(3);
+				GetSingleItem("zone", 0)["_num0"].gotoAndStop(ppoint);
+			}
+			else if ( ppoint < bpoint )
+			{
+				utilFun.Log("b>p");
+				GetSingleItem("zone", 1 ).gotoAndStop(3);
+				GetSingleItem("zone", 1)["_num0"].gotoAndStop(bpoint);
+			}
+			else
+			{
+				utilFun.Log("tie");
+				GetSingleItem("zone", 0 ).gotoAndStop(1);
+				GetSingleItem("zone", 1 ).gotoAndStop(1);
+				GetSingleItem("zone", 2 ).gotoAndStop(2);
+			}
+		}
+		
+		
+		//TODO compare to pounit
+		private function countPoint(poke:Array):int
+		{
+			var total:int = 0;
+			for (var i:int = 0; i < poke.length ; i++)
+			{
+				var strin:String =  poke[i];
+				var arr:Array = strin.match((/(\w|d)+(\w)+/));					
+				var numb:String = arr[1];				
+				
+				var point:int = 0;
+				if ( numb == "i" || numb == "j" || numb == "q" || numb == "k" ) 				
+				{
+					point = 10;
+				}				
+				else 	point = parseInt(numb);
+				
+				total += point;
+			}	
+			
+			return total %= 10;
+		}		
+		
 		
 		public function check_power_up_effect():void
 		{			
 			var re:int = utilFun.Random(2);
 			
-			if ( re)
-			{
-				var idx:int = _model.getValue("power_pair_idx");
-				var arr:Array = _model.getValue("power_pair_posi")[idx];			
-				GetSingleItem("contractpower").x = arr[0];
-				GetSingleItem("contractpower").y = arr[1];			
-				GetSingleItem("contractpower").gotoAndPlay(2);
-				
-				
-				GetSingleItem("power_bar_2pair", idx).gotoAndStop(2)
-				GetSingleItem("power_bar_2pair", idx).alpha = 0;
-				_regular.FadeIn ( GetSingleItem("power_bar_2pair", idx), 3, 3,null);
-				_opration.operator("power_pair_idx", DataOperation.add, 1);
-				
-			}						
-			else
-			{
-				var idx:int = _model.getValue("power_3_idx");
-				var arr:Array = _model.getValue("power_3_posi")[idx];
-			
-				GetSingleItem("contractpower").x = arr[0];
-				GetSingleItem("contractpower").y = arr[1];			
-				GetSingleItem("contractpower").gotoAndPlay(2);
-				
-				GetSingleItem("powerbar_3", idx).gotoAndStop(2);
-				GetSingleItem("powerbar_3", idx).alpha = 0;
-				_regular.FadeIn ( GetSingleItem("powerbar_3", idx), 3, 3,null);
-				_opration.operator("power_3_idx", DataOperation.add, 1);
-				
-			}			
+			//if ( re)
+			//{
+				//var idx:int = _model.getValue("power_pair_idx");
+				//var arr:Array = _model.getValue("power_pair_posi")[idx];			
+				//GetSingleItem("contractpower").x = arr[0];
+				//GetSingleItem("contractpower").y = arr[1];			
+				//GetSingleItem("contractpower").gotoAndPlay(2);
+				//
+				//
+				//GetSingleItem("power_bar_2pair", idx).gotoAndStop(2)
+				//GetSingleItem("power_bar_2pair", idx).alpha = 0;
+				//_regular.FadeIn ( GetSingleItem("power_bar_2pair", idx), 3, 3,null);
+				//_opration.operator("power_pair_idx", DataOperation.add, 1);
+				//
+			//}						
+			//else
+			//{
+				//var idx:int = _model.getValue("power_3_idx");
+				//var arr:Array = _model.getValue("power_3_posi")[idx];
+			//
+				//GetSingleItem("contractpower").x = arr[0];
+				//GetSingleItem("contractpower").y = arr[1];			
+				//GetSingleItem("contractpower").gotoAndPlay(2);
+				//
+				//GetSingleItem("powerbar_3", idx).gotoAndStop(2);
+				//GetSingleItem("powerbar_3", idx).alpha = 0;
+				//_regular.FadeIn ( GetSingleItem("powerbar_3", idx), 3, 3,null);
+				//_opration.operator("power_3_idx", DataOperation.add, 1);
+				//
+			//}			
 		
 			
 			
@@ -363,7 +441,7 @@ package View.ViewComponent
 		//傳回值 -1 表示第一個參數 a 是在第二個參數 b 之前。
 		//傳回值 1 表示第二個參數 b 是在第一個參數 a 之前。
 		//傳回值 0 指出元素都具有相同的排序優先順序。
-		private function order(a, b):int 
+		private function order(a:String, b:String):int 
 		{
 			var apoint:String = a.substr(0, 1);
 			var bpoint:String = b.substr(0, 1);
@@ -380,84 +458,8 @@ package View.ViewComponent
 			if ( parseInt( apoint)  < parseInt( bpoint) ) return -1;
 			else if (  parseInt( apoint) > parseInt( bpoint )) return 1;
 			else return 0;			
-		}
-		
-		[MessageHandler(type = "Model.valueObject.Intobject",selector="playerpokerAni")]
-		public function playerpokerani(type:Intobject):void
-		{				
-			var mypoker:Array =   _model.getValue(type.Value);			
-			//取得第n 張牌路徑			
-			paipathinit(type.Value, mypoker.length - 1);
-			var pokerid:int = pokerUtil.pokerTrans(mypoker[mypoker.length - 1])
-			paideal(pokerid, type.Value, mypoker.length - 1);
-			
-		}
-		
-		public function paideal(pokerid:int, cardtype:int, pokernum:int, static_deal:Boolean = false):void
-	   {		   
-		   	var mypoker:MovieClip = utilFun.GetClassByString(ResName.Poker);					
-			mypoker.gotoAndStop(pokerid);			
-			
-			var pokerbac:MovieClip = GetSingleItem(cardtype, pokernum);			
-			pokerbac.visible = true;
-			pokerbac.addChild(mypoker)
-			//_tool.SetControlMc(mypoker);
-			//add(_tool);
-			//
-			if ( static_deal )
-			{				
-				//pokerbac.rotationY = -180;
-				//Tweener.addTween(pokerbac, { rotationY: -180, time:1, transition:"easeInOutCubic" } )
-				//pokerbac.x = pokerpath [pokerpath.length-1].x;
-				//pokerbac.y = pokerpath [pokerpath.length - 1].y;
-			}
-			else
-			{
-				mypoker.visible = false;
-				mypoker.x = 168;
-				mypoker.rotationY = -180;
-				
-				pokerbac.rotation = -65;
-				pokerbac.scaleX = 0.48;
-				pokerbac.scaleY = 0.48;
-				
-				
-				pokerbac.x = pokerpath[0].x;
-				pokerbac.y = pokerpath[0].y;
-				Tweener.addTween(pokerbac, {
-					x:pokerpath [pokerpath.length -1].x,
-					y:pokerpath [pokerpath.length -1].y,
-					_bezier:_path.makeBesierArray(pokerpath),
-					time:0.5, onComplete:ok, onCompleteParams:[pokerbac,mypoker], transition:"linear"});
-			
-				Tweener.addTween(pokerbac, { scaleX:0.8, scaleY:0.8, rotation: 0, time:0.5, transition:"easeInOutCubic" } )
-			}
-	   }
-		
-	   public function ok(pokerbac:MovieClip,mypoker:MovieClip):void
-		{		
-			//翻牌
-			Tweener.addTween(pokerbac, { rotationY:-180, time:0.5, transition:"linear",onUpdate:this.show,onUpdateParams:[pokerbac,mypoker] } )
-		}
-		
-		public function show(pokerbac:MovieClip,mypoker:MovieClip):void
-		{			
-			if ( pokerbac.rotationY <= -100)
-			{
-				mypoker.visible = true;
-			}
-		}
-		
-		public function paipathinit(cardtype:int ,npoker:int):void
-		{
-			var path:Array;
-			if ( cardtype == modelName.PLAYER_POKER) path = _model.getValue("player_pokerpath")		
-			else path = _model.getValue("banker_pokerpath");
-			
-			pokerpath.length = 0;
-			pokerpath = _path.get_Path_isometric(path,npoker);
-			
-		}
+		}	 
+	
 	}
 
 }

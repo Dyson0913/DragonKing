@@ -33,7 +33,8 @@ package Res
 		public static const prob_square:String = "prob";
 		
 		public static const history_Item_select:String = "historyItem_select";
-		public static const historytable:String = "history_table";				
+		public static const historytable:String = "history_table";
+		public static const historyball:String = "history_ball";
 		public static const history_select_item_sencebar:String = "history_select_item_sence_bar";
 		
 		public static const powerbar:String = "power_bar";

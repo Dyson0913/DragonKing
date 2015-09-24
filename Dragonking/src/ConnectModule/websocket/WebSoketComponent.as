@@ -120,8 +120,7 @@ package ConnectModule.websocket
 						dispatcher(new ModelEvent("update_state"));
 						dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_No_mi"));
 						dispatcher(new Intobject(modelName.BANKER_POKER, "poker_No_mi"));
-						dispatcher(new Intobject(modelName.RIVER_POKER, "poker_No_mi"));
-						//dispatcher(new ModelEvent("update_result_Credit"));
+						dispatcher(new Intobject(modelName.RIVER_POKER, "poker_No_mi"));						
 					}
 					break;
 					
@@ -129,10 +128,10 @@ package ConnectModule.websocket
 					{				
 						var card:Array = result.card_list;
 						var card_type:String = result.card_type;
-						
+						var mypoker:Array =[];
 						if ( card_type == "Player")
 						{										
-							var mypoker:Array = _model.getValue(modelName.PLAYER_POKER);										
+							mypoker = _model.getValue(modelName.PLAYER_POKER);										
 							mypoker.push(card[0]);
 							_model.putValue(modelName.PLAYER_POKER, mypoker);										
 							dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_mi"));
@@ -140,14 +139,14 @@ package ConnectModule.websocket
 						}
 						else if ( card_type == "Banker")
 						{							
-							var mypoker:Array = _model.getValue(modelName.BANKER_POKER);										
+							mypoker = _model.getValue(modelName.BANKER_POKER);										
 							mypoker.push( card[0]);										
 							_model.putValue(modelName.BANKER_POKER, mypoker);									
 							dispatcher(new Intobject(modelName.BANKER_POKER, "poker_mi"));
 						}					
 						else if ( card_type == "River")
 						{							
-							var mypoker:Array = _model.getValue(modelName.RIVER_POKER);										
+							mypoker = _model.getValue(modelName.RIVER_POKER);										
 							mypoker.push( card[0]);										
 							_model.putValue(modelName.RIVER_POKER, mypoker);										
 							dispatcher(new Intobject(modelName.RIVER_POKER, "poker_mi"));
@@ -166,8 +165,7 @@ package ConnectModule.websocket
 					{
 						if (result.result == 0)
 						{
-							dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.BETRESULT));
-							dispatcher(new ModelEvent("updateCredit"));
+							dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.BETRESULT));							
 							dispatcher(new ModelEvent("updateCoin"));
 						}
 						else
@@ -184,8 +182,7 @@ package ConnectModule.websocket
 						//dispatcher(new ModelEvent("update_state"));
 						
 						dispatcher( new ValueObject(result.result_list, modelName.ROUND_RESULT));
-						dispatcher(new ModelEvent("round_result"));
-						//dispatcher(new ModelEvent("update_result_Credit"));
+						dispatcher(new ModelEvent("round_result"));						
 					}
 					break;
 					

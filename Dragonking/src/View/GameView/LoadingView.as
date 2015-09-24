@@ -88,8 +88,9 @@ package View.GameView
 			view.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "a_");
 					
 			utilFun.SetTime(connet, 0.1);
-			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
 			//_test.init();			
+			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
+			
 		}
 		private function connet():void
 		{	

@@ -46,8 +46,7 @@ package View.ViewComponent
 			zoneCon.Post_CustomizedData = [[0, 0], [1020, 0], [550, 0]];
 			zoneCon.Create_by_list(3, [ResName.playerScore, ResName.bankerScore,ResName.TieScore], 0 , 0, 3, 500, 0, "Bet_");					
 			zoneCon.container.x = 370;
-			zoneCon.container.y = 560;
-			//zoneCon.container.visible = false;
+			zoneCon.container.y = 560;			
 			
 			var bigwinfire:MultiObject = prepare("bigwinfire", new MultiObject(), GetSingleItem("_view").parent.parent);
 			bigwinfire.Create_by_list(1, [ResName.bigwinfire], 0 , 0, 1, 0, 0, "Bet_");			
@@ -140,9 +139,9 @@ package View.ViewComponent
 			result_str_list.Create_by_list(1, [ResName.TextInfo], 0 , 0,1,0 , 0, "Bet_");		
 			
 			//_tool.SetControlMc(zoneCon.container);
-			_tool.SetControlMc(zoneCon.ItemList[1]);
-			_tool.y = 200;
-			add(_tool);
+			//_tool.SetControlMc(zoneCon.ItemList[1]);
+			//_tool.y = 200;
+			//add(_tool);
 			Clean();
 		}
 		
@@ -207,17 +206,14 @@ package View.ViewComponent
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean():void
-		{
-			Get("zone").container.visible = false;			
-			
+		{			
 			var a:MultiObject = Get("zone");
 			for ( var i:int = 0; i <  a.ItemList.length; i++)
-			{
-				GetSingleItem("zone", i).visible = false;
+			{				
 				GetSingleItem("zone", i).gotoAndStop(1);
 			}
 			
-			Get("settletable").container.visible = false;			
+			Get("settletable").container.visible = false;		
 		}
 		
 		//move to model command to parse ,then send event
@@ -242,12 +238,14 @@ package View.ViewComponent
 			var bankerwin:int = 0;
 			var winst:String = "";
 			
+			var playerPoint:int = pokerUtil.ca_point(_model.getValue(modelName.PLAYER_POKER));
+			var bankerPoint:int = pokerUtil.ca_point(_model.getValue(modelName.BANKER_POKER));
 			var clean:Array = [];
 			for ( var i:int = 0; i < num; i++)
 			{
 				var resultob:Object = result_list[i];
-				//utilFun.Log("Win_state=" + resultob.win_state);
-				//utilFun.Log("bet_type=" + resultob.bet_type);
+				utilFun.Log("Win_state=" + resultob.win_state);
+				utilFun.Log("bet_type=" + resultob.bet_type);
 				
 				//coin 清除區
 				if ( resultob.win_state == "WSLost") clean.push (name_to_idx.getValue(resultob.bet_type));
@@ -257,8 +255,7 @@ package View.ViewComponent
 					if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin")
 					{
 						bigwin = bigpokermapping.getValue( resultob.win_state);
-						result_str.push(pokerstr.getValue(resultob.win_state));		
-						winst = resultob.win_state;
+						result_str.push(pokerstr.getValue(resultob.win_state));								
 					}
 					
 					if ( resultob.bet_type == "BetBWPlayer" ) 
@@ -271,6 +268,7 @@ package View.ViewComponent
 						bankerwin = 1;						
 						if( bigwin == -1) result_str.push("莊贏");
 					}
+					winst = resultob.win_state;
 				}
 				
 				//總押注和贏分
@@ -279,7 +277,10 @@ package View.ViewComponent
 				total += resultob.settle_amount;
 			}
 			
+			if( playerwin ==0  && bankerwin ==0)  result_str.push("和");	
 			if( bigwin == -1) result_str.push("無特殊牌型");
+			
+			
 			
 			_model.putValue("result_settle_amount",settle_amount);
 			_model.putValue("result_zonebet_amount",zonebet_amount);
@@ -320,20 +321,30 @@ package View.ViewComponent
 				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 0.8,scaleY:0.8, time:0.5,transition:"easeOutCubic" } );
 				//_regular.rubber_effect(GetSingleItem("bigwinmsg"), 1, 1, 0.4, 0.4, _regular.rubber_effect);
 			}
-				
+						
 			//patytable提示框
-			//if( _betCommand.get_my_betlist().length !=0)
-			//{
-				//_regular.Call(Get("coinstakeZone").container, { onComplete:this.start_settle }, 1, 2);
-				utilFun.Log("winst = "+winst);
-				//_paytable.win_frame_hint(winst);
-			//}		
+			utilFun.Log("winst = "+winst);
+			_paytable.win_frame_hint(winst);
+			
+			//show誰贏
+			dispatcher(new Intobject(1, "show_who_win"));
 			
 			//歷史記錄
-			history_add(playerwin, bankerwin);
+			history_add(playerwin, bankerwin,playerPoint,bankerPoint);
+			
+			var delaytime:int = 2;
+			if ( bigwin != -1) delaytime = 3;
 			
 			//結算表
-			show_settle();			
+			_regular.Call(this, { onComplete:this.showAni}, 1, delaytime, 1, "linear");
+		}
+		
+		public function showAni():void
+		{
+			GetSingleItem("bigwinmsg").gotoAndStop(1);
+			show_settle();
+			
+			
 		}
 		
 		public function rubber_out(mc:MovieClip):void
@@ -346,32 +357,42 @@ package View.ViewComponent
 			Tweener.addTween(mc, { scaleX: 1,scaleY:1, time:0.5,transition:"linear" } );
 		}
 		
-		public function history_add(playerwin:int, bankerwin:int):void
+		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int):void
 		{
 			//history recode 
 			utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
-			var arr:Array = _model.getValue("history_win_list");
+			var history:Array = _model.getValue("history_win_list");
+			var arr:Array = [];
 			if ( !playerwin && !bankerwin) 
 			{
-				arr.push(ResName.Noneball);
+				arr.push(5);
+				arr.push(playPoint);
 			}
 			else 
 			{
-				if ( playerwin == 1) arr.push(ResName.angelball);
-				else if ( bankerwin == 1) arr.push(ResName.evilball);
+				if ( playerwin == 1) 
+				{
+					arr.push(2);
+					arr.push(playPoint);
+				}
+				else if ( bankerwin == 1) 
+				{
+					arr.push(3);
+					arr.push(bankerPoint);
+				}
 			}
+			//TODO 特
 			
-			utilFun.Log("arr = "+arr);
-			if ( arr.length > 60) arr.shift();			
-			_model.putValue("history_win_list",arr);
-			_paytable.history_display(1);
+			utilFun.Log("arr = " + arr);
+			history.push(arr);
+			if ( history.length > 60) history.shift();			
+			_model.putValue("history_win_list",history);			
 		}
 		
 		public function show_settle():void
-		{
+		{				
 			var settletable:MultiObject = Get("settletable");
-			settletable.container.visible = true;
-			
+			settletable.container.visible = true;		
 			//押注
 			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
 			var font:Array = [{size:24}];
@@ -418,89 +439,11 @@ package View.ViewComponent
 			
 		}	
 		
-		private function countPoint(poke:Array):int
-		{
-			var total:int = 0;
-			for (var i:int = 0; i < poke.length ; i++)
-			{
-				var strin:String =  poke[i];
-				var arr:Array = strin.match((/(\w|d)+(\w)+/));					
-				var numb:String = arr[1];				
-				
-				var point:int = 0;
-				if ( numb == "i" || numb == "j" || numb == "q" || numb == "k" ) 				
-				{
-					point = 10;
-				}				
-				else 	point = parseInt(numb);
-				
-				total += point;
-			}	
-			
-			return total %= 10;
-		}		
 		
 		
-		[MessageHandler(type = "Model.valueObject.Intobject",selector="show_judge")]
-		public function early_check_point(type:Intobject):void
-		{
-			var Mypoker:Array =   _model.getValue(type.Value);
-			
-			if ( Mypoker.length == 2 )
-			{				
-				var point:Array = utilFun.arrFormat(countPoint(Mypoker), 1);
-				if ( point[0] == 0 ) point[0] = 10;				
-				var zone:int = -1;
-				if ( modelName.PLAYER_POKER == type.Value)  zone = 0;
-				else if ( modelName.BANKER_POKER == type.Value) zone = 1;				
-				if ( zone == -1) return;
-				Get("zone").container.visible = true;
-				GetSingleItem("zone", zone ).visible = true;
-				
-				GetSingleItem("zone",zone)["_num0"].gotoAndStop(point[0]);					
-			}			
-		}
+	
 		
 		
-		[MessageHandler(type = "Model.valueObject.Intobject",selector="check_result")]
-		public function early_check_result(type:Intobject):void
-		{
-			//小 poker
-			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
-			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
-			var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);
-			
-			if ( ppoker.length + bpoker.length == 4)
-			{				
-				var ppoint:Array = utilFun.arrFormat(countPoint(ppoker), 1);
-				var bpoint:Array = utilFun.arrFormat(countPoint(bpoker), 1);
-				
-				var result:Array = [];
-				if ( ppoint > bpoint ) 
-				{
-					result.push(2);
-					result.push(1)
-				}
-				else if ( ppoint < bpoint )
-				{
-					result.push(1);
-					result.push(2);
-				}
-				else
-				{
-					result.push(1);
-					result.push(1);
-				}
-				
-				
-				GetSingleItem("zone", 0 ).gotoAndStop(result[0]);
-				GetSingleItem("zone", 1 ).gotoAndStop(result[1]);
-								
-				dispatcher(new ModelEvent("public_ard"));
-			}
-			
-		
-		}
 		
 		
 	}

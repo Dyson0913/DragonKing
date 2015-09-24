@@ -15,6 +15,17 @@ package util
 			
 		}
 		
+		public static function ca_point(mypoker:Array):int
+		{			
+			var point :int ;
+			var pointar:Array  = get_Point( mypoker);
+			point = Get_Mapping_Value([0, 1], pointar);
+			
+			point %= 10;
+			if ( point == 0) point = 10;
+			return point;		
+		}
+		
 		public static function showpoker(mc:MovieClip, idx:int, data:Array):void
 		{			
 			mc.visible = true;
@@ -210,7 +221,9 @@ package util
 				total += point;
 			}	
 			
-			return total %= 10;
+			total %= 10;
+			if ( total == 0) total = 10;
+			return total;
 		}
 	}
 

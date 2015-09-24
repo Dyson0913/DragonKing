@@ -61,14 +61,13 @@ package View.ViewComponent
 			historytable.container.y =  150;
 			historytable.Create_by_list(1, [ResName.historytable], 0, 0, 1, 0, 0, "time_");
 			
-			//結果歷史記錄
-			var history_model:Array = _model.getValue("history_win_list");
+			//結果歷史記錄		
 			var historyball:MultiObject = prepare("historyball", new MultiObject() ,   historytable.container);
 			historyball.container.x = 10;
 			historyball.container.y = 10;
 			historyball.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			historyball.Post_CustomizedData = [6,33,33 ];
-			historyball.Create_by_list(history_model.length, history_model, 0, 0, 1, 0, 0, "histor");
+			historyball.Create_by_list(60, [ResName.historyball], 0, 0, 1, 0, 0, "histor");
 			
 			//集氣吧
 			var powerbar:MultiObject = prepare("powerbar", new MultiObject() ,   GetSingleItem("_view").parent.parent);
@@ -102,10 +101,10 @@ package View.ViewComponent
 			settletable_zone.container.visible = false;
 			
 			var opencard_bet_amount:MultiObject = prepare("opencard_bet_amount", new MultiObject(), GetSingleItem("_view").parent.parent);		
+			opencard_bet_amount.CustomizedFun = _gameinfo.textSetting;
 			opencard_bet_amount.container.x = 1010;
-			opencard_bet_amount.container.y =  140;			
-			//opencard_bet_amount.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");			
-			
+			opencard_bet_amount.container.y =  140;	
+						
 			//
 			//_tool.SetControlMc(opencard_bet_amount.container);
 			//_tool.SetControlMc(contractpower.ItemList[0]);
@@ -116,6 +115,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
 		{
+			
 			GetSingleItem("paytable_baridx").gotoAndStop(1);
 			
 			Get("prob").container.visible = false;
@@ -123,6 +123,28 @@ package View.ViewComponent
 			
 			Get("opencard_betinfo").container.visible = false;
 			Get("opencard_bet_amount").container.visible = false;	
+			update_history();
+		}
+		
+		public function update_history():void
+		{
+			var history_model:Array = _model.getValue("history_win_list");
+			Get("historyball").CustomizedData = history_model;
+			Get("historyball").CustomizedFun = history_ball_Setting;
+			Get("historyball").FlushObject();
+		}
+		
+		public function history_ball_Setting(mc:MovieClip, idx:int, data:Array):void
+		{			
+			var info:Array =  data[idx];
+			utilFun.Log("history_ball_Setting " + data[idx]);
+			if ( data[idx] == undefined ) return;
+			var frame:int = info[0];
+			if ( info[0] != 5)
+			{				
+				mc["_Text"].text = info[1];
+			}
+			mc.gotoAndStop(frame);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
@@ -149,8 +171,9 @@ package View.ViewComponent
 			mylist.push(0);
 			mylist.push(0);
 			mylist.push(_betCommand.all_betzone_totoal());		
-			var font:Array = [{size:24,align:_gameinfo.align_right}];
+			var font:Array = [{size:24,align:_gameinfo.align_right,color:0xFF0000}];
 			font = font.concat(mylist);
+			utilFun.Log("font = "+font);
 			Get("opencard_bet_amount").CustomizedData = font;
 			Get("opencard_bet_amount").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
 		}
@@ -234,87 +257,6 @@ package View.ViewComponent
 			
 		}
 		
-		public function history_sence(e:Event, idx:int):Boolean
-		{			
-			var betzone:MultiObject = Get("history_select_item_bar");			
-			var mc:MovieClip = betzone.ItemList[idx];
-			mc.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false));			
-			return true;
-		}
-		
-		//public function historySelect(e:Event, idx:int):Boolean
-		//{			
-			//var betzone:MultiObject = Get("history_select_item_bar");						
-			//betzone.exclusive(idx, 1);
-			//
-			//var hisoty_show_info:MultiObject = Get("Historytable");		
-			//hisoty_show_info.ItemList[0].gotoAndStop(idx+1);
-			//hisoty_show_info.customized();
-			//
-			//history_display(idx + 1);
-			//return true;
-			//
-		//}
-		
-		public function history_display(select:int):void
-		{
-			var history_model:Array = _model.getValue("history_win_list");			
-			Get("historyball").Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-			Get("historyball").Post_CustomizedData = [6, 33, 33 ];
-			Get("historyball").Create_by_list(history_model.length, history_model, 0, 0, 1, 0, 0, "histor");
-			Get("historyball").customized();
-		}
-		
-		//public function history_display(select:int):void
-		//{
-			//if ( select == 1)
-			//{
-				//Get("history_Pai_list").container.visible = false;
-				//Get("history_banker_Pai_list").container.visible = false;
-				//
-				//var history_model:Array = _model.getValue("history_win_list");
-				//Get("historyball").container.visible = true;
-				//Get("historyball").Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-				//Get("historyball").Post_CustomizedData = [6, -33, 33 ];
-				//Get("historyball").Create_by_list(history_model.length, history_model, 0, 0, 1, 0, 0, "histor");
-				//Get("historyball").customized();
-			//}
-			//else if (select == 2)
-			//{
-				//Get("historyball").container.visible = false;
-				//
-				//var historyPai_model:Array = _model.getValue("history_Play_Pai_list");
-				//Get("history_Pai_list").container.visible = true;
-				//Get("history_Pai_list").CustomizedFun = sprite_idx_setting_player;			
-				//Get("history_Pai_list").CustomizedData = historyPai_model;				
-				//Get("history_Pai_list").Create_by_bitmap(historyPai_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, historyPai_model.length, 22, 25, "o_");				
-				//
-				//
-				//var historyPai_banker_model:Array = _model.getValue("history_banker_Pai_list");
-				//Get("history_banker_Pai_list").container.visible = true;			
-				//Get("history_banker_Pai_list").CustomizedFun = sprite_idx_setting_banker;			
-				//Get("history_banker_Pai_list").CustomizedData = historyPai_banker_model;				
-				//Get("history_banker_Pai_list").Create_by_bitmap(historyPai_banker_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, historyPai_banker_model.length, 22, 25, "o_");		
-			//
-			//}
-			//
-		//}		
-		
-		//滑入bar 效果
-		//public function paytable_sence(e:Event, idx:int):Boolean
-		//{			
-			//if ( idx == 0)
-			//{
-				//GetSingleItem("paytable").gotoAndStop(idx+1);
-				//Tweener.addTween(GetSingleItem("paytable_colorbar"), { x:0,time:0.5, transition:"easeOutCubic"} );
-			//}
-			//else if (idx  == 1)
-			//{
-				//GetSingleItem("paytable").gotoAndStop(idx+1);
-				//Tweener.addTween(GetSingleItem("paytable_colorbar"), { x:220,time:0.5, transition:"easeOutCubic"} );
-			//}
-			//return false;
-		//}		
 		
 	}
 
