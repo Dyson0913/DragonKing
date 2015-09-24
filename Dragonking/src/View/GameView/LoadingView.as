@@ -58,6 +58,14 @@ package View.GameView
 			
 			_betCommand.bet_init();
 			_sound.init();
+			_model.putValue(modelName.Game_Name, "BigWin");
+			
+			var state:DI = new DI();
+			state.putValue("NewRoundState", gameState.NEW_ROUND);
+			state.putValue("EndBetState", gameState.END_BET);
+			state.putValue("OpenState", gameState.START_OPEN);
+			state.putValue("EndRoundState", gameState.END_ROUND);			
+			_model.putValue("state_mapping", state);
 			
 			_model.putValue("history_win_list", []);				
 			_model.putValue("result_Pai_list", []);

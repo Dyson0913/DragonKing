@@ -103,11 +103,8 @@ package View.ViewComponent
 			
 			var opencard_bet_amount:MultiObject = prepare("opencard_bet_amount", new MultiObject(), GetSingleItem("_view").parent.parent);		
 			opencard_bet_amount.container.x = 1010;
-			opencard_bet_amount.container.y =  140;	
-			opencard_bet_amount.CustomizedFun = _gameinfo.textSetting;
-			opencard_bet_amount.CustomizedData = [{size:24,align:_gameinfo.align_right}, "","","","","","",""];
-			opencard_bet_amount.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");		
-			opencard_bet_amount.container.visible = false;
+			opencard_bet_amount.container.y =  140;			
+			//opencard_bet_amount.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");			
 			
 			//
 			//_tool.SetControlMc(opencard_bet_amount.container);
@@ -120,38 +117,42 @@ package View.ViewComponent
 		public function display():void
 		{
 			GetSingleItem("paytable_baridx").gotoAndStop(1);
-			var probpercet:MultiObject = Get("prob");
-			probpercet.container.visible = false;
+			
+			Get("prob").container.visible = false;
+			Get("Historytable").container.visible = true;
+			
+			Get("opencard_betinfo").container.visible = false;
+			Get("opencard_bet_amount").container.visible = false;	
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function opencard_parse():void
 		{
-			var probpercet:MultiObject = Get("prob");
-			probpercet.container.visible = true;
+			Get("prob").container.visible = true;			
+			Get("Historytable").container.visible = false;	
 			
-			Get("Historytable").container.visible = false;
+			//下注單
 			Get("opencard_betinfo").container.visible = true;
+			Get("opencard_bet_amount").container.visible = true;									
+			var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
+			var zone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);
+			var maping:DI = _model.getValue("idx_to_result_idx");
+			for ( var i:int = 0; i < zone.length; i++)
+			{				
+				var map:int = maping.getValue(zone[i]);				 
+				mylist.splice(map, 0,_betCommand.get_total_bet(zone[i]));
+			}
 			
-			
-			//Get("opencard_bet_amount").container.visible = true;			
-			Get("opencard_bet_amount").container.visible = true;			
-			//utilFun.Clear_ItemChildren(Get("opencard_bet_amount"));
-			
-			//var amount:Array = _betCommand.get_my_bet_info("amount");	
-			var mylist:Array = ["0", "0", "0", "0", "0", "0", "0"];
-			//for (var i:int = 0; i < 6; i++)
-			//{
-				//if ( amount[i] != undefined)	mylist.push(amount[i])
-				//else mylist.push(0);
-			//}
-			//
-			//mylist.push( _betCommand.all_betzone_totoal());
-			
+			//和,莊對,閒對,特殊牌型
+			mylist.push(0);
+			mylist.push(0);
+			mylist.push(0);
+			mylist.push(0);
+			mylist.push(_betCommand.all_betzone_totoal());		
 			var font:Array = [{size:24,align:_gameinfo.align_right}];
 			font = font.concat(mylist);
 			Get("opencard_bet_amount").CustomizedData = font;
-			Get("opencard_bet_amount").Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
+			Get("opencard_bet_amount").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
