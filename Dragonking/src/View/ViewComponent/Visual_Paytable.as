@@ -40,7 +40,7 @@ package View.ViewComponent
 			paytable_baridx.container.x = 224;
 			paytable_baridx.container.y =  161;
 			paytable_baridx.Create_by_list(1, [ResName.paytable_baridx], 0, 0, 1, 0, 0, "time_");			
-			paytable_baridx.ItemList[0].gotoAndStop(2);			
+			//paytable_baridx.ItemList[0].gotoAndStop(2);			
 			
 			//賠率提示
 			var paytable:MultiObject = prepare("paytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
