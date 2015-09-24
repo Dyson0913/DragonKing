@@ -288,7 +288,7 @@ package View.ViewComponent
 				total += resultob.settle_amount;
 			}
 			
-			if( playerwin ==0  && bankerwin ==0)  result_str.push("和");	
+			if ( isTie && bigwin == -1)  result_str.push("和");	
 			if( bigwin == -1) result_str.push("無特殊牌型");
 			
 			

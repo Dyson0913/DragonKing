@@ -71,7 +71,7 @@ package View.ViewComponent
 			var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
 			var bet_text:MultiObject = prepare("pay_text", new MultiObject() , GetSingleItem("_view").parent.parent);
 			bet_text.CustomizedFun = textSetting;
-			bet_text.CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight"),paytext.getValue("WS_Three"), paytext.getValue("WS_Twopair")];		
+			bet_text.CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight"),paytext.getValue("WSBWTripple"), paytext.getValue("WSBWTwoPair")];		
 			bet_text.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
 			bet_text.container.x = 242;
 			bet_text.container.y = 165;

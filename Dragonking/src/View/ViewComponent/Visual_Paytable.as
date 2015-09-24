@@ -107,10 +107,10 @@ package View.ViewComponent
 			opencard_bet_amount.container.y =  140;	
 						
 			//
-			_tool.SetControlMc(paytable_baridx.container);
+			//_tool.SetControlMc(paytable_baridx.container);
 			//_tool.SetControlMc(contractpower.ItemList[0]);
-			_tool.y = 200;
-			add(_tool);			
+			//_tool.y = 200;
+			//add(_tool);			
 		}
 	
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]

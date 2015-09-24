@@ -108,8 +108,8 @@ package Command
 			_model.putValue(modelName.SMALL_POKER_MSG , history_str);
 			
 			var poer_msg:DI = new DI();		
-			poer_msg.putValue("WS_Twopair", "兩對");
-			poer_msg.putValue("WS_Three", "三條");
+			poer_msg.putValue("WSBWTwoPair", "兩對");
+			poer_msg.putValue("WSBWTripple", "三條");
 			poer_msg.putValue("WSBWStraight", "順子");
 			poer_msg.putValue("WSBWFlush", "同花");
 			poer_msg.putValue("WSBWFullHouse", "葫蘆");
