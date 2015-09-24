@@ -251,7 +251,7 @@ package View.ViewComponent
 				else
 				{
 					//大獎
-					if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin")
+					if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin" && resultob.win_state != "WSBWOnePairBig")
 					{
 						bigwin = bigpokermapping.getValue( resultob.win_state);
 						result_str.push(pokerstr.getValue(resultob.win_state));								

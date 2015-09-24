@@ -86,7 +86,7 @@ package Command
 			_model.putValue(modelName.COIN_STACK_XY,   [ [30, 0], [670, -10],  [350, 23], [970, -20], [-279, -12], [340, -182]]);
 			
 			var poermapping:DI = new DI();	
-			poermapping.putValue("WSBWTwoPair", 0);
+			poermapping.putValue("WSBWTwoPair", 0);			
 			poermapping.putValue("WSBWTripple", 1);
 			poermapping.putValue("WSBWStraight", 2);
 			poermapping.putValue("WSBWFlush", 3);
