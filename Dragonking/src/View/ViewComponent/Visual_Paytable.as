@@ -141,14 +141,13 @@ package View.ViewComponent
 		{	
 			//frame,point,playerPair,bankerPair			
 			var info:Array =  data[idx];			
-			utilFun.Log("info "+info);
+			//utilFun.Log("info "+info);
 			if (info == null ) return;
 			
 			if( info[4] !=-1)
 			{
 				var str:DI = _model.getValue(modelName.SMALL_POKER_MSG);				
-				mc.gotoAndStop(5);
-				utilFun.Log(" str.getValue(info[4]) "+ str.getValue(info[4]));
+				mc.gotoAndStop(5);				
 				mc["_Text"].text = str.getValue(info[4])
 				return;
 			}

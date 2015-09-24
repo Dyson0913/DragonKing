@@ -378,17 +378,16 @@ package View.ViewComponent
 			{
 				//寫字大獎
 				arr.push(5);
-				arr.push(0);
-				arr.push(0);
-				arr.push(0);
-				arr.push(bigwin);
+				arr.push(playPoint);
+				arr.push(isPlayPair);
+				arr.push(isbankerPair);
 				
 			}
-			if ( !playerwin && !bankerwin) 
+			else if ( !playerwin && !bankerwin) 
 			{
-				arr.push(5);
+				//TIE
+				arr.push(4);
 				arr.push(playPoint);
-			
 			}
 			else
 			{
@@ -402,15 +401,16 @@ package View.ViewComponent
 					arr.push(3);
 					arr.push(bankerPoint);
 				}
-				else if ( isTie == 1) 
-				{
-					arr.push(4);
-					arr.push(bankerPoint);
-				}
+				//else if ( isTie == 1) 
+				//{
+					//arr.push(4);
+					//arr.push(bankerPoint);
+				//}
 			}
-			//TODO 特
+			
 			arr.push(isPlayPair);
 			arr.push(isbankerPair);
+			arr.push(bigwin);
 						
 			history.push(arr);
 			//utilFun.Log("history = " + history);
