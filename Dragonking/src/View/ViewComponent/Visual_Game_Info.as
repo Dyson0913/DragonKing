@@ -5,6 +5,7 @@ package View.ViewComponent
 	import flash.globalization.DateTimeFormatter;
 	import flash.text.TextField;
 	import flash.utils.Timer;
+	import View.ViewBase.Visual_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -29,6 +30,9 @@ package View.ViewComponent
 		[Inject]
 		public var _betCommand:BetCommand;
 		
+		[Inject]
+		public var _text:Visual_Text;
+		
 		private var mcTimer:Timer;
 		
 		private var now:Date;
@@ -36,6 +40,8 @@ package View.ViewComponent
 		public var align_left:String = TextFormatAlign.LEFT;
 		public var align_center:String = TextFormatAlign.CENTER;
 		public var align_right:String = TextFormatAlign.RIGHT
+		
+		
 		
 		public function Visual_Game_Info() 
 		{
@@ -70,7 +76,7 @@ package View.ViewComponent
 			//手寫賠率表
 			var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
 			var bet_text:MultiObject = prepare("pay_text", new MultiObject() , GetSingleItem("_view").parent.parent);
-			bet_text.CustomizedFun = textSetting;
+			bet_text.CustomizedFun = _text.textSetting;
 			bet_text.CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight"),paytext.getValue("WSBWTripple"), paytext.getValue("WSBWTwoPair")];		
 			bet_text.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
 			bet_text.container.x = 242;
@@ -78,14 +84,14 @@ package View.ViewComponent
 
 			
 			var pay_mark:MultiObject = prepare("pay_mark", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			pay_mark.CustomizedFun = textSetting;
+			pay_mark.CustomizedFun = _text.textSetting;
 			pay_mark.CustomizedData = [{size:24,color:0x00b4ff,bold:true},"X","X","X","X","X","X","X","X","X","X"];		
 			pay_mark.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
 			pay_mark.container.x = 482;
 			pay_mark.container.y = 165;
 			
 			var pay_odd:MultiObject = prepare("pay_odd", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			pay_odd.CustomizedFun = textSetting;
+			pay_odd.CustomizedFun = _text.textSetting;
 			pay_odd.CustomizedData = [{size:24,color:0x00b4ff,bold:true,align:TextFormatAlign.RIGHT},"200","50","20","3","2","1","0.1","0.05","X","X"];		
 			pay_odd.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
 			pay_odd.container.x = 32;
@@ -118,17 +124,6 @@ package View.ViewComponent
 			//add(_tool);	
 			
 		}
-		
-		public function timerHandler(event:TimerEvent):void 
-		{  						
-			//now = new Date();
-			//var dtf:DateTimeFormatter = new DateTimeFormatter("zh-TW");
-			//dtf.setDateTimePattern("yyyy/MM/dd  hh:mm:ss");
-			//var str:String = dtf.format(now);			
-			//utilFun.Clear_ItemChildren(Get("game_title_info_data").ItemList[0]);
-			//var textfi:TextField = dynamic_text(str,18);
-			//Get("game_title_info_data").ItemList[0].addChild(textfi);			
-		}  
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
 		public function settle_parse():void
@@ -163,6 +158,32 @@ package View.ViewComponent
 			
 			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型賠率"];		
 			Get("pay_title").FlushObject();
+			
+			for ( var i:int = 0; i < Get("pay_text").ItemList.length; i++)
+			{
+				utilFun.Clear_ItemChildren(GetSingleItem("pay_text",i));
+			}
+			
+			var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
+			Get("pay_text").CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight"),paytext.getValue("WSBWTripple"), paytext.getValue("WSBWTwoPair")];		
+			Get("pay_text").FlushObject();
+			//
+			for ( var i:int = 0; i < Get("pay_mark").ItemList.length; i++)
+			{
+				utilFun.Clear_ItemChildren(GetSingleItem("pay_mark",i));
+			}			
+			Get("pay_mark").CustomizedFun = _text.textSetting;
+			Get("pay_mark").CustomizedData = [ { size:24, color:0x00b4ff, bold:true }, "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"];		
+			Get("pay_mark").FlushObject();
+			//
+			for ( var i:int = 0; i < Get("pay_odd").ItemList.length; i++)
+			{
+				utilFun.Clear_ItemChildren(GetSingleItem("pay_odd",i));
+			}					
+			Get("pay_odd").CustomizedFun = _text.textSetting;
+			Get("pay_odd").CustomizedData = [{size:24,color:0x00b4ff,bold:true,align:TextFormatAlign.RIGHT},"200","50","20","3","2","1","0.1","0.05","X","X"];		
+			Get("pay_odd").FlushObject();
+			
 		}
 		
 		public function textSetting(mc:MovieClip, idx:int, data:Array):void

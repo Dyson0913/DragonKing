@@ -22,7 +22,7 @@ package util
 			point = Get_Mapping_Value([0, 1], pointar);
 			
 			point %= 10;
-			if ( point == 0) point = 10;
+			//if ( point == 0) point = 10;
 			return point;		
 		}
 		

@@ -176,6 +176,8 @@ package View.ViewComponent
 			_timer.init();
 			
 			dispatcher(new ModelEvent("display"));
+			
+			dispatcher(new StringObject("WSBWFourOfAKind", "winstr_hint"));
 		}	
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "00")]

@@ -10,6 +10,7 @@ package
 	import util.*;
 	import View.ViewBase.ViewBase;
 	import ConnectModule.websocket.WebSoketComponent;
+	import View.ViewBase.Visual_Text;
 	import View.ViewComponent.*;
 	
 	import View.GameView.*;
@@ -59,7 +60,7 @@ package
 		public var _sencer:Visual_betZone_Sence = new Visual_betZone_Sence();
 		public var _gameinfo:Visual_Game_Info = new Visual_Game_Info();
 		public var _paytable:Visual_Paytable = new Visual_Paytable();
-		
+		public var _text:Visual_Text = new Visual_Text();
 		//test
 		public var _test:Visual_testInterface = new Visual_testInterface();
 		

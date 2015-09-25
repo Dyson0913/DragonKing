@@ -323,8 +323,9 @@ package View.ViewComponent
 			//}
 			
 			//大獎
-			if ( bigwin!=-1)
+			if ( bigwin!=-1 && bigwin != 0 && bigwin !=1)
 			{				
+				
 				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
 				GetSingleItem("bigwinfire").gotoAndPlay(2);				
 				//_regular.FadeIn( GetSingleItem("bigwinmsg"), 2, 2, _regular.Fadeout);
@@ -333,6 +334,7 @@ package View.ViewComponent
 				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 0.8,scaleY:0.8, time:0.5,transition:"easeOutCubic" } );
 				//_regular.rubber_effect(GetSingleItem("bigwinmsg"), 1, 1, 0.4, 0.4, _regular.rubber_effect);
 			}
+			//TODO 集氣處理
 			else
 			{
 				//patytable提示框			

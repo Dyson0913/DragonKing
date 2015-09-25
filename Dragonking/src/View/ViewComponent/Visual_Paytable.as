@@ -6,6 +6,7 @@ package View.ViewComponent
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextFormat;
+	import View.ViewBase.Visual_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -28,6 +29,9 @@ package View.ViewComponent
 		
 		[Inject]
 		public var _gameinfo:Visual_Game_Info;
+		
+		[Inject]
+		public var _text:Visual_Text;
 		
 		public function Visual_Paytable() 
 		{
@@ -252,20 +256,28 @@ package View.ViewComponent
 			
 			if ( wintype == "") return ;
 			if (wintype ==  "WSWin" || wintype == "WSBWNormalWin")  return;
+			if (wintype ==  "WSBWOnePairBig")  return;
 			
 			var y:int = 0;			
-			if ( wintype == "WSBWTwoPair") y = 245;
-			if ( wintype == "WSBWTripple") y = 210;
-			if (wintype == "WSBWStraight") y = 175;
-			if ( wintype == "WSBWFlush") y = 140;
-			if (wintype == "WSBWFullHouse") y = 105;
-			if ( wintype == "WSBWFourOfAKind")y = 70;
-			if ( wintype == "WSBWStraightFlush") y = 35;
+			if ( wintype == "WSBWTwoPair") y = 7;
+			if ( wintype == "WSBWTripple") y = 6;
+			if (wintype == "WSBWStraight") y = 5;
+			if ( wintype == "WSBWFlush") y = 4;
+			if (wintype == "WSBWFullHouse") y = 3;
+			if ( wintype == "WSBWFourOfAKind")y = 2;
+			if ( wintype == "WSBWStraightFlush") y = 1;
 			if ( wintype == "WSBWRoyalFlush") y = 0;	
 			
-			GetSingleItem("paytable_baridx").y = y;
-			_regular.Twinkle(GetSingleItem("paytable_baridx"), 5, 15, 2);
+			//GetSingleItem("paytable_baridx").y = y;
+			//_regular.Twinkle(GetSingleItem("paytable_baridx"), 5, 15, 2);
+			//var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
 			
+			utilFun.Log("GetSingleItem =" + GetSingleItem("pay_text"));			
+			
+			GetSingleItem("pay_text",y).getChildByName("Dy_Text").textColor = 0xFFFF00;			
+			GetSingleItem("pay_mark",y).getChildByName("Dy_Text").textColor = 0xFFFF00;			
+			GetSingleItem("pay_odd",y).getChildByName("Dy_Text").textColor = 0xFFFF00;			
+	
 		}
 		
 		

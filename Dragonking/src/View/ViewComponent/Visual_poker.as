@@ -266,8 +266,9 @@ package View.ViewComponent
 			
 			if ( Mypoker.length != 2) return;
 			
-			var point:int = pokerUtil.countPoint(Mypoker);
-			
+			var point:int = pokerUtil.ca_point(Mypoker);
+			utilFun.Log("point = " + point);
+			if ( point == 0) point = 10;
 			GetSingleItem("zone", zone ).gotoAndStop(2);
 			GetSingleItem("zone", zone)["_num0"].gotoAndStop(point);
 			
@@ -291,18 +292,20 @@ package View.ViewComponent
 			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
 			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
 			
-			var ppoint:int = pokerUtil.countPoint(ppoker);
-			var bpoint:int = pokerUtil.countPoint(bpoker);			
+			var ppoint:int = pokerUtil.ca_point(ppoker);
+			var bpoint:int = pokerUtil.ca_point(bpoker);			
 			if ( ppoint > bpoint ) 
 			{
 				utilFun.Log("p>b");
 				GetSingleItem("zone", 0 ).gotoAndStop(3);
+				if ( ppoint == 0) ppoint = 10;
 				GetSingleItem("zone", 0)["_num0"].gotoAndStop(ppoint);
 			}
 			else if ( ppoint < bpoint )
 			{
 				utilFun.Log("b>p");
 				GetSingleItem("zone", 1 ).gotoAndStop(3);
+				if ( bpoint == 0) bpoint = 10;
 				GetSingleItem("zone", 1)["_num0"].gotoAndStop(bpoint);
 			}
 			else
