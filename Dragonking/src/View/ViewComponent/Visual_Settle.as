@@ -337,6 +337,8 @@ package View.ViewComponent
 			//TODO 集氣處理
 			else
 			{
+				if ( bigwin == 0 || bigwin == 1) dispatcher(new Intobject(bigwin, "power_up"));			
+					
 				//patytable提示框			
 				dispatcher(new StringObject(_model.getValue("winstr"), "winstr_hint"));
 				

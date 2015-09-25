@@ -342,40 +342,41 @@ package View.ViewComponent
 		}		
 		
 		
-		public function check_power_up_effect():void
+		[MessageHandler(type = "Model.valueObject.Intobject",selector="power_up")]
+		public function check_power_up_effect(type:Intobject):void
 		{			
-			var re:int = utilFun.Random(2);
+			var re:int = type.Value;
 			
-			//if ( re)
-			//{
-				//var idx:int = _model.getValue("power_pair_idx");
-				//var arr:Array = _model.getValue("power_pair_posi")[idx];			
-				//GetSingleItem("contractpower").x = arr[0];
-				//GetSingleItem("contractpower").y = arr[1];			
-				//GetSingleItem("contractpower").gotoAndPlay(2);
-				//
-				//
-				//GetSingleItem("power_bar_2pair", idx).gotoAndStop(2)
-				//GetSingleItem("power_bar_2pair", idx).alpha = 0;
-				//_regular.FadeIn ( GetSingleItem("power_bar_2pair", idx), 3, 3,null);
-				//_opration.operator("power_pair_idx", DataOperation.add, 1);
-				//
-			//}						
-			//else
-			//{
-				//var idx:int = _model.getValue("power_3_idx");
-				//var arr:Array = _model.getValue("power_3_posi")[idx];
-			//
-				//GetSingleItem("contractpower").x = arr[0];
-				//GetSingleItem("contractpower").y = arr[1];			
-				//GetSingleItem("contractpower").gotoAndPlay(2);
-				//
-				//GetSingleItem("powerbar_3", idx).gotoAndStop(2);
-				//GetSingleItem("powerbar_3", idx).alpha = 0;
-				//_regular.FadeIn ( GetSingleItem("powerbar_3", idx), 3, 3,null);
-				//_opration.operator("power_3_idx", DataOperation.add, 1);
-				//
-			//}			
+			if ( re == 0)
+			{
+				var idx:int = _model.getValue("power_pair_idx");
+				var arr:Array = _model.getValue("power_pair_posi")[idx];			
+				GetSingleItem("contractpower").x = arr[0];
+				GetSingleItem("contractpower").y = arr[1];			
+				GetSingleItem("contractpower").gotoAndPlay(2);
+				
+				
+				GetSingleItem("power_bar_2pair", idx).gotoAndStop(2)
+				GetSingleItem("power_bar_2pair", idx).alpha = 0;
+				_regular.FadeIn ( GetSingleItem("power_bar_2pair", idx), 3, 3,null);
+				_opration.operator("power_pair_idx", DataOperation.add, 1);
+				
+			}						
+			else
+			{
+				var idx:int = _model.getValue("power_3_idx");
+				var arr:Array = _model.getValue("power_3_posi")[idx];
+			
+				GetSingleItem("contractpower").x = arr[0];
+				GetSingleItem("contractpower").y = arr[1];			
+				GetSingleItem("contractpower").gotoAndPlay(2);
+				
+				GetSingleItem("powerbar_3", idx).gotoAndStop(2);
+				GetSingleItem("powerbar_3", idx).alpha = 0;
+				_regular.FadeIn ( GetSingleItem("powerbar_3", idx), 3, 3,null);
+				_opration.operator("power_3_idx", DataOperation.add, 1);
+				
+			}			
 		
 			
 			

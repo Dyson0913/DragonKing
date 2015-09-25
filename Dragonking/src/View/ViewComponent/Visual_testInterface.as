@@ -177,7 +177,7 @@ package View.ViewComponent
 			
 			dispatcher(new ModelEvent("display"));
 			
-			dispatcher(new StringObject("WSBWFourOfAKind", "winstr_hint"));
+			//dispatcher(new StringObject("WSBWTwoPair", "winstr_hint"));
 		}	
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "00")]
@@ -333,7 +333,7 @@ package View.ViewComponent
 			{ "bet_type": "BetBWPlayer", "settle_amount": 390.0, "odds": 1.95, "win_state": "WSBWNormalWin", "bet_amount": 200 }, 
 			{"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 }, 
 			{"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 }, 
-			{"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 0, "win_state": "WSBWStraight", "bet_amount": 200 }, 
+			{"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 0, "win_state": "WSBWTripple", "bet_amount": 200 }, 
 			{"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 }, 
 			{"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 200 } ],
 			"game_state": "EndRoundState", "game_result_id": "290315", "timestamp": 1443110880.443993, "remain_time": 9, "game_type": "BigWin", "game_round": 241, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "6d822d4062d611e5b419f23c9189e2a9"}
