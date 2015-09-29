@@ -224,6 +224,8 @@ package View.ViewComponent
 			var bigpokermapping:DI = _model.getValue(modelName.BIG_POKER_MSG);
 			var pokerstr:DI = _model.getValue(modelName.BIG_POKER_TEXT);
 			var bigwin:int = -1;
+			var pigwin:int = -1;
+			var sigwin:int = -1;
 			
 			var result_str:Array = [];
 			var settle_amount:Array = [0,0,0,0,0,0];
@@ -244,42 +246,47 @@ package View.ViewComponent
 			for ( var i:int = 0; i < num; i++)
 			{
 				var resultob:Object = result_list[i];				
-				utilFun.Log("bet_type=" + resultob.bet_type  + "  " + resultob.win_state);
+				utilFun.Log("bet_type=" + resultob.bet_type  + "  " + resultob.win_state + " bigwin= " + bigwin);				
 				
 				//coin 清除區
 				if ( resultob.win_state == "WSLost") clean.push (name_to_idx.getValue(resultob.bet_type));
 				else
-				{
-					//大獎
-					if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin" && resultob.win_state != "WSBWOnePairBig")
-					{
-						bigwin = bigpokermapping.getValue( resultob.win_state);
-						result_str.push(pokerstr.getValue(resultob.win_state));								
-					}
+				{					
 					
 					if ( resultob.bet_type == "BetBWPlayer" ) 
 					{
-						playerwin = 1;						
-						if( bigwin == -1) result_str.push("閒贏");
+						playerwin = 1;
+						//大獎
+						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin" && resultob.win_state != "WSBWOnePairBig")
+						{						
+							bigwin = bigpokermapping.getValue( resultob.win_state);
+							if( bigwin !=-1) result_str.push(pokerstr.getValue(resultob.win_state));								
+						}
+						else result_str.push("閒贏");
+						winst = resultob.win_state;
 					}
-					else if ( resultob.bet_type == "BetBWBanker") 
+					if ( resultob.bet_type == "BetBWBanker") 
 					{
 						bankerwin = 1;						
-						if( bigwin == -1) result_str.push("莊贏");
+						//大獎
+						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin" && resultob.win_state != "WSBWOnePairBig")
+						{						
+							pigwin = bigpokermapping.getValue( resultob.win_state);
+							if( pigwin != bigwin) result_str.push(pokerstr.getValue(resultob.win_state));								
+						}
+						else result_str.push("莊贏");
+						winst = resultob.win_state;
 					}
-					if ( resultob.bet_type == "BetBWTiePoint" ) 
+					
+					if ( resultob.bet_type == "BetBWTiePoint" )  isTie = 1;
+					if ( resultob.bet_type == "BetBWPlayerPair" ) isPlayPair = 1;
+					if ( resultob.bet_type == "BetBWBankerPair" ) isbankerPair = 1;
+					if ( resultob.bet_type == "BetBWSpecial" ) 
 					{
-						isTie = 1;
+						sigwin = bigpokermapping.getValue( resultob.win_state);
+						if( sigwin != bigwin) result_str.push(pokerstr.getValue(resultob.win_state));		
 					}
-					if ( resultob.bet_type == "BetBWPlayerPair" ) 
-					{
-						isPlayPair = 1;
-					}
-					if ( resultob.bet_type == "BetBWBankerPair" ) 
-					{
-						isbankerPair = 1;
-					}
-					winst = resultob.win_state;
+					
 				}
 				
 				//總押注和贏分
@@ -323,7 +330,7 @@ package View.ViewComponent
 			//}
 			
 			//大獎
-			if ( bigwin!=-1 && bigwin != 0 && bigwin !=1)
+			if ( bigwin!=-1 && bigwin != 0 && bigwin !=1 &&  bigwin !=-2)
 			{				
 				
 				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
@@ -334,7 +341,6 @@ package View.ViewComponent
 				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 0.8,scaleY:0.8, time:0.5,transition:"easeOutCubic" } );
 				//_regular.rubber_effect(GetSingleItem("bigwinmsg"), 1, 1, 0.4, 0.4, _regular.rubber_effect);
 			}
-			//TODO 集氣處理
 			else
 			{
 				if ( bigwin == 0 || bigwin == 1) dispatcher(new Intobject(bigwin, "power_up"));			
@@ -391,10 +397,7 @@ package View.ViewComponent
 			{
 				//寫字大獎
 				arr.push(5);
-				arr.push(playPoint);
-				arr.push(isPlayPair);
-				arr.push(isbankerPair);
-				
+				arr.push(playPoint);					
 			}
 			else if ( !playerwin && !bankerwin) 
 			{
@@ -426,9 +429,11 @@ package View.ViewComponent
 			arr.push(bigwin);
 						
 			history.push(arr);
-			//utilFun.Log("history = " + history);
+			//utilFun.Log("history = " + arr);
 			if ( history.length > 60) history.shift();			
-			_model.putValue("history_win_list",history);			
+			_model.putValue("history_win_list", history);			
+			
+			dispatcher(new ModelEvent("display"));
 		}
 		
 		public function show_settle():void
