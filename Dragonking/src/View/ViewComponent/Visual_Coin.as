@@ -112,13 +112,16 @@ package View.ViewComponent
 		{			
 			var old_select:int = _model.getValue("coin_selectIdx");
 			
-			_model.putValue("coin_selectIdx", idx);			
+			_model.putValue("coin_selectIdx", idx);
+			
 			//position chagne 
 			for (var i:int = 0; i < _coin.ItemList.length; i++)
 			{
 				if ( i == old_select ) 
 				{				
-					var frame:int = _coin.ItemList[old_select]["_coin"].currentFrame;				
+					if ( old_select == idx) continue;
+					
+					var frame:int = _coin.ItemList[old_select]["_coin"].currentFrame;					
 					_coin.ItemList[old_select].y += 20;
 					_coin.ItemList[old_select].gotoAndStop(1);
 					_coin.ItemList[old_select]["_coin"].gotoAndStop(frame);
