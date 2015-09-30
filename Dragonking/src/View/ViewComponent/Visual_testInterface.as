@@ -10,6 +10,7 @@ package View.ViewComponent
 	import flash.net.navigateToURL;
 	import flash.text.TextField;
 	import util.math.Path_Generator;
+	import View.ViewBase.Visual_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -73,6 +74,8 @@ package View.ViewComponent
 		[Inject]
 		public var _btn:Visual_BtnHandle;
 		
+		[Inject]
+		public var _text:Visual_Text;
 		
 		private var _script_item:MultiObject;
 		
@@ -94,7 +97,7 @@ package View.ViewComponent
 			script_list.stop_Propagation = true;
 			script_list.mousedown = script_list_test;
 			script_list.CustomizedData = [{size:18},"下注腳本","開牌腳本","結算腳本"]
-			script_list.CustomizedFun = _gameinfo.textSetting;			
+			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
 			
 			
@@ -123,7 +126,7 @@ package View.ViewComponent
 			utilFun.Log("script_list_test=" + idx);
 			_model.putValue("Script_idx", idx);
 			_script_item.CustomizedData = _model.getValue("allScript")[idx];
-			_script_item.CustomizedFun = _gameinfo.textSetting;			
+			_script_item.CustomizedFun = _text.textSetting;			
 			_script_item.Create_by_list(_script_item.CustomizedData.length -1, [ResName.TextInfo], 0, 100, 1, 0, 20, "Btn_");
 			
 			dispatcher(new TestEvent(_model.getValue("Script_idx").toString()));
@@ -245,9 +248,7 @@ package View.ViewComponent
 			//================================================poker
 			_poker.init();
 			
-			
-			
-			
+		
 			//================================================settle info
 			//_settle.init();
 			
@@ -298,9 +299,9 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "2")]
 		public function settleScript():void
 		{
-			_model.putValue(modelName.PLAYER_POKER, ["9d","5d"]);				
-			_model.putValue(modelName.BANKER_POKER, ["2d","6d"]);		
-			_model.putValue(modelName.RIVER_POKER, ["1d","6c",]);					
+			_model.putValue(modelName.PLAYER_POKER, ["9d","9s"]);				
+			_model.putValue(modelName.BANKER_POKER, []);		
+			_model.putValue(modelName.RIVER_POKER, []);					
 			
 			
 			
@@ -322,6 +323,11 @@ package View.ViewComponent
 			
 			
 			_poker.init();
+			
+			//_poker.prob_cal();
+			//return;
+			
+			
 			dispatcher(new ModelEvent("hide"));
 			dispatcher(new ModelEvent("display"));
 			//================================================settle info
@@ -336,8 +342,10 @@ package View.ViewComponent
 			
 			//
 			//同花
-			var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 0, "odds": 3, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 3, "win_state": "WSWin", "bet_amount": 0}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 6, "win_state": "WSBWOnePairBig", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "291643", "timestamp": 1443162482.443791, "remain_time": 9, "game_type": "BigWin", "game_round": 971, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "92b27a3e634e11e5b419f23c9189e2a9"}
+			//var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 0, "odds": 3, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 3, "win_state": "WSWin", "bet_amount": 0}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 6, "win_state": "WSBWOnePairBig", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "291643", "timestamp": 1443162482.443791, "remain_time": 9, "game_type": "BigWin", "game_round": 971, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "92b27a3e634e11e5b419f23c9189e2a9"}
 			
+			//二對
+			var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 195.0, "odds": 1.95, "win_state": "WSBWNormalWin", "bet_amount": 100}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 100}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 2, "win_state": "WSBWTwoPair", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 12, "win_state": "WSWin", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "299250", "timestamp": 1443593721.364407, "remain_time": 9, "game_type": "BigWin", "game_round": 158, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "a11fba56673a11e5be2bf23c9189e2a9"}
 			_MsgModel.push(fakePacket);	
 			
 			

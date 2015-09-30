@@ -345,8 +345,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="power_up")]
 		public function check_power_up_effect(type:Intobject):void
 		{			
-			var re:int = type.Value;
-			
+			var re:int = type.Value;			
 			if ( re == 0)
 			{
 				var idx:int = _model.getValue("power_pair_idx");
@@ -390,7 +389,7 @@ package View.ViewComponent
 		
 		public function prob_cal():void
 		{
-			var arr:Array = utilFun.Random_N(80, 8);
+			var arr:Array = utilFun.Random_N(80, 6);
 			arr.push(utilFun.Random(8));
 			_model.putValue("percent_prob",arr);
 			return;
@@ -404,6 +403,7 @@ package View.ViewComponent
 			totalPoker = totalPoker.concat(bpoker);
 			totalPoker = totalPoker.concat(rpoker);
 			var rest_poker_num:int = 52 - totalPoker.length;
+			var freedowm:int = 6 - totalPoker.length;
 			utilFun.Log("rest_poker_num = " + rest_poker_num);
 			utilFun.Log("totalpoker = " + totalPoker);
 			totalPoker.sort(order);
@@ -427,19 +427,21 @@ package View.ViewComponent
 				num_amount[parseInt(point)] += 1;				
 			}
 			utilFun.Log("num_amount= " + num_amount);
-			utilFun.Log("color_amount= " + color_amount);
+			utilFun.Log("color_amount= d =" + color_amount[0] +" h =" +color_amount[1]+" s =" +color_amount[2]+" c =" +color_amount[3]);
 			
 			//3條 (每個張數都要算)
 			var three:int = 0;			
 			var maxValue:Number = Math.max.apply(null, num_amount);
 			//var minValue:Number = Math.min.apply(null, num_amount);
-			utilFun.Log("maxValue= " + maxValue);			
-			utilFun.Log("three_prob  = (4- samepoint_max_cnt/rest_poker_num)= " + (4 - maxValue) / rest_poker_num * 100);
+			//utilFun.Log("maxValue= " + maxValue);			
+			//utilFun.Log("three_prob  = (4- samepoint_max_cnt/rest_poker_num)= " + (4 - maxValue) / rest_poker_num * 100);
 			
-			
+			pokerUtil.three(num_amount,rest_poker_num,freedowm);
 			
 			//dispatcher(new Intobject(type, "caculate_prob"));
 		}		
+		
+		
 		
 		//傳回值 -1 表示第一個參數 a 是在第二個參數 b 之前。
 		//傳回值 1 表示第二個參數 b 是在第一個參數 a 之前。

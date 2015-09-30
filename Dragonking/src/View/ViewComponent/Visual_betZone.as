@@ -61,6 +61,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
 		{
+			utilFun.Log("trig display");
 			var betzone:MultiObject = Get("betzone");
 			betzone.mousedown = _betCommand.empty_reaction;			
 			betzone.rollout = _betCommand.empty_reaction;

@@ -15,6 +15,40 @@ package util
 			
 		}
 		
+		public static function three(pointCnt:Array,rest_poker_num:int,freedowm:int):void
+		{
+		
+			utilFun.Log("rest_poker_num"+ rest_poker_num);
+			utilFun.Log("freedom" + freedowm);
+			var TotalProb:Number = 0;
+			for (var k:int = 0; k < pointCnt.length; k++)
+			{
+				if ( pointCnt[k] != 0)
+				{
+					var rest:int = 3 - pointCnt[k] ;
+					if ( rest > freedowm) 
+					{
+						utilFun.Log(" rest > freedowm prob = 0")
+						TotalProb += 0;
+						continue;
+					}
+					if ( rest == 2) 
+					{
+						var nu:Number  = (3 / rest_poker_num) + (2 / (rest_poker_num - 1));
+						utilFun.Log(" rest 2 = "+nu )
+						TotalProb += nu ;					
+					}
+					if ( rest == 1)
+					{
+						utilFun.Log(" rest 1 = " + (2 / rest_poker_num ) )
+						TotalProb +=  (2 / rest_poker_num) ;
+					}
+					
+				}
+			}
+			utilFun.Log(" TotalProb = " + TotalProb)
+		}
+		
 		public static function ca_point(mypoker:Array):int
 		{			
 			var point :int ;

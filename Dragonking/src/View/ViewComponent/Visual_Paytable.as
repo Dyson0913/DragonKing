@@ -58,7 +58,7 @@ package View.ViewComponent
 			var pro:MultiObject = prepare("prob", new MultiObject() , paytable.container);			
 			pro.container.x = 157;
 			pro.container.y =  42;
-			pro.Create_by_list(8, [ResName.prob_square], 0, 0, 1, 0, 35, "time_");				
+			pro.Create_by_list(6, [ResName.prob_square], 0, 0, 1, 0, 50, "time_");				
 			
 			//歷史記錄bar 點擊呈現區
 			var historytable:MultiObject = prepare("Historytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
@@ -100,13 +100,13 @@ package View.ViewComponent
 			var settletable_zone:MultiObject = prepare("opencard_betinfo", new MultiObject(), GetSingleItem("_view").parent.parent);		
 			settletable_zone.container.x = 1380;
 			settletable_zone.container.y =  140;	
-			settletable_zone.CustomizedFun = _gameinfo.textSetting;
+			settletable_zone.CustomizedFun = _text.textSetting;
 			settletable_zone.CustomizedData = [{size:24}, "莊","閒","和","莊對","閒對","特殊牌型","總計"];
 			settletable_zone.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");		
 			settletable_zone.container.visible = false;
 			
 			var opencard_bet_amount:MultiObject = prepare("opencard_bet_amount", new MultiObject(), GetSingleItem("_view").parent.parent);		
-			opencard_bet_amount.CustomizedFun = _gameinfo.textSetting;
+			opencard_bet_amount.CustomizedFun = _text.textSetting;
 			opencard_bet_amount.container.x = 1010;
 			opencard_bet_amount.container.y =  140;	
 						
@@ -193,7 +193,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function hide():void
 		{
-			var zero:Array = utilFun.Random_N(0, 8);
+			var zero:Array = utilFun.Random_N(0, 6);
 			zero.push(-1);
 			_model.putValue("percent_prob",zero);		
 			prob_percentupdate();
@@ -259,8 +259,8 @@ package View.ViewComponent
 			if (wintype ==  "WSBWOnePairBig")  return;
 			
 			var y:int = 0;			
-			if ( wintype == "WSBWTwoPair") y = 7;
-			if ( wintype == "WSBWTripple") y = 6;
+			//if ( wintype == "WSBWTwoPair") y = 7;
+			//if ( wintype == "WSBWTripple") y = 6;
 			if (wintype == "WSBWStraight") y = 5;
 			if ( wintype == "WSBWFlush") y = 4;
 			if (wintype == "WSBWFullHouse") y = 3;
