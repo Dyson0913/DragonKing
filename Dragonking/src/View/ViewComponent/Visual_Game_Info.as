@@ -99,7 +99,7 @@ package View.ViewComponent
 			
 			var pay_title:MultiObject = prepare("pay_title", new MultiObject() , GetSingleItem("_view").parent.parent);			
 			pay_title.CustomizedFun = _text.textSetting;
-			pay_title.CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型賠率"];		
+			pay_title.CustomizedData = [{size:24,color:0xCCCCCC},"主注特殊牌型賠率"];		
 			pay_title.Create_by_list(1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
 			pay_title.container.x = 424;
 			pay_title.container.y = 129;
@@ -145,7 +145,7 @@ package View.ViewComponent
 			
 			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
 			
-			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型機率"];		
+			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"主注特殊牌型機率"];		
 			Get("pay_title").FlushObject();
 		}
 		
@@ -156,7 +156,7 @@ package View.ViewComponent
 			
 			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
 			
-			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"特殊牌型賠率"];		
+			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"主注特殊牌型賠率"];		
 			Get("pay_title").FlushObject();
 			
 			for ( var i:int = 0; i < Get("pay_text").ItemList.length; i++)
