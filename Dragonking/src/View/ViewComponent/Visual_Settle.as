@@ -295,8 +295,8 @@ package View.ViewComponent
 				total += resultob.settle_amount;
 			}
 			
-			if ( isTie && bigwin == -1)  result_str.push("和");	
-			if( bigwin == -1) result_str.push("無特殊牌型");
+			if ( isTie && sigwin == -1)  result_str.push("和");	
+			if( sigwin == -1) result_str.push("無特殊牌型");
 			
 			
 			
@@ -329,8 +329,8 @@ package View.ViewComponent
 				//utilFun.Clear_ItemChildren(GetSingleItem("coinstakeZone",  clean[i]));				
 			//}
 			
-			//大獎
-			if ( bigwin!=-1 && bigwin != 0 && bigwin !=1 &&  bigwin !=-2)
+			//大獎 (排除2對,3條和11以上J對)
+			if ( bigwin!=-1 && bigwin >=2)
 			{				
 				
 				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
@@ -343,6 +343,7 @@ package View.ViewComponent
 			}
 			else
 			{
+				//2對,3條集氣吧
 				if ( bigwin == 0 || bigwin == 1) dispatcher(new Intobject(bigwin, "power_up"));			
 					
 				//patytable提示框			
