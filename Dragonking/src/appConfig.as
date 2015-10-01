@@ -32,7 +32,7 @@ package
 		public var _Model:Model = new Model();
 		public var _MsgModel:MsgQueue = new MsgQueue();
 		public var _Actionmodel:ActionQueue = new ActionQueue();
-		
+		public var _fileStream:fileStream = new fileStream();
 		
 		//connect module
 		public var _socket:WebSoketComponent = new WebSoketComponent();

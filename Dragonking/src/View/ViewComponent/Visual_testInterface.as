@@ -79,6 +79,9 @@ package View.ViewComponent
 		
 		private var _script_item:MultiObject;
 		
+		[Inject]
+		public var _fileStream:fileStream;
+		
 		public function Visual_testInterface() 
 		{
 			
@@ -86,7 +89,10 @@ package View.ViewComponent
 		
 		public function init():void
 		{			
-			
+				
+			_fileStream.switch_recode(true);
+			_fileStream.write();
+				
 			_betCommand.bet_init();			
 			_model.putValue("result_Pai_list", []);
 			_model.putValue("game_round", 1);			

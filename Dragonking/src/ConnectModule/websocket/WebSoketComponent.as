@@ -43,6 +43,9 @@ package ConnectModule.websocket
 		[Inject]
 		public var _opration:DataOperation;
 		
+		[Inject]
+		public var _fileStream:fileStream;
+		
 		private var websocket:WebSocket;
 		
 		public function WebSoketComponent() 
@@ -98,7 +101,7 @@ package ConnectModule.websocket
 		public function msghandler():void
 		{
 			   var result:Object  = _MsgModel.getMsg();
-			    if ( result.game_type != _model.getValue(modelName.Game_Name) ) return;
+			    if ( result.game_type != _model.getValue(modelName.Game_Name) ) return;				
 				
 				switch(result.message_type)
 				{
@@ -186,6 +189,8 @@ package ConnectModule.websocket
 					break;
 					
 				}
+				
+				_fileStream.recode(result);
 		}
 		
 		[MessageHandler(type="ConnectModule.websocket.WebSoketInternalMsg",selector="Bet")]
