@@ -99,26 +99,12 @@ package View.ViewComponent
 			
 			var pay_title:MultiObject = prepare("pay_title", new MultiObject() , GetSingleItem("_view").parent.parent);			
 			pay_title.CustomizedFun = _text.textSetting;
-			pay_title.CustomizedData = [{size:24,color:0xCCCCCC},"主注特殊牌型賠率"];		
+			pay_title.CustomizedData = [{size:24,color:0xCCCCCC,align:TextFormatAlign.CENTER},"主注特殊牌型賠率"];		
 			pay_title.Create_by_list(1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
-			pay_title.container.x = 424;
+			pay_title.container.x = 179;
 			pay_title.container.y = 129;
 			
-			//mcTimer = new Timer(1000);  
-			//mcTimer.addEventListener(TimerEvent.TIMER, timerHandler);  
-			//mcTimer.start();  
-			
-			var zone_limit_bet:MultiObject = prepare("zone_limit_bet", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			zone_limit_bet.container.x = 3;
-			zone_limit_bet.container.y = 135;
-			zone_limit_bet.Create_by_list(1,[ResName.zonepaytable], 0, 0, 1, 50, 0, "betzone_");	
-			
-			var realtime_info:MultiObject = prepare("realtime_info", new MultiObject() , GetSingleItem("_view").parent.parent);			
-			realtime_info.container.x = 1730;
-			realtime_info.container.y = 145;
-			realtime_info.Create_by_list(1, [ResName.real_timeinfo], 0, 0, 1, 50, 0, "betzone_");	
-			
-			//_tool.SetControlMc(pay_odd.container);			
+			//_tool.SetControlMc(pay_title.container);			
 			//_tool.SetControlMc(game_info_data.ItemList[3]);			
 			//_tool.y = 200;
 			//add(_tool);	
@@ -145,7 +131,7 @@ package View.ViewComponent
 			
 			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
 			
-			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"主注特殊牌型機率"];		
+			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC,align:TextFormatAlign.CENTER},"主注特殊牌型機率"];		
 			Get("pay_title").FlushObject();
 		}
 		
@@ -156,7 +142,7 @@ package View.ViewComponent
 			
 			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
 			
-			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC},"主注特殊牌型賠率"];		
+			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC,align:TextFormatAlign.CENTER},"主注特殊牌型賠率"];		
 			Get("pay_title").FlushObject();
 			
 			for ( var i:int = 0; i < Get("pay_text").ItemList.length; i++)

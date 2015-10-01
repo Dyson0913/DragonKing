@@ -23,8 +23,7 @@ package Res
 		public static const Betcoin:String = "Bet_coin";	
 		public static const Wincoin:String = "Win_coin";	
 		public static const pokeratlas:String = "poker_atlas";	
-		
-		public static const paytablemain:String = "paytable_main"		
+				
 		public static const paytable_baridx:String = "paytable_bar_idx";
 		
 		public static const angelball:String = "angel_ball";
@@ -56,9 +55,7 @@ package Res
 		public static const betzone_player_pari:String = "playerzone_pair";		
 		public static const special_Zone:String = "specialzone";		
 		public static const bet_tableitem:String = "bet_table_item";		
-		public static const open_tableitem:String = "open_table_item";		
-		public static const zonepaytable:String = "zone_paytable";		
-		public static const real_timeinfo:String = "real_time_info";		
+		public static const open_tableitem:String = "open_table_item";	
 		
 		//public static const playerZone_s:String = "playerZone_sence";
 		//public static const bankerZone_s:String = "bankerZone_sence";

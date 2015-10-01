@@ -41,12 +41,6 @@ package View.ViewComponent
 		public function init():void
 		{
 			
-			var paytable_baridx:MultiObject = prepare("paytable_baridx", new MultiObject() ,  GetSingleItem("_view").parent.parent);
-			paytable_baridx.container.x = 224;
-			paytable_baridx.container.y =  161;
-			paytable_baridx.Create_by_list(1, [ResName.paytable_baridx], 0, 0, 1, 0, 0, "time_");			
-			//paytable_baridx.ItemList[0].gotoAndStop(2);			
-			
 			//賠率提示
 			var paytable:MultiObject = prepare("paytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
 			paytable.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 1]);			
@@ -119,9 +113,7 @@ package View.ViewComponent
 	
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
-		{
-			
-			GetSingleItem("paytable_baridx").gotoAndStop(1);
+		{			
 			
 			Get("prob").container.visible = false;
 			Get("Historytable").container.visible = true;
@@ -266,11 +258,7 @@ package View.ViewComponent
 			if (wintype == "WSBWFullHouse") y = 3;
 			if ( wintype == "WSBWFourOfAKind")y = 2;
 			if ( wintype == "WSBWStraightFlush") y = 1;
-			if ( wintype == "WSBWRoyalFlush") y = 0;	
-			
-			//GetSingleItem("paytable_baridx").y = y;
-			//_regular.Twinkle(GetSingleItem("paytable_baridx"), 5, 15, 2);
-			//var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
+			if ( wintype == "WSBWRoyalFlush") y = 0;			
 			
 			utilFun.Log("GetSingleItem =" + GetSingleItem("pay_text"));			
 			
