@@ -239,7 +239,11 @@ package View.ViewComponent
 						winst = resultob.win_state;
 					}
 					
-					if ( resultob.bet_type == "BetBWTiePoint" )  isTie = 1;
+					if ( resultob.bet_type == "BetBWTiePoint" ) 
+					{
+						isTie = 1;
+						result_str.push("和");
+					}
 					if ( resultob.bet_type == "BetBWPlayerPair" ) isPlayPair = 1;
 					if ( resultob.bet_type == "BetBWBankerPair" ) isbankerPair = 1;
 					if ( resultob.bet_type == "BetBWSpecial" ) 
@@ -256,7 +260,6 @@ package View.ViewComponent
 				total += resultob.settle_amount;
 			}
 			
-			if ( isTie && sigwin == -1)  result_str.push("和");	
 			if( sigwin == -1) result_str.push("無特殊牌型");
 			
 			
