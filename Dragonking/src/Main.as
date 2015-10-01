@@ -63,6 +63,12 @@ package
 				Debug.monitor(stage);
 				utilFun.Log("welcome DK alcon");
 			}
+			//else
+			//{
+				//Debug.enabled = false;
+			//}
+			//Debug.monitor(stage);
+				//utilFun.Log("welcome DK alcon");
 			
 			//no thing ,ok
 			_context  = ActionScriptContextBuilder.build(appConfig);

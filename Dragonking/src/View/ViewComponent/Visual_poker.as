@@ -389,10 +389,10 @@ package View.ViewComponent
 		
 		public function prob_cal():void
 		{
-			var arr:Array = utilFun.Random_N(80, 6);
-			arr.push(utilFun.Random(8));
-			_model.putValue("percent_prob",arr);
-			return;
+			//var arr:Array = utilFun.Random_N(80, 6);
+			//arr.push(utilFun.Random(6));
+			//_model.putValue("percent_prob",arr);
+			//return;
 			
 			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
 			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
@@ -436,9 +436,12 @@ package View.ViewComponent
 			//utilFun.Log("maxValue= " + maxValue);			
 			//utilFun.Log("three_prob  = (4- samepoint_max_cnt/rest_poker_num)= " + (4 - maxValue) / rest_poker_num * 100);
 			
-			pokerUtil.three(num_amount,rest_poker_num,freedowm);
+			//pokerUtil.Check_FourOfAKind_prob(num_amount,rest_poker_num,freedowm);
+			//pokerUtil.Check_Flush_prob(color_amount,rest_poker_num,freedowm);
+			pokerUtil.Check_Straight_prob(num_amount,rest_poker_num,freedowm);
 			
-			//dispatcher(new Intobject(type, "caculate_prob"));
+			
+			
 		}		
 		
 		

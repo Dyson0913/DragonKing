@@ -299,7 +299,7 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "2")]
 		public function settleScript():void
 		{
-			_model.putValue(modelName.PLAYER_POKER, ["9d","9s"]);				
+			_model.putValue(modelName.PLAYER_POKER, ["9d","2d","6d"]);				
 			_model.putValue(modelName.BANKER_POKER, []);		
 			_model.putValue(modelName.RIVER_POKER, []);					
 			
@@ -324,8 +324,8 @@ package View.ViewComponent
 			
 			_poker.init();
 			
-			//_poker.prob_cal();
-			//return;
+			_poker.prob_cal();
+			return;
 			
 			
 			dispatcher(new ModelEvent("hide"));

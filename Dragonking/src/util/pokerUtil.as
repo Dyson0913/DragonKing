@@ -15,38 +15,237 @@ package util
 			
 		}
 		
-		public static function three(pointCnt:Array,rest_poker_num:int,freedowm:int):void
+		//4條
+		public static function Check_FourOfAKind_prob(pointCnt:Array,rest_poker_num:int,freedowm:int):Number
 		{
-		
 			utilFun.Log("rest_poker_num"+ rest_poker_num);
 			utilFun.Log("freedom" + freedowm);
+			
 			var TotalProb:Number = 0;
 			for (var k:int = 0; k < pointCnt.length; k++)
 			{
 				if ( pointCnt[k] != 0)
-				{
-					var rest:int = 3 - pointCnt[k] ;
+				{					
+					var rest:int = 4 - pointCnt[k] ;
+					var nu:Number = 0;
+					
+					//math 
+					if ( rest == 0 ) 
+					{
+						TotalProb = 100;
+						break;
+					}
+					
 					if ( rest > freedowm) 
 					{
 						utilFun.Log(" rest > freedowm prob = 0")
-						TotalProb += 0;
+						TotalProb = 0;
 						continue;
 					}
-					if ( rest == 2) 
+					utilFun.Log(" rest  = "+rest )					
+					nu  = calprob_cnt(rest, 1, rest_poker_num, rest);					
+					TotalProb += nu ;					
+				}
+			}
+			utilFun.Log(" TotalProb = " + TotalProb)
+			
+			return TotalProb;
+		}
+		
+		
+		//葫蘆
+		public static function Check_FullHouse_prob(pointCnt:Array,rest_poker_num:int,freedowm:int):void
+		{
+			
+		}
+		
+		//同花
+		public static function Check_Flush_prob(pointCnt:Array,rest_poker_num:int,freedowm:int):Number
+		{
+			utilFun.Log("rest_poker_num"+ rest_poker_num);
+			utilFun.Log("freedom" + freedowm);
+			
+			var TotalProb:Number = 0;
+			for (var k:int = 0; k < pointCnt.length; k++)
+			{
+				if ( pointCnt[k] != 0)
+				{					
+					var rest:int = 5 - pointCnt[k] ;
+					var nu:Number = 0;
+					
+					//math 
+					if ( rest == 0 ) 
 					{
-						var nu:Number  = (3 / rest_poker_num) + (2 / (rest_poker_num - 1));
-						utilFun.Log(" rest 2 = "+nu )
-						TotalProb += nu ;					
+						TotalProb = 100;
+						break;
 					}
-					if ( rest == 1)
+					
+					if ( rest > freedowm) 
 					{
-						utilFun.Log(" rest 1 = " + (2 / rest_poker_num ) )
-						TotalProb +=  (2 / rest_poker_num) ;
+						utilFun.Log(" rest > freedowm prob = 0")
+						TotalProb = 0;
+						continue;
+					}
+					//  4          3           2          1
+					//12/51   11/50   10/49    9/48
+					
+					utilFun.Log(" rest  = " + rest )	
+					var flush_diff:int = 8 + rest;
+					nu  = calprob_cnt(flush_diff,1, rest_poker_num,rest);
+					TotalProb += nu ;					
+				}
+			}
+			utilFun.Log(" TotalProb = " + TotalProb)
+			return TotalProb;
+		}
+		
+		//順子		
+		//1,2,3,4,5,6,7,8,9,10,11,12,13
+		//5,6,7,8,9 前4,後4   
+		//1,2,3,4 ,只check 後4,+前(1,2,3)
+		//11,12,13 10只check 前4 +後(1,2,3 ,check 1)		
+		public static function Check_Straight_prob(pointCnt:Array,rest_poker_num:int,freedowm:int):Number
+		{		
+			utilFun.Log("rest_poker_num"+ rest_poker_num);
+			utilFun.Log("freedom" + freedowm);
+			
+			//pre check
+			
+			
+			var TotalProb:Number = 0;
+			for (var k:int = 0; k < pointCnt.length; k++)
+			{
+				if ( pointCnt[k] != 0)
+				{		
+					var total_select_able_card:int = 0;
+					var rest:int = 4 ;
+					if ( k == 5 || k == 6 || k == 7 || k == 8 || k == 9)
+					{						
+						utilFun.Log("56789 total_select_able_card = " + total_select_able_card);
+						if (  pointCnt[k - 1] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k - 2] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k - 3] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k - 4] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k + 1] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k + 2] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k + 3] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k + 4] == 0) total_select_able_card += 4;					
+						else rest -= 1;
+						
+						//32/51 *  28 /50 *  24/49 * 20/48 							
+						utilFun.Log("56789after sub = " + total_select_able_card);
+						utilFun.Log("56789 rest = " + rest);
+						TotalProb += calprob_cnt(total_select_able_card, 4, rest_poker_num, rest);
+						utilFun.Log(" 5678 s TotalProb = " + TotalProb)
+					}
+					
+					if (k==1 ||  k == 2 || k == 3 || k == 4 )
+					{	
+						utilFun.Log("1234 total_select_able_card = " + total_select_able_card);					
+						if (  pointCnt[k + 1] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k + 2] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k + 3] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k + 4] == 0) total_select_able_card += 4;					
+						else rest -= 1;
+						
+						if ( k == 2) 
+						{
+							if (  pointCnt[k - 1] == 0) total_select_able_card += 4;
+							else rest -= 1;
+						}
+						if ( k == 3) 
+						{
+							if (  pointCnt[k - 1] == 0) total_select_able_card += 4;
+							else rest -= 1;
+							if (  pointCnt[k - 2] == 0) total_select_able_card += 4;
+							else rest -= 1;
+						}
+						if ( k == 4) 
+						{
+							if (  pointCnt[k - 1] == 0) total_select_able_card += 4;
+							else rest -= 1;
+							if (  pointCnt[k - 2] == 0) total_select_able_card += 4;
+							else rest -= 1;
+							if (  pointCnt[k - 3] == 0) total_select_able_card += 4;
+							else rest -= 1;
+						}
+						
+						//32/51 *  28 /50 *  24/49 * 20/48 							
+						utilFun.Log("1234 after sub = " + total_select_able_card);
+						utilFun.Log("1234 rest = " + rest);
+						TotalProb += calprob_cnt(total_select_able_card, 4, rest_poker_num, rest);
+						utilFun.Log(" 1234 s TotalProb = " + TotalProb)
+					}
+					
+					if (k ==10 || k == 11 || k == 12 || k == 13 )
+					{
+						utilFun.Log("10,11,12.13 total_select_able_card = " + total_select_able_card);
+						if (  pointCnt[k - 1] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k - 2] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k - 3] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						if (  pointCnt[k - 4] == 0) total_select_able_card += 4;
+						else rest -= 1;
+						
+						if ( k == 10) 
+						{
+							if (  pointCnt[k - 9] == 0) total_select_able_card += 4;
+							else rest -= 1;
+						}
+						if ( k == 11) 
+						{
+							if (  pointCnt[k + 1] == 0) total_select_able_card += 4;
+							else rest -= 1;
+						}
+						if ( k == 12) 
+						{
+							if (  pointCnt[k + 1] == 0) total_select_able_card += 4;
+							else rest -= 1;
+							if (  pointCnt[k + 2] == 0) total_select_able_card += 4;
+							else rest -= 1;
+						}
+						if ( k == 13) 
+						{
+							if (  pointCnt[k + 1] == 0) total_select_able_card += 4;
+							else rest -= 1;
+							if (  pointCnt[k + 2] == 0) total_select_able_card += 4;
+							else rest -= 1;
+							if (  pointCnt[k + 3] == 0) total_select_able_card += 4;
+							else rest -= 1;
+						}
+						
+						//32/51 *  28 /50 *  24/49 * 20/48 							
+						utilFun.Log("10,11.12.13 after sub = " + total_select_able_card);
+						utilFun.Log("10,11.12.13 rest = " + rest);
+						TotalProb += calprob_cnt(total_select_able_card, 4, rest_poker_num, rest);
+						utilFun.Log("10,11.12.13 s TotalProb = " + TotalProb)
 					}
 					
 				}
 			}
 			utilFun.Log(" TotalProb = " + TotalProb)
+			
+			return TotalProb;
+		}
+		
+		
+		public static function calprob_cnt(num:int ,num_sub:int, Denominator:int,Cnt:int):Number
+		{
+			if ( Cnt == 1) return num / (Denominator);
+			
+			return (num / Denominator) *  calprob_cnt(num -num_sub,num_sub, Denominator-1,Cnt-1);
 		}
 		
 		public static function ca_point(mypoker:Array):int
