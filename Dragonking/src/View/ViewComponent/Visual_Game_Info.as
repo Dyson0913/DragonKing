@@ -147,25 +147,19 @@ package View.ViewComponent
 			
 			for ( var i:int = 0; i < Get("pay_text").ItemList.length; i++)
 			{
-				utilFun.Clear_ItemChildren(GetSingleItem("pay_text",i));
+				utilFun.Clear_ItemChildren(GetSingleItem("pay_text", i));
+				utilFun.Clear_ItemChildren(GetSingleItem("pay_mark", i));
+				utilFun.Clear_ItemChildren(GetSingleItem("pay_odd",i));
 			}
 			
 			var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
 			Get("pay_text").CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight")];		
-			Get("pay_text").FlushObject();
-			//
-			for ( var i:int = 0; i < Get("pay_mark").ItemList.length; i++)
-			{
-				utilFun.Clear_ItemChildren(GetSingleItem("pay_mark",i));
-			}			
+			Get("pay_text").FlushObject();			
+			
 			Get("pay_mark").CustomizedFun = _text.textSetting;
 			Get("pay_mark").CustomizedData = [ { size:24, color:0x00b4ff, bold:true },"X", "X", "X", "X", "X", "X", "X", "X"];		
 			Get("pay_mark").FlushObject();
-			//
-			for ( var i:int = 0; i < Get("pay_odd").ItemList.length; i++)
-			{
-				utilFun.Clear_ItemChildren(GetSingleItem("pay_odd",i));
-			}					
+			
 			Get("pay_odd").CustomizedFun = _text.textSetting;
 			Get("pay_odd").CustomizedData = [{size:24,color:0x00b4ff,bold:true,align:TextFormatAlign.RIGHT},"200","50","20","3","2","1"];		
 			Get("pay_odd").FlushObject();

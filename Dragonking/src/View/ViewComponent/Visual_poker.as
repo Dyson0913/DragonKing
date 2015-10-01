@@ -345,11 +345,13 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="power_up")]
 		public function check_power_up_effect(type:Intobject):void
 		{			
-			var re:int = type.Value;			
+			var re:int = type.Value;	
+			var arr:Array = [];
+			var idx:int ;
 			if ( re == 0)
 			{
-				var idx:int = _model.getValue("power_pair_idx");
-				var arr:Array = _model.getValue("power_pair_posi")[idx];			
+				idx = _model.getValue("power_pair_idx");
+				arr = _model.getValue("power_pair_posi")[idx];			
 				GetSingleItem("contractpower").x = arr[0];
 				GetSingleItem("contractpower").y = arr[1];			
 				GetSingleItem("contractpower").gotoAndPlay(2);
@@ -363,8 +365,8 @@ package View.ViewComponent
 			}						
 			else
 			{
-				var idx:int = _model.getValue("power_3_idx");
-				var arr:Array = _model.getValue("power_3_posi")[idx];
+				idx = _model.getValue("power_3_idx");
+				arr = _model.getValue("power_3_posi")[idx];
 			
 				GetSingleItem("contractpower").x = arr[0];
 				GetSingleItem("contractpower").y = arr[1];			
@@ -389,10 +391,10 @@ package View.ViewComponent
 		
 		public function prob_cal():void
 		{
-			//var arr:Array = utilFun.Random_N(80, 6);
-			//arr.push(utilFun.Random(6));
-			//_model.putValue("percent_prob",arr);
-			//return;
+			var arr:Array = utilFun.Random_N(80, 6);
+			arr.push(utilFun.Random(6));
+			_model.putValue("percent_prob",arr);
+			return;
 			
 			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
 			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
@@ -438,7 +440,8 @@ package View.ViewComponent
 			
 			//pokerUtil.Check_FourOfAKind_prob(num_amount,rest_poker_num,freedowm);
 			//pokerUtil.Check_Flush_prob(color_amount,rest_poker_num,freedowm);
-			pokerUtil.Check_Straight_prob(num_amount,rest_poker_num,freedowm);
+			//pokerUtil.Check_Straight_prob(num_amount,rest_poker_num,freedowm);
+			pokerUtil.Check_FullHouse_prob(num_amount,rest_poker_num,freedowm);
 			
 			
 			

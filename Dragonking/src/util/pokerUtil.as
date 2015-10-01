@@ -15,6 +15,23 @@ package util
 			
 		}
 		
+		//同花大順
+		public static function Check_RoyalFlush(pointCnt:Array,rest_poker_num:int,freedowm:int):Number
+		{
+			
+			return 1;
+		}
+		
+		//同花順
+		//同花prob * 順子prob
+		public static function Check_StraightFlush(pointCnt:Array,rest_poker_num:int,freedowm:int):Number
+		{
+			var straight_prob:Number = Check_Straight_prob(pointCnt, rest_poker_num, freedowm);
+			var flush_prob:Number = Check_Flush_prob(pointCnt, rest_poker_num, freedowm);
+			
+			return straight_prob * flush_prob;
+		}
+		
 		//4條
 		public static function Check_FourOfAKind_prob(pointCnt:Array,rest_poker_num:int,freedowm:int):Number
 		{
@@ -52,11 +69,42 @@ package util
 			return TotalProb;
 		}
 		
-		
 		//葫蘆
-		public static function Check_FullHouse_prob(pointCnt:Array,rest_poker_num:int,freedowm:int):void
+		//TODO
+		public static function Check_FullHouse_prob(pointCnt:Array,rest_poker_num:int,freedowm:int):Number
 		{
+			utilFun.Log("rest_poker_num"+ rest_poker_num);
+			utilFun.Log("freedom" + freedowm);
 			
+			var TotalProb:Number = 0;
+			for (var k:int = 0; k < pointCnt.length; k++)
+			{
+				if ( pointCnt[k] != 0)
+				{					
+					var rest:int = 4 - pointCnt[k] ;
+					var nu:Number = 0;
+					
+					//math 
+					if ( rest == 0 ) 
+					{
+						TotalProb = 100;
+						break;
+					}
+					
+					if ( rest > freedowm) 
+					{
+						utilFun.Log(" rest > freedowm prob = 0")
+						TotalProb = 0;
+						continue;
+					}
+					utilFun.Log(" rest  = "+rest )					
+					nu  = calprob_cnt(rest, 1, rest_poker_num, rest);					
+					TotalProb += nu ;					
+				}
+			}
+			utilFun.Log(" TotalProb = " + TotalProb)
+			
+			return TotalProb;
 		}
 		
 		//同花
@@ -113,8 +161,9 @@ package util
 			
 			
 			var TotalProb:Number = 0;
+			var total_rest:int = 5;
 			for (var k:int = 0; k < pointCnt.length; k++)
-			{
+			{				
 				if ( pointCnt[k] != 0)
 				{		
 					var total_select_able_card:int = 0;
@@ -139,6 +188,7 @@ package util
 						if (  pointCnt[k + 4] == 0) total_select_able_card += 4;					
 						else rest -= 1;
 						
+						total_rest -= 1;
 						//32/51 *  28 /50 *  24/49 * 20/48 							
 						utilFun.Log("56789after sub = " + total_select_able_card);
 						utilFun.Log("56789 rest = " + rest);
@@ -180,6 +230,7 @@ package util
 							else rest -= 1;
 						}
 						
+						total_rest -= 1;
 						//32/51 *  28 /50 *  24/49 * 20/48 							
 						utilFun.Log("1234 after sub = " + total_select_able_card);
 						utilFun.Log("1234 rest = " + rest);
@@ -226,6 +277,7 @@ package util
 							else rest -= 1;
 						}
 						
+						total_rest -= 1;
 						//32/51 *  28 /50 *  24/49 * 20/48 							
 						utilFun.Log("10,11.12.13 after sub = " + total_select_able_card);
 						utilFun.Log("10,11.12.13 rest = " + rest);
@@ -234,7 +286,14 @@ package util
 					}
 					
 				}
+				
+				
 			}
+			if ( total_rest == 0) TotalProb = 100;				
+			
+			//TODO check
+			if ( total_rest > freedowm) TotalProb = 0;				
+				
 			utilFun.Log(" TotalProb = " + TotalProb)
 			
 			return TotalProb;
