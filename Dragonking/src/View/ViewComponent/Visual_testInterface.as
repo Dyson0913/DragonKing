@@ -90,8 +90,8 @@ package View.ViewComponent
 		public function init():void
 		{			
 				
-			_fileStream.switch_recode(true);
-			_fileStream.write();
+			//_fileStream.switch_recode(true);
+			//_fileStream.write();
 				
 			_betCommand.bet_init();			
 			_model.putValue("result_Pai_list", []);

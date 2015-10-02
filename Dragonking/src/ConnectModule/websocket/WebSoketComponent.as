@@ -190,7 +190,7 @@ package ConnectModule.websocket
 					
 				}
 				
-				_fileStream.recode(result);
+				//_fileStream.recode(result);
 		}
 		
 		[MessageHandler(type="ConnectModule.websocket.WebSoketInternalMsg",selector="Bet")]

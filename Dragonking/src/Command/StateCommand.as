@@ -33,8 +33,8 @@ package Command
 			{
 				dispatcher(new ModelEvent("display"));
 				dispatcher(new ModelEvent("clearn"));	
-				_fileStream.write();
-				if( !_fileStream._start) _fileStream.switch_recode(true);
+				//_fileStream.write();
+				//if( !_fileStream._start) _fileStream.switch_recode(true);
 			}
 			else if ( state == gameState.END_BET) dispatcher(new ModelEvent("hide"));
 			else if ( state == gameState.START_OPEN) dispatcher(new ModelEvent("hide"));
