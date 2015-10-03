@@ -29,7 +29,7 @@ package Command
 		
 		public function BetCommand() 
 		{
-			Clean_bet();					
+		
 		}
 		
 		public function bet_init():void
@@ -122,6 +122,7 @@ package Command
 			
 			
 			_Bet_info.putValue("self", [] ) ;
+			_model.putValue("history_bet",[]);
 		}
 		
 		public function betTypeMain(e:Event,idx:int):Boolean
@@ -137,7 +138,8 @@ package Command
 				return false;
 			}
 			utilFun.Log("betType = "+idx);
-			var bet:Object = { "betType": idx, 
+			var bet:Object = { "betType": idx,
+											"bet_idx":_model.getValue("coin_selectIdx"),
 			                               "bet_amount": _opration.array_idx("coin_list", "coin_selectIdx"),
 										    "total_bet_amount": get_total_bet(idx) +_opration.array_idx("coin_list", "coin_selectIdx")
 			};
@@ -159,7 +161,8 @@ package Command
 			//idx += 1;
 			utilFun.Log("idx ="+idx);
 			
-			var bet:Object = { "betType": idx, 
+			var bet:Object = { "betType": idx,
+										   "bet_idx":_model.getValue("coin_selectIdx"),
 			                               "bet_amount": _opration.array_idx("coin_list", "coin_selectIdx"),
 										    "total_bet_amount": get_total_bet(idx) +_opration.array_idx("coin_list", "coin_selectIdx")
 			};
@@ -190,12 +193,12 @@ package Command
 				_Bet_info.putValue("self", bet_list);
 			}
 			self_show_credit()
-			//var bet_list:Array = _Bet_info.getValue("self");
+			
 			//for (var i:int = 0; i < bet_list.length; i++)
 			//{
 				//var bet:Object = bet_list[i];
 				//
-				//utilFun.Log("bet_info  = "+bet["betType"] +" amount ="+ bet["bet_amount"]);
+				//utilFun.Log("bet_info  = "+bet["betType"] +" amount ="+ bet["bet_amount"] + " idx = " + bet["bet_idx"] );
 			//}
 		}
 		
@@ -205,6 +208,9 @@ package Command
 			
 			var credit:int = _model.getValue(modelName.CREDIT);
 			_model.putValue("after_bet_credit", credit - total);
+			
+			
+		
 		}
 		
 		public function all_betzone_totoal():Number
@@ -289,9 +295,55 @@ package Command
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean_bet():void
 		{
+			save_bet();
 			_Bet_info.clean();
+			//re_bet();
+			
 			_Bet_info.putValue("self", [] ) ;
 		}
+		
+		public function save_bet():void
+		{
+			var bet_list:Array = _Bet_info.getValue("self");
+			utilFun.Log("save_bet bet_list  = "+bet_list.length );
+			if ( bet_list.length ==0) return;
+			_model.putValue("history_bet", bet_list);
+		}
+		
+		public function need_rebet():Boolean
+		{
+			var bet_list:Array  = _model.getValue("history_bet");			
+			if ( bet_list.length ==0) return false;
+			
+			return true;
+		}
+		
+		public function re_bet():void
+		{
+			var bet_list:Array  = _model.getValue("history_bet");
+			
+			utilFun.Log("check bet_list  = " + bet_list );
+			if ( bet_list == null) return;
+			
+			//與賓果不同,同一注區會分多筆,必需要等上一筆注單確認,再能再下第二筆,不然total_bet_amount,值會錯
+			utilFun.Log("bet_list  = " + bet_list.length );
+			if ( bet_list.length != 0)
+			{			
+				var bet:Object = bet_list[0];				
+				var mybet:Object = { "betType": bet["betType"],
+													  "bet_idx":bet["bet_idx"],
+														"bet_amount": _opration.array_idx("coin_list", bet["bet_idx"]),
+														"total_bet_amount": get_total_bet( bet["betType"]) +_opration.array_idx("coin_list",  bet["bet_idx"])
+				};
+			
+				utilFun.Log("bet_info  = " + mybet["betType"] +" amount =" + mybet["bet_amount"] + " idx = " + bet["bet_idx"] +" total_bet_amount " + (get_total_bet( bet["betType"]) +_opration.array_idx("coin_list",  bet["bet_idx"]) ));
+				bet_list.shift();
+				_model.putValue("history_bet",bet_list);
+				dispatcher( new ActionEvent(mybet, "bet_action"));
+				dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.BET));
+			}
+		}
+		
 	}
 
 }

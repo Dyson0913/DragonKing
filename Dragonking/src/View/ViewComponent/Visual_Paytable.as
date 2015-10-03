@@ -197,6 +197,8 @@ package View.ViewComponent
 			Get("prob").container.visible = false;
 			
 			//Get("Historytable").container.visible = false;
+			Get("opencard_betinfo").container.visible = false;
+			Get("opencard_bet_amount").container.visible = false;	
 		}
 		
 		

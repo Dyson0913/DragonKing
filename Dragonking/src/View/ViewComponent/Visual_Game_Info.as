@@ -79,7 +79,7 @@ package View.ViewComponent
 			bet_text.CustomizedFun = _text.textSetting;
 			bet_text.CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight")];		
 			bet_text.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 50, "info_");
-			bet_text.container.x = 242;
+			bet_text.container.x = 262;
 			bet_text.container.y = 165;
 
 			
@@ -104,7 +104,17 @@ package View.ViewComponent
 			pay_title.container.x = 179;
 			pay_title.container.y = 129;
 			
-			//_tool.SetControlMc(pay_title.container);			
+			var betlimit:MultiObject = prepare("betlimit", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			betlimit.container.x = 40;
+			betlimit.container.y = 150;	
+			betlimit.Create_by_list(1, [ResName.betlimit], 0, 0, 1, 0, 0, "time_");				
+			
+			var realtimeinfo:MultiObject = prepare("realtimeinfo", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			realtimeinfo.container.x = 1704;
+			realtimeinfo.container.y = 160;	
+			realtimeinfo.Create_by_list(1, [ResName.realtimeinfo], 0, 0, 1, 0, 0, "time_");				
+			
+			//_tool.SetControlMc(bet_text.container);			
 			//_tool.SetControlMc(game_info_data.ItemList[3]);			
 			//_tool.y = 200;
 			//add(_tool);	
@@ -128,17 +138,23 @@ package View.ViewComponent
 		{
 			Get("pay_mark").container.visible = false;
 			Get("pay_odd").container.visible = false;
+			Get("betlimit").container.visible = false;
+			Get("realtimeinfo").container.visible = false;
 			
 			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
 			
 			Get("pay_title").CustomizedData = [{size:24,color:0xCCCCCC,align:TextFormatAlign.CENTER},"主注特殊牌型機率"];		
 			Get("pay_title").FlushObject();
+						
 		}
 		
 		public function apper():void
 		{			
 			Get("pay_mark").container.visible = true;
 			Get("pay_odd").container.visible = true;
+			Get("betlimit").container.visible = true;
+			Get("realtimeinfo").container.visible = true;
+			
 			
 			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));
 			

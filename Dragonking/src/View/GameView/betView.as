@@ -27,9 +27,8 @@ package View.GameView
 	 */
 	public class betView extends ViewBase
 	{
-		
 		[Inject]
-		public var _regular:RegularSetting;
+		public var _betCommand:BetCommand;
 		
 		[Inject]
 		public var _poker:Visual_poker;
@@ -93,7 +92,9 @@ package View.GameView
 			_poker.init();
 			_btn.init();
 			_settle.init();
-			_sencer.init();		
+			_sencer.init();	
+			
+			
 		}
 		
 		

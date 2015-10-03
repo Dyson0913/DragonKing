@@ -77,7 +77,7 @@ package View.ViewComponent
 			settletable_zone.container.x = 70;
 			settletable_zone.container.y = 90;		
 			settletable_zone.CustomizedFun = _text.textSetting;
-			settletable_zone.CustomizedData = [{size:24}, "莊","閒","和","莊對","閒對","特殊牌型","合計"];
+			settletable_zone.CustomizedData = [{size:24}, "莊","閒","和","莊對","閒對","特殊牌型","得分"];
 			settletable_zone.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 50, "Bet_");		
 			
 			var settletable_zone_bet:MultiObject = prepare("settletable_zone_bet", new MultiObject(), settletable.container);		
@@ -95,38 +95,38 @@ package View.ViewComponent
 			settletable_zone_settle.CustomizedData = [{size:24}, "0","0","1000","0","0","100000","10000"];
 			settletable_zone_settle.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 50, "Bet_");		
 			
-			var settletable_desh:MultiObject = prepare("settletable_desh", new MultiObject(), settletable.container);		
-			settletable_desh.container.x = 40;
-			settletable_desh.container.y = 364;		
-			settletable_desh.CustomizedFun = _text.textSetting;
-			settletable_desh.CustomizedData = [{size:24},"--------------------------------------"];
-			settletable_desh.Create_by_list(1, [ResName.TextInfo], 0 , 0, 1, 7, 0, "Bet_");		
+			//var settletable_desh:MultiObject = prepare("settletable_desh", new MultiObject(), settletable.container);		
+			//settletable_desh.container.x = 40;
+			//settletable_desh.container.y = 364;		
+			//settletable_desh.CustomizedFun = _text.textSetting;
+			//settletable_desh.CustomizedData = [{size:24},"--------------------------------------"];
+			//settletable_desh.Create_by_list(1, [ResName.TextInfo], 0 , 0, 1, 7, 0, "Bet_");		
 			//settletable_desh.container.visible = false;
 			
-			var settletable_H_desh:MultiObject = prepare("settletable_H_desh", new MultiObject(), settletable.container);		
-			settletable_H_desh.container.x = 454;
-			settletable_H_desh.container.y = 40;		
-			settletable_H_desh.CustomizedFun = _text.textSetting;
-			settletable_H_desh.CustomizedData = [ { size:24 }, "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|"];
-			settletable_H_desh.Create_by_list(14, [ResName.TextInfo], 0 , 0, 1, 0, 28, "Bet_");
+			//var settletable_H_desh:MultiObject = prepare("settletable_H_desh", new MultiObject(), settletable.container);		
+			//settletable_H_desh.container.x = 454;
+			//settletable_H_desh.container.y = 40;		
+			//settletable_H_desh.CustomizedFun = _text.textSetting;
+			//settletable_H_desh.CustomizedData = [ { size:24 }, "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|"];
+			//settletable_H_desh.Create_by_list(14, [ResName.TextInfo], 0 , 0, 1, 0, 28, "Bet_");
 			
 			
-			var result_pai:MultiObject = prepare("result_pai", new MultiObject(), settletable.container);		
-			result_pai.container.x = 288;
-			result_pai.container.y = 90;
-			result_pai.CustomizedFun = _text.textSetting;
-			result_pai.CustomizedData = [{size:24,align:TextFormatAlign.CENTER}, "閒","莊","公牌"];
-			result_pai.Create_by_list(3, [ResName.TextInfo], 0 , 0, 1, 0, 80, "Bet_");		
-			
+			//var result_pai:MultiObject = prepare("result_pai", new MultiObject(), settletable.container);		
+			//result_pai.container.x = 288;
+			//result_pai.container.y = 90;
+			//result_pai.CustomizedFun = _text.textSetting;
+			//result_pai.CustomizedData = [{size:24,align:TextFormatAlign.CENTER}, "閒","莊","公牌"];
+			//result_pai.Create_by_list(3, [ResName.TextInfo], 0 , 0, 1, 0, 80, "Bet_");		
+			//
 			//開牌結果
-			_model.putValue("result_Pai_list", ["1d","2d","3d","4d","5d","6d"]);
-			var historyPai_model:Array = _model.getValue("result_Pai_list");			
-			var history_play_pai:MultiObject = prepare("history_Pai_list", new MultiObject() , settletable.container);
-			history_play_pai.CustomizedFun = sprite_idx_setting_player;			
-			history_play_pai.CustomizedData = historyPai_model;			
-			history_play_pai.container.x = 579;
-			history_play_pai.container.y = 133;			
-			history_play_pai.Create_by_bitmap(historyPai_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, 6, 22, 25, "o_");		
+			//_model.putValue("result_Pai_list", ["1d","2d","3d","4d","5d","6d"]);
+			//var historyPai_model:Array = _model.getValue("result_Pai_list");			
+			//var history_play_pai:MultiObject = prepare("history_Pai_list", new MultiObject() , settletable.container);
+			//history_play_pai.CustomizedFun = sprite_idx_setting_player;			
+			//history_play_pai.CustomizedData = historyPai_model;			
+			//history_play_pai.container.x = 579;
+			//history_play_pai.container.y = 133;			
+			//history_play_pai.Create_by_bitmap(historyPai_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, 6, 22, 25, "o_");		
 			
 			
 			_model.putValue("result_str_list", []);
@@ -218,10 +218,10 @@ package View.ViewComponent
 					{
 						playerwin = 1;
 						//大獎
-						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin" && resultob.win_state != "WSBWOnePairBig")
+						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin")
 						{						
-							bigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state)							
-							if( bigwin !=-1) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );
+							bigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state)		
+							if( pigwin != bigwin) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );						
 						}
 						else result_str.push("閒贏");
 						winst = resultob.win_state;
@@ -230,7 +230,7 @@ package View.ViewComponent
 					{
 						bankerwin = 1;						
 						//大獎
-						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin" && resultob.win_state != "WSBWOnePairBig")
+						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin")
 						{						
 							pigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state)		
 							if( pigwin != bigwin) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );						
@@ -247,7 +247,8 @@ package View.ViewComponent
 					if ( resultob.bet_type == "BetBWPlayerPair" ) isPlayPair = 1;
 					if ( resultob.bet_type == "BetBWBankerPair" ) isbankerPair = 1;
 					if ( resultob.bet_type == "BetBWSpecial" ) 
-					{
+					{						
+						
 						sigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state)		
 						if( sigwin != bigwin) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );	
 					}
@@ -405,6 +406,12 @@ package View.ViewComponent
 		{				
 			var settletable:MultiObject = Get("settletable");
 			settletable.container.visible = true;		
+			
+			_tool.SetControlMc(settletable.container);
+			//_tool.SetControlMc(zoneCon.ItemList[2]);
+			_tool.y = 200;
+			add(_tool);
+			
 			//押注
 			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
 			var font:Array = [{size:24}];
@@ -423,30 +430,30 @@ package View.ViewComponent
 			Get("settletable_zone_settle").Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 50, "Bet_");				
 			
 			//小 poker
-			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
-			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
-			var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);
-			
-			var totalPoker:Array = [];			
-			totalPoker = totalPoker.concat(ppoker);			
-			totalPoker = totalPoker.concat(bpoker);
-			totalPoker = totalPoker.concat(rpoker);
-			_model.putValue("result_Pai_list", totalPoker);
-			var historyPai_model:Array = _model.getValue("result_Pai_list");					
-			Get("history_Pai_list").CustomizedFun = sprite_idx_setting_player;			
-			Get("history_Pai_list").CustomizedData = historyPai_model;			
-			Get("history_Pai_list").Create_by_bitmap(historyPai_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, 6, 22, 25, "o_");		
+			//var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
+			//var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
+			//var rpoker:Array =   _model.getValue(modelName.RIVER_POKER);
+			//
+			//var totalPoker:Array = [];			
+			//totalPoker = totalPoker.concat(ppoker);			
+			//totalPoker = totalPoker.concat(bpoker);
+			//totalPoker = totalPoker.concat(rpoker);
+			//_model.putValue("result_Pai_list", totalPoker);
+			//var historyPai_model:Array = _model.getValue("result_Pai_list");					
+			//Get("history_Pai_list").CustomizedFun = sprite_idx_setting_player;			
+			//Get("history_Pai_list").CustomizedData = historyPai_model;			
+			//Get("history_Pai_list").Create_by_bitmap(historyPai_model.length, utilFun.Getbitmap("poker_atlas"), 0, 0, 6, 22, 25, "o_");		
 			
 			
 			//小牌結果
-			var historystr_model:Array = _model.getValue("result_str_list");
-			var add_parse:String = historystr_model.join("、");
-			add_parse = add_parse.slice(0, 0) + "(" + add_parse.slice(0);
-			add_parse = add_parse +")";
-			
-			Get("result_str_list").CustomizedFun = _text.textSetting;
-			Get("result_str_list").CustomizedData =[{size:20,align:TextFormatAlign.CENTER},add_parse];				
-			Get("result_str_list").Create_by_list(1, [ResName.TextInfo], 0 , 0,1,0 , 0, "Bet_");		
+			//var historystr_model:Array = _model.getValue("result_str_list");
+			//var add_parse:String = historystr_model.join("、");
+			//add_parse = add_parse.slice(0, 0) + "(" + add_parse.slice(0);
+			//add_parse = add_parse +")";
+			//
+			//Get("result_str_list").CustomizedFun = _text.textSetting;
+			//Get("result_str_list").CustomizedData =[{size:20,align:TextFormatAlign.CENTER},add_parse];				
+			//Get("result_str_list").Create_by_list(1, [ResName.TextInfo], 0 , 0,1,0 , 0, "Bet_");		
 			
 			
 		}	

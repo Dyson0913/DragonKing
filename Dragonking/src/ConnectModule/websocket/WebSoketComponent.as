@@ -162,16 +162,18 @@ package ConnectModule.websocket
 						dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );							
 						dispatcher(new ModelEvent("update_state"));
 					}
+					break;
 					
 					case Message.MSG_TYPE_BET_INFO:
 					{
+						
 						if (result.result == 0)
 						{
 							dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.BETRESULT));							
 							dispatcher(new ModelEvent("updateCoin"));
 						}
 						else
-						{
+						{						
 							_actionqueue.dropMsg();
 							//error handle
 						}
@@ -198,6 +200,7 @@ package ConnectModule.websocket
 		{			
 			var ob:Object = _actionqueue.getMsg();
 			var idx_to_name:DI = _model.getValue("Bet_idx_to_name");					
+			
 			
 			var bet:Object = {  "id": String(_model.getValue(modelName.UUID)),
 			                                "timestamp":1111,

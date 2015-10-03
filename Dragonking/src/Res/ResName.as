@@ -25,6 +25,8 @@ package Res
 		public static const pokeratlas:String = "poker_atlas";	
 				
 		public static const paytable_baridx:String = "paytable_bar_idx";
+		public static const betlimit:String = "bet_limit";
+		public static const realtimeinfo:String = "realtime_info";
 		
 		public static const angelball:String = "angel_ball";
 		public static const evilball:String = "evil_ball";

@@ -168,6 +168,8 @@ package View.ViewComponent
 			
 			changeBG(ResName.Bet_Scene);
 			
+			
+			
 			//=============================================gameinfo			
 			_gameinfo.init();
 			
@@ -187,6 +189,8 @@ package View.ViewComponent
 			//================================================timer
 			_model.putValue(modelName.REMAIN_TIME, 20);					
 			_timer.init();
+			
+			_btn.init();
 			
 			dispatcher(new ModelEvent("display"));
 			

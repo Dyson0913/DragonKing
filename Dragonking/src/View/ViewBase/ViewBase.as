@@ -10,7 +10,7 @@ package View.ViewBase
 	import util.utilFun;	
 	import View.Viewutil.AdjustTool;
 	import Interface.ViewComponentInterface;
-	import Command.ViewCommand;
+	import Command.*;
 	
 	/**
 	 * ...
@@ -29,6 +29,9 @@ package View.ViewBase
 		
 		[Inject]
 		public var _viewcom:ViewCommand;
+		
+		[Inject]
+		public var _regular:RegularSetting;
 		
 		public var _tool:AdjustTool;
 		

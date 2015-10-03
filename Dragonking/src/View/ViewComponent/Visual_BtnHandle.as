@@ -1,5 +1,6 @@
 package View.ViewComponent 
 {
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
@@ -29,8 +30,8 @@ package View.ViewComponent
 		
 		public function init():void
 		{
-			var btnlist:Array = [ResName.paytable_btn];// , ResName.rebet_btn, ResName.betcancel_btn];
-			//下注區
+			var btnlist:Array = [ResName.paytable_btn];// , ResName.rebet_btn];// , ResName.betcancel_btn];
+			//patable說明
 			var btn_group:MultiObject = prepare("btn_group", new MultiObject() , GetSingleItem("_view").parent.parent);
 			btn_group.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,3,1]);
 			btn_group.container.x = -4;
@@ -43,6 +44,19 @@ package View.ViewComponent
 			btn_group.mousedown = table_true;
 			btn_group.mouseup = test_reaction;
 			
+			//rebet
+			var mylist:Array = [ ResName.rebet_btn];// , ResName.betcancel_btn];
+			var mybtn_group:MultiObject = prepare("mybtn_group", new MultiObject() , GetSingleItem("_view").parent.parent);
+			mybtn_group.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,3,1]);
+			mybtn_group.container.x = 1710;
+			mybtn_group.container.y = 950;
+			mybtn_group.CustomizedFun = scal;			
+			mybtn_group.Create_by_list(mylist.length, mylist, 0, 0, btnlist.length, 200, 0, "time_");		
+			mybtn_group.rollout = test_reaction;
+			mybtn_group.rollover = test_reaction;
+			mybtn_group.mousedown = rebet_fun;
+			mybtn_group.mouseup = test_reaction;
+			
 			
 			_rule_table  = prepare("rule_table", new MultiObject() , GetSingleItem("_view").parent.parent);			
 			_rule_table.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 1]);
@@ -54,9 +68,15 @@ package View.ViewComponent
 			_rule_table.container.visible = false;
 			
 			//_tool.SetControlMc(btn_group.ItemList[1]);
-			//_tool.SetControlMc(btn_group.container);
+			//_tool.SetControlMc(mybtn_group.container);
+			//_tool.y = 200;
 			//add(_tool);
 		}		
+		
+		public function scal(mc:MovieClip, idx:int, data:Array):void
+		{		
+			utilFun.scaleXY(mc, 0.68, 0.68);
+		}
 		
 		public function test_reaction(e:Event, idx:int):Boolean
 		{
@@ -69,55 +89,54 @@ package View.ViewComponent
 			return true;
 		}
 		
-		public function Game_iconhandle(e:Event, idx:int):Boolean
+		public function rebet_fun(e:Event, idx:int):Boolean
 		{			
-			if ( e.currentTarget.currentFrame == 3 || e.currentTarget.currentFrame == 4) return false;
-			else
-			{
-				e.currentTarget.gotoAndStop(2);
-			}
-			return true;
-		}
-		
-		public function Game_iconclick_down(e:Event, idx:int):Boolean
-		{
-			if ( e.currentTarget.currentFrame == 3 || e.currentTarget.currentFrame == 4) return false;
-			else
-			{
-				//dispatcher(new Intobject(idx, "Load_flash") );				
-				//e.currentTarget.gotoAndStop(2);
-				//loading game
-				e.currentTarget.y += 10;
-			}
-			return true;
-		}
-		
-		public function Game_iconclick_up(e:Event, idx:int):Boolean
-		{
-			if ( e.currentTarget.currentFrame == 3 || e.currentTarget.currentFrame == 4) return false;
-			else
-			{
-				//loading game
-				e.currentTarget.y -= 10;
-			}
-			return true;
-		}
-		
-		
-		public function BtnHint(e:Event, idx:int):Boolean
-		{
-			e.currentTarget.gotoAndStop(2);
-			e.currentTarget["_hintText"].gotoAndStop(idx+1);
-			return true;
-		}
-		
-		//public function gonewpage(e:Event, idx:int):Boolean
-		//{
-			//var request:URLRequest = new URLRequest("https://www.google.com.tw/");			
-			//navigateToURL( request, "_blank" );
-			//return true;
-		//}
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.ItemList[0].gotoAndStop(4);
+			betzone.rollout = null;
+			betzone.rollover = null;
+			betzone.mousedown = null;
+			betzone.mouseup = null;
 			
+			_betCommand.re_bet();
+			return false;
+		}
+		
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		public function display():void
+		{
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.container.visible = true;
+			utilFun.Log("_betCommand.need_rebet() ="+_betCommand.need_rebet());
+			if ( !_betCommand.need_rebet() )
+			{
+				betzone.ItemList[0].gotoAndStop(4);
+				betzone.rollout = null;
+				betzone.rollover = null;
+				betzone.mousedown = null;
+				betzone.mouseup = null;
+				
+			}
+			else
+			{
+				betzone.ItemList[0].gotoAndStop(1);
+				betzone.rollout = _betCommand.empty_reaction;
+				betzone.rollover = _betCommand.empty_reaction;
+				betzone.mousedown = rebet_fun;
+				betzone.mouseup = _betCommand.empty_reaction;
+			}		
+			
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
+		public function hide():void
+		{
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.container.visible = false;
+		
+		}
+		
 	}
 
 }

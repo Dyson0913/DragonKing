@@ -31,8 +31,9 @@ package Command
 			var state:int = _model.getValue(modelName.GAMES_STATE);		
 			if ( state  == gameState.NEW_ROUND)
 			{
-				dispatcher(new ModelEvent("display"));
 				dispatcher(new ModelEvent("clearn"));	
+				dispatcher(new ModelEvent("display"));
+				
 				//_fileStream.write();
 				//if( !_fileStream._start) _fileStream.switch_recode(true);
 			}

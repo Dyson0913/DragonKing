@@ -19,8 +19,8 @@ package Model
 		
 		[MessageHandler(type = "Model.ActionEvent")]
 		public function push(msg:ActionEvent):void
-		{			
-		   	_queue.push(msg.Value);
+		{		    
+		   	_queue.push(msg.Value);			
 		}
 		
 		
@@ -30,8 +30,8 @@ package Model
 		}
 		
 		public function dropMsg():void
-		{			
-			_queue.shift();
+		{		
+			_queue.shift();		
 		}
 		
 		public function excutionMsg():Object
