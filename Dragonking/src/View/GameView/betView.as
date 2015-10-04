@@ -63,6 +63,12 @@ package View.GameView
 		[Inject]
 		public var _coin_stack:Visual_Coin_stack;
 		
+		[Inject]
+		public var _settle_panel:Visual_SettlePanel;
+		
+		[Inject]
+		public var _betinfo:Visual_Betinfo;
+		
 		public function betView()  
 		{
 			utilFun.Log("betView");
@@ -83,6 +89,8 @@ package View.GameView
 			
 			_gameinfo.init();
 			_paytable.init();
+			_settle_panel.init();
+			_betinfo.init();
 			_timer.init();		
 			_hint.init();			
 			
@@ -93,6 +101,7 @@ package View.GameView
 			_btn.init();
 			_settle.init();
 			_sencer.init();	
+			
 			
 			
 		}

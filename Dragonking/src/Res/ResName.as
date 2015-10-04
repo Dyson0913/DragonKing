@@ -47,8 +47,7 @@ package Res
 		public static const Timer:String = "countDowntimer";
 		public static const Hint:String = "HintMsg";
 		public static const Bigwinmsg:String = "big_win_msg";	
-		public static const bigwinfire:String = "bigwin_fire";	
-		public static const settletable:String = "settle_table";	
+		public static const bigwinfire:String = "bigwin_fire";		
 		
 		public static const betzone_player:String = "playerzone";
 		public static const betzone_banker:String = "bankerzone";
@@ -57,14 +56,8 @@ package Res
 		public static const betzone_player_pari:String = "playerzone_pair";		
 		public static const special_Zone:String = "specialzone";		
 		public static const bet_tableitem:String = "bet_table_item";		
-		public static const open_tableitem:String = "open_table_item";	
+		public static const open_tableitem:String = "open_table_item";
 		
-		//public static const playerZone_s:String = "playerZone_sence";
-		//public static const bankerZone_s:String = "bankerZone_sence";
-		//public static const tiezone_s:String = "tiezone_sence";
-		//public static const bankerzone_pair_s:String = "bankerzone_pair_sence";
-		//public static const playerZone_pair_s:String = "playerZone_pair_sence";		
-		//public static const specialZone_s:String = "specialZone_sence";		
 		
 		public static const playerScore:String = "PlayerScore";
 		public static const bankerScore:String = "BankerScore";

@@ -73,6 +73,7 @@ package View.ViewComponent
 			powerbar.container.x = 1358;
 			powerbar.container.y = 370;			
 			powerbar.Create_by_list(1, [ResName.powerbar], 0, 0, 1, 0, 0, "histor");			
+			//powerbar.container.visible = false;
 			
 			var powerbar_3:MultiObject = prepare("powerbar_3", new MultiObject() ,  powerbar.container);
 			powerbar_3.container.x = 2.85;
@@ -90,21 +91,6 @@ package View.ViewComponent
 			contractpower.container.y = -210;			
 			contractpower.Create_by_list(1, [ResName.contractpower], 0, 0, 1, 0, 45, "histor");			
 			
-			
-			var settletable_zone:MultiObject = prepare("opencard_betinfo", new MultiObject(), GetSingleItem("_view").parent.parent);		
-			settletable_zone.container.x = 1380;
-			settletable_zone.container.y =  140;	
-			settletable_zone.CustomizedFun = _text.textSetting;
-			settletable_zone.CustomizedData = [{size:24}, "莊","閒","和","莊對","閒對","特殊牌型","總計"];
-			settletable_zone.Create_by_list(7, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");		
-			settletable_zone.container.visible = false;
-			
-			var opencard_bet_amount:MultiObject = prepare("opencard_bet_amount", new MultiObject(), GetSingleItem("_view").parent.parent);		
-			opencard_bet_amount.CustomizedFun = _text.textSetting;
-			opencard_bet_amount.container.x = 1010;
-			opencard_bet_amount.container.y =  140;	
-						
-			//
 			//_tool.SetControlMc(paytable_baridx.container);
 			//_tool.SetControlMc(contractpower.ItemList[0]);
 			//_tool.y = 200;
@@ -118,11 +104,7 @@ package View.ViewComponent
 			Get("prob").container.visible = false;
 			Get("Historytable").container.visible = true;
 			
-			Get("opencard_betinfo").container.visible = false;
-			Get("opencard_bet_amount").container.visible = false;				
-			update_history();			
-			
-			
+			update_history();
 		}
 		
 		public function update_history():void
@@ -160,45 +142,20 @@ package View.ViewComponent
 		public function opencard_parse():void
 		{
 			Get("prob").container.visible = true;			
-			Get("Historytable").container.visible = false;	
+			Get("Historytable").container.visible = false;
 			
-			//下注單
-			Get("opencard_betinfo").container.visible = true;
-			Get("opencard_bet_amount").container.visible = true;									
-			var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
-			var zone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);
-			var maping:DI = _model.getValue("idx_to_result_idx");
-			for ( var i:int = 0; i < zone.length; i++)
-			{				
-				var map:int = maping.getValue(zone[i]);				 
-				mylist.splice(map, 0,_betCommand.get_total_bet(zone[i]));
-			}			
-			
-			mylist.push(_betCommand.all_betzone_totoal());		
-			var font:Array = [{size:24,align:_gameinfo.align_right,color:0xFF0000}];
-			font = font.concat(mylist);
-			//utilFun.Log("font = "+font);
-			Get("opencard_bet_amount").CustomizedData = font;
-			Get("opencard_bet_amount").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
-		}		
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function hide():void
-		{
 			var zero:Array = utilFun.Random_N(0, 6);
 			zero.push(-1);
 			_model.putValue("percent_prob",zero);		
 			prob_percentupdate();
+			
 		}
+		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
 		public function settle_parse():void
 		{			
-			Get("prob").container.visible = false;
-			
-			//Get("Historytable").container.visible = false;
-			Get("opencard_betinfo").container.visible = false;
-			Get("opencard_bet_amount").container.visible = false;	
+			Get("prob").container.visible = false;		
 		}
 		
 		

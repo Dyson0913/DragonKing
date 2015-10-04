@@ -25,6 +25,9 @@ package View.ViewBase
 	 */
 	public class Visual_Text  extends VisualHandler
 	{
+		public var align_left:String = TextFormatAlign.LEFT;
+		public var align_center:String = TextFormatAlign.CENTER;
+		public var align_right:String = TextFormatAlign.RIGHT
 		
 		public function Visual_Text() 
 		{

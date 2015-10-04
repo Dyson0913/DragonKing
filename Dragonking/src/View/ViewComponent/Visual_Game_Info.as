@@ -33,16 +33,6 @@ package View.ViewComponent
 		[Inject]
 		public var _text:Visual_Text;
 		
-		private var mcTimer:Timer;
-		
-		private var now:Date;
-		
-		public var align_left:String = TextFormatAlign.LEFT;
-		public var align_center:String = TextFormatAlign.CENTER;
-		public var align_right:String = TextFormatAlign.RIGHT
-		
-		
-		
 		public function Visual_Game_Info() 
 		{
 			
@@ -59,10 +49,7 @@ package View.ViewComponent
 			bet.container.x = 292;
 			bet.container.y = 88;
 				
-			//now = new Date();
-			//var dtf:DateTimeFormatter = new DateTimeFormatter("zh-TW");
-			//dtf.setDateTimePattern("yyyy/MM/dd  hh:mm:ss");
-			var str:String = "";// dtf.format(now);
+			var str:String = "";
 			var game_info_data:MultiObject = prepare("game_title_info_data", new MultiObject() , GetSingleItem("_view").parent.parent);			
 			game_info_data.CustomizedFun = _text.textSetting;
 			game_info_data.CustomizedData = [{size:18,color:0xCCCCCC},_model.getValue("game_round").toString(), "", ""];

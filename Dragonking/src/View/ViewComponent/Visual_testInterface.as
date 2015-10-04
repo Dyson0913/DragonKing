@@ -77,6 +77,12 @@ package View.ViewComponent
 		[Inject]
 		public var _text:Visual_Text;
 		
+		[Inject]
+		public var _settle_panel:Visual_SettlePanel;
+		
+		[Inject]
+		public var _betinfo:Visual_Betinfo;
+		
 		private var _script_item:MultiObject;
 		
 		[Inject]
@@ -248,8 +254,9 @@ package View.ViewComponent
 			fake_hisotry();
 			_paytable.init();
 			//_paytable.opencard_parse();
-				
 			
+			
+			_betinfo.init();
 			//=============================================Hintmsg
 			_hint.init();
 			_model.putValue(modelName.GAMES_STATE,gameState.END_BET);
@@ -324,6 +331,8 @@ package View.ViewComponent
 			
 			//=============================================Hintmsg
 			//_hint.init();			
+			_settle_panel.init();
+			
 			
 			//=============================================paytable
 			fake_hisotry();
@@ -339,7 +348,7 @@ package View.ViewComponent
 			//
 			
 			dispatcher(new ModelEvent("hide"));
-			dispatcher(new ModelEvent("display"));
+			//dispatcher(new ModelEvent("display"));
 			//================================================settle info
 			_settle.init();			
 			dispatcher(new Intobject(modelName.PLAYER_POKER, "show_judge"));
