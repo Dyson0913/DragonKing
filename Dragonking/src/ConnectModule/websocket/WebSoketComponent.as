@@ -215,6 +215,7 @@ package ConnectModule.websocket
 		
 		public function SendMsg(msg:Object):void 
 		{
+			dispatcher(new ArrayObject([msg], "pack_recoder"));
 			var jsonString:String = JSON.encode(msg);
 			utilFun.Log("jsonString ="+jsonString );			
 			websocket.sendUTF(jsonString);

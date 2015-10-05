@@ -87,7 +87,11 @@ package View.ViewComponent
 		public var _debug:Visual_debugTool;
 		
 		[Inject]
-		public var _fileStream:fileStream;
+		public var _replayer:Visual_package_replayer;
+		
+		[Inject]
+		public var _loader:Visual_Loder;
+		
 		
 		public function Visual_testInterface() 
 		{
@@ -97,8 +101,6 @@ package View.ViewComponent
 		public function init():void
 		{			
 			_debug.init();
-			//_fileStream.switch_recode(true);
-			//_fileStream.write();
 				
 			_betCommand.bet_init();			
 			_model.putValue("result_Pai_list", []);
@@ -109,14 +111,14 @@ package View.ViewComponent
 			script_list.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
 			script_list.stop_Propagation = true;
 			script_list.mousedown = script_list_test;
-			script_list.CustomizedData = [{size:18},"下注腳本","開牌腳本","結算腳本"]
+			script_list.CustomizedData = [ { size:18 }, "下注腳本", "開牌腳本", "結算腳本", "封包模擬"];
 			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
 			
 			
 			_model.putValue("Script_idx", 0);			
-			_tool.y = 200;
-			add(_tool);
+			//_tool.y = 200;
+			//add(_tool);
 			
 		}				
 		
@@ -187,39 +189,6 @@ package View.ViewComponent
 			
 			//dispatcher(new StringObject("WSBWTwoPair", "winstr_hint"));
 		}	
-		
-		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "00")]
-		public function test00():void
-		{			
-			//_settle.init();
-			//_tool.SetControlMc(playerzone.ItemList[0]);
-			//_tool.SetControlMc(Get(modelName.REMAIN_TIME).container);				
-			//_model.putValue(modelName.PLAYER_POKER, ["2d"]);				
-			//_model.putValue(modelName.BANKER_POKER, ["2d"]);		
-			//_model.putValue(modelName.RIVER_POKER, []);		
-			//_poker.prob_cal();
-			
-			_paytable.prob_percentupdate();
-		}		
-		
-		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "01")]
-		public function test01():void
-		{			
-			_tool.SetControlMc(Get(modelName.HINT_MSG).container);			
-		}
-		
-		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "02")]
-		public function test02():void
-		{			
-			changeBG(ResName.Bet_Scene);
-			//================================================timer
-			if ( !_timer.already_countDown)
-			{
-				_model.putValue(modelName.REMAIN_TIME, 20);					
-				_timer.init();
-				_timer.display();
-			}
-		}
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "1")]
 		public function opencardScript():void
@@ -297,7 +266,6 @@ package View.ViewComponent
 			}					
 		}
 		
-		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "2")]
 		public function settleScript():void
 		{
@@ -371,10 +339,14 @@ package View.ViewComponent
 			}			
 			_model.putValue("history_win_list",history);
 		}
-		public function up(e:Event, idx:int):Boolean
-		{			
-			return true;
-		}	
+	
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "3")]
+		public function pack_sim():void
+		{
+			_loader.init();
+			_replayer.set_mission_id(_loader.getToken());
+			dispatcher(new ArrayObject([_replayer.mission_id(),"stream_setting.txt"], "binary_file_loading"));
+		}
 		
 	}
 

@@ -127,6 +127,8 @@ package View.ViewComponent
 		public function show():void
 		{
 			apper();
+			Get("betlimit").container.visible = true;
+			Get("realtimeinfo").container.visible = true;
 			
 			utilFun.Clear_ItemChildren(Get("game_title_info_data").ItemList[1]);			
 			var round_code:int = _opration.operator("game_round", DataOperation.add,1);
@@ -153,8 +155,7 @@ package View.ViewComponent
 		{			
 			Get("pay_mark").container.visible = true;
 			Get("pay_odd").container.visible = true;
-			Get("betlimit").container.visible = true;
-			Get("realtimeinfo").container.visible = true;
+			
 			
 			
 			utilFun.Clear_ItemChildren(GetSingleItem("pay_title"));

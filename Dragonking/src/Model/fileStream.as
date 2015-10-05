@@ -4,6 +4,7 @@ package Model
 	import com.adobe.serialization.json.JSON	
 	import Model.valueObject.ArrayObject;
 	import util.utilFun;
+	
 	/**
 	 * 輸出模型
 	 * @author hhg4092
@@ -23,14 +24,18 @@ package Model
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function recoding():void
 		{
+			if ( CONFIG::release ) return;
+			
 			write();
 			if( !_start) switch_recode(true);
 		}
 		
 		[MessageHandler(type="Model.valueObject.ArrayObject",selector="pack_recoder")]
-		public function get_package (pack:ArrayObject):void
+		public function get_package(pack:ArrayObject):void
 		{
-			if ( _start) return;
+			if ( CONFIG::release ) return;
+			
+			if ( !_start) return;
 			recode(pack.Value[0]);
 		}
 		
@@ -62,6 +67,7 @@ package Model
 		
 		public function recode(ob:Object):void
 		{
+			utilFun.Log("recoe !");
 			_recodeData.push(ob);			
 		}
 	

@@ -12,7 +12,7 @@ package
 	import ConnectModule.websocket.WebSoketComponent;
 	import View.ViewBase.Visual_Text;
 	import View.ViewComponent.*;
-	import View.Viewutil.Visual_debugTool;
+	import View.Viewutil.*;
 	
 	import View.GameView.*;
 	/**
@@ -49,6 +49,7 @@ package
 		//util
 		public var _path:Path_Generator = new Path_Generator();
 		public var _debug:Visual_debugTool = new Visual_debugTool();
+		public var _replayer:Visual_package_replayer = new Visual_package_replayer();
 		
 		//visual
 		public var _pokerhandler:Visual_poker = new Visual_poker();
@@ -57,6 +58,7 @@ package
 		public var _coin:Visual_Coin = new Visual_Coin();
 		public var _coin_stack:Visual_Coin_stack = new Visual_Coin_stack();
 		public var _betzone:Visual_betZone = new Visual_betZone();
+		public var _loader:Visual_Loder = new Visual_Loder();
 		public var _btn:Visual_BtnHandle = new Visual_BtnHandle();
 		public var _settle:Visual_Settle = new Visual_Settle();
 		public var _sencer:Visual_betZone_Sence = new Visual_betZone_Sence();

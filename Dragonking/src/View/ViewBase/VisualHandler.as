@@ -41,12 +41,26 @@ package View.ViewBase
 		[Inject]
 		public var _debugTool:Visual_debugTool;
 		
+		private var _miss_id:Array = [];
+		
 		public var _tool:AdjustTool;
 		
 		public function VisualHandler() 
 		{
 			_tool = new AdjustTool();
 		}
+		
+		public function set_mission_id(id:int ):void
+		{
+			_miss_id.push(id);
+		}
+		
+		public function mission( ):int
+		{
+			if ( _miss_id.length != 0)			
+			return _miss_id[0];
+		}
+		
 		
 		public function put_to_lsit(viewcompo:ViewComponentInterface):void
 		{
