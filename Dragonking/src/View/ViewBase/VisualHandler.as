@@ -10,6 +10,7 @@ package View.ViewBase
 	import util.*;
 	import Model.*;
 	import View.Viewutil.AdjustTool;
+	import View.Viewutil.Visual_debugTool;
 	
 	/**
 	 * handle display item how to presentation
@@ -34,11 +35,28 @@ package View.ViewBase
 		[Inject]
 		public var _opration:DataOperation;
 		
+		[Inject]
+		public var _debugTool:Visual_debugTool;
+		
 		public var _tool:AdjustTool;
 		
 		public function VisualHandler() 
 		{
 			_tool = new AdjustTool();
+		}
+		
+		public function put_to_lsit(viewcompo:ViewComponentInterface):void
+		{
+			if ( CONFIG::release ) return;
+			
+			_debugTool.put_to_lsit(viewcompo);			
+		}
+		
+		public function debug():void
+		{
+			if ( CONFIG::release ) return;	
+			_debugTool.create_tool();
+			add(_debugTool);
 		}
 		
 		//only for same view clean item

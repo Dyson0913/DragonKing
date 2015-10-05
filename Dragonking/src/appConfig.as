@@ -12,6 +12,7 @@ package
 	import ConnectModule.websocket.WebSoketComponent;
 	import View.ViewBase.Visual_Text;
 	import View.ViewComponent.*;
+	import View.Viewutil.Visual_debugTool;
 	
 	import View.GameView.*;
 	/**
@@ -47,6 +48,7 @@ package
 		
 		//util
 		public var _path:Path_Generator = new Path_Generator();
+		public var _debug:Visual_debugTool = new Visual_debugTool();
 		
 		//visual
 		public var _pokerhandler:Visual_poker = new Visual_poker();

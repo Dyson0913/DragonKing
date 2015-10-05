@@ -1,8 +1,6 @@
 package View.ViewComponent 
 {
-	import flash.display.MovieClip;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
+	import flash.display.MovieClip;	
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -50,6 +48,10 @@ package View.ViewComponent
 			//add(_tool);
 			already_countDown = false;
 			Waring_sec = 7;
+			
+			put_to_lsit(countDown);
+			put_to_lsit(timellight);
+			
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]

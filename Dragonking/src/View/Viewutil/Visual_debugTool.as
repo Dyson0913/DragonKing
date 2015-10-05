@@ -1,9 +1,6 @@
 package View.Viewutil 
-{
-	import flash.display.MovieClip;
+{	
 	import flash.display.Sprite;
-	import flash.events.TimerEvent;
-	import flash.globalization.DateTimeFormatter;
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	import Interface.ViewComponentInterface;
@@ -16,8 +13,6 @@ package View.Viewutil
 	import Command.*;
 	
 	import View.Viewutil.MultiObject;
-	import Res.ResName;
-	import caurina.transitions.Tweener;
 	
 	
 	/**
@@ -38,13 +33,12 @@ package View.Viewutil
 		
 		public function init():void
 		{
-			_tool = new MultiObject();			
+			_tool = new MultiObject();
 			_tool.setContainer(this);
 		}
 		
-		public function put_to_lsit(viewcompo:MultiObject):void
-		{
-			utilFun.Log("_tool " +_tool);
+		public function put_to_lsit(viewcompo:ViewComponentInterface):void
+		{			
 			utilFun.Log("putin no "+viewcompo.getName());
 			
 			//"View.ViewComponent.FinancialGraph"
@@ -70,6 +64,8 @@ package View.Viewutil
 			}
 			
 		}
+		
+	
 		
 	}
 
