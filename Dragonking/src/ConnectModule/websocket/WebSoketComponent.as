@@ -189,7 +189,7 @@ package ConnectModule.websocket
 					
 				}
 				
-				dispatcher(new ArrayObject([result], "pack_recoder"));							
+				dispatcher(new ArrayObject([result], "pack_recoder"));
 		}
 		
 		[MessageHandler(type="ConnectModule.websocket.WebSoketInternalMsg",selector="Bet")]

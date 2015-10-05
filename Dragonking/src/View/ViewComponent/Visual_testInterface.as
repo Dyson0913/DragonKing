@@ -86,6 +86,9 @@ package View.ViewComponent
 		private var _script_item:MultiObject;
 		
 		[Inject]
+		public var _debug:Visual_debugTool;
+		
+		[Inject]
 		public var _fileStream:fileStream;
 		
 		public function Visual_testInterface() 
@@ -95,7 +98,7 @@ package View.ViewComponent
 		
 		public function init():void
 		{			
-				
+			_debug.init();
 			//_fileStream.switch_recode(true);
 			//_fileStream.write();
 				
@@ -198,6 +201,7 @@ package View.ViewComponent
 			
 			_btn.init();
 			
+			_btn.debug();
 			dispatcher(new ModelEvent("display"));
 			
 			//dispatcher(new StringObject("WSBWTwoPair", "winstr_hint"));

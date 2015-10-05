@@ -36,6 +36,9 @@ package View.Viewutil
 		public static const _Y:String = "y";
 		public static const _Rotation:String = "Rotation";
 		
+		
+		private var TweenerY:Number;
+		
 		public function AdjustTool() 
 		{
 			
@@ -49,8 +52,11 @@ package View.Viewutil
 			//功能表
 			if ( _Menu )
 			{
-				removeChild(_Menu);
+				utilFun.Clear_ItemChildren(this);
+				//removeChild(_Menu);
 				_Menu = null;
+				TweenerY = 0;
+				_AttributeCnt = 1;
 			}
 			
 			_Menu = Createitem(mc.name, _RollOutColor);
@@ -78,7 +84,7 @@ package View.Viewutil
 		{
 			utilFun.ReMoveMouseListen(_Menu, this.MenuEffect);
 			
-			var TweenerY:Number = 25;
+			TweenerY = 25;
 			
 			//想要徵調的屬性
 			PopItemList(_AdValue, _AdjustUnit, TweenerY * _AttributeCnt);

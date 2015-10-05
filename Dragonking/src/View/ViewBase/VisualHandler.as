@@ -7,9 +7,12 @@ package View.ViewBase
 	import Model.Model;
 	import Command.*;
 	import Interface.ViewComponentInterface;
+	import Model.valueObject.ArrayObject;
 	import util.*;
 	import Model.*;
 	import View.Viewutil.AdjustTool;
+	import View.Viewutil.MultiObject;
+	import View.Viewutil.TestEvent;
 	import View.Viewutil.Visual_debugTool;
 	
 	/**
@@ -49,14 +52,16 @@ package View.ViewBase
 		{
 			if ( CONFIG::release ) return;
 			
-			_debugTool.put_to_lsit(viewcompo);			
+			dispatcher(new ArrayObject([viewcompo], "debug_item"));			
 		}
 		
 		public function debug():void
 		{
 			if ( CONFIG::release ) return;	
-			_debugTool.create_tool();
-			add(_debugTool);
+			
+			dispatcher(new TestEvent("debug_start"));
+			//_debugTool.create_tool();
+			//add(_debugTool);
 		}
 		
 		//only for same view clean item
@@ -103,6 +108,18 @@ package View.ViewBase
 			return utilFun.prepare(name,ob , _viewcom.currentViewDI , container);
 		}
 		
+		//========================= better way		
+		protected function create(name:*,resNameArr:Array, Stick_in_container:DisplayObjectContainer = null):*
+		{
+			if ( Stick_in_container == null) Stick_in_container = GetSingleItem("_view").parent.parent;
+			var ob:MultiObject = new MultiObject();
+			ob.resList = resNameArr;
+			
+			var sp:Sprite = new Sprite();
+			sp.name  = name;
+			ob.setContainer(sp);
+			return utilFun.prepare(name,ob , _viewcom.currentViewDI , Stick_in_container);
+		}		
 	}
 
 }
