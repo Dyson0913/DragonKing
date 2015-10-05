@@ -95,11 +95,11 @@ package View.Viewutil
 		{
 			for ( var i:int = 0; i < _list.length; i++)
 			{
-				var item:MultiObject = _list[i];
+				var myitem:MultiObject = _list[i];
 				if ( idx == i) continue;
 				else
 				{
-					var cleaniteam:MultiObject = create("debug_" + item.getName(), [ResName.TextInfo]);	
+					var cleaniteam:MultiObject = create("debug_" + myitem.getName(), [ResName.TextInfo]);	
 					cleaniteam.CleanList();
 				}
 			}
@@ -107,9 +107,9 @@ package View.Viewutil
 			_select_idx = idx;
 			var item:MultiObject = _list[idx];			
 			var name:Array = [];
-			for ( var i:int = 0; i < item.ItemList.length; i++)
+			for ( var k:int = 0; k < item.ItemList.length; k++)
 			{
-				name.push(item.ItemList[i].name);				
+				name.push(item.ItemList[k].name);				
 			}
 			var font:Array = [{size:24}];
 			font = font.concat(name);

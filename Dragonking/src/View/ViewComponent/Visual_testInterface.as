@@ -83,8 +83,6 @@ package View.ViewComponent
 		[Inject]
 		public var _betinfo:Visual_Betinfo;
 		
-		private var _script_item:MultiObject;
-		
 		[Inject]
 		public var _debug:Visual_debugTool;
 		
@@ -116,21 +114,7 @@ package View.ViewComponent
 			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
 			
 			
-			//腳本細項調整
-			_script_item = prepare("script_item", new MultiObject() ,GetSingleItem("_view").parent.parent );			
-			_script_item.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
-			_script_item.stop_Propagation = true;
-			_script_item.mousedown = _script_item_test;
-			_script_item.mouseup = up;
-			
-			_model.putValue("allScript",[ [{size:18}, "時間", "提示訊息","注區"],
-														   [{size:18}, "閒家一張牌", "莊家一張牌", "閒家第二張(報點數)", "閒家第二張(報點數)"],
-														   [{size:18}, "出現發公牌字樣", "公牌第一張", "公牌第二張", "出現特殊牌型"],
-														   [{size:18}, "結算表呈現","能量BAR集氣","能量BAR集滿效果"]														   
-														  ]);
-			
-			_model.putValue("Script_idx", 0);
-			_model.putValue("Script_item_idx", 0);
+			_model.putValue("Script_idx", 0);			
 			_tool.y = 200;
 			add(_tool);
 			
@@ -139,10 +123,7 @@ package View.ViewComponent
 		public function script_list_test(e:Event, idx:int):Boolean
 		{
 			utilFun.Log("script_list_test=" + idx);
-			_model.putValue("Script_idx", idx);
-			_script_item.CustomizedData = _model.getValue("allScript")[idx];
-			_script_item.CustomizedFun = _text.textSetting;			
-			_script_item.Create_by_list(_script_item.CustomizedData.length -1, [ResName.TextInfo], 0, 100, 1, 0, 20, "Btn_");
+			_model.putValue("Script_idx", idx);		
 			
 			dispatcher(new TestEvent(_model.getValue("Script_idx").toString()));
 			

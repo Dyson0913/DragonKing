@@ -40,71 +40,84 @@ package View.ViewComponent
 		
 		public function init():void
 		{			
-			var bet:MultiObject = prepare("game_title_info", new MultiObject() , GetSingleItem("_view").parent.parent);
+			var bet:MultiObject = create("game_title_info" ,[ResName.TextInfo]);
 			bet.CustomizedFun = _text.textSetting;
 			bet.CustomizedData = [{size:22,color:0xCCCCCC}, "局號:"];
 			bet.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			bet.Post_CustomizedData = [[0,0],[1020,0],[1130,0],[1300,0]];
-			bet.Create_by_list(bet.CustomizedData.length-1, [ResName.TextInfo], 0, 0, bet.CustomizedData.length-1, 200, 0, "info_");
+			bet.Post_CustomizedData = [[0,0]];
+			bet.Create_(bet.CustomizedData.length - 1, "game_title_info");
 			bet.container.x = 292;
 			bet.container.y = 88;
-				
-			var str:String = "";
-			var game_info_data:MultiObject = prepare("game_title_info_data", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			
+			var game_info_data:MultiObject = create("game_title_info_data", [ResName.TextInfo]);			
 			game_info_data.CustomizedFun = _text.textSetting;
-			game_info_data.CustomizedData = [{size:18,color:0xCCCCCC},_model.getValue("game_round").toString(), "", ""];
+			game_info_data.CustomizedData = [{size:18,color:0xCCCCCC},_model.getValue("game_round").toString()];
 			game_info_data.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			game_info_data.Post_CustomizedData = [[0,0],[310,0],[1230,0],[1400,0]];
-			game_info_data.Create_by_list(1, [ResName.TextInfo], 0, 0, 1, 200, 0, "info_");
+			game_info_data.Post_CustomizedData = [[0,0]];
+			game_info_data.Create_(1, "game_title_info_data");
 			game_info_data.container.x = 372;
 			game_info_data.container.y = 90;
 			
 			
 			//手寫賠率表 paytext.getValue("WSBWTripple"), paytext.getValue("WSBWTwoPair")
 			var paytext:DI = _model.getValue(modelName.BIG_POKER_TEXT );
-			var bet_text:MultiObject = prepare("pay_text", new MultiObject() , GetSingleItem("_view").parent.parent);
+			var bet_text:MultiObject = create("pay_text", [ResName.TextInfo]);
 			bet_text.CustomizedFun = _text.textSetting;
-			bet_text.CustomizedData = [{size:24,color:0x00b4ff,bold:true}, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight")];		
-			bet_text.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 50, "info_");
+			bet_text.CustomizedData = [ { size:24, color:0x00b4ff, bold:true }, paytext.getValue("WSBWRoyalFlush"), paytext.getValue("WSBWStraightFlush"), paytext.getValue("WSBWFourOfAKind"), paytext.getValue("WSBWFullHouse"), paytext.getValue("WSBWFlush"), paytext.getValue("WSBWStraight")];		
+			bet_text.Post_CustomizedData = [8, 50, 50];
+			bet_text.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			bet_text.Create_(bet_text.CustomizedData.length -1, "pay_text");
 			bet_text.container.x = 262;
 			bet_text.container.y = 165;
-
 			
-			var pay_mark:MultiObject = prepare("pay_mark", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			var pay_mark:MultiObject = create("pay_mark", [ResName.TextInfo]);
 			pay_mark.CustomizedFun = _text.textSetting;
-			pay_mark.CustomizedData = [{size:24,color:0x00b4ff,bold:true},"X","X","X","X","X","X"];		
-			pay_mark.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 50, "info_");
+			pay_mark.CustomizedData = [ { size:24, color:0x00b4ff, bold:true }, "X", "X", "X", "X", "X", "X"];
+			pay_mark.Post_CustomizedData = [8, 50, 50];
+			pay_mark.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			pay_mark.Create_(bet_text.CustomizedData.length -1, "pay_mark");
 			pay_mark.container.x = 482;
 			pay_mark.container.y = 165;
 			
-			var pay_odd:MultiObject = prepare("pay_odd", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			var pay_odd:MultiObject = create("pay_odd", [ResName.TextInfo]);
 			pay_odd.CustomizedFun = _text.textSetting;
-			pay_odd.CustomizedData = [{size:24,color:0x00b4ff,bold:true,align:TextFormatAlign.RIGHT},"200","50","20","3","2","1"];		
-			pay_odd.Create_by_list(bet_text.CustomizedData.length -1, [ResName.TextInfo], 0, 0, 1, 0, 50, "info_");
+			pay_odd.CustomizedData = [ { size:24, color:0x00b4ff, bold:true, align:TextFormatAlign.RIGHT }, "200", "50", "20", "3", "2", "1"];
+			pay_odd.Post_CustomizedData = [8, 50, 50];
+			pay_odd.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			pay_odd.Create_(bet_text.CustomizedData.length -1, "pay_odd");
 			pay_odd.container.x = 32;
 			pay_odd.container.y = 165;
 			
-			var pay_title:MultiObject = prepare("pay_title", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			var pay_title:MultiObject = create("pay_title",[ResName.TextInfo]);	
 			pay_title.CustomizedFun = _text.textSetting;
 			pay_title.CustomizedData = [{size:24,color:0xCCCCCC,align:TextFormatAlign.CENTER},"主注特殊牌型賠率"];		
-			pay_title.Create_by_list(1, [ResName.TextInfo], 0, 0, 1, 0, 35, "info_");
+			pay_title.Create_(1, "pay_title");
 			pay_title.container.x = 179;
 			pay_title.container.y = 129;
 			
-			var betlimit:MultiObject = prepare("betlimit", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			var betlimit:MultiObject = create("betlimit",  [ResName.betlimit]);
 			betlimit.container.x = 40;
 			betlimit.container.y = 150;	
-			betlimit.Create_by_list(1, [ResName.betlimit], 0, 0, 1, 0, 0, "time_");				
+			betlimit.Create_(1, "betlimit");
 			
-			var realtimeinfo:MultiObject = prepare("realtimeinfo", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			var realtimeinfo:MultiObject = create("realtimeinfo", [ResName.realtimeinfo]);	
 			realtimeinfo.container.x = 1704;
 			realtimeinfo.container.y = 160;	
-			realtimeinfo.Create_by_list(1, [ResName.realtimeinfo], 0, 0, 1, 0, 0, "time_");				
+			realtimeinfo.Create_(1, "realtimeinfo");	
 			
 			//_tool.SetControlMc(bet_text.container);			
 			//_tool.SetControlMc(game_info_data.ItemList[3]);			
 			//_tool.y = 200;
 			//add(_tool);	
+			
+			put_to_lsit(bet);
+			put_to_lsit(game_info_data);
+			put_to_lsit(bet_text);
+			put_to_lsit(pay_mark);
+			put_to_lsit(pay_odd);
+			put_to_lsit(pay_title);
+			put_to_lsit(betlimit);
+			put_to_lsit(realtimeinfo);
 			
 		}
 		
