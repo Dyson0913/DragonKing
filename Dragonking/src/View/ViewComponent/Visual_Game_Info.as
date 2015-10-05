@@ -108,16 +108,17 @@ package View.ViewComponent
 			
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
-		public function settle_parse():void
-		{
-			apper();
-		}
+		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function show():void
 		{
 			apper();
+			
+			utilFun.Clear_ItemChildren(Get("game_title_info_data").ItemList[1]);			
+			var round_code:int = _opration.operator("game_round", DataOperation.add,1);
+			var textfi:TextField = _text.dynamic_text(round_code.toString(),{size:18});
+			Get("game_title_info_data").ItemList[1].addChild(textfi);	
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
@@ -169,15 +170,10 @@ package View.ViewComponent
 			
 		}
 		
-		
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
-		public function display():void
+		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
+		public function settle_parse():void
 		{
-			utilFun.Clear_ItemChildren(Get("game_title_info_data").ItemList[1]);			
-			var round_code:int = _opration.operator("game_round", DataOperation.add,1);
-			var textfi:TextField = _text.dynamic_text(round_code.toString(),{size:18});
-			Get("game_title_info_data").ItemList[1].addChild(textfi);	
+			apper();
 		}
 		
 		

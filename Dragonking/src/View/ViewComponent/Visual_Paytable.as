@@ -91,7 +91,7 @@ package View.ViewComponent
 			contractpower.container.y = -210;			
 			contractpower.Create_by_list(1, [ResName.contractpower], 0, 0, 1, 0, 45, "histor");			
 			
-			//_tool.SetControlMc(paytable_baridx.container);
+			//_tool.SetControlMc(contractpower.container);
 			//_tool.SetControlMc(contractpower.ItemList[0]);
 			//_tool.y = 200;
 			//add(_tool);			

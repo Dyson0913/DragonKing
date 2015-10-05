@@ -24,19 +24,15 @@ package Res
 		public static const Wincoin:String = "Win_coin";	
 		public static const pokeratlas:String = "poker_atlas";	
 				
-		public static const paytable_baridx:String = "paytable_bar_idx";
+		
 		public static const betlimit:String = "bet_limit";
 		public static const realtimeinfo:String = "realtime_info";
-		
-		public static const angelball:String = "angel_ball";
-		public static const evilball:String = "evil_ball";
-		public static const Noneball:String = "None_ball";
+				
 		public static const prob_square:String = "prob";
 		
-		public static const history_Item_select:String = "historyItem_select";
+		
 		public static const historytable:String = "history_table";
-		public static const historyball:String = "history_ball";
-		public static const history_select_item_sencebar:String = "history_select_item_sence_bar";
+		public static const historyball:String = "history_ball";		
 		
 		public static const powerbar:String = "power_bar";
 		public static const power_bar3:String = "power_bar_3";

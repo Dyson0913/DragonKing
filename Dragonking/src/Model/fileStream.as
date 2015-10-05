@@ -24,21 +24,18 @@ package Model
 			
 			var file:FileReference = new FileReference();
 			
-			var myob:Object = { size:1, aaa:3 };
-			var myob2:Object = { size:3, aaa:2 };
-			_recodeData.push(myob);
-			_recodeData.push(myob2);
+			//var myob:Object = { size:1, aaa:3 };
+			//var myob2:Object = { size:3, aaa:2 };
+			//_recodeData.push(myob);
+			//_recodeData.push(myob2);
 			var arr:Array = [];
 			for ( var i:int = 0; i < _recodeData.length ; i++)
 			{
-				var jsonString:String = JSON.encode(_recodeData[i]);			
-				jsonString += "\n";
-				utilFun.Log("js = "+jsonString);
+				var jsonString:String = JSON.encode(_recodeData[i]);				
 				arr.push(jsonString);
-			}
-			utilFun.Log("j = "+arr.join(""));
+			}			
 			
-			file.save(arr.join(""), "myfile.txt");
+			file.save(arr.join("\n"), "myfile.txt");
 			
 		}
 		
