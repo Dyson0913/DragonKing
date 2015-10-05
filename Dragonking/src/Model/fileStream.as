@@ -2,6 +2,7 @@ package Model
 {	
 	import flash.net.FileReference;
 	import com.adobe.serialization.json.JSON	
+	import Model.valueObject.ArrayObject;
 	import util.utilFun;
 	/**
 	 * 輸出模型
@@ -16,6 +17,21 @@ package Model
 		public function fileStream() 
 		{
 			
+		}
+		
+		//start recoding
+		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		public function recoding():void
+		{
+			write();
+			if( !_start) switch_recode(true);
+		}
+		
+		[MessageHandler(type="Model.valueObject.ArrayObject",selector="pack_recoder")]
+		public function get_package (pack:ArrayObject):void
+		{
+			if ( _start) return;
+			recode(pack.Value[0]);
 		}
 		
 		public function write():void
@@ -35,7 +51,7 @@ package Model
 				arr.push(jsonString);
 			}			
 			
-			file.save(arr.join("\n"), "myfile.txt");
+			file.save(arr.join("\n"), "pack_.txt");
 			
 		}
 		
@@ -46,8 +62,7 @@ package Model
 		
 		public function recode(ob:Object):void
 		{
-			if ( _start) _recodeData.push(ob);
-			
+			_recodeData.push(ob);			
 		}
 	
 	}

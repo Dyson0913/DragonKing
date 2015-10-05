@@ -15,10 +15,7 @@ package Command
         public var dispatcher:Function;
 		
 		[Inject]
-		public var _model:Model;
-		
-		[Inject]
-		public var _fileStream:fileStream;
+		public var _model:Model;	
 		
 		public function StateCommand() 
 		{
@@ -32,10 +29,7 @@ package Command
 			if ( state  == gameState.NEW_ROUND)
 			{
 				dispatcher(new ModelEvent("clearn"));	
-				dispatcher(new ModelEvent("display"));
-				
-				//_fileStream.write();
-				//if( !_fileStream._start) _fileStream.switch_recode(true);
+				dispatcher(new ModelEvent("display"));							
 			}
 			else if ( state == gameState.END_BET) dispatcher(new ModelEvent("hide"));
 			else if ( state == gameState.START_OPEN) dispatcher(new ModelEvent("hide"));

@@ -43,9 +43,6 @@ package ConnectModule.websocket
 		[Inject]
 		public var _opration:DataOperation;
 		
-		[Inject]
-		public var _fileStream:fileStream;
-		
 		private var websocket:WebSocket;
 		
 		public function WebSoketComponent() 
@@ -192,7 +189,7 @@ package ConnectModule.websocket
 					
 				}
 				
-				//_fileStream.recode(result);
+				dispatcher(new ArrayObject([result], "pack_recoder"));							
 		}
 		
 		[MessageHandler(type="ConnectModule.websocket.WebSoketInternalMsg",selector="Bet")]
