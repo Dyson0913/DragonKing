@@ -207,6 +207,7 @@ package View.ViewComponent
 			//=============================================paytable
 			fake_hisotry();
 			_paytable.init();
+			_paytable.debug();
 			//_paytable.opencard_parse();
 			
 			
@@ -303,7 +304,8 @@ package View.ViewComponent
 			dispatcher(new ModelEvent("hide"));
 			//dispatcher(new ModelEvent("display"));
 			//================================================settle info
-			_settle.init();			
+			_settle.init();
+			_settle.debug();
 			dispatcher(new Intobject(modelName.PLAYER_POKER, "show_judge"));
 			dispatcher(new Intobject(modelName.BANKER_POKER, "show_judge"));			
 			//摸擬押注
@@ -345,7 +347,7 @@ package View.ViewComponent
 		{
 			_loader.init();
 			_replayer.set_mission_id(_loader.getToken());
-			dispatcher(new ArrayObject([_replayer.mission_id(),"stream_setting.txt"], "binary_file_loading"));
+			dispatcher(new ArrayObject([_replayer.mission_id(),"pack_player_win.txt",{callback:"replay_config_complete"}], "binary_file_loading"));
 		}
 		
 	}

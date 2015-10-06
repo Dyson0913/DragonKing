@@ -48,7 +48,8 @@ package View.ViewComponent
 		{
 			_model.putValue("Loading_Serial",0);			
 			_model.putValue("loader", new DI());			
-			_model.putValue("loadermap", new DI());			
+			_model.putValue("loader_mapping", new DI());			
+			_model.putValue("callback_mapping", new DI());			
 			
 		}
 		
@@ -62,24 +63,23 @@ package View.ViewComponent
 		{
 			var serial:int = token.Value[0];
 			var filename:String = token.Value[1];
+			
+			var ob:Object = token.Value[2];
+			var callback:String = ob.callback;
 			//create new loader processing		
 			_model.getValue("loader").putValue(serial, new URLLoader());
 			
 			utilFun.Log("game = " + serial);
 			utilFun.Log("filename = " + filename);
-				
-			startup(serial,filename);
+			utilFun.Log("callback = " + callback);
 			
-		}
-		
-		private function startup(serial:int,filename:String):void 
-		{
 			var _loader:URLLoader =  _model.getValue("loader").getValue(serial.toString());
 			
 			utilFun.Log("startup = " + filename + " serial = " + serial);			
 			
 			//mapping for complete identify
-			_model.getValue("loadermap").putValue(_loader, serial );
+			_model.getValue("loader_mapping").putValue(_loader, serial );
+			_model.getValue("callback_mapping").putValue(callback, serial );
 			
 			
 			_loader.addEventListener(Event.COMPLETE, loadend);
@@ -89,16 +89,17 @@ package View.ViewComponent
 			
 			//put back
 			_model.getValue("loader").putValue(serial, _loader);
+			
 		}
 		
 		private function gameprogress(e:ProgressEvent):void 
 		{
 			// TODO update loader
-			var serial:int = _model.getValue("loadermap").getValue(e.currentTarget );
+			var serial:int = _model.getValue("loader_mapping").getValue(e.currentTarget );
 			utilFun.Log("progress= " + serial);			
 			var total:Number = Math.round( e.bytesTotal/ 1024);
 			var loaded:Number = Math.round(e.bytesLoaded / 1024);
-			//var percent:Number = Math.round(loaded / total * 100);
+			var percent:Number = Math.round(loaded / total * 100);
 			//utilFun.Log("total = total" +total);
 			//loadingPro._Progress.gotoAndStop(percent);
 			//loadingPro._Progress._Percent._TextFild.text = percent.toString()+"%";
@@ -107,7 +108,7 @@ package View.ViewComponent
 		private function loadend(event:Event):void
 		{			
 			//TODO clean
-			var serial:int = _model.getValue("loadermap").getValue(event.currentTarget );
+			var serial:int = _model.getValue("loader_mapping").getValue(event.currentTarget );
 			utilFun.Log("loadend = " + serial);
 			var _loader:URLLoader =  _model.getValue("loader").getValue(serial.toString());			
 			//
@@ -122,8 +123,9 @@ package View.ViewComponent
 			
 			//TODO loading ok
 			//utilFun.Log("jsonarr = " + jsonob.online.stream_link);
+			var callback:String =  _model.getValue("callback_mapping").getValue(serial.toString());
 			
-			dispatcher(new ArrayObject([serial,jsonob], "urlLoader_complete"));
+			dispatcher(new ArrayObject([serial,jsonob],callback));
 		}
 	}
 

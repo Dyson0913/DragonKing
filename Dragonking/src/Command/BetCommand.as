@@ -310,6 +310,12 @@ package Command
 			_model.putValue("history_bet", bet_list);
 		}
 		
+		public function clean_hisotry_bet():void
+		{
+			_model.putValue("history_bet", []);
+			dispatcher(new ModelEvent("can_rebet"));
+		}
+		
 		public function need_rebet():Boolean
 		{
 			var bet_list:Array  = _model.getValue("history_bet");			

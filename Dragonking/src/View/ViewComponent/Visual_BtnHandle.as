@@ -105,29 +105,42 @@ package View.ViewComponent
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
-		{
-			var betzone:MultiObject = Get("mybtn_group");
-			betzone.container.visible = true;
+		{			
 			utilFun.Log("_betCommand.need_rebet() ="+_betCommand.need_rebet());
 			if ( !_betCommand.need_rebet() )
 			{
-				betzone.ItemList[0].gotoAndStop(4);
-				betzone.rollout = null;
-				betzone.rollover = null;
-				betzone.mousedown = null;
-				betzone.mouseup = null;
-				
+				can_not_rebet()				
 			}
 			else
 			{
-				betzone.ItemList[0].gotoAndStop(1);
-				betzone.rollout = _betCommand.empty_reaction;
-				betzone.rollover = _betCommand.empty_reaction;
-				betzone.mousedown = rebet_fun;
-				betzone.mouseup = _betCommand.empty_reaction;
+				can_rebet();
 			}		
 			
 		}
+		
+		public function can_rebet():void
+		{
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.container.visible = true;
+			betzone.ItemList[0].gotoAndStop(1);
+			betzone.rollout = _betCommand.empty_reaction;
+			betzone.rollover = _betCommand.empty_reaction;
+			betzone.mousedown = rebet_fun;
+			betzone.mouseup = _betCommand.empty_reaction;
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "can_rebet")]
+		public function can_not_rebet():void
+		{
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.container.visible = true;
+			betzone.ItemList[0].gotoAndStop(4);
+			betzone.rollout = null;
+			betzone.rollover = null;
+			betzone.mousedown = null;
+			betzone.mouseup = null;
+		}
+		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function hide():void

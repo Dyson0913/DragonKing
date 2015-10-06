@@ -49,10 +49,12 @@ package View.ViewComponent
 			paytable.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "time_");
 			
 			//歷史記錄bar 選項底圖
-			var pro:MultiObject = prepare("prob", new MultiObject() , paytable.container);			
+			var pro:MultiObject = create("prob",  [ResName.prob_square], paytable.container);			
 			pro.container.x = 157;
-			pro.container.y =  42;
-			pro.Create_by_list(6, [ResName.prob_square], 0, 0, 1, 0, 50, "time_");				
+			pro.container.y =  39;
+			pro.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
+			pro.Post_CustomizedData = [6, 50, 50];
+			pro.Create_(6, "prob");
 			
 			//歷史記錄bar 點擊呈現區
 			var historytable:MultiObject = prepare("Historytable", new MultiObject() ,  GetSingleItem("_view").parent.parent);
@@ -91,10 +93,7 @@ package View.ViewComponent
 			contractpower.container.y = -210;			
 			contractpower.Create_by_list(1, [ResName.contractpower], 0, 0, 1, 0, 45, "histor");			
 			
-			//_tool.SetControlMc(contractpower.container);
-			//_tool.SetControlMc(contractpower.ItemList[0]);
-			//_tool.y = 200;
-			//add(_tool);			
+			put_to_lsit(pro);	
 		}
 	
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]

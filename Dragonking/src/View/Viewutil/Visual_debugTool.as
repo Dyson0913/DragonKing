@@ -79,7 +79,7 @@ package View.Viewutil
 			debug_list.CustomizedFun = _text.textSetting;
 			debug_list.CustomizedData = font;	
 			debug_list.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;	
-			debug_list.Post_CustomizedData = [10,50,50];				
+			debug_list.Post_CustomizedData = [name.length,50,50];				
 			debug_list.Create_(name.length,"debugItem");
 			debug_list.container.x = 372;
 			debug_list.container.y = 90;

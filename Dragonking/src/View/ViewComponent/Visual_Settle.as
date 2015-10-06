@@ -211,7 +211,7 @@ package View.ViewComponent
 			GetSingleItem("bigwinmsg").gotoAndStop(1);
 			
 			//TODO settle panel
-			
+			dispatcher(new ModelEvent("show_settle_table"));
 		}
 		
 		public function rubber_out(mc:MovieClip):void

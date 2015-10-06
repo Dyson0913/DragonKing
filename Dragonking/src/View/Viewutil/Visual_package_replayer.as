@@ -45,18 +45,18 @@ package View.Viewutil
 		
 		}
 		
-		[MessageHandler(type="Model.valueObject.ArrayObject",selector="debug_item")]		
-		public function lsit(debugitem:ArrayObject):void
-		{			
-			var item:ViewComponentInterface = debugitem.Value[0];
-			utilFun.Log("putin no "+item.getName());
-			
-			//"View.ViewComponent.FinancialGraph"
-			_list.push(item);
-			
+		[MessageHandler(type="Model.valueObject.ArrayObject",selector="replay_config_complete")]		
+		public function lsit(replayinfo:ArrayObject):void
+		{	
+			//確認為自己要求的mission
+			//if ( replayinfo.Value[0] != _miss_id[0])
+			//{
+				//var object:Object =  token.Value[1];
+				//var config:Array = object.development.stream_link;
+			//}
 		}
 		
-		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "debug_start")]
+		//[MessageHandler(type = "View.Viewutil.TestEvent", selector = "debug_start")]
 		public function create_tool():void
 		{
 			utilFun.Log("create_tool " +_list.length);

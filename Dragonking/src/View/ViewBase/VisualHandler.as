@@ -55,9 +55,10 @@ package View.ViewBase
 			_miss_id.push(id);
 		}
 		
-		public function mission( ):int
+		public function mission_id( ):int
 		{
-			if ( _miss_id.length != 0)			
+			if ( _miss_id.length == 0) return -1;
+			//TODO multi mission
 			return _miss_id[0];
 		}
 		
@@ -73,9 +74,7 @@ package View.ViewBase
 		{
 			if ( CONFIG::release ) return;	
 			
-			dispatcher(new TestEvent("debug_start"));
-			//_debugTool.create_tool();
-			//add(_debugTool);
+			dispatcher(new TestEvent("debug_start"));			
 		}
 		
 		//only for same view clean item
