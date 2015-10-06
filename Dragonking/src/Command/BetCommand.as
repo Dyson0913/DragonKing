@@ -296,8 +296,7 @@ package Command
 		public function Clean_bet():void
 		{
 			save_bet();
-			_Bet_info.clean();
-			//re_bet();
+			_Bet_info.clean();			
 			
 			_Bet_info.putValue("self", [] ) ;
 		}
@@ -335,14 +334,15 @@ package Command
 			utilFun.Log("bet_list  = " + bet_list.length );
 			if ( bet_list.length != 0)
 			{			
+				var coin_list:Array = _model.getValue("coin_list");
 				var bet:Object = bet_list[0];				
 				var mybet:Object = { "betType": bet["betType"],
 													  "bet_idx":bet["bet_idx"],
-														"bet_amount": _opration.array_idx("coin_list", bet["bet_idx"]),
-														"total_bet_amount": get_total_bet( bet["betType"]) +_opration.array_idx("coin_list",  bet["bet_idx"])
+														"bet_amount": coin_list[ bet["bet_idx"]],
+														"total_bet_amount": (get_total_bet( bet["betType"]) +coin_list[ bet["bet_idx"]])
 				};
 			
-				utilFun.Log("bet_info  = " + mybet["betType"] +" amount =" + mybet["bet_amount"] + " idx = " + bet["bet_idx"] +" total_bet_amount " + (get_total_bet( bet["betType"]) +_opration.array_idx("coin_list",  bet["bet_idx"]) ));
+				utilFun.Log("bet_info  = " + mybet["betType"] +" amount =" + mybet["bet_amount"] + " idx = " + bet["bet_idx"] +" total_bet_amount " +  (get_total_bet( bet["betType"]) +coin_list[ bet["bet_idx"]])  );
 				bet_list.shift();
 				_model.putValue("history_bet",bet_list);
 				dispatcher( new ActionEvent(mybet, "bet_action"));

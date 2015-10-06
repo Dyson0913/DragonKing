@@ -68,18 +68,20 @@ package View.ViewComponent
 			var callback:String = ob.callback;
 			//create new loader processing		
 			_model.getValue("loader").putValue(serial, new URLLoader());
+			_model.getValue("callback_mapping").putValue(serial, callback);
 			
 			utilFun.Log("game = " + serial);
 			utilFun.Log("filename = " + filename);
 			utilFun.Log("callback = " + callback);
 			
+			//for gameprogress
 			var _loader:URLLoader =  _model.getValue("loader").getValue(serial.toString());
 			
 			utilFun.Log("startup = " + filename + " serial = " + serial);			
 			
 			//mapping for complete identify
-			_model.getValue("loader_mapping").putValue(_loader, serial );
-			_model.getValue("callback_mapping").putValue(callback, serial );
+			_model.getValue("loader_mapping").putValue(_loader,serial );
+			
 			
 			
 			_loader.addEventListener(Event.COMPLETE, loadend);
@@ -124,7 +126,7 @@ package View.ViewComponent
 			//TODO loading ok
 			//utilFun.Log("jsonarr = " + jsonob.online.stream_link);
 			var callback:String =  _model.getValue("callback_mapping").getValue(serial.toString());
-			
+			//utilFun.Log("callback = "+callback);
 			dispatcher(new ArrayObject([serial,jsonob],callback));
 		}
 	}

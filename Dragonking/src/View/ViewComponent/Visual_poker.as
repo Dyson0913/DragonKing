@@ -30,37 +30,35 @@ package View.ViewComponent
 		
 		public function init():void
 		{			
-			var table_hint:MultiObject = prepare("table_hint", new MultiObject(), GetSingleItem("_view").parent.parent);
-			table_hint.autoClean = true;
-			table_hint.CleanList();
-			table_hint.Create_by_list(1, [ResName.open_tableitem], 0 , 0, 1, 0, 0, "Bet_");
-			table_hint.container.x = 272;
-			table_hint.container.y = 560;	
+			var table_hint:MultiObject = create("table_hint", [ResName.open_tableitem]);						
+			table_hint.Create_(1, "table_hint");
+			table_hint.container.x = 200;
+			table_hint.container.y = 567;	
 			table_hint.container.visible = false;
 			
 			var pokerkind:Array = [ResName.just_turnpoker];
-			var playerCon:MultiObject = prepare(modelName.PLAYER_POKER, new MultiObject(), GetSingleItem("_view").parent.parent);
-			playerCon.autoClean = true;
-			playerCon.CleanList();
-			playerCon.Create_by_list(2, pokerkind, 0 , 0, 2, 184, 0, "Bet_");
-			playerCon.container.x = 283;
-			playerCon.container.y = 627;
+			var playerCon:MultiObject = create(modelName.PLAYER_POKER, pokerkind);
+			playerCon.Post_CustomizedData = [2, 204, 0];
+			playerCon.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;			
+			playerCon.Create_(2, "playerpoker");
+			playerCon.container.x = 259;
+			playerCon.container.y = 634;
 			playerCon.container.alpha = 0;
 			
-			var bankerCon:MultiObject =  prepare(modelName.BANKER_POKER, new MultiObject(), GetSingleItem("_view").parent.parent);
-			bankerCon.autoClean = true;
-			bankerCon.CleanList();		
-			bankerCon.Create_by_list(2, pokerkind, 0 , 0, 2, 184, 0, "Bet_");
-			bankerCon.container.x = 1298;
-			bankerCon.container.y = 627;
+			var bankerCon:MultiObject =  create(modelName.BANKER_POKER, pokerkind);
+			bankerCon.Post_CustomizedData = [2, 204, 0];
+			bankerCon.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;			
+			bankerCon.Create_(2, "bankerpoker");
+			bankerCon.container.x = 1277;
+			bankerCon.container.y = 634;
 			bankerCon.container.alpha = 0;
 			
-			var riverCon:MultiObject = prepare(modelName.RIVER_POKER, new MultiObject(), GetSingleItem("_view").parent.parent);
-			riverCon.autoClean = true;
-			riverCon.CleanList();
-			riverCon.Create_by_list(2,pokerkind, 0 , 0, 2, 184, 0, "Bet_");			
-			riverCon.container.x = 792;
-			riverCon.container.y = 627;			
+			var riverCon:MultiObject = create(modelName.RIVER_POKER, pokerkind);
+			riverCon.Post_CustomizedData = [2, 204, 0];
+			riverCon.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;		
+			riverCon.Create_(2,"riverpoker");
+			riverCon.container.x = 774;
+			riverCon.container.y = 634;			
 			riverCon.container.alpha = 0;
 			
 			var mipoker:MultiObject =  prepare("mipoker", new MultiObject(), GetSingleItem("_view").parent.parent);			
@@ -69,9 +67,10 @@ package View.ViewComponent
 			mipoker.container.y = 570;
 			mipoker.container.alpha = 0;
 			
-			//_tool.SetControlMc(riverCon.container);
-			//_tool.SetControlMc(playerCon.ItemList[1]);
-			//add(_tool);
+			put_to_lsit(table_hint);
+			put_to_lsit(playerCon);
+			put_to_lsit(bankerCon);
+			put_to_lsit(riverCon);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
@@ -82,14 +81,14 @@ package View.ViewComponent
 			{								
 				var playerCon:MultiObject = Get(modelName.PLAYER_POKER);
 				playerCon.CleanList();				
-				playerCon.Create_by_list(2,pokerkind, 0 , 0, 2, 184, 0, "Bet_");
+				playerCon.Create_(2, "playerpoker");
 				playerCon.container.alpha = 0;				
 			}
 			if ( Get(modelName.BANKER_POKER) != null) 
 			{								
 				var bankerCon:MultiObject = Get(modelName.BANKER_POKER);
 				bankerCon.CleanList();			    
-				bankerCon.Create_by_list(2,pokerkind, 0 , 0, 2, 184, 0, "Bet_");
+				bankerCon.Create_(2, "bankerpoker");
 				bankerCon.container.alpha = 0;				
 			}
 			
@@ -97,7 +96,7 @@ package View.ViewComponent
 			{				
 				var riverCon:MultiObject = Get(modelName.RIVER_POKER);
 				riverCon.CleanList();				
-				riverCon.Create_by_list(2, pokerkind, 0 , 0, 2, 184, 0, "Bet_");
+				riverCon.Create_(2, "riverpoker");
 				riverCon.container.alpha = 0;				
 			}
 			

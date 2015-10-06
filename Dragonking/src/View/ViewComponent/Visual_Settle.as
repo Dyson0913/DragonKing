@@ -35,12 +35,12 @@ package View.ViewComponent
 		
 		public function init():void
 		{
-			var zoneCon:MultiObject = prepare("zone", new MultiObject(), GetSingleItem("_view").parent.parent);
+			var zoneCon:MultiObject = create("zone", [ResName.playerScore, ResName.bankerScore, ResName.TieScore]);
 			zoneCon.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			zoneCon.Post_CustomizedData = [[0, 0], [1013, 0], [557, 0]];
-			zoneCon.Create_by_list(3, [ResName.playerScore, ResName.bankerScore,ResName.TieScore], 0 , 0, 3, 500, 0, "Bet_");					
-			zoneCon.container.x = 378;
-			zoneCon.container.y = 560;			
+			zoneCon.Post_CustomizedData = [[0, 0], [1018, 0], [570, 0]];
+			zoneCon.Create_(3, "zone");
+			zoneCon.container.x = 358;
+			zoneCon.container.y = 560;				
 			
 			var bigwinfire:MultiObject = prepare("bigwinfire", new MultiObject(), GetSingleItem("_view").parent.parent);
 			bigwinfire.Create_by_list(1, [ResName.bigwinfire], 0 , 0, 1, 0, 0, "Bet_");			
@@ -52,10 +52,7 @@ package View.ViewComponent
 			bigwinCon.container.x = 981;
 			bigwinCon.container.y = 420;		
 			
-			//_tool.SetControlMc(zoneCon.container);
-			//_tool.SetControlMc(zoneCon.ItemList[2]);
-			//_tool.y = 200;
-			//add(_tool);
+			put_to_lsit(zoneCon);
 			
 		}
 		

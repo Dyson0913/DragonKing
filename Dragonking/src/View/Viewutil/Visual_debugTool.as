@@ -2,6 +2,7 @@ package View.Viewutil
 {	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	import Interface.ViewComponentInterface;
@@ -15,6 +16,7 @@ package View.Viewutil
 	
 	import View.Viewutil.MultiObject;
 	import Res.ResName;
+	import flash.events.MouseEvent;
 	
 	/**
 	 * Visual_text present way
@@ -75,11 +77,11 @@ package View.Viewutil
 			font = font.concat(name);
 			debug_list= create("debug", [ResName.TextInfo]);
 			debug_list.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 1, 0]);
-			debug_list.mousedown = test_reaction;
+			debug_list.mousedown = test_reaction;			
 			debug_list.CustomizedFun = _text.textSetting;
 			debug_list.CustomizedData = font;	
 			debug_list.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;	
-			debug_list.Post_CustomizedData = [name.length,50,50];				
+			debug_list.Post_CustomizedData = [name.length,50,25];				
 			debug_list.Create_(name.length,"debugItem");
 			debug_list.container.x = 372;
 			debug_list.container.y = 90;
@@ -89,7 +91,7 @@ package View.Viewutil
 			
 			add(_childList);
 			
-		}
+		}		
 		
 		public function test_reaction(e:Event, idx:int):Boolean
 		{
@@ -127,9 +129,30 @@ package View.Viewutil
 			
 			s_tool.SetControlMc(item.container);
 			add(s_tool);
+			
+			var sRect:Rectangle = new Rectangle(0,0,1920,1080);
+			var sp:Sprite = debug_list.container as Sprite;
+			sp.startDrag(false, sRect);
+			sp.addEventListener(MouseEvent.MOUSE_MOVE, ScrollDrag);
+			sp.addEventListener(MouseEvent.MOUSE_UP, ScrollDrag);
+					
 			return true;
 		}
 	
+		private function ScrollDrag(e:Event):void
+		{
+			utilFun.Log("e =" + e.currentTarget.name);
+			switch (e.type)
+			{				
+				case "mouseUp":
+					var sp:Sprite = debug_list.container as Sprite;
+					
+					sp.stopDrag();
+					sp.removeEventListener(MouseEvent.MOUSE_MOVE, ScrollDrag);
+					sp.removeEventListener(MouseEvent.MOUSE_UP, ScrollDrag);
+				break;
+			}
+		}
 		
 		public function child_reaction(e:Event, idx:int):Boolean
 		{

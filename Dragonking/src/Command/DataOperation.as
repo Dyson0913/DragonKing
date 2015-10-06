@@ -51,6 +51,7 @@ package Command
 			return data;
 		}
 		
+		//using idx(in _model) to acceess list (in _model) value
 		public function  array_idx(data_name:*, idx_name:*):*
 		{
 			var data:* = _model.getValue(data_name);

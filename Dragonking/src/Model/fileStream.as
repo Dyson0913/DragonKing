@@ -55,8 +55,11 @@ package Model
 				var jsonString:String = JSON.encode(_recodeData[i]);				
 				arr.push(jsonString);
 			}			
+			_recodeData.length = 0;
 			
-			file.save(arr.join("\n"), "pack_.txt");
+			var packhead:String = "{\"packlist\":[\n" + arr.join(",\n") +"]}";			
+			file.save(packhead, "pack_.txt");
+			
 			
 		}
 		
