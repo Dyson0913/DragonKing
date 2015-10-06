@@ -98,11 +98,11 @@ package View.GameView
 			_coin_stack.init();
 			_coin.init();
 			_poker.init();
-			_btn.init();
+			
 			_settle.init();
 			_sencer.init();	
 			
-			
+			_btn.init();
 			
 		}
 		

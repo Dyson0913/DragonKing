@@ -230,7 +230,7 @@ package View.ViewComponent
 			dispatcher(new StringObject(_model.getValue("winstr"), "winstr_hint"));
 			
 			//結算表
-			_regular.Call(this, { onComplete:this.showAni}, 1, 1, 1, "linear");
+			_regular.Call(this, { onComplete:this.showAni}, 2, 1, 1, "linear");
 		}
 		
 		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int,bigwin:int):void

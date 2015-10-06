@@ -58,19 +58,16 @@ package View.ViewComponent
 			mybtn_group.mouseup = test_reaction;
 			
 			
-			_rule_table  = prepare("rule_table", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			_rule_table  = create("rule_table", [ResName.ruletable]);
 			_rule_table.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 1]);
 			_rule_table.mousedown = table_true;
 			_rule_table.mouseup = test_reaction;
 			_rule_table.container.x = -10;
-			_rule_table.container.y = 100;			
-			_rule_table.Create_by_list(1,[ResName.ruletable], 0, 0, 1, 0, 0, "time_");		
+			_rule_table.container.y = 50;			
+			_rule_table.Create_(1, "rule_table");
 			_rule_table.container.visible = false;
 			
-			//_tool.SetControlMc(btn_group.ItemList[1]);
-			//_tool.SetControlMc(mybtn_group.container);
-			//_tool.y = 200;
-			//add(_tool);
+			put_to_lsit(_rule_table);		
 		}		
 		
 		public function scal(mc:MovieClip, idx:int, data:Array):void
@@ -129,7 +126,7 @@ package View.ViewComponent
 			betzone.mouseup = _betCommand.empty_reaction;
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "can_rebet")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "can_not_rebet")]
 		public function can_not_rebet():void
 		{
 			var betzone:MultiObject = Get("mybtn_group");

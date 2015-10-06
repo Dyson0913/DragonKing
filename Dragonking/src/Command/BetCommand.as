@@ -313,7 +313,7 @@ package Command
 		public function clean_hisotry_bet():void
 		{
 			_model.putValue("history_bet", []);
-			dispatcher(new ModelEvent("can_rebet"));
+			dispatcher(new ModelEvent("can_not_rebet"));
 		}
 		
 		public function need_rebet():Boolean
