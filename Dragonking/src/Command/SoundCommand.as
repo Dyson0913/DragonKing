@@ -46,8 +46,8 @@ package Command
 			
 			//var s:SoundTween  = SoundAS.addTween(sound.Value);			
 			
-			var ss:SoundInstance = SoundAS.playFx(sound.Value);
-			ss.fadeFrom(0, 1,2000);
+			var ss:SoundInstance = SoundAS.playLoop(sound.Value);
+			
 		}
 		
 		[MessageHandler(type="Model.valueObject.StringObject",selector="Music_pause")]

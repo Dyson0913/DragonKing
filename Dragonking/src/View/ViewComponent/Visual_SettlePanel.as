@@ -50,7 +50,7 @@ package View.ViewComponent
 			settletable_zone.container.x = 70;
 			settletable_zone.container.y = 70;		
 			settletable_zone.CustomizedFun = _text.textSetting;
-			settletable_zone.CustomizedData = [ { size:18 }, "莊", "閒", "和", "莊對", "閒對", "特殊牌型", "得分"];
+			settletable_zone.CustomizedData = [ { size:18 }, "莊", "閒", "和", "莊對", "閒對", "特殊牌型", "合計"];
 			settletable_zone.Post_CustomizedData = [7, 30, 32];
 			settletable_zone.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			settletable_zone.Create_(7, "settletable_zone");

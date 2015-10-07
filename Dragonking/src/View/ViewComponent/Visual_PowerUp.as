@@ -53,10 +53,10 @@ package View.ViewComponent
 			powerbar_2pair.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			powerbar_2pair.Create_(5, "power_bar_2pair");
 			
-			for (var i:int = 0; i < powerbar_2pair.ItemList.length; i++)
-			{
-				powerbar_2pair.ItemList[i].gotoAndStop(2);
-			}				
+			//for (var i:int = 0; i < powerbar_2pair.ItemList.length; i++)
+			//{
+				//powerbar_2pair.ItemList[i].gotoAndStop(2);
+			//}				
 			
 			//next grid 65
 			var contractpower:MultiObject = create("contractpower", [ResName.contractpower],  powerbar.container);

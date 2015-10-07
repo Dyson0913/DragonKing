@@ -352,10 +352,11 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "3")]
 		public function pack_sim():void
 		{
+			dispatcher(new Intobject(modelName.Hud, ViewCommand.ADD)) ;			
 			//pack test
-			//_loader.init();
-			//_replayer.set_mission_id(_loader.getToken());
-			//dispatcher(new ArrayObject([_replayer.mission_id(),"pack_player_win.txt",{callback:"replay_config_complete"}], "binary_file_loading"));
+			_loader.init();
+			_replayer.set_mission_id(_loader.getToken());
+			dispatcher(new ArrayObject([_replayer.mission_id(),"pack_player_win.txt",{callback:"replay_config_complete"}], "binary_file_loading"));
 				
 			//music test
 			//dispatcher(new StringObject("Soun_Bet_BGM","Music_pause" ) );

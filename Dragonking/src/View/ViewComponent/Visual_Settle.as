@@ -191,7 +191,7 @@ package View.ViewComponent
 			{
 				//2對,3條集氣吧
 				//if ( sigwin == 0 || sigwin == 1) dispatcher(new Intobject(sigwin, "power_up"));			
-				if ( _betCommand.check_jp() > 0 ) dispatcher(new Intobject(sigwin, "power_up"));
+				if ( _betCommand.check_jp() > 0 && (sigwin ==1 || sigwin ==1)) dispatcher(new Intobject(sigwin, "power_up"));
 				else settle(new Intobject(1, "settle_step"));
 			}
 			
