@@ -101,8 +101,8 @@ package View.ViewComponent
 			betlimit.Create_(1, "betlimit");
 			
 			var realtimeinfo:MultiObject = create("realtimeinfo", [ResName.realtimeinfo]);	
-			realtimeinfo.container.x = 1704;
-			realtimeinfo.container.y = 160;	
+			realtimeinfo.container.x = 1722;
+			realtimeinfo.container.y = 151;	
 			realtimeinfo.Create_(1, "realtimeinfo");	
 			
 			//_tool.SetControlMc(bet_text.container);			

@@ -90,6 +90,9 @@ package View.ViewComponent
 		public var _loader:Visual_Loder;
 		
 		[Inject]
+		public var _PowerUp:Visual_PowerUp;
+		
+		[Inject]
 		public var _fileStream:fileStream;
 		
 		public function Visual_testInterface() 
@@ -185,6 +188,8 @@ package View.ViewComponent
 			_timer.init();
 			
 			_btn.init();
+			
+			_PowerUp.init();
 			
 			_btn.debug();
 			dispatcher(new ModelEvent("display"));
@@ -301,7 +306,7 @@ package View.ViewComponent
 			
 			//_poker.prob_cal();
 			//return;
-			//
+			_PowerUp.init();
 			
 			dispatcher(new ModelEvent("hide"));			
 			//dispatcher(new ModelEvent("display"));
@@ -313,7 +318,7 @@ package View.ViewComponent
 			//摸擬押注
 			//_betzone.init();			
 			//_coin_stack.init();
-			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
+			_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
 			//
@@ -321,7 +326,7 @@ package View.ViewComponent
 			//var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 0, "odds": 3, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 3, "win_state": "WSWin", "bet_amount": 0}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 6, "win_state": "WSBWOnePairBig", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "291643", "timestamp": 1443162482.443791, "remain_time": 9, "game_type": "BigWin", "game_round": 971, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "92b27a3e634e11e5b419f23c9189e2a9"}
 			
 			//二對
-			var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 195.0, "odds": 1.95, "win_state": "WSBWStraight", "bet_amount": 100}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSBWStraight", "bet_amount": 100}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 2, "win_state": "WSBWStraight", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 12, "win_state": "WSWin", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "299250", "timestamp": 1443593721.364407, "remain_time": 9, "game_type": "BigWin", "game_round": 158, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "a11fba56673a11e5be2bf23c9189e2a9"}
+			var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 195.0, "odds": 1.95, "win_state": "WSWin", "bet_amount": 100}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 100}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 2, "win_state": "WSBWTripple", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 12, "win_state": "WSWin", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "299250", "timestamp": 1443593721.364407, "remain_time": 9, "game_type": "BigWin", "game_round": 158, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "a11fba56673a11e5be2bf23c9189e2a9"}
 			_MsgModel.push(fakePacket);	
 			
 			
@@ -347,9 +352,13 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "3")]
 		public function pack_sim():void
 		{
-			_loader.init();
-			_replayer.set_mission_id(_loader.getToken());
-			dispatcher(new ArrayObject([_replayer.mission_id(),"pack_player_win.txt",{callback:"replay_config_complete"}], "binary_file_loading"));
+			//_loader.init();
+			//_replayer.set_mission_id(_loader.getToken());
+			//dispatcher(new ArrayObject([_replayer.mission_id(),"pack_player_win.txt",{callback:"replay_config_complete"}], "binary_file_loading"));
+			
+			//power bar test
+			_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
+			dispatcher(new Intobject(utilFun.Random(2), "power_up"));		
 		}
 		
 	}

@@ -121,6 +121,8 @@ package Command
 			_model.putValue(modelName.BIG_POKER_TEXT , poer_msg);
 			
 			
+			_model.putValue("power_jp",[0,0]);
+			
 			_Bet_info.putValue("self", [] ) ;
 			_model.putValue("history_bet",[]);
 		}
@@ -271,6 +273,21 @@ package Command
 				}
 			}			
 			return arr;
+		}
+		
+		public function check_jp():Number
+		{
+			var name_to_idx:DI = _model.getValue("Bet_name_to_idx");
+			var check_zone:Array = ["BetBWPlayer", "BetBWBanker", "BetBWTiePoint"];
+					
+			var total:Number = 0;
+			for ( var i:int = 0; i < check_zone.length ; i++)
+			{
+				var zone:int = name_to_idx.getValue(check_zone[i]);	
+				total += get_total_bet(zone);
+			}
+			
+			return total;
 		}
 		
 		public function get_my_bet_info(type:String):Array

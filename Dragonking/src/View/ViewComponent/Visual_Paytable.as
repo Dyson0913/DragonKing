@@ -69,42 +69,12 @@ package View.ViewComponent
 			historyball.Post_CustomizedData = [6, 33, 33 ];
 			historyball.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			historyball.Create_(60, "historyball");
-			
-			//集氣吧
-			var powerbar:MultiObject = create("powerbar",  [ResName.powerbar]);
-			powerbar.container.x = 1358;
-			powerbar.container.y = 370;			
-			powerbar.Create_(1, "powerbar");
-			//powerbar.container.visible = false;
-			
-			var powerbar_3:MultiObject = create("powerbar_3",  [ResName.power_bar3],  powerbar.container);
-			powerbar_3.container.x = 2.85;
-			powerbar_3.container.y = 21;			
-			powerbar_3.Post_CustomizedData = [5, 65, 0 ];
-			powerbar_3.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
-			powerbar_3.Create_(5, "powerbar_3");
-						
-			var powerbar_2pair:MultiObject = create("power_bar_2pair", [ResName.power_bar_2pair] ,  powerbar.container);
-			powerbar_2pair.container.x = 3.35;
-			powerbar_2pair.container.y = 64.5;
-			powerbar_2pair.Post_CustomizedData = [5, 64.5, 0 ];
-			powerbar_2pair.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
-			powerbar_2pair.Create_(5, "power_bar_2pair");
-			
-			//next grid 65
-			var contractpower:MultiObject = create("contractpower", [ResName.contractpower],  powerbar.container);
-			contractpower.container.x = -270;
-			contractpower.container.y = -210;			
-			contractpower.Create_(1, "contractpower");
+					
 			
 			put_to_lsit(paytable);	
 			put_to_lsit(pro);	
 			put_to_lsit(historytable);	
-			put_to_lsit(historyball);	
-			put_to_lsit(powerbar);	
-			put_to_lsit(powerbar_3);	
-			put_to_lsit(powerbar_2pair);	
-			put_to_lsit(contractpower);	
+			put_to_lsit(historyball);			
 		}
 	
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]

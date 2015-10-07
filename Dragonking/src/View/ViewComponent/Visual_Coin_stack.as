@@ -96,10 +96,11 @@ package View.ViewComponent
 			//TODO  一次一次pop
 			_betCommand.re_bet();
 			
+			utilFun.Log("check jp ="+_betCommand.check_jp());
 			
 			//coin動畫
 			stack(_betCommand.Bet_type_betlist(bet_ob["betType"]), GetSingleItem("coinstakeZone",bet_ob["betType"] ),bet_ob["betType"]);	
-		}
+		}		
 		
 		public function stack(Allcoin:Array,contain:DisplayObjectContainer,bettype:int):void
 		{			

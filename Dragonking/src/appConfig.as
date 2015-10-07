@@ -66,6 +66,7 @@ package
 		public var _paytable:Visual_Paytable = new Visual_Paytable();
 		public var _text:Visual_Text = new Visual_Text();
 		public var _settle_panel:Visual_SettlePanel = new Visual_SettlePanel();
+		public var _PowerUp:Visual_PowerUp = new Visual_PowerUp();
 		//public var _betinfo:Visual_Betinfo = new Visual_Betinfo();
 		
 		

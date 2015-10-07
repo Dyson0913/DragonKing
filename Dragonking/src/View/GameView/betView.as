@@ -66,6 +66,9 @@ package View.GameView
 		[Inject]
 		public var _settle_panel:Visual_SettlePanel;
 		
+		[Inject]
+		public var _PowerUp:Visual_PowerUp;
+		
 		public function betView()  
 		{
 			utilFun.Log("betView");
@@ -99,7 +102,7 @@ package View.GameView
 			_sencer.init();	
 			
 			_btn.init();
-			
+			_PowerUp.init();
 		}
 		
 		

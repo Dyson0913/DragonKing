@@ -81,7 +81,7 @@ package View.ViewBase
 		protected function Del(name:*):void
 		{			
 			_viewcom.currentViewDI.Del(name);
-		}
+		}	
 		
 		protected function Get(name:*):*
 		{			
@@ -96,6 +96,15 @@ package View.ViewBase
 				return ob.ItemList[idx];
 			}
 			return null;
+		}
+		
+		protected function setFrame(name:*, frame:int):void
+		{
+			var a:MultiObject = Get(name);
+			for ( var i:int = 0; i <  a.ItemList.length; i++)
+			{				
+				GetSingleItem(name, i).gotoAndStop(frame);
+			}
 		}
 		
 		protected function changeBG(name:String):void

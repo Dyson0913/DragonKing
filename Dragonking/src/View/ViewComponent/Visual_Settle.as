@@ -28,6 +28,9 @@ package View.ViewComponent
 		[Inject]
 		public var _text:Visual_Text;
 		
+		[Inject]
+		public var _betCommand:BetCommand;
+		
 		public function Visual_Settle() 
 		{
 			
@@ -59,12 +62,12 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean():void
 		{			
-			var a:MultiObject = Get("zone");
-			for ( var i:int = 0; i <  a.ItemList.length; i++)
-			{				
-				GetSingleItem("zone", i).gotoAndStop(1);
-			}
-			
+			//var a:MultiObject = Get("zone");
+			//for ( var i:int = 0; i <  a.ItemList.length; i++)
+			//{				
+				//GetSingleItem("zone", i).gotoAndStop(1);
+			//}
+			setFrame("zone", 1);
 		}
 		
 		//move to model command to parse ,then send event
@@ -187,18 +190,11 @@ package View.ViewComponent
 			else
 			{
 				//2對,3條集氣吧
-				if ( sigwin == 0 || sigwin == 1) dispatcher(new Intobject(sigwin, "power_up"));			
-					
-				//patytable提示框			
-				dispatcher(new StringObject(_model.getValue("winstr"), "winstr_hint"));
-				
-				//show誰贏
-				dispatcher(new Intobject(1, "show_who_win"));			
-				
-				//結算表
-				_regular.Call(this, { onComplete:this.showAni}, 1, 2, 1, "linear");
+				//if ( sigwin == 0 || sigwin == 1) dispatcher(new Intobject(sigwin, "power_up"));			
+				if ( _betCommand.check_jp() > 0 ) dispatcher(new Intobject(sigwin, "power_up"));
+				else settle(new Intobject(1, "settle_step"));
 			}
-						
+			
 			//歷史記錄
 			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin);
 		}
@@ -220,6 +216,12 @@ package View.ViewComponent
 		{
 			Tweener.addTween(mc, { scaleX: 1, scaleY:1, time:0.5, transition:"linear" } );		
 			
+			settle(new Intobject(1, "settle_step"));
+		}
+		
+		[MessageHandler(type="Model.valueObject.Intobject",selector="settle_step")]
+		public function settle(v:Intobject):void
+		{
 			//show誰贏
 			dispatcher(new Intobject(1, "show_who_win"));			
 			

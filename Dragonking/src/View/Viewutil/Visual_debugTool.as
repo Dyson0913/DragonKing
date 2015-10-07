@@ -36,6 +36,7 @@ package View.Viewutil
 		private  var debug_list:MultiObject;
 		
 		private var _childList:Sprite;
+		private var _testList:Sprite;
 		
 		public function Visual_debugTool() 
 		{
@@ -77,23 +78,27 @@ package View.Viewutil
 			font = font.concat(name);
 			debug_list= create("debug", [ResName.TextInfo]);
 			debug_list.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 1, 0]);
-			debug_list.mousedown = test_reaction;			
+			debug_list.mousedown = item_and_child;			
 			debug_list.CustomizedFun = _text.textSetting;
 			debug_list.CustomizedData = font;	
 			debug_list.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;	
-			debug_list.Post_CustomizedData = [name.length,50,25];				
+			debug_list.Post_CustomizedData = [name.length,50,30];				
 			debug_list.Create_(name.length,"debugItem");
-			debug_list.container.x = 372;
-			debug_list.container.y = 90;
+			debug_list.container.x = 0;
+			debug_list.container.y = 200;
 			
-			_childList.x = debug_list.container.x;
+			_childList.x = debug_list.container.x+ 100;
 			_childList.y = debug_list.container.y;
 			
+			_testList.x = debug_list.container.x + 200;
+			_testList.y = debug_list.container.y;
+			
 			add(_childList);
+			add(_testList);
 			
 		}		
 		
-		public function test_reaction(e:Event, idx:int):Boolean
+		public function item_and_child(e:Event, idx:int):Boolean
 		{
 			for ( var i:int = 0; i < _list.length; i++)
 			{
@@ -116,7 +121,7 @@ package View.Viewutil
 			var font:Array = [{size:24}];
 			font = font.concat(name);
 			
-			
+			//child
 			var game_info_data:MultiObject = create("debug_" + item.getName(), [ResName.TextInfo],_childList);			
 			game_info_data.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 1, 0]);
 			game_info_data.mousedown = child_reaction;
@@ -125,23 +130,35 @@ package View.Viewutil
 			game_info_data.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;	
 			game_info_data.Post_CustomizedData = [10,50,50];				
 			game_info_data.Create_( item.ItemList.length,"debugItem");
-			game_info_data.container.x = debug_list.container.x + 100;			
+			game_info_data.container.x = debug_list.container.x + 500;			
 			
 			s_tool.SetControlMc(item.container);
 			add(s_tool);
 			
+			//drag
 			var sRect:Rectangle = new Rectangle(0,0,1920,1080);
 			var sp:Sprite = debug_list.container as Sprite;
 			sp.startDrag(false, sRect);
 			sp.addEventListener(MouseEvent.MOUSE_MOVE, ScrollDrag);
 			sp.addEventListener(MouseEvent.MOUSE_UP, ScrollDrag);
 					
+			//testlist
+			//var test_list:MultiObject = create("test_" + item.getName(), [ResName.TextInfo],_testList);			
+			//test_list.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 1, 0]);
+			//test_list.mousedown = child_reaction;
+			//test_list.CustomizedFun = _text.textSetting;
+			//test_list.CustomizedData = font;	
+			//test_list.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;	
+			//test_list.Post_CustomizedData = [10,50,50];				
+			//test_list.Create_( item.ItemList.length,"testItem");
+			//test_list.container.x = debug_list.container.x + 100;			
+			
 			return true;
 		}
 	
 		private function ScrollDrag(e:Event):void
 		{
-			utilFun.Log("e =" + e.currentTarget.name);
+			//utilFun.Log("e =" + e.currentTarget.name);
 			switch (e.type)
 			{				
 				case "mouseUp":
