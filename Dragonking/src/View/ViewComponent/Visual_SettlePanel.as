@@ -20,6 +20,9 @@ package View.ViewComponent
 		[Inject]
 		public var _text:Visual_Text;
 		
+		[Inject]
+		public var _betCommand:BetCommand;
+		
 		public function Visual_SettlePanel() 
 		{
 			
@@ -41,6 +44,7 @@ package View.ViewComponent
 			settletable_title.CustomizedFun = _text.textSetting;
 			settletable_title.CustomizedData = [{size:22}, "投注內容","押分","得分"];
 			settletable_title.Create_(3, "settletable_title");
+			GetSingleItem("settletable_title", 2).visible = false;
 			
 			var settletable_zone:MultiObject = create("settletable_zone", [ResName.TextInfo], settletable.container);		
 			settletable_zone.container.x = 70;
@@ -54,28 +58,30 @@ package View.ViewComponent
 			var settletable_zone_bet:MultiObject = create("settletable_zone_bet", [ResName.TextInfo], settletable.container);		
 			settletable_zone_bet.container.x = -360;
 			settletable_zone_bet.container.y = settletable_zone.container.y;		
-			//settletable_zone_bet.CustomizedFun = _text.textSetting;
-			//settletable_zone_bet.CustomizedData = [ { size:18,align:_text.align_right }, "100", "100", "1000", "0", "200", "100000"];
-			settletable_zone_bet.Post_CustomizedData = [6, 30, 32];
+			settletable_zone_bet.CustomizedFun = _text.textSetting;
+			settletable_zone_bet.CustomizedData = [ { size:18,align:_text.align_right,color:0xFF0000 }, "100", "100", "1000", "0", "200", "100000","0"];
+			settletable_zone_bet.Post_CustomizedData = [7, 30, 32];
 			settletable_zone_bet.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-			settletable_zone_bet.Create_(6, "settletable_zone_bet");
+			settletable_zone_bet.Create_(7, "settletable_zone_bet");
 			
 			
 			var settletable_zone_settle:MultiObject = create("settletable_zone_settle",  [ResName.TextInfo], settletable.container);		
 			settletable_zone_settle.container.x = -240;
 			settletable_zone_settle.container.y = settletable_zone.container.y;		
-			//settletable_zone_settle.CustomizedFun = _text.colortextSetting;
-			//settletable_zone_settle.CustomizedData = [ { size:18,align:_text.align_right }, "0", "0", "1000", "0", "0", "100000", "10000"];
+			settletable_zone_settle.CustomizedFun = _text.colortextSetting;
+			settletable_zone_settle.CustomizedData = [ { size:18,align:_text.align_right }, "0", "0", "1000", "0", "0", "100000", "10000"];
 			settletable_zone_settle.Post_CustomizedData = [7, 30, 32];
 			settletable_zone_settle.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			settletable_zone_settle.Create_(7, "settletable_zone_settle");
+			settletable_zone_settle.container.visible = false;
 			
-			var settletable_desh:MultiObject = create("settletable_desh", [ResName.TextInfo], settletable.container);		
-			settletable_desh.container.x = 70;
-			settletable_desh.container.y = 235;					
-			settletable_desh.CustomizedFun = _text.textSetting;
-			settletable_desh.CustomizedData = [{size:24},"______________________________"];
-			settletable_desh.Create_(1,"settletable_desh");
+			//var settletable_desh:MultiObject = create("settletable_desh", [ResName.TextInfo], settletable.container);		
+			//settletable_desh.container.x = 70;
+			//settletable_desh.container.y = 235;					
+			//settletable_desh.CustomizedFun = _text.textSetting;
+			//settletable_desh.CustomizedData = [{size:24},"______________________________"];
+			//settletable_desh.Create_(1, "settletable_desh");
+			
 			//_model.putValue("result_str_list", []);
 			//var historystr_model:Array = _model.getValue("result_str_list");			
 			//var result_str_list:MultiObject = prepare("result_str_list", new MultiObject() , settletable.container);
@@ -90,7 +96,7 @@ package View.ViewComponent
 			put_to_lsit(settletable_zone);
 			put_to_lsit(settletable_zone_bet);
 			put_to_lsit(settletable_zone_settle);
-			put_to_lsit(settletable_desh);
+			//put_to_lsit(settletable_desh);
 		}		
 		
 		public function sprite_idx_setting_player(mc:*, idx:int, data:Array):void
@@ -108,6 +114,33 @@ package View.ViewComponent
 		public function display():void
 		{				
 			Get("settletable").container.visible = false;
+			GetSingleItem("settletable_title", 2).visible = false;
+			Get("settletable_zone_settle").container.visible = false;
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
+		public function opencard_parse():void
+		{
+			Get("settletable").container.visible = true;			
+			GetSingleItem("settletable_title", 2).visible = false;
+			Get("settletable_zone_settle").container.visible = false;
+			
+			utilFun.Log("1 = ");
+			var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
+			var zone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);
+			var maping:DI = _model.getValue("idx_to_result_idx");
+			for ( var i:int = 0; i < zone.length; i++)
+			{				
+				var map:int = maping.getValue(zone[i]);				 
+				mylist.splice(map, 0,_betCommand.get_total_bet(zone[i]));
+			}			
+			
+			mylist.push(_betCommand.all_betzone_totoal());		
+			var font:Array = [{size:24,align:_text.align_right,color:0xFF0000}];
+			font = font.concat(mylist);
+			utilFun.Log("font = "+mylist);
+			Get("settletable_zone_bet").CustomizedData = font;
+			Get("settletable_zone_bet").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "show_settle_table")]
@@ -115,11 +148,14 @@ package View.ViewComponent
 		{
 			
 			utilFun.Log("show_settle");			
-			Get("settletable").container.visible = true;		
+			Get("settletable").container.visible = true;			
+			GetSingleItem("settletable_title", 2).visible = true;
+			Get("settletable_zone_settle").container.visible = true;	
 			
 			//押注
-			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
-			var font:Array = [{size:24,align:_text.align_right}];
+			var zone_amount:Array = _model.getValue("result_zonebet_amount");
+			zone_amount.push(_betCommand.all_betzone_totoal());		
+			var font:Array = [ { size:24, align:_text.align_right, color:0xFF0000 } ];			
 			font = font.concat(zone_amount);			
 			utilFun.Log("font1 = "+font);			
 			Get("settletable_zone_bet").CustomizedFun = _text.textSetting;
