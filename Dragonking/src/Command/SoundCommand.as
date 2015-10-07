@@ -30,10 +30,13 @@ package Command
 			
 		}
 		
-		//[MessageHandler(type = "Model.ModelEvent", selector = "update_state")]
+		
 		public function init():void
 		{
 			SoundAS.addSound("Soun_Bet_BGM", new Soun_Bet_BGM());
+			SoundAS.addSound("sound_coin", new sound_coin());
+			SoundAS.addSound("sound_msg", new sound_msg());
+			SoundAS.addSound("sound_rebet", new sound_rebet());
 			//SoundAS.addSound("C", new C());						
 		}
 		
@@ -47,9 +50,16 @@ package Command
 			ss.fadeFrom(0, 1,2000);
 		}
 		
-		public function playSound():void
+		[MessageHandler(type="Model.valueObject.StringObject",selector="Music_pause")]
+		public function stopMusic(sound:StringObject):void
 		{
-			
+			SoundAS.pause(sound.Value);
+		}
+		
+		[MessageHandler(type="Model.valueObject.StringObject",selector="sound")]
+		public function playSound(sound:StringObject):void
+		{
+			SoundAS.playFx(sound.Value);
 		}
 		
 	}

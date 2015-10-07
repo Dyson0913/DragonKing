@@ -103,6 +103,7 @@ package View.GameView
 			
 			_btn.init();
 			_PowerUp.init();
+			dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
 		}
 		
 		

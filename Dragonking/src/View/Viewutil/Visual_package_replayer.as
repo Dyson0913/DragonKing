@@ -49,12 +49,24 @@ package View.Viewutil
 			utilFun.Log("parse");
 			var jsonob:Object =  replayinfo.Value[1];
 			var packinfo:Array = jsonob.packlist;
-			//for (var i:int = 0; i < packinfo.length ; i++)
-			//{
-				//utilFun.Log("pack = "+ packinfo[i]);
-			//}
-			
-			
+			var packName:Array = [];
+			for (var i:int = 0; i < packinfo.length ; i++)
+			{
+				utilFun.Log("my pack = " + packinfo[i]);
+				packName.push(packinfo[i].message_type);
+				
+			}
+			utilFun.Log("my packName = " + packName);
+			//var sim_pack:MultiObject = create("sim_pack", [ResName.TextInfo]);	
+			//sim_pack.container.x = 100;
+			//sim_pack.container.y = 100
+			//sim_pack.CustomizedFun = _text.textSetting;
+			//sim_pack.CustomizedData = [ { size:18,align:_text.align_right,color:0xFF0000 }, packName];
+			//sim_pack.Post_CustomizedData = [packinfo.length, 30, 32];
+			//sim_pack.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
+			//sim_pack.Create_(packinfo.length, "sim_pack");
+			//
+			//put_to_lsit(sim_pack);
 		}
 		
 		

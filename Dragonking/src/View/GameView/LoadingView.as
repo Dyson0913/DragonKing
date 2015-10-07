@@ -89,7 +89,7 @@ package View.GameView
 					
 			//utilFun.SetTime(connet, 0.1);
 			_test.init();			
-			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
+			
 			
 		}
 		private function connet():void
