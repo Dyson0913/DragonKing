@@ -20,17 +20,13 @@ package
 	{
 		private var _context:Context;
 		
-		public var result:Object ;
-		
 		private var _appconfig:appConfig = new appConfig();
-		
-		private var _par:MovieClip;
 		
 		private var _credit:Number =-1;
 		private var _clientidx:Number =-1;
 		private var _handshake:Function = null;
-		private var _uuid:String = "";
-		private var _DomainName:String = "";
+		private var _uuid:String = "";		
+		private var _DomainName:String = "";		
 		
 		public function Main():void 
 		{
@@ -38,14 +34,8 @@ package
 			else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
-		public function pass(pass:Object):void
-		{
-			result = pass;
-		}
-		
 		public function handshake(handshakeinfo:Array):void
-		{
-			// credit:Number, Clientidx:int, handshake:Function, uuid:String, DomainName:String
+		{			
 			_credit = handshakeinfo[0];
 			_clientidx = handshakeinfo[1];
 			_handshake = handshakeinfo[2];	

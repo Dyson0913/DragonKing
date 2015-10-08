@@ -87,7 +87,7 @@ package ConnectModule.websocket
 			var result:Object ;
 			if (event.message.type === WebSocketMessage.TYPE_UTF8) 
 			{
-				utilFun.Log("before"+event.message.utf8Data)
+				//utilFun.Log("before"+event.message.utf8Data)
 				result = JSON.decode(event.message.utf8Data);			
 			}
 			
@@ -217,7 +217,7 @@ package ConnectModule.websocket
 		{
 			dispatcher(new ArrayObject([msg], "pack_recoder"));
 			var jsonString:String = JSON.encode(msg);
-			utilFun.Log("jsonString ="+jsonString );			
+			//utilFun.Log("jsonString ="+jsonString );			
 			websocket.sendUTF(jsonString);
 		}
 		
