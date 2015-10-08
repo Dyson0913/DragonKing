@@ -149,6 +149,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.valueObject.Intobject", selector = "poker_mi")]
 		public function poker_mi(type:Intobject):void
 		{
+			
 			var mypoker:Array =   _model.getValue(type.Value);
 			var pokerid:int = pokerUtil.pokerTrans(mypoker[mypoker.length - 1]);		
 			if ( mypoker.length == 2 && type.Value != modelName.RIVER_POKER )
@@ -185,6 +186,7 @@ package View.ViewComponent
 			anipoker["_poker"].gotoAndStop(pokerid);			
 			anipoker.gotoAndPlay(2);
 			_regular.Call(anipoker, { onComplete:this.show_point_prob, onCompleteParams:[type.Value] }, 1, 0, 1);
+			dispatcher(new StringObject("sound_poker_turn","sound" ) );
 			//Tweener.addTween(anipoker["_poker"], { rotationZ:24.5, time:0.3,onCompleteParams:[anipoker,anipoker["_poker"],0,mypoker.length,type.Value],onComplete:this.pullback} );
 		}
 		
@@ -270,9 +272,37 @@ package View.ViewComponent
 			if ( point == 0) point = 10;
 			GetSingleItem("zone", zone ).gotoAndStop(2);
 			GetSingleItem("zone", zone)["_num0"].gotoAndStop(point);
+			if ( zone == 0)
+			{
+				dispatcher(new StringObject("sound_player", "sound" ) );			
+			}
+			else
+			{
+				dispatcher(new StringObject("sound_deal", "sound" ) );
+			}
+			
+			_regular.Call(this, { onComplete:this.playPoint,onCompleteParams:[point] }, 1, 0.5, 1, "linear");
+		
 			
 			//是否該提示公牌
 			dispatcher(new Intobject(type.Value, "check_opencard_msg"));			
+		}
+		
+		public function playPoint(point:int):void
+		{
+			utilFun.Log("playPoint = " + point);
+			if ( point == 10) point = 0;
+			dispatcher(new StringObject("sound_" + point, "sound" ) );
+			if ( point == 9) 
+			{
+				_regular.Call(this, { onComplete:this.po,onCompleteParams:[point] }, 1, 0.5, 1, "linear");
+				
+			}
+		}
+		
+		public function po(point:int):void
+		{
+			dispatcher(new StringObject("sound_point", "sound" ) );
 		}
 		
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="check_opencard_msg")]
@@ -299,6 +329,7 @@ package View.ViewComponent
 				GetSingleItem("zone", 0 ).gotoAndStop(3);
 				if ( ppoint == 0) ppoint = 10;
 				GetSingleItem("zone", 0)["_num0"].gotoAndStop(ppoint);
+				dispatcher(new StringObject("sound_player_win", "sound" ) );
 			}
 			else if ( ppoint < bpoint )
 			{
@@ -306,6 +337,7 @@ package View.ViewComponent
 				GetSingleItem("zone", 1 ).gotoAndStop(3);
 				if ( bpoint == 0) bpoint = 10;
 				GetSingleItem("zone", 1)["_num0"].gotoAndStop(bpoint);
+				dispatcher(new StringObject("sound_deal_win", "sound" ) );
 			}
 			else
 			{
@@ -313,6 +345,7 @@ package View.ViewComponent
 				GetSingleItem("zone", 0 ).gotoAndStop(1);
 				GetSingleItem("zone", 1 ).gotoAndStop(1);
 				GetSingleItem("zone", 2 ).gotoAndStop(2);
+				dispatcher(new StringObject("sound_tie_win", "sound" ) );
 			}
 		}
 		

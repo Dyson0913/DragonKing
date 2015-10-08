@@ -178,7 +178,7 @@ package View.ViewComponent
 			//大獎 (排除2對,3條和11以上J對)
 			if ( bigwin!=-1 && bigwin >=2)
 			{				
-				
+				dispatcher(new StringObject("sound_bigPoker","sound" ) );
 				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
 				GetSingleItem("bigwinfire").gotoAndPlay(2);				
 				//_regular.FadeIn( GetSingleItem("bigwinmsg"), 2, 2, _regular.Fadeout);
@@ -191,7 +191,7 @@ package View.ViewComponent
 			{
 				//2對,3條集氣吧
 				//if ( sigwin == 0 || sigwin == 1) dispatcher(new Intobject(sigwin, "power_up"));			
-				if ( _betCommand.check_jp() > 0 && (sigwin ==1 || sigwin ==1)) dispatcher(new Intobject(sigwin, "power_up"));
+				if ( _betCommand.check_jp() > 0 && (sigwin ==1 || sigwin ==0)) dispatcher(new Intobject(sigwin, "power_up"));
 				else settle(new Intobject(1, "settle_step"));
 			}
 			

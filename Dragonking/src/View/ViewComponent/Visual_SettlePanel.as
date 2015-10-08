@@ -50,7 +50,7 @@ package View.ViewComponent
 			settletable_zone.container.x = 70;
 			settletable_zone.container.y = 70;		
 			settletable_zone.CustomizedFun = _text.textSetting;
-			settletable_zone.CustomizedData = [ { size:18 }, "莊", "閒", "和", "莊對", "閒對", "特殊牌型", "合計"];
+			settletable_zone.CustomizedData = [ { size:22 }, "莊", "閒", "和", "莊對", "閒對", "特殊牌型", "合計"];
 			settletable_zone.Post_CustomizedData = [7, 30, 32];
 			settletable_zone.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			settletable_zone.Create_(7, "settletable_zone");
@@ -171,6 +171,7 @@ package View.ViewComponent
 			Get("settletable_zone_settle").CustomizedFun = _text.colortextSetting;
 			Get("settletable_zone_settle").CustomizedData = font2;
 			Get("settletable_zone_settle").Create_(settle_amount.length, "settletable_zone_settle");
+			dispatcher(new StringObject("sound_get_point","sound" ) );
 			
 			//小牌結果
 			//var historystr_model:Array = _model.getValue("result_str_list");

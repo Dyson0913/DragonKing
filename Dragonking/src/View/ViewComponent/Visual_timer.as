@@ -86,7 +86,10 @@ package View.ViewComponent
 				GetSingleItem(modelName.REMAIN_TIME)["_Text"].textColor = 0xFF0000;
 				GetSingleItem(modelName.REMAIN_TIME).gotoAndStop(2);
 				mc.gotoAndStop(2);
+				
 			}
+			
+			if ( time <= Waring_sec ) dispatcher(new StringObject("sound_final","sound" ) );
 			
 			utilFun.SetText(GetSingleItem(modelName.REMAIN_TIME)["_Text"], utilFun.Format(time, 2) );			
 			

@@ -127,7 +127,7 @@ package View.ViewComponent
 			var zero:Array = utilFun.Random_N(0, 6);
 			zero.push(-1);
 			_model.putValue("percent_prob",zero);		
-			prob_percentupdate();
+			//prob_percentupdate();
 			
 		}
 		
@@ -143,6 +143,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="caculate_prob")]
 		public function prob_percentupdate():void
 		{			
+			dispatcher(new StringObject("sound_prob","sound" ) );
 			var percentlist:Array = _model.getValue("percent_prob");	
 			var ln:int = percentlist.length - 1;				
 			var hiest:int = percentlist[percentlist.length-1];			

@@ -362,8 +362,9 @@ package View.ViewComponent
 			//dispatcher(new StringObject("Soun_Bet_BGM","Music_pause" ) );
 			//dispatcher(new StringObject("sound_coin","sound" ) );
 			//dispatcher(new StringObject("sound_msg","sound" ) );
-			dispatcher(new StringObject("sound_rebet","sound" ) );
-			
+			//dispatcher(new StringObject("sound_rebet","sound" ) );
+			var point:int = 0;
+			dispatcher(new StringObject("sound_"+point, "sound" ) );
 			//power bar test
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
 			//dispatcher(new Intobject(utilFun.Random(2), "power_up"));		

@@ -137,6 +137,8 @@ package View.ViewComponent
 				GetSingleItem("power_bar_amount", 0).getChildByName("Dy_Text").text = acumu.toString();				
 				
 			}			
+			
+			dispatcher(new StringObject("sound_Powerup_poker","sound" ) );
 			if( ! power_jp(nowIdx,acumu,kind)) dispatcher(new Intobject(1, "settle_step"));	
 		}
 		
