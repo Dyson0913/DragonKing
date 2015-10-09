@@ -23,6 +23,7 @@ package Command
 		[Inject]
 		public var _model:Model;
 		
+		private var _mute:Boolean;
 		
 		public function SoundCommand() 
 		{
@@ -73,11 +74,12 @@ package Command
 				lobbyevent(_model.getValue(modelName.Client_ID), ["HandShake_callback", this.lobby_callback]);			
 			}
 			
+			_mute = false;
 		}
 		
 		public function lobby_callback(CMD:Array):void
 		{
-			utilFun.Log("DK lobby call back = " + CMD);	
+			utilFun.Log("DK lobby call back = " + CMD[0]);	
 			if ( CMD[0] == "STOP_BGM")
 			{
 				//dispatcher(new StringObject("Soun_Bet_BGM","Music_pause" ) );
@@ -85,6 +87,16 @@ package Command
 			if ( CMD[0] == "START_BGM")
 			{
 				//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
+			}
+			
+			if ( CMD[0] == "MUTE")
+			{
+				_mute = true;				
+			}
+			
+			if ( CMD[0] == "RESUME")
+			{
+				_mute = false;				
 			}
 		}
 		
@@ -107,6 +119,7 @@ package Command
 		[MessageHandler(type="Model.valueObject.StringObject",selector="sound")]
 		public function playSound(sound:StringObject):void
 		{
+			if ( _mute ) return;
 			SoundAS.playFx(sound.Value);
 		}
 		
