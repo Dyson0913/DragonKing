@@ -93,6 +93,12 @@ package View.ViewComponent
 		public var _PowerUp:Visual_PowerUp;
 		
 		[Inject]
+		public var _HistoryRecoder:Visual_HistoryRecoder;
+		
+		[Inject]
+		public var _ProbData:Visual_ProbData;
+		
+		[Inject]
 		public var _fileStream:fileStream;
 		
 		public function Visual_testInterface() 
@@ -165,7 +171,7 @@ package View.ViewComponent
 			
 			changeBG(ResName.Bet_Scene);
 			
-			
+			_PowerUp.init();
 			
 			//=============================================gameinfo			
 			_gameinfo.init();
@@ -188,8 +194,8 @@ package View.ViewComponent
 			_timer.init();
 			
 			_btn.init();
+			_HistoryRecoder.init();
 			
-			_PowerUp.init();
 			
 			_btn.debug();
 			dispatcher(new ModelEvent("display"));
@@ -218,6 +224,7 @@ package View.ViewComponent
 			//_paytable.opencard_parse();
 			_settle_panel.init();
 			
+			_ProbData.init();
 
 			//=============================================Hintmsg
 			_hint.init();
@@ -230,7 +237,7 @@ package View.ViewComponent
 		
 			//================================================settle info
 			//_settle.init();
-			
+			_PowerUp.init();
 			
 			dispatcher(new ModelEvent("hide"));
 			
@@ -286,8 +293,7 @@ package View.ViewComponent
 			changeBG(ResName.Bet_Scene);
 			
 			//=============================================gameinfo			
-			_gameinfo.init();
-			_gameinfo.settle_parse();
+			_gameinfo.init();			
 			
 			
 			//=============================================Hintmsg
@@ -297,9 +303,7 @@ package View.ViewComponent
 			
 			//=============================================paytable
 			fake_hisotry();
-			_paytable.init();		
-			_paytable.settle_parse();
-				
+			_paytable.init();				
 			
 			
 			_poker.init();
@@ -348,26 +352,27 @@ package View.ViewComponent
 			}			
 			_model.putValue("history_win_list",history);
 		}
-	
+		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "3")]
 		public function pack_sim():void
 		{
-			dispatcher(new Intobject(modelName.Hud, ViewCommand.ADD)) ;			
+			//dispatcher(new Intobject(modelName.Hud, ViewCommand.ADD)) ;			
 			//pack test
-			_loader.init();
-			_replayer.set_mission_id(_loader.getToken());
-			dispatcher(new ArrayObject([_replayer.mission_id(),"pack_player_win.txt",{callback:"replay_config_complete"}], "binary_file_loading"));
+			//_loader.init();
+			//_replayer.set_mission_id(_loader.getToken());
+			//dispatcher(new ArrayObject([_replayer.mission_id(),"pack_player_win.txt",{callback:"replay_config_complete"}], "binary_file_loading"));
 				
 			//music test
 			//dispatcher(new StringObject("Soun_Bet_BGM","Music_pause" ) );
 			//dispatcher(new StringObject("sound_coin","sound" ) );
 			//dispatcher(new StringObject("sound_msg","sound" ) );
 			//dispatcher(new StringObject("sound_rebet","sound" ) );
-			var point:int = 0;
-			dispatcher(new StringObject("sound_"+point, "sound" ) );
+			
+			
+			
 			//power bar test
-			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
-			//dispatcher(new Intobject(utilFun.Random(2), "power_up"));		
+			_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
+			dispatcher(new Intobject(utilFun.Random(2), "power_up"));		
 		}
 		
 	}

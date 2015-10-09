@@ -67,6 +67,12 @@ package View.GameView
 		public var _settle_panel:Visual_SettlePanel;
 		
 		[Inject]
+		public var _HistoryRecoder:Visual_HistoryRecoder;
+		
+		[Inject]
+		public var _ProbData:Visual_ProbData;
+		
+		[Inject]
 		public var _PowerUp:Visual_PowerUp;
 		
 		public function betView()  
@@ -87,6 +93,10 @@ package View.GameView
 			var view:MultiObject = prepare("_view", new MultiObject() , this);
 			view.Create_by_list(1, [ResName.Bet_Scene], 0, 0, 1, 0, 0, "a_");	
 			
+			_HistoryRecoder.init();
+			_ProbData.init();
+			_PowerUp.init();
+			
 			_gameinfo.init();
 			_paytable.init();
 			_settle_panel.init();			
@@ -102,7 +112,7 @@ package View.GameView
 			_sencer.init();	
 			
 			_btn.init();
-			_PowerUp.init();
+			
 			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
 		}
 		

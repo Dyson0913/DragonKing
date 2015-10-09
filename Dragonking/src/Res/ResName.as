@@ -27,6 +27,8 @@ package Res
 		
 		public static const betlimit:String = "bet_limit";
 		public static const realtimeinfo:String = "realtime_info";
+		public static const betstaticarrow:String = "betstatic_arrow";
+		public static const betstaticarrow_right:String = "betstatic_arrow_right";
 				
 		public static const prob_square:String = "prob";
 		
@@ -68,6 +70,9 @@ package Res
 		public static const ruletable:String = "rule_table";
 		
 		public static const emptymc:String = "Emptymc";
+		
+		public static const paytablemain:String = "paytable_main"		
+		public static const paytable_baridx:String = "paytable_bar_idx";
 		
 		public function ResName() 
 		{

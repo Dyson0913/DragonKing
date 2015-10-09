@@ -29,7 +29,7 @@ package View.ViewComponent
 		{
 			var countDown:MultiObject = create(modelName.REMAIN_TIME,[ResName.Timer]);
 		   countDown.Create_(1,modelName.REMAIN_TIME.toString());
-		   countDown.container.x = 1208;
+		   countDown.container.x = 1148;
 		   countDown.container.y = 338;
 		   countDown.container.visible = false;
 		   

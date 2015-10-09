@@ -32,7 +32,7 @@ package View.ViewComponent
 		{
 			var settletable:MultiObject = create("settletable",  [ResName.emptymc]);
 			settletable.Create_(1, "settletable");	
-			settletable.container.x = 1300;
+			settletable.container.x = 1240;
 			settletable.container.y = 90;
 			settletable.container.visible = false;
 			

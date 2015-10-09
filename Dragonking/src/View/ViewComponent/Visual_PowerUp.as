@@ -34,8 +34,8 @@ package View.ViewComponent
 			
 			//集氣吧
 			var powerbar:MultiObject = create("powerbar",  [ResName.powerbar]);
-			powerbar.container.x = 1352;
-			powerbar.container.y = 383;			
+			powerbar.container.x = 1292;
+			powerbar.container.y = 380;			
 			powerbar.Create_(1, "powerbar");
 			//powerbar.container.visible = false;
 			
@@ -138,10 +138,18 @@ package View.ViewComponent
 				
 			}			
 			
-			dispatcher(new StringObject("sound_Powerup_poker","sound" ) );
-			if( ! power_jp(nowIdx,acumu,kind)) dispatcher(new Intobject(1, "settle_step"));	
+			
+			if ( ! power_jp(nowIdx, acumu, kind))
+			{
+				dispatcher(new Intobject(1, "settle_step"));	
+				utilFun.SetTime(triger, 2);
+			}
 		}
 		
+		private function triger():void
+		{
+			dispatcher(new StringObject("sound_Powerup_poker","sound" ) );
+		}
 		
 		private function power_jp(idx:int,acumu:int,type:int):Boolean
 		{
@@ -160,6 +168,7 @@ package View.ViewComponent
 			PowerJPNum.Post_CustomizedData = [arr.length, 57, 10];
 			PowerJPNum.Create_(arr.length, "Power_JP_num");					
 			_regular.Call(this, { onComplete:this.showok,onCompleteParams:[type] }, 4, 1, 1, "linear");
+			dispatcher(new StringObject("sound_bigPoker", "sound" ) );
 			
 			return true;
 		}
