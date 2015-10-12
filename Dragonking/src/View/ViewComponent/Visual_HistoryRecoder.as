@@ -61,17 +61,23 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
 		{			
-			Get("Historytable").container.visible = true;
-			
+			Get("Historytable").container.visible = true;			
 			update_history();
 		}
 		
 		public function update_history():void
-		{
+		{			
+			for ( var i:int = 0; i < 60; i ++)
+			{
+				GetSingleItem("historyball", i).gotoAndStop(1);
+				GetSingleItem("historyball", i)["_Text"].text = "";
+				GetSingleItem("historyball", i)["_pair"].gotoAndStop(1);
+			}
+			
 			var history_model:Array = _model.getValue("history_win_list");			
 			Get("historyball").CustomizedData = history_model;
 			Get("historyball").CustomizedFun = history_ball_Setting;
-			Get("historyball").FlushObject();
+			Get("historyball").FlushObject();			
 		}
 		
 		public function history_ball_Setting(mc:MovieClip, idx:int, data:Array):void
@@ -101,6 +107,75 @@ package View.ViewComponent
 		public function opencard_parse():void
 		{
 			Get("Historytable").container.visible = false;
+		}
+		
+		[MessageHandler(type="Model.valueObject.ArrayObject",selector="add_history")]
+		public function add_data(arr:ArrayObject):void
+		{			
+			var playerwin:int = arr.Value[0];		
+			var bankerwin:int = arr.Value[1];		
+			var playerPoint:int = arr.Value[2];
+			var bankerPoint:int = arr.Value[3];	
+			var isTie:int = arr.Value[4];			
+			var isPlayPair:int =  arr.Value[5];
+			var isbankerPair:int =  arr.Value[6];
+			var bigwin:int = arr.Value[7];
+			
+			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin);
+			
+		}
+		
+		private function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int,bigwin:int):void
+		{
+			//history recode 
+			//utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
+			//utilFun.Log("playerwin  =  " + playPoint +" bankerwin  =  " + bankerPoint);	
+			var history:Array = _model.getValue("history_win_list");
+			var arr:Array = [];
+			if ( bigwin != -1)
+			{
+				//寫字大獎
+				arr.push(5);
+				arr.push(playPoint);					
+			}
+			else if ( !playerwin && !bankerwin) 
+			{
+				//TIE
+				arr.push(4);
+				arr.push(playPoint);
+			}
+			else
+			{
+				if ( playerwin == 1) 
+				{
+					arr.push(2);
+					arr.push(playPoint);
+				}
+				else if ( bankerwin == 1) 
+				{
+					arr.push(3);
+					arr.push(bankerPoint);
+				}
+				//else if ( isTie == 1) 
+				//{
+					//arr.push(4);
+					//arr.push(bankerPoint);
+				//}
+			}
+			
+			arr.push(isPlayPair);
+			arr.push(isbankerPair);
+			arr.push(bigwin);
+						
+			history.push(arr);
+			//utilFun.Log("history = " + arr);
+			if ( history.length > 60) 
+			{
+				history = history.slice(6);
+			}
+			_model.putValue("history_win_list", history);			
+			
+			
 		}
 		
 	}

@@ -170,6 +170,9 @@ package View.ViewComponent
 			Get("settletable_zone_settle").CustomizedFun = _text.colortextSetting;
 			Get("settletable_zone_settle").CustomizedData = font2;
 			Get("settletable_zone_settle").Create_(settle_amount.length, "settletable_zone_settle");
+			
+			if ( _betCommand.all_betzone_totoal() == 0) return;
+			
 			dispatcher(new StringObject("sound_get_point","sound" ) );
 			
 			//小牌結果

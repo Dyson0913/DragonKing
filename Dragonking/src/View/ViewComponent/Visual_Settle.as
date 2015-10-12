@@ -196,7 +196,7 @@ package View.ViewComponent
 			}
 			
 			//歷史記錄
-			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin);
+			dispatcher(new ArrayObject([playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin],"add_history" ) );			
 		}
 		
 		public function showAni():void
@@ -230,56 +230,6 @@ package View.ViewComponent
 			
 			//結算表
 			_regular.Call(this, { onComplete:this.showAni}, 2, 1, 1, "linear");
-		}
-		
-		public function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int,bigwin:int):void
-		{
-			//history recode 
-			//utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
-			//utilFun.Log("playerwin  =  " + playPoint +" bankerwin  =  " + bankerPoint);	
-			var history:Array = _model.getValue("history_win_list");
-			var arr:Array = [];
-			if ( bigwin != -1)
-			{
-				//寫字大獎
-				arr.push(5);
-				arr.push(playPoint);					
-			}
-			else if ( !playerwin && !bankerwin) 
-			{
-				//TIE
-				arr.push(4);
-				arr.push(playPoint);
-			}
-			else
-			{
-				if ( playerwin == 1) 
-				{
-					arr.push(2);
-					arr.push(playPoint);
-				}
-				else if ( bankerwin == 1) 
-				{
-					arr.push(3);
-					arr.push(bankerPoint);
-				}
-				//else if ( isTie == 1) 
-				//{
-					//arr.push(4);
-					//arr.push(bankerPoint);
-				//}
-			}
-			
-			arr.push(isPlayPair);
-			arr.push(isbankerPair);
-			arr.push(bigwin);
-						
-			history.push(arr);
-			//utilFun.Log("history = " + arr);
-			if ( history.length > 60) history.shift();			
-			_model.putValue("history_win_list", history);			
-			
-			
 		}
 		
 	}
