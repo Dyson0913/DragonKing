@@ -1,6 +1,5 @@
 package Model 
-{
-	import caurina.transitions.Tweener;
+{	
 	import util.utilFun;
 	
 	/**
@@ -60,8 +59,7 @@ package Model
 				//utilFun.Log("after pop set false");
 				Isqueueing =  false;
 				
-				utilFun.SetTime(checkqueue, 0.01);
-				//Tweener.addCaller(this, { time:0.1 , count: 1, onUpdate: this.checkqueue } );
+				utilFun.SetTime(checkqueue, 0.01);				
 			}
 			
 		}
