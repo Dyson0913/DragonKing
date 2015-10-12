@@ -87,7 +87,7 @@ package ConnectModule.websocket
 			var result:Object ;
 			if (event.message.type === WebSocketMessage.TYPE_UTF8) 
 			{
-				//utilFun.Log("before"+event.message.utf8Data)
+				utilFun.Log("before"+event.message.utf8Data)
 				result = JSON.decode(event.message.utf8Data);			
 			}
 			
@@ -98,6 +98,7 @@ package ConnectModule.websocket
 		public function msghandler():void
 		{
 			   var result:Object  = _MsgModel.getMsg();
+			   
 			    if ( result.game_type != _model.getValue(modelName.Game_Name) ) return;				
 				
 				switch(result.message_type)
@@ -190,6 +191,7 @@ package ConnectModule.websocket
 				}
 				
 				dispatcher(new ArrayObject([result], "pack_recoder"));
+				
 		}
 		
 		[MessageHandler(type="ConnectModule.websocket.WebSoketInternalMsg",selector="Bet")]

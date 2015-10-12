@@ -75,13 +75,15 @@ package View.ViewComponent
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean_poker():void
-		{
+		{			
 			var pokerkind:Array = [ResName.just_turnpoker];			
 			if ( Get(modelName.PLAYER_POKER) != null) 
 			{								
 				var playerCon:MultiObject = Get(modelName.PLAYER_POKER);
 				playerCon.CleanList();				
 				playerCon.Create_(2, "playerpoker");
+							
+				Tweener.pauseTweens(playerCon.container);
 				playerCon.container.alpha = 0;				
 			}
 			if ( Get(modelName.BANKER_POKER) != null) 
@@ -89,6 +91,7 @@ package View.ViewComponent
 				var bankerCon:MultiObject = Get(modelName.BANKER_POKER);
 				bankerCon.CleanList();			    
 				bankerCon.Create_(2, "bankerpoker");
+				Tweener.pauseTweens(bankerCon.container);
 				bankerCon.container.alpha = 0;				
 			}
 			
@@ -97,6 +100,7 @@ package View.ViewComponent
 				var riverCon:MultiObject = Get(modelName.RIVER_POKER);
 				riverCon.CleanList();				
 				riverCon.Create_(2, "riverpoker");
+				Tweener.pauseTweens(riverCon.container);
 				riverCon.container.alpha = 0;				
 			}
 			
@@ -113,8 +117,7 @@ package View.ViewComponent
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function poker_display():void
-		{
-			
+		{			
 			var playerCon:MultiObject = Get(modelName.PLAYER_POKER);			
 			_regular.FadeIn(playerCon.container, 1, 1,null);
 			

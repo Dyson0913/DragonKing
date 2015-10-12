@@ -125,7 +125,6 @@ package View.ViewComponent
 			GetSingleItem("settletable_title", 2).visible = false;
 			Get("settletable_zone_settle").container.visible = false;
 			
-			utilFun.Log("1 = ");
 			var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
 			var zone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);
 			var maping:DI = _model.getValue("idx_to_result_idx");
@@ -138,7 +137,7 @@ package View.ViewComponent
 			mylist.push(_betCommand.all_betzone_totoal());		
 			var font:Array = [{size:24,align:_text.align_right,color:0xFF0000}];
 			font = font.concat(mylist);
-			utilFun.Log("font = "+mylist);
+			//utilFun.Log("font = "+mylist);
 			Get("settletable_zone_bet").CustomizedData = font;
 			Get("settletable_zone_bet").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
 		}
