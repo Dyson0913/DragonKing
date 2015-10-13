@@ -61,8 +61,8 @@ package View.ViewComponent
 			riverCon.container.y = 634;			
 			riverCon.container.alpha = 0;
 			
-			var mipoker:MultiObject =  prepare("mipoker", new MultiObject(), GetSingleItem("_view").parent.parent);			
-			mipoker.Create_by_list(1, [ResName.Mipoker_zone], 0 , 0, 1, 0, 0, "Bet_");			
+			var mipoker:MultiObject =  create("mipoker", [ResName.Mipoker_zone]);	
+			mipoker.Create_(1, "mipoker");
 			mipoker.container.x = 740;
 			mipoker.container.y = 570;
 			mipoker.container.alpha = 0;
@@ -71,38 +71,31 @@ package View.ViewComponent
 			put_to_lsit(playerCon);
 			put_to_lsit(bankerCon);
 			put_to_lsit(riverCon);
+			put_to_lsit(mipoker);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean_poker():void
 		{			
-			var pokerkind:Array = [ResName.just_turnpoker];			
-			if ( Get(modelName.PLAYER_POKER) != null) 
-			{								
-				var playerCon:MultiObject = Get(modelName.PLAYER_POKER);
-				playerCon.CleanList();				
-				playerCon.Create_(2, "playerpoker");
-							
-				Tweener.pauseTweens(playerCon.container);
-				playerCon.container.alpha = 0;				
-			}
-			if ( Get(modelName.BANKER_POKER) != null) 
-			{								
-				var bankerCon:MultiObject = Get(modelName.BANKER_POKER);
-				bankerCon.CleanList();			    
-				bankerCon.Create_(2, "bankerpoker");
-				Tweener.pauseTweens(bankerCon.container);
-				bankerCon.container.alpha = 0;				
-			}
+			var pokerkind:Array = [ResName.just_turnpoker];
 			
-			if ( Get(modelName.RIVER_POKER) != null) 
-			{				
-				var riverCon:MultiObject = Get(modelName.RIVER_POKER);
-				riverCon.CleanList();				
-				riverCon.Create_(2, "riverpoker");
-				Tweener.pauseTweens(riverCon.container);
-				riverCon.container.alpha = 0;				
-			}
+			var playerCon:MultiObject = Get(modelName.PLAYER_POKER);
+			playerCon.CleanList();				
+			playerCon.Create_(2, "playerpoker");
+			Tweener.pauseTweens(playerCon.container);
+			playerCon.container.alpha = 0;				
+			
+			var bankerCon:MultiObject = Get(modelName.BANKER_POKER);
+			bankerCon.CleanList();			    
+			bankerCon.Create_(2, "bankerpoker");
+			Tweener.pauseTweens(bankerCon.container);
+			bankerCon.container.alpha = 0;
+			
+			var riverCon:MultiObject = Get(modelName.RIVER_POKER);
+			riverCon.CleanList();				
+			riverCon.Create_(2, "riverpoker");
+			Tweener.pauseTweens(riverCon.container);
+			riverCon.container.alpha = 0;
 			
 			Get("mipoker").CleanList();		
 			Get("mipoker").Create_by_list(1, [ResName.Mipoker_zone], 0 , 0, 1, 130, 0, "Bet_");			
@@ -156,28 +149,49 @@ package View.ViewComponent
 			var mypoker:Array =   _model.getValue(type.Value);
 			var pokerid:int = pokerUtil.pokerTrans(mypoker[mypoker.length - 1]);		
 			if ( mypoker.length == 2 && type.Value != modelName.RIVER_POKER )
-			{				
+			{	
+				
 				Get("mipoker").CleanList();		
 				Get("mipoker").Create_by_list(1, [ResName.Mipoker_zone], 0 , 0, 1, 130, 0, "Bet_");
 				Get("mipoker").container.alpha = 0;
 				
+				
 				var mipoker:MultiObject = Get("mipoker");
+				if ( type.Value == modelName.PLAYER_POKER)
+				{
+					mipoker.container.x = 500;
+					mipoker.container.y = 680;
+				}
+				if ( type.Value == modelName.RIVER_POKER)
+				{
+					mipoker.container.x = 1020;
+					mipoker.container.y = 680;
+				}
+				if ( type.Value == modelName.BANKER_POKER)
+				{
+					mipoker.container.x = 1500;
+					mipoker.container.y = 680;
+				}
+				
 				var mc:MovieClip = mipoker.ItemList[0];
 				
 				var pokerf:MovieClip = utilFun.GetClassByString(ResName.Poker);				
 				var pokerb:MovieClip = utilFun.GetClassByString(ResName.poker_back);				
 				var pokerm:MovieClip = utilFun.GetClassByString(ResName.pokermask);
-				pokerb.x  = 140;
-				pokerb.y  = 64;
-				pokerf.x = 140;
-				pokerf.y  = 64;
+				pokerb.x  = 70;
+				pokerb.y  = 24;
+				pokerf.x = pokerb.x;
+				pokerf.y  = pokerb.y;
 				pokerm.x = 136.35;
 				pokerm.y = 185.8;
 				pokerf.gotoAndStop(pokerid);
 				pokerf.visible = false;
 				pokerf.addChild(pokerm);
 				mc.addChild(pokerf);
-				mc.addChild(pokerb);				
+				mc.addChild(pokerb);
+				
+				//_tool.SetControlMc(pokerb);
+				//add(_tool);				
 				Tweener.addTween(mipoker.container, { alpha:1, time:1, onCompleteParams:[pokerf,pokerid,type.Value],onComplete:this.poker_mi_ani } );
 				
 				return;
@@ -213,7 +227,8 @@ package View.ViewComponent
 		
 		public function sec_wait_to_see(pokerf:MovieClip, pokerid:int, pokertype:int):void
 		{
-			//staty 0.5 to check 
+			//staty 0.5 to check 			
+			//Tweener.addTween(pokerf, { delay:0.5} );
 			Tweener.addTween(pokerf, { delay:0.5, transition:"easeInSine",onCompleteParams:[pokerid,pokertype],onComplete: this.showfinal } );
 		}
 		

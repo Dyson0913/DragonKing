@@ -96,7 +96,7 @@ package View.ViewComponent
 			var p:int = (parseInt( mc["_Text"].text) +start );
 			if (p >= per) p = per;
 			
-			mc["_Text"].text = p.toString();// + "%";
+			mc["_Text"].text = p.toString() + "%";
 			mc["_Text"].textColor = 0xFFDD00;
 			
 			//position follow

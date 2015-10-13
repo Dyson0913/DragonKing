@@ -243,7 +243,7 @@ package View.ViewComponent
 			
 			
 			//================================================ simu deal
-			var testpoker:Array = ["Player", "Banker", "Player", "Banker", "River", "River"];
+			var testpoker:Array = ["Player", "Banker", "Player"];// , "Banker", "River", "River"];
 			_regular.Call(Get(modelName.PLAYER_POKER).container, { onUpdate:this.fackeDeal, onUpdateParams:[testpoker] }, 25, 0, 6, "linear");						
 		}
 		
