@@ -68,10 +68,15 @@ package View.ViewComponent
 		}
 		
 		public function bet_sencer_rollover(e:Event,idx:int):Boolean
-		{			
-			var betzone:MultiObject = Get("betzone");			
-			var mc:MovieClip = betzone.ItemList[idx];
+		{
+			var mc:MovieClip = Get("betzone").ItemList[idx];
 			mc.dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER, true, false));			
+			
+			if ( idx == 5) 
+			{
+				Tweener.pauseTweens(GetSingleItem("betzone", 5));
+				GetSingleItem("highpayrate").gotoAndStop(2);
+			}
 			
 			return true;
 		}

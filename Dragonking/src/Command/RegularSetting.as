@@ -74,12 +74,23 @@ package Command
 			Tweener.addTween(mc, { scaleX: scale_X+diff,scaleY:scale_Y+diff, time:in_t, onCompleteParams:[mc,1- (diff/2),1-(diff/2),0.5, (diff/2),null],onComplete:onComF } );
 		}
 		
-		public function Twinkle(mc:MovieClip, t:int, cnt:int,frameNum:int):void
+		public function Twinkle_by_JumpFrame(mc:MovieClip, t:int, cnt:int,startframe:int,Jumpframe:int):void
 		{
-			Tweener.addCaller(mc, { time:3 , count: 10 , transition:"linear", onUpdateParams:[mc,frameNum], onUpdate: this.flash } );
+			Tweener.addCaller(mc, { time:t , count: cnt , transition:"linear", onUpdateParams:[mc,startframe,Jumpframe], onUpdate: this.JumpFrame } );
 		}
 		
-		private function flash(mc:MovieClip,frameNum:int):void
+		public function Twinkle_by_loopFrame(mc:MovieClip, t:int, cnt:int,frameNum:int):void
+		{
+			Tweener.addCaller(mc, { time:t , count: cnt , transition:"linear", onUpdateParams:[mc,frameNum], onUpdate: this.loopFrame } );
+		}
+		
+		private function JumpFrame(mc:MovieClip,startframe:int,Jumpframe:int):void
+		{			
+			mc.gotoAndStop( utilFun.jumpFrame(mc.currentFrame,startframe, Jumpframe) )	
+			
+		}	
+		
+		private function loopFrame(mc:MovieClip,frameNum:int):void
 		{			
 			mc.gotoAndStop( utilFun.cycleFrame(mc.currentFrame,frameNum) )	
 		}	

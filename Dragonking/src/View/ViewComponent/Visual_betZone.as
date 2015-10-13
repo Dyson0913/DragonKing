@@ -29,33 +29,39 @@ package View.ViewComponent
 		public function init():void
 		{
 			
-			var tableitem:MultiObject = prepare("tableitem", new MultiObject() , GetSingleItem("_view").parent.parent);			
+			var tableitem:MultiObject = create("tableitem", [ResName.bet_tableitem]);	
 			tableitem.container.x = 193;
 			tableitem.container.y = 655;
-			tableitem.Create_by_list(1,[ResName.bet_tableitem], 0, 0, 1, 50, 0, "betzone_");	
+			tableitem.Create_(1, "tableitem");
 			
 			var avaliblezone:Array = _model.getValue(modelName.AVALIBLE_ZONE);
 			var zone_xy:Array = _model.getValue(modelName.AVALIBLE_ZONE_XY);						
 			
 			//下注區
-			var pz:MultiObject = prepare("betzone", new MultiObject() , GetSingleItem("_view").parent.parent);
+			var pz:MultiObject = create("betzone", avaliblezone);
 			pz.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,2,0]);
 			pz.container.x = 457;
 			pz.container.y = 662;
 			pz.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			pz.Post_CustomizedData = zone_xy;
-			pz.Create_by_list(avaliblezone.length, avaliblezone, 0, 0, avaliblezone.length, 50, 0, "betzone_");		
+			pz.Create_(avaliblezone.length, "betzone");
+			
+			//
+			var highpayrate:MultiObject = create("highpayrate", [ResName.highpayrate]);	
+			highpayrate.container.x = 793;
+			highpayrate.container.y = 595;
+			highpayrate.Create_(1, "highpayrate");
+			
 			
 			//pz.ItemList[0].gotoAndStop(2);
 			//for (var i:int = 0; i < avaliblezone.length; i++)
-			//{
+			//{,
 				//pz.ItemList[i].gotoAndStop(2);
 			//}					
-			//
-			//_tool.SetControlMc(pz.ItemList[5]);
-			//_tool.SetControlMc(pz.container);
-			//_tool.y = 200;
-			//add(_tool);
+			
+			put_to_lsit(pz);
+			put_to_lsit(tableitem);
+			put_to_lsit(highpayrate);
 		}		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
@@ -67,6 +73,8 @@ package View.ViewComponent
 			betzone.rollover = _betCommand.empty_reaction;
 			
 			Get("tableitem").container.visible = true;
+			GetSingleItem("highpayrate").gotoAndStop(1);			
+			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone",5), 25, 25, 1,3);
 		}
 		
 		
@@ -87,6 +95,11 @@ package View.ViewComponent
 			betzone.FlushObject();
 			
 			Get("tableitem").container.visible = false;
+			
+						
+			Tweener.pauseTweens(GetSingleItem("betzone",5));
+			
+			GetSingleItem("highpayrate").gotoAndStop(2);
 			
 		}
 		

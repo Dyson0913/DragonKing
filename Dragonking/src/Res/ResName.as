@@ -56,8 +56,10 @@ package Res
 		public static const betzone_banker_pair:String = "bankerzone_pair";
 		public static const betzone_player_pari:String = "playerzone_pair";		
 		public static const special_Zone:String = "specialzone";		
+		
 		public static const bet_tableitem:String = "bet_table_item";		
 		public static const open_tableitem:String = "open_table_item";
+		public static const highpayrate:String = "high_payrate";
 		
 		
 		public static const playerScore:String = "PlayerScore";

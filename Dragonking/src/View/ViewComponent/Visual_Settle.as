@@ -201,9 +201,8 @@ package View.ViewComponent
 		
 		public function showAni():void
 		{
-			GetSingleItem("bigwinmsg").gotoAndStop(1);
+			//GetSingleItem("bigwinmsg").gotoAndStop(1);
 			
-			//TODO settle panel
 			dispatcher(new ModelEvent("show_settle_table"));
 		}
 		
@@ -222,11 +221,18 @@ package View.ViewComponent
 		[MessageHandler(type="Model.valueObject.Intobject",selector="settle_step")]
 		public function settle(v:Intobject):void
 		{
-			//show誰贏
-			dispatcher(new Intobject(1, "show_who_win"));			
-			
 			//patytable提示框			
 			dispatcher(new StringObject(_model.getValue("winstr"), "winstr_hint"));
+			
+			utilFun.Log("jj " + _opration.getMappingValue(modelName.BIG_POKER_MSG, _model.getValue("winstr")));
+			if ( _opration.getMappingValue(modelName.BIG_POKER_MSG, _model.getValue("winstr")) == null)
+			{
+				//show誰贏
+				dispatcher(new Intobject(1, "show_who_win"));		
+			}
+			
+			
+			
 			
 			//結算表
 			_regular.Call(this, { onComplete:this.showAni}, 2, 1, 1, "linear");
