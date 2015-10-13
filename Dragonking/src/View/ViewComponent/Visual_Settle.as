@@ -45,29 +45,27 @@ package View.ViewComponent
 			zoneCon.container.x = 358;
 			zoneCon.container.y = 560;				
 			
-			var bigwinfire:MultiObject = prepare("bigwinfire", new MultiObject(), GetSingleItem("_view").parent.parent);
-			bigwinfire.Create_by_list(1, [ResName.bigwinfire], 0 , 0, 1, 0, 0, "Bet_");			
+			var bigwinfire:MultiObject = create("bigwinfire", [ResName.bigwinfire]);
+			bigwinfire.Create_(1, "bigwinfire");
 			bigwinfire.container.x = 620;
-			bigwinfire.container.y = 240;			
+			bigwinfire.container.y = 240;
 			
-			var bigwinCon:MultiObject = prepare("bigwinmsg", new MultiObject(), GetSingleItem("_view").parent.parent);
-			bigwinCon.Create_by_list(1, [ResName.Bigwinmsg], 0 , 0, 1, 0, 0, "Bet_");			
+			var bigwinCon:MultiObject = create("bigwinmsg",  [ResName.Bigwinmsg]);
+			bigwinCon.Create_(1, "bigwinmsg");
 			bigwinCon.container.x = 981;
 			bigwinCon.container.y = 420;		
 			
 			put_to_lsit(zoneCon);
+			put_to_lsit(bigwinCon);
+			put_to_lsit(bigwinfire);
 			
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean():void
-		{			
-			//var a:MultiObject = Get("zone");
-			//for ( var i:int = 0; i <  a.ItemList.length; i++)
-			//{				
-				//GetSingleItem("zone", i).gotoAndStop(1);
-			//}
+		{
 			setFrame("zone", 1);
+			setFrame("bigwinmsg", 1);
 		}
 		
 		//move to model command to parse ,then send event
@@ -201,7 +199,7 @@ package View.ViewComponent
 		
 		public function showAni():void
 		{
-			//GetSingleItem("bigwinmsg").gotoAndStop(1);
+			
 			
 			dispatcher(new ModelEvent("show_settle_table"));
 		}
