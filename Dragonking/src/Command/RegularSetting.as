@@ -49,7 +49,12 @@ package Command
 		
 		public function moveTo(mc:Object,  x_move:int , y_move:int, t:int,de:int,onComF:Function):void
 		{
-			Tweener.addTween(mc, { x:x_move,y:y_move, time:t, delay:de,onComplete:onComF } );
+			Tweener.addTween(mc, { x:x_move,y:y_move, time:t,transition:"linear", delay:de,onComplete:onComF } );
+		}
+		
+		public function FadeIn_no_out(mc:DisplayObjectContainer,  in_t:Number , de:Number,onComF:Function):void
+		{
+			Tweener.addTween(mc, { alpha:1, time:in_t, delay:de,onComplete:onComF } );
 		}
 		
 		public function FadeIn(mc:DisplayObjectContainer,  in_t:int , out_t:int, onComF:Function):void

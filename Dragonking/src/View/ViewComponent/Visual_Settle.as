@@ -40,7 +40,7 @@ package View.ViewComponent
 		{
 			var zoneCon:MultiObject = create("zone", [ResName.playerScore, ResName.bankerScore, ResName.TieScore]);
 			zoneCon.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			zoneCon.Post_CustomizedData = [[0, 0], [1018, 0], [570, 0]];
+			zoneCon.Post_CustomizedData = [[0, 0], [1018, 0], [560, 0]];
 			zoneCon.Create_(3, "zone");
 			zoneCon.container.x = 358;
 			zoneCon.container.y = 560;				
@@ -59,6 +59,8 @@ package View.ViewComponent
 			put_to_lsit(bigwinCon);
 			put_to_lsit(bigwinfire);
 			
+			//_tool.SetControlMc(zoneCon.ItemList[2]);
+			//add(_tool);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]

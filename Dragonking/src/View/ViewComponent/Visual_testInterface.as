@@ -239,6 +239,7 @@ package View.ViewComponent
 			//_settle.init();
 			_PowerUp.init();
 			
+			dispatcher(new ModelEvent("clearn"));
 			dispatcher(new ModelEvent("hide"));
 			
 			

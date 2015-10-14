@@ -73,11 +73,25 @@ package View.ViewComponent
 			betzone.rollover = _betCommand.empty_reaction;
 			
 			Get("tableitem").container.visible = true;
-			GetSingleItem("highpayrate").gotoAndStop(1);			
-			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone",5), 25, 25, 1,3);
+			GetSingleItem("highpayrate").gotoAndStop(1);
+			//GetSingleItem("highpayrate").container.x = 793;
+			//GetSingleItem("highpayrate").container.y = 595;
+			pull();
+			
+			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone", 5), 25, 25, 1, 3);
+			
+			
 		}
 		
+		public function pull():void
+		{
+			_regular.moveTo(GetSingleItem("highpayrate"), 0, GetSingleItem("highpayrate").y - 10, 1, 0, pull_up);
+		}
 		
+		public function pull_up():void
+		{
+			_regular.moveTo(GetSingleItem("highpayrate"), 0, GetSingleItem("highpayrate").y + 10, 1, 0, pull);
+		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function timer_hide():void

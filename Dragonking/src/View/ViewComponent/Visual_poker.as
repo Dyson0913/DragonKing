@@ -19,9 +19,6 @@ package View.ViewComponent
 	public class Visual_poker  extends VisualHandler
 	{
 		private var pokerpath:Array = [];
-			
-		[Inject]
-		public var _path:Path_Generator;
 		
 		public function Visual_poker() 
 		{
@@ -58,7 +55,7 @@ package View.ViewComponent
 			riverCon.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;		
 			riverCon.Create_(2,"riverpoker");
 			riverCon.container.x = 774;
-			riverCon.container.y = 634;			
+			riverCon.container.y = 634;
 			riverCon.container.alpha = 0;
 			
 			var mipoker:MultiObject =  create("mipoker", [ResName.Mipoker_zone]);	
@@ -106,23 +103,36 @@ package View.ViewComponent
 			_model.putValue(modelName.RIVER_POKER, []);
 			
 			Get("table_hint").container.visible = false;
+			
+			
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function poker_display():void
 		{			
-			var playerCon:MultiObject = Get(modelName.PLAYER_POKER);			
+			var playerCon:MultiObject = Get(modelName.PLAYER_POKER);					
 			_regular.FadeIn(playerCon.container, 1, 1,null);
 			
-			var bankerCon:MultiObject = Get(modelName.BANKER_POKER);
+			var bankerCon:MultiObject = Get(modelName.BANKER_POKER);			
 			_regular.FadeIn(bankerCon.container, 1, 1,null);
 			
-			var riverCon:MultiObject = Get(modelName.RIVER_POKER);
+			var riverCon:MultiObject = Get(modelName.RIVER_POKER);			
 			_regular.FadeIn(riverCon.container, 1, 1, null);
 			
 			Get("table_hint").container.visible = true;
-			
+			//utilFun.Log("poker_display = "+ playpoker[0]);
+			//_regular.FadeIn_no_out(playpoker[0] , 0.5, 1, this.soun);
 		}
+		
+		//public function soun():void
+		//{
+			//utilFun.Log("soun = "+ playpoker.length);
+			//dispatcher(new StringObject("sound_coin", "sound" ) );
+			//if ( playpoker.length != 0)
+			//{				
+				//_regular.FadeIn_no_out(playpoker[0] , 0.1, 0, this.soun);
+			//}
+		//}
 		
 		
 		[MessageHandler(type = "Model.valueObject.Intobject", selector = "poker_No_mi")]
