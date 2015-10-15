@@ -188,8 +188,8 @@ package View.ViewComponent
 				var pokerf:MovieClip = utilFun.GetClassByString(ResName.Poker);				
 				var pokerb:MovieClip = utilFun.GetClassByString(ResName.poker_back);				
 				var pokerm:MovieClip = utilFun.GetClassByString(ResName.pokermask);
-				pokerb.x  = 70;
-				pokerb.y  = 24;
+				pokerb.x  = 39;
+				pokerb.y  = 30;
 				pokerf.x = pokerb.x;
 				pokerf.y  = pokerb.y;
 				pokerm.x = 136.35;
@@ -369,10 +369,8 @@ package View.ViewComponent
 			}
 			else
 			{
-				utilFun.Log("tie");
-				GetSingleItem("zone", 0 ).gotoAndStop(1);
-				GetSingleItem("zone", 1 ).gotoAndStop(1);
-				GetSingleItem("zone", 2 ).gotoAndStop(2);
+				utilFun.Log("tie");				
+				GetSingleItem("zone", 1 ).gotoAndStop(1);				
 				dispatcher(new StringObject("sound_tie_win", "sound" ) );
 			}
 		}

@@ -79,7 +79,7 @@ package util
 		/******************** 元件操作功能 ********************/
 		
 		//縮放
-		public static function scaleXY(mc:MovieClip,x:Number = 1.0, y:Number = 1.0):void
+		public static function scaleXY(mc:DisplayObjectContainer,x:Number = 1.0, y:Number = 1.0):void
 		{
 			mc.scaleX = x;
 			mc.scaleY = y;

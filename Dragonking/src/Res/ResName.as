@@ -34,6 +34,8 @@ package Res
 		
 		public static const PowerJP:String = "Power_JP";
 		public static const PowerJP_Num:String = "Power_JP_Num";
+		public static const bigwin_num:String = "big_win_num";
+		public static const powerbar_name:String = "power_bar_name";
 		
 		
 		public static const historytable:String = "history_table";
@@ -49,7 +51,7 @@ package Res
 		public static const Hint:String = "HintMsg";
 		public static const Bigwinmsg:String = "big_win_msg";	
 		public static const bigwinfire:String = "bigwin_fire";		
-		public static const bigwin_num:String = "big_win_num";		
+			
 		
 		public static const betzone_player:String = "playerzone";
 		public static const betzone_banker:String = "bankerzone";

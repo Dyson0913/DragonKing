@@ -47,17 +47,21 @@ package View.ViewComponent
 			
 			var bigwinfire:MultiObject = create("bigwinfire", [ResName.bigwinfire]);
 			bigwinfire.Create_(1, "bigwinfire");
-			bigwinfire.container.x = 620;
-			bigwinfire.container.y = 240;
+			bigwinfire.container.x = 0;
+			bigwinfire.container.y = -90;
 			
 			var bigwinCon:MultiObject = create("bigwinmsg",  [ResName.Bigwinmsg]);
 			bigwinCon.Create_(1, "bigwinmsg");
 			bigwinCon.container.x = 981;
 			bigwinCon.container.y = 420;		
 			
+			var PowerJPNum:MultiObject = create("bigwin_JP_num",  [ResName.bigwin_num], bigwinCon.container);			
+			
+			
 			put_to_lsit(zoneCon);
 			put_to_lsit(bigwinCon);
 			put_to_lsit(bigwinfire);
+			put_to_lsit(PowerJPNum);
 			
 			//_tool.SetControlMc(zoneCon.ItemList[2]);
 			//add(_tool);
@@ -88,6 +92,7 @@ package View.ViewComponent
 			var zonebet_amount:Array = [0, 0, 0, 0, 0, 0];			
 			var total:int = 0;
 			
+			var odd:int = -1;
 			var playerwin:int = 0;
 			var bankerwin:int = 0;
 			var winst:String = "";
@@ -120,6 +125,7 @@ package View.ViewComponent
 						}
 						else result_str.push("閒贏");
 						winst = resultob.win_state;
+						odd = resultob.odds;
 					}
 					if ( resultob.bet_type == "BetBWBanker") 
 					{
@@ -165,6 +171,8 @@ package View.ViewComponent
 			_model.putValue("result_total", total);
 			_model.putValue("result_str_list", result_str);
 			_model.putValue("winstr", winst);
+			_model.putValue("win_odd", odd);
+			
 			
 			var wintzone:Array = utilFun.Get_restItem(betZone, clean);
 			//utilFun.Log("clean zone =" + clean);
@@ -180,10 +188,29 @@ package View.ViewComponent
 			{				
 				dispatcher(new StringObject("sound_bigPoker","sound" ) );
 				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
-				GetSingleItem("bigwinfire").gotoAndPlay(2);				
-				//_regular.FadeIn( GetSingleItem("bigwinmsg"), 2, 2, _regular.Fadeout);
-				//utilFun.scaleXY(GetSingleItem("bigwinmsg"), 0, 0);
-				Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 1.2,scaleY:1.2, time:0.5,transition:"linear",onCompleteParams:[GetSingleItem("bigwinmsg")],onComplete:rubber_out } );
+				
+				
+				var s:String = "x" + _model.getValue("win_odd");;
+				var arr:Array = utilFun.frameAdj(s.split(""));				
+				//utilFun.Log("arr = "+arr);
+				var PowerJPNum:MultiObject = Get("bigwin_JP_num");
+				PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
+				PowerJPNum.container.y = 160;		
+				PowerJPNum.CustomizedData = arr;
+				PowerJPNum.CustomizedFun = settlt_FrameSetting;
+				PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
+				PowerJPNum.Post_CustomizedData = [arr.length, 91, 0];
+				PowerJPNum.Create_(arr.length, "bigwin_JP_num");									
+				
+				utilFun.scaleXY(Get("bigwinmsg").container,4.0, 4.0);
+				Get("bigwinmsg").container.alpha = 0;
+				
+				Tweener.addTween(Get("bigwinmsg").container, { scaleX: 1, scaleY:1, alpha: 1,time:0.6, transition:"easeInQuart",onComplete:this.ready_to_cunt } );
+				
+				dispatcher(new StringObject("sound_bigwin_down","sound" ) );
+				
+				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 1.2,scaleY:1.2, time:0.5,transition:"linear",onCompleteParams:[GetSingleItem("bigwinmsg")],onComplete:rubber_out } );
+				
 				//Tweener.addTween(GetSingleItem("bigwinmsg"), { scaleX: 0.8,scaleY:0.8, time:0.5,transition:"easeOutCubic" } );
 				//_regular.rubber_effect(GetSingleItem("bigwinmsg"), 1, 1, 0.4, 0.4, _regular.rubber_effect);
 			}
@@ -199,10 +226,82 @@ package View.ViewComponent
 			dispatcher(new ArrayObject([playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin],"add_history" ) );			
 		}
 		
+		public function ready_to_cunt():void
+		{
+			Tweener.addTween(this, {delay:3, transition:"linear",onComplete:this._cunt } );
+		}
+		
+		public function _cunt():void
+		{						
+			_model.putValue("TotalJP_amoount", _model.getValue("result_total"));
+			var s:String = _model.getValue("TotalJP_amoount");
+			var arr:Array = utilFun.frameAdj(s.split(""));				
+			utilFun.Log("arr = "+arr);
+			var PowerJPNum:MultiObject = Get("bigwin_JP_num");
+			PowerJPNum.CleanList();
+			PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
+			PowerJPNum.container.y = 160;		
+			PowerJPNum.CustomizedData = arr;
+			PowerJPNum.CustomizedFun = settlt_FrameSetting;
+			PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
+			PowerJPNum.Post_CustomizedData = [arr.length, 91, 0];
+			PowerJPNum.Create_(arr.length, "bigwin_JP_num");	
+			GetSingleItem("bigwinfire").gotoAndPlay(2);		
+			
+			//N秒內跑完表
+			Tweener.addTween(this, {delay:1, transition:"linear",onComplete:this.num_count } );
+		}
+		
+		public function num_count():void
+		{			
+			var PowerJPNum:MultiObject = Get("bigwin_JP_num");			
+			PowerJPNum.ItemList[PowerJPNum.ItemList.length-1].gotoAndPlay(11);			
+			
+			Tweener.addCaller(this, { time:2 , count: PowerJPNum.ItemList.length-1 , transition:"easeInQuad", onUpdateParams:[10], onUpdate: this.add_carray } );
+			
+		}
+		
+		public function add_carray(amount:int):void
+		{
+			var total:Number = _model.getValue("TotalJP_amoount");			
+			total -= amount;		
+			total /= amount;			
+			_model.putValue("TotalJP_amoount", total);			
+			
+			var toIn:int = total;
+			var arr:Array = utilFun.frameAdj(toIn.toString().split(""));							
+				
+			var PowerJPNum:MultiObject = Get("bigwin_JP_num");	
+			PowerJPNum.CleanList();
+			PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
+			PowerJPNum.container.y = 160;
+			PowerJPNum.CustomizedData = arr;
+			PowerJPNum.CustomizedFun = settlt_FrameSetting;
+			PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
+			PowerJPNum.Post_CustomizedData = [arr.length, 91, 0];
+			PowerJPNum.Create_(arr.length, "bigwin_JP_num");	
+			PowerJPNum.ItemList[PowerJPNum.ItemList.length-1].gotoAndPlay(11);			
+			
+			
+			if ( toIn <= 10) 
+			{
+				utilFun.Log("add carry over");			
+				PowerJPNum.ItemList[PowerJPNum.ItemList.length-1].gotoAndStop(10);
+				return;
+			}
+			
+			
+		}
+		
+		public function settlt_FrameSetting(mc:MovieClip, idx:int, data:Array):void
+		{			
+			if ( data[idx] == "x")  data[idx] = 13;
+			mc.gotoAndStop(data[idx]);
+		}
+		
+		
 		public function showAni():void
 		{
-			
-			
 			dispatcher(new ModelEvent("show_settle_table"));
 		}
 		
@@ -230,9 +329,6 @@ package View.ViewComponent
 				//show誰贏
 				dispatcher(new Intobject(1, "show_who_win"));		
 			}
-			
-			
-			
 			
 			//結算表
 			_regular.Call(this, { onComplete:this.showAni}, 2, 1, 1, "linear");

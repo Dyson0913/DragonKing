@@ -34,29 +34,28 @@ package View.ViewComponent
 			
 			//集氣吧
 			var powerbar:MultiObject = create("powerbar",  [ResName.powerbar]);
-			powerbar.container.x = 1292;
-			powerbar.container.y = 380;			
+			powerbar.container.x = 1302;
+			powerbar.container.y = 390;			
 			powerbar.Create_(1, "powerbar");
-			//powerbar.container.visible = false;
+			//powerbar.container.visible = false;			
 			
 			var powerbar_3:MultiObject = create("powerbar_3",  [ResName.power_bar3],  powerbar.container);
-			powerbar_3.container.x = 2.85;
-			powerbar_3.container.y = 21;			
-			powerbar_3.Post_CustomizedData = [5, 65, 0 ];
+			powerbar_3.container.x = 4.35;
+			powerbar_3.container.y = 6;			
+			powerbar_3.Post_CustomizedData = [5, 59, 0 ];
 			powerbar_3.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			powerbar_3.Create_(5, "powerbar_3");
 						
 			var powerbar_2pair:MultiObject = create("power_bar_2pair", [ResName.power_bar_2pair] ,  powerbar.container);
-			powerbar_2pair.container.x = 3.35;
-			powerbar_2pair.container.y = 64.5;
-			powerbar_2pair.Post_CustomizedData = [5, 65, 0 ];
+			powerbar_2pair.container.x = 4.35;
+			powerbar_2pair.container.y = 46.5;
+			powerbar_2pair.Post_CustomizedData = [5, 59, 0 ];
 			powerbar_2pair.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			powerbar_2pair.Create_(5, "power_bar_2pair");
 			
-			//for (var i:int = 0; i < powerbar_2pair.ItemList.length; i++)
-			//{
-				//powerbar_2pair.ItemList[i].gotoAndStop(2);
-			//}				
+			var powerbarname:MultiObject = create("powerbarname",  [ResName.powerbar_name], powerbar.container);
+			powerbarname.container.x = 15.35;
+			powerbarname.Create_(1, "powerbarname");
 			
 			//next grid 65
 			var contractpower:MultiObject = create("contractpower", [ResName.contractpower],  powerbar.container);
@@ -66,8 +65,8 @@ package View.ViewComponent
 			
 			//累租金額
 			var power_bar_amount:MultiObject = create("power_bar_amount",  [ResName.TextInfo], powerbar.container);		
-			power_bar_amount.container.x = 334;
-			power_bar_amount.container.y = 13;
+			power_bar_amount.container.x = 304;
+			power_bar_amount.container.y = -4;
 			power_bar_amount.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			power_bar_amount.Post_CustomizedData = [2,10,46];
 			power_bar_amount.CustomizedFun = _text.textSetting;
@@ -81,6 +80,7 @@ package View.ViewComponent
 			PowerJP.container.visible = false;
 			
 			var PowerJPNum:MultiObject = create("Power_JP_num",  [ResName.PowerJP_Num], Get("Power_JP").container);			
+			
 			
 			put_to_lsit(powerbar);	
 			put_to_lsit(powerbar_3);	

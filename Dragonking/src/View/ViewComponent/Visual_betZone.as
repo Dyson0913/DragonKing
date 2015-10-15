@@ -46,18 +46,8 @@ package View.ViewComponent
 			pz.Post_CustomizedData = zone_xy;
 			pz.Create_(avaliblezone.length, "betzone");
 			
-			//
 			var highpayrate:MultiObject = create("highpayrate", [ResName.highpayrate]);	
-			highpayrate.container.x = 793;
-			highpayrate.container.y = 595;
 			highpayrate.Create_(1, "highpayrate");
-			
-			
-			//pz.ItemList[0].gotoAndStop(2);
-			//for (var i:int = 0; i < avaliblezone.length; i++)
-			//{,
-				//pz.ItemList[i].gotoAndStop(2);
-			//}					
 			
 			put_to_lsit(pz);
 			put_to_lsit(tableitem);
@@ -74,9 +64,10 @@ package View.ViewComponent
 			
 			Get("tableitem").container.visible = true;
 			GetSingleItem("highpayrate").gotoAndStop(1);
-			//GetSingleItem("highpayrate").container.x = 793;
-			//GetSingleItem("highpayrate").container.y = 595;
-			pull();
+			Get("highpayrate").container.x = 783;
+			Get("highpayrate").container.y = 575;
+			
+			//pull();
 			
 			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone", 5), 25, 25, 1, 3);
 			

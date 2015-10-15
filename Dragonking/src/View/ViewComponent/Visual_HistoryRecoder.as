@@ -48,9 +48,9 @@ package View.ViewComponent
 			
 			//結果歷史記錄		
 			var historyball:MultiObject = create("historyball",  [ResName.historyball] ,   historytable.container);
-			historyball.container.x = 10;
-			historyball.container.y = 10;
-			historyball.Post_CustomizedData = [6, 33, 33 ];
+			historyball.container.x = 6.85;
+			historyball.container.y = 9.35;
+			historyball.Post_CustomizedData = [6, 37, 37 ];
 			historyball.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			historyball.Create_(60, "historyball");
 			
