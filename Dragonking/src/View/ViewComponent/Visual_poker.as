@@ -189,7 +189,7 @@ package View.ViewComponent
 				var pokerb:MovieClip = utilFun.GetClassByString(ResName.poker_back);				
 				var pokerm:MovieClip = utilFun.GetClassByString(ResName.pokermask);
 				pokerb.x  = 39;
-				pokerb.y  = 30;
+				pokerb.y  = 28;
 				pokerf.x = pokerb.x;
 				pokerf.y  = pokerb.y;
 				pokerm.x = 136.35;
