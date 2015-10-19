@@ -343,37 +343,7 @@ package View.ViewComponent
 			dispatcher(new ModelEvent("show_public_card_hint"));		
 		}
 		
-		[MessageHandler(type = "Model.valueObject.Intobject", selector = "show_who_win")]
-		public function show_who_win():void
-		{
-			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
-			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
-			
-			var ppoint:int = pokerUtil.ca_point(ppoker);
-			var bpoint:int = pokerUtil.ca_point(bpoker);			
-			if ( ppoint > bpoint ) 
-			{
-				utilFun.Log("p>b");
-				GetSingleItem("zone", 0 ).gotoAndStop(3);
-				if ( ppoint == 0) ppoint = 10;
-				GetSingleItem("zone", 0)["_num0"].gotoAndStop(ppoint);
-				dispatcher(new StringObject("sound_player_win", "sound" ) );
-			}
-			else if ( ppoint < bpoint )
-			{
-				utilFun.Log("b>p");
-				GetSingleItem("zone", 1 ).gotoAndStop(3);
-				if ( bpoint == 0) bpoint = 10;
-				GetSingleItem("zone", 1)["_num0"].gotoAndStop(bpoint);
-				dispatcher(new StringObject("sound_deal_win", "sound" ) );
-			}
-			else
-			{
-				utilFun.Log("tie");				
-				GetSingleItem("zone", 1 ).gotoAndStop(1);				
-				dispatcher(new StringObject("sound_tie_win", "sound" ) );
-			}
-		}
+		
 		
 		
 		//TODO compare to pounit

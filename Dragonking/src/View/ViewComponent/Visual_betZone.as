@@ -67,7 +67,7 @@ package View.ViewComponent
 			Get("highpayrate").container.x = 783;
 			Get("highpayrate").container.y = 575;
 			
-			//pull();
+			pull();
 			
 			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone", 5), 25, 25, 1, 3);
 			
@@ -76,12 +76,12 @@ package View.ViewComponent
 		
 		public function pull():void
 		{
-			_regular.moveTo(GetSingleItem("highpayrate"), 0, GetSingleItem("highpayrate").y - 10, 1, 0, pull_up);
+			_regular.moveTo(Get("highpayrate").container, Get("highpayrate").container.x, Get("highpayrate").container.y - 10, 1, 0, pull_up);
 		}
 		
 		public function pull_up():void
 		{
-			_regular.moveTo(GetSingleItem("highpayrate"), 0, GetSingleItem("highpayrate").y + 10, 1, 0, pull);
+			_regular.moveTo(Get("highpayrate").container, Get("highpayrate").container.x, Get("highpayrate").container.y + 10, 1, 0, pull);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
@@ -105,6 +105,8 @@ package View.ViewComponent
 			Tweener.pauseTweens(GetSingleItem("betzone",5));
 			
 			GetSingleItem("highpayrate").gotoAndStop(2);
+			
+			Tweener.pauseTweens(Get("highpayrate"));		
 			
 		}
 		

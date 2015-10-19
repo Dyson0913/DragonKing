@@ -38,6 +38,8 @@ package Res
 		public static const powerbar_name:String = "power_bar_name";
 		
 		
+		
+		
 		public static const historytable:String = "history_table";
 		public static const historyball:String = "history_ball";		
 		

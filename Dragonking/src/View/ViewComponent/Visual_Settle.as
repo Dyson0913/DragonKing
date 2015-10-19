@@ -72,6 +72,8 @@ package View.ViewComponent
 		{
 			setFrame("zone", 1);
 			setFrame("bigwinmsg", 1);
+			setFrame("bigwin_JP_num", 12);
+			
 		}
 		
 		//move to model command to parse ,then send event
@@ -190,7 +192,7 @@ package View.ViewComponent
 				GetSingleItem("bigwinmsg").gotoAndStop(bigwin);
 				
 				
-				var s:String = "x" + _model.getValue("win_odd");;
+				var s:String = "x" + _model.getValue("win_odd");
 				var arr:Array = utilFun.frameAdj(s.split(""));				
 				//utilFun.Log("arr = "+arr);
 				var PowerJPNum:MultiObject = Get("bigwin_JP_num");
@@ -232,7 +234,15 @@ package View.ViewComponent
 		}
 		
 		public function _cunt():void
-		{						
+		{					
+			//沒下注,中大獎
+			if ( _model.getValue("result_total") == 0)
+			{
+				GetSingleItem("bigwinfire").gotoAndPlay(2);
+				settle(new Intobject(1, "settle_step"));
+				return;
+			}
+			
 			_model.putValue("TotalJP_amoount", _model.getValue("result_total"));
 			var s:String = _model.getValue("TotalJP_amoount");
 			var arr:Array = utilFun.frameAdj(s.split(""));				
@@ -285,7 +295,8 @@ package View.ViewComponent
 			
 			if ( toIn <= 10) 
 			{
-				utilFun.Log("add carry over");			
+				utilFun.Log("add carry over");
+				settle(new Intobject(1, "settle_step"));
 				PowerJPNum.ItemList[PowerJPNum.ItemList.length-1].gotoAndStop(10);
 				return;
 			}
@@ -297,12 +308,6 @@ package View.ViewComponent
 		{			
 			if ( data[idx] == "x")  data[idx] = 13;
 			mc.gotoAndStop(data[idx]);
-		}
-		
-		
-		public function showAni():void
-		{
-			dispatcher(new ModelEvent("show_settle_table"));
 		}
 		
 		public function rubber_out(mc:MovieClip):void
@@ -330,8 +335,41 @@ package View.ViewComponent
 				dispatcher(new Intobject(1, "show_who_win"));		
 			}
 			
+			dispatcher(new ModelEvent("show_settle_table"));
 			//結算表
-			_regular.Call(this, { onComplete:this.showAni}, 2, 1, 1, "linear");
+			//_regular.Call(this, { onComplete:this.showAni}, 2, 1, 1, "linear");
+		}
+		
+		[MessageHandler(type = "Model.valueObject.Intobject", selector = "show_who_win")]
+		public function show_who_win():void
+		{
+			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
+			var bpoker:Array =   _model.getValue(modelName.BANKER_POKER);
+			
+			var ppoint:int = pokerUtil.ca_point(ppoker);
+			var bpoint:int = pokerUtil.ca_point(bpoker);			
+			if ( ppoint > bpoint ) 
+			{
+				utilFun.Log("p>b");
+				GetSingleItem("zone", 0 ).gotoAndStop(3);
+				if ( ppoint == 0) ppoint = 10;
+				GetSingleItem("zone", 0)["_num0"].gotoAndStop(ppoint);
+				dispatcher(new StringObject("sound_player_win", "sound" ) );
+			}
+			else if ( ppoint < bpoint )
+			{
+				utilFun.Log("b>p");
+				GetSingleItem("zone", 1 ).gotoAndStop(3);
+				if ( bpoint == 0) bpoint = 10;
+				GetSingleItem("zone", 1)["_num0"].gotoAndStop(bpoint);
+				dispatcher(new StringObject("sound_deal_win", "sound" ) );
+			}
+			else
+			{
+				utilFun.Log("tie");				
+				GetSingleItem("zone", 2).gotoAndStop(2);
+				dispatcher(new StringObject("sound_tie_win", "sound" ) );
+			}
 		}
 		
 	}
