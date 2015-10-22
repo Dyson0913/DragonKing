@@ -345,13 +345,13 @@ package View.ViewComponent
 		public function fake_hisotry():void
 		{
 			var history:Array = _model.getValue("history_win_list");			
-			for ( var i:int = 0; i < 8; i++)
+			for ( var i:int = 0; i < 60; i++)
 			{
 				var frame:int = utilFun.Random(4) +2;
 				var point:int = utilFun.Random(9);			
 				var isplayerPair:int = utilFun.Random(2);			
 				var isbankerPair:int = utilFun.Random(2);							
-				var bigs:int = i;// utilFun.Random(7);
+				var bigs:int = 0;// utilFun.Random(7);
 				history.push([frame, point, isplayerPair, isbankerPair,bigs]);
 			}			
 			_model.putValue("history_win_list",history);

@@ -142,8 +142,8 @@ package Command
 		public function Posi_Colum_first_Setting(mc:MovieClip, idx:int, data:Array):void
 		{			
 			var ColumnCnt:int = data[0];
-			var xdiff:int = data[1];
-			var ydiff:int = data[2];
+			var xdiff:Number = data[1];
+			var ydiff:Number = data[2];
 			mc.x = ( Math.floor(idx / ColumnCnt) * data[1]);		
 			mc.y = (idx % ColumnCnt * ydiff);
 		}
@@ -151,8 +151,8 @@ package Command
 		public function Posi_Row_first_Setting(mc:MovieClip, idx:int, data:Array):void
 		{			
 			var RowCnt:int = data[0];
-			var xdiff:int = data[1];
-			var ydiff:int = data[2];
+			var xdiff:Number = data[1];
+			var ydiff:Number = data[2];
 			mc.x = (idx % RowCnt * xdiff);			
 			mc.y = Math.floor(idx / RowCnt) * ydiff;		
 		}
