@@ -21,9 +21,7 @@ package Res
 		
 		public static const TextInfo:String = "Text_Info";	
 		public static const Betcoin:String = "Bet_coin";	
-		public static const Wincoin:String = "Win_coin";	
-		public static const pokeratlas:String = "poker_atlas";	
-				
+		public static const Wincoin:String = "Win_coin";				
 		
 		public static const betlimit:String = "bet_limit";
 		public static const realtimeinfo:String = "realtime_info";
