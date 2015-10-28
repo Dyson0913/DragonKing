@@ -76,8 +76,8 @@ package View.ViewComponent
 			put_to_lsit(powerbar_0);
 			put_to_lsit(powerbar_1);		
 			
-			_tool.SetControlMc(powerbar_0.ItemList[4]);
-			add(_tool);
+			//_tool.SetControlMc(powerbar_0.ItemList[4]);
+			//add(_tool);
 		}		
 		
 		//mode -> (contorl ?)->view 

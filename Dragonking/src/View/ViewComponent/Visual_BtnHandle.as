@@ -50,7 +50,7 @@ package View.ViewComponent
 			mybtn_group.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,3,1]);
 			mybtn_group.container.x = 1710;
 			mybtn_group.container.y = 950;
-			mybtn_group.CustomizedFun = scal;			
+			//mybtn_group.CustomizedFun = scal;			
 			mybtn_group.Create_by_list(mylist.length, mylist, 0, 0, btnlist.length, 200, 0, "time_");		
 			mybtn_group.rollout = test_reaction;
 			mybtn_group.rollover = test_reaction;
@@ -70,10 +70,10 @@ package View.ViewComponent
 			put_to_lsit(_rule_table);
 		}		
 		
-		public function scal(mc:MovieClip, idx:int, data:Array):void
-		{		
-			utilFun.scaleXY(mc, 0.68, 0.68);
-		}
+		//public function scal(mc:MovieClip, idx:int, data:Array):void
+		//{		
+			//utilFun.scaleXY(mc, 0.68, 0.68);
+		//}
 		
 		public function test_reaction(e:Event, idx:int):Boolean
 		{
