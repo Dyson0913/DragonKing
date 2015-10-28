@@ -75,6 +75,9 @@ package View.GameView
 		[Inject]
 		public var _PowerUp:Visual_PowerUp;
 		
+		[Inject]
+		public var _progressbar:Visual_progressbar;
+		
 		public function betView()  
 		{
 			utilFun.Log("betView");
@@ -95,7 +98,8 @@ package View.GameView
 			
 			_HistoryRecoder.init();
 			_ProbData.init();
-			_PowerUp.init();
+//			_PowerUp.init();
+			_progressbar.init();
 			
 			_gameinfo.init();
 			_paytable.init();

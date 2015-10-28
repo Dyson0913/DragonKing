@@ -35,17 +35,17 @@ package View.ViewComponent
 			//集氣吧
 			var powerbar:MultiObject = create("powerbar",  [ResName.powerbar]);
 			powerbar.container.x = 1302;
-			powerbar.container.y = 390;			
+			powerbar.container.y = 390;
 			powerbar.Create_(1, "powerbar");
-			//powerbar.container.visible = false;			
+			//powerbar.container.visible = false;
 			
 			var powerbar_3:MultiObject = create("powerbar_3",  [ResName.power_bar3],  powerbar.container);
 			powerbar_3.container.x = 4.35;
-			powerbar_3.container.y = 6;			
+			powerbar_3.container.y = 6;
 			powerbar_3.Post_CustomizedData = [5, 59, 0 ];
 			powerbar_3.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			powerbar_3.Create_(5, "powerbar_3");
-						
+			
 			var powerbar_2pair:MultiObject = create("power_bar_2pair", [ResName.power_bar_2pair] ,  powerbar.container);
 			powerbar_2pair.container.x = 4.35;
 			powerbar_2pair.container.y = 46.5;
@@ -93,7 +93,9 @@ package View.ViewComponent
 		
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="power_up")]
 		public function check_power_up_effect(type:Intobject):void
-		{			
+		{
+			//0,2pair
+			//1,three kind
 			var kind:int = type.Value;	
 			var arr:Array = [];
 			var idx:int ;

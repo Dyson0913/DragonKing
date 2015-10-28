@@ -276,10 +276,8 @@ package View.ViewComponent
 			dispatcher(new Intobject(type, "show_judge"));
 			
 			prob_cal();
-			dispatcher(new Intobject(type, "caculate_prob"));	
+			dispatcher(new Intobject(type, "caculate_prob"));
 			
-			//TODO move to settle
-			//check_power_up_effect();
 			
 		}
 		

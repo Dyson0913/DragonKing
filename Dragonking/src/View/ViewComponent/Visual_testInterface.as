@@ -93,6 +93,9 @@ package View.ViewComponent
 		public var _PowerUp:Visual_PowerUp;
 		
 		[Inject]
+		public var _progressbar:Visual_progressbar;
+		
+		[Inject]
 		public var _HistoryRecoder:Visual_HistoryRecoder;
 		
 		[Inject]
@@ -171,7 +174,8 @@ package View.ViewComponent
 			
 			changeBG(ResName.Bet_Scene);
 			
-			_PowerUp.init();
+			//_PowerUp.init();
+			_progressbar.init();
 			
 			//=============================================gameinfo			
 			_gameinfo.init();
@@ -360,6 +364,8 @@ package View.ViewComponent
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "3")]
 		public function pack_sim():void
 		{
+			dispatcher(new Intobject(utilFun.Random(2), "power_up"));
+			return;
 			//dispatcher(new Intobject(modelName.Hud, ViewCommand.ADD)) ;			
 			//pack test
 			//_loader.init();
