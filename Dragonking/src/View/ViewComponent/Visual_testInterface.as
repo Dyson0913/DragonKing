@@ -121,13 +121,13 @@ package View.ViewComponent
 			_model.putValue("game_round", 1);			
 			
 			//腳本
-			var script_list:MultiObject = prepare("script_list", new MultiObject() ,GetSingleItem("_view").parent.parent );			
+			var script_list:MultiObject = create("script_list", [ResName.TextInfo]);	
 			script_list.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
 			script_list.stop_Propagation = true;
 			script_list.mousedown = script_list_test;
 			script_list.CustomizedData = [ { size:18 }, "下注腳本", "開牌腳本", "結算腳本", "封包模擬"];
 			script_list.CustomizedFun = _text.textSetting;			
-			script_list.Create_by_list(script_list.CustomizedData.length -1, [ResName.TextInfo], 0, 0, script_list.CustomizedData.length-1, 100, 20, "Btn_");			
+			script_list.Create_(script_list.CustomizedData.length -1, "script_list");// , 0, 0, script_list.CustomizedData.length - 1, 100, 20, "Btn_");			
 			
 			
 			_model.putValue("Script_idx", 0);			

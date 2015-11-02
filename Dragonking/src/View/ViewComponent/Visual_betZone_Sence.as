@@ -33,19 +33,13 @@ package View.ViewComponent
 			var zone_xy:Array = _model.getValue(modelName.AVALIBLE_ZONE_XY);			
 			var avaliblezone_s:Array = _model.getValue(modelName.AVALIBLE_ZONE_S);
 			
-			var playerzone_s:MultiObject = prepare("betzone_s", new MultiObject() , GetSingleItem("_view").parent.parent);
+			var playerzone_s:MultiObject = create("betzone_s", avaliblezone_s);
 			playerzone_s.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,1,2,1]);
 			playerzone_s.container.x = 457;
 			playerzone_s.container.y = 662;
 			playerzone_s.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			playerzone_s.Post_CustomizedData = zone_xy;
-		
-			playerzone_s.Create_by_list(avaliblezone_s.length, avaliblezone_s, 0, 0, avaliblezone_s.length, 0, 0, "bet_sence");			
-			
-			//_tool.SetControlMc(coinob.ItemList[0]);
-			//_tool.SetControlMc(coinob.container);
-			//add(_tool);
-			utilFun.Log("betzone snece ok");
+			playerzone_s.Create_(avaliblezone_s.length, "betzone_s");
 		}		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]

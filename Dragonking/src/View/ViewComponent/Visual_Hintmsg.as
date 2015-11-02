@@ -17,6 +17,7 @@ package View.ViewComponent
 	 */
 	public class Visual_Hintmsg  extends VisualHandler
 	{
+		public const Hint:String = "HintMsg";
 		
 		public function Visual_Hintmsg() 
 		{
@@ -25,15 +26,12 @@ package View.ViewComponent
 		
 		public function init():void
 		{
-			var hintmsg:MultiObject = prepare(modelName.HINT_MSG, new MultiObject()  , GetSingleItem("_view").parent.parent);
-			hintmsg.Create_by_list(1, [ResName.Hint], 0, 0, 1, 0, 0, "hintmsg");
+			var hintmsg:MultiObject = create(modelName.HINT_MSG, [Hint]);
+			hintmsg.Create_(1, "hintmsg");
 			hintmsg.container.x = 960.3;
 			hintmsg.container.y = 439.3;
 			hintmsg.container.visible = false;
 			
-			//_tool.SetControlMc(coinob.ItemList[0]);
-			//_tool.SetControlMc(hintmsg.container);
-			//add(_tool);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]

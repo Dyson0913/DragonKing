@@ -8,6 +8,7 @@ package View.ViewBase
 	import Command.*;
 	import Interface.ViewComponentInterface;
 	import Model.valueObject.ArrayObject;
+	import Model.valueObject.StringObject;
 	import util.*;
 	import Model.*;
 	import View.Viewutil.AdjustTool;
@@ -39,6 +40,9 @@ package View.ViewBase
 		public var _opration:DataOperation;
 		
 		[Inject]
+		public var _sound:SoundCommand;
+		
+		[Inject]
 		public var _debugTool:Visual_debugTool;
 		
 		private var _miss_id:Array = [];
@@ -60,8 +64,7 @@ package View.ViewBase
 			if ( _miss_id.length == 0) return -1;
 			//TODO multi mission
 			return _miss_id[0];
-		}
-		
+		}		
 		
 		public function put_to_lsit(viewcompo:ViewComponentInterface):void
 		{
@@ -141,7 +144,22 @@ package View.ViewBase
 			sp.name  = name;
 			ob.setContainer(sp);
 			return utilFun.prepare(name,ob , _viewcom.currentViewDI , Stick_in_container);
-		}		
+		}
+		
+		protected function play_sound(soundname:String):void
+		{			
+			_sound.playSound(new StringObject(soundname,"sound") );			
+		}
+		
+		protected function pause_sound(soundname:String):void
+		{
+			_sound.stopMusic(new StringObject(soundname,"Music_pause" ));
+		}
+		
+		protected function loop_sound(soundname:String):void
+		{
+			_sound.loop_sound(new StringObject(soundname,"loop_sound" ));
+		}
 	}
 
 }
