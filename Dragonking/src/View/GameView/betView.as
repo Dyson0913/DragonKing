@@ -78,6 +78,9 @@ package View.GameView
 		[Inject]
 		public var _progressbar:Visual_progressbar;
 		
+		[Inject]
+		public var _Bigwin_Effect:Visual_Bigwin_Effect;
+		
 		public function betView()  
 		{
 			utilFun.Log("betView");
@@ -116,6 +119,7 @@ package View.GameView
 			_sencer.init();	
 			
 			_btn.init();
+			_Bigwin_Effect.init();
 			
 			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
 		}
