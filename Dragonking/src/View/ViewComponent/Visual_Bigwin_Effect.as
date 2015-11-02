@@ -117,12 +117,11 @@ package View.ViewComponent
 		
 		public function odd_present():void
 		{
-			//Xodd
 			var s:String = "x" + _model.getValue("win_odd");			
 			var arr:Array = utilFun.frameAdj(s.split(""));		
 			var PowerJPNum:MultiObject = Get("bigwin_JP_num");
 			PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
-			PowerJPNum.container.y = 160;		
+			PowerJPNum.container.y = 200;		
 			PowerJPNum.CustomizedData = arr;
 			PowerJPNum.CustomizedFun = settlt_FrameSetting;
 			PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
@@ -144,6 +143,7 @@ package View.ViewComponent
 		public function _cunt():void
 		{					
 			utilFun.Log("_count");
+			//_model.putValue("result_total", 1000);
 			//沒下注,中大獎
 			if ( _model.getValue("result_total") == 0)
 			{
@@ -159,7 +159,7 @@ package View.ViewComponent
 			var PowerJPNum:MultiObject = Get("bigwin_JP_num");
 			PowerJPNum.CleanList();
 			PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
-			PowerJPNum.container.y = 330;		
+			PowerJPNum.container.y = 200;		
 			PowerJPNum.CustomizedData = arr;
 			PowerJPNum.CustomizedFun = settlt_FrameSetting;
 			PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
@@ -181,7 +181,7 @@ package View.ViewComponent
 			var PowerJPNum:MultiObject = Get("bigwin_JP_num");			
 			PowerJPNum.ItemList[PowerJPNum.ItemList.length-1].gotoAndPlay(11);			
 			
-			Tweener.addCaller(this, { time:10 , count: PowerJPNum.ItemList.length - 1 , transition:"easeInQuad", onUpdateParams:[10], onUpdate: this.add_carray } );
+			Tweener.addCaller(this, { time:3 , count: PowerJPNum.ItemList.length - 1 , transition:"easeInQuad", onUpdateParams:[10], onUpdate: this.add_carray } );
 			loop_sound(sound_getpoint);
 		}
 		
@@ -198,7 +198,7 @@ package View.ViewComponent
 			var PowerJPNum:MultiObject = Get("bigwin_JP_num");	
 			PowerJPNum.CleanList();
 			PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
-			PowerJPNum.container.y = 330;
+			PowerJPNum.container.y = 200;
 			PowerJPNum.CustomizedData = arr;
 			PowerJPNum.CustomizedFun = settlt_FrameSetting;
 			PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;

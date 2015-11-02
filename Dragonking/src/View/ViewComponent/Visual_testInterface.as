@@ -104,6 +104,9 @@ package View.ViewComponent
 		[Inject]
 		public var _fileStream:fileStream;
 		
+		[Inject]
+		public var _Bigwin_Effect:Visual_Bigwin_Effect;
+		
 		public function Visual_testInterface() 
 		{
 			
@@ -127,7 +130,10 @@ package View.ViewComponent
 			script_list.mousedown = script_list_test;
 			script_list.CustomizedData = [ { size:18 }, "下注腳本", "開牌腳本", "結算腳本", "封包模擬"];
 			script_list.CustomizedFun = _text.textSetting;			
+			script_list.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
+			script_list.Post_CustomizedData = [4, 100, 100];			
 			script_list.Create_(script_list.CustomizedData.length -1, "script_list");// , 0, 0, script_list.CustomizedData.length - 1, 100, 20, "Btn_");			
+			
 			
 			
 			_model.putValue("Script_idx", 0);			
@@ -320,8 +326,7 @@ package View.ViewComponent
 			dispatcher(new ModelEvent("hide"));			
 			//dispatcher(new ModelEvent("display"));
 			//================================================settle info
-			_settle.init();
-			_settle.debug();
+			_settle.init();			
 			dispatcher(new Intobject(modelName.PLAYER_POKER, "show_judge"));
 			dispatcher(new Intobject(modelName.BANKER_POKER, "show_judge"));			
 			//摸擬押注
@@ -330,6 +335,8 @@ package View.ViewComponent
 			_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
+			_Bigwin_Effect.init();
+			_Bigwin_Effect.debug();
 			//
 			//同花
 			var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 0, "odds": 3, "win_state": "WSBWFullHouse", "bet_amount": 0}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 3, "win_state": "WSBWFullHouse", "bet_amount": 0}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 6, "win_state": "WSBWFullHouse", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "291643", "timestamp": 1443162482.443791, "remain_time": 9, "game_type": "BigWin", "game_round": 971, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "92b27a3e634e11e5b419f23c9189e2a9"}
