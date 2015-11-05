@@ -31,6 +31,7 @@ package Model
 		public static const AVALIBLE_ZONE_XY:int = Num++;
 		public static const BIG_POKER_MSG:int = Num++;
 		public static const SMALL_POKER_MSG:int = Num++;
+		public static const HIS_SHORT_MSG:int = Num++;
 		public static const BIG_POKER_TEXT:int = Num++;
 		public static const COIN_STACK_XY:int = Num++;
 		

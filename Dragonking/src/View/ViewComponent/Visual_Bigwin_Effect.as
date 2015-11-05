@@ -118,7 +118,7 @@ package View.ViewComponent
 		public function odd_present():void
 		{
 			var s:String = "x" + (_model.getValue("win_odd") -1);
-			var arr:Array = utilFun.frameAdj(s.split(""));		
+			var arr:Array = utilFun.frameAdj(s.split(""));
 			var PowerJPNum:MultiObject = Get("bigwin_JP_num");
 			PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
 			PowerJPNum.container.y = 200;		

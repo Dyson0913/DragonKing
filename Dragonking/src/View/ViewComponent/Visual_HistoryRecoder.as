@@ -74,108 +74,42 @@ package View.ViewComponent
 				GetSingleItem("historyball", i)["_pair"].gotoAndStop(1);
 			}
 			
-			var history_model:Array = _model.getValue("history_win_list");			
+			var history_model:Array = _model.getValue("history_list");			
 			Get("historyball").CustomizedData = history_model;
 			Get("historyball").CustomizedFun = history_ball_Setting;
 			Get("historyball").FlushObject();			
 		}
 		
+		//{"player_pair": false, "winner": "BetBWPlayer", "banker_pair": false, "point": 4}
 		public function history_ball_Setting(mc:MovieClip, idx:int, data:Array):void
-		{	
-			//frame,point,playerPair,bankerPair			
-			var info:Array =  data[idx];			
-			//utilFun.Log("info "+info);
-			if (info == null ) return;
+		{		
+			//2,player  3,banker,4 tie ,5 sp
+			var info:Object = data[idx];
 			
-			if( info[4] !=-1)
+			if ( _opration.getMappingValue(modelName.BIG_POKER_MSG,  info.winner) >= 2	)
 			{
-				var str:DI = _model.getValue(modelName.SMALL_POKER_MSG);				
-				mc.gotoAndStop(5);				
-				mc["_Text"].text = str.getValue(info[4])
+				var str:DI = _model.getValue(modelName.HIS_SHORT_MSG);	
+				mc.gotoAndStop(5);
+				mc["_Text"].text = str.getValue( info.winner);
 				return;
 			}
-			var frame:int = info[0];
-			mc.gotoAndStop(frame);						
-			mc["_Text"].text = info[1];
 			
-			if ( info[2] == 1 && info[3] == 1) mc["_pair"].gotoAndStop(4);
-			else if ( info[2] == 1) mc["_pair"].gotoAndStop(3);		
-			else if ( info[3] == 1) mc["_pair"].gotoAndStop(2);		
+			var frame:int = 0;
+			if ( info.winner == "BetBWPlayer") frame = 2;			
+			if ( info.winner == "BetBWBanker") frame = 3;
+			if ( info.winner == "None") frame = 4;			
+			mc.gotoAndStop(frame);
+			mc["_Text"].text =  info.point;			
+			
+			if( info.banker_pair && info.player_pair) mc["_pair"].gotoAndStop(4);
+			else if( info.banker_pair) mc["_pair"].gotoAndStop(2);
+			else if ( info.player_pair) mc["_pair"].gotoAndStop(3);
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function opencard_parse():void
 		{
 			Get("Historytable").container.visible = false;
-		}
-		
-		[MessageHandler(type="Model.valueObject.ArrayObject",selector="add_history")]
-		public function add_data(arr:ArrayObject):void
-		{			
-			var playerwin:int = arr.Value[0];		
-			var bankerwin:int = arr.Value[1];		
-			var playerPoint:int = arr.Value[2];
-			var bankerPoint:int = arr.Value[3];	
-			var isTie:int = arr.Value[4];			
-			var isPlayPair:int =  arr.Value[5];
-			var isbankerPair:int =  arr.Value[6];
-			var bigwin:int = arr.Value[7];
-			
-			history_add(playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin);
-			
-		}
-		
-		private function history_add(playerwin:int, bankerwin:int,playPoint:int,bankerPoint:int,isTie:int ,isPlayPair:int,isbankerPair:int,bigwin:int):void
-		{
-			//history recode 
-			//utilFun.Log("playerwin  =  " + playerwin +" bankerwin  =  " + bankerwin);	
-			//utilFun.Log("playerwin  =  " + playPoint +" bankerwin  =  " + bankerPoint);	
-			var history:Array = _model.getValue("history_win_list");
-			var arr:Array = [];
-			if ( bigwin != -1)
-			{
-				//寫字大獎
-				arr.push(5);
-				arr.push(playPoint);					
-			}
-			else if ( !playerwin && !bankerwin) 
-			{
-				//TIE
-				arr.push(4);
-				arr.push(playPoint);
-			}
-			else
-			{
-				if ( playerwin == 1) 
-				{
-					arr.push(2);
-					arr.push(playPoint);
-				}
-				else if ( bankerwin == 1) 
-				{
-					arr.push(3);
-					arr.push(bankerPoint);
-				}
-				//else if ( isTie == 1) 
-				//{
-					//arr.push(4);
-					//arr.push(bankerPoint);
-				//}
-			}
-			
-			arr.push(isPlayPair);
-			arr.push(isbankerPair);
-			arr.push(bigwin);
-						
-			history.push(arr);
-			//utilFun.Log("history = " + arr);
-			if ( history.length > 60) 
-			{
-				history = history.slice(6);
-			}
-			_model.putValue("history_win_list", history);			
-			
-			
 		}
 		
 	}

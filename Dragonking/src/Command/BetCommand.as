@@ -109,6 +109,15 @@ package Command
 			history_str.putValue(7, "RTF");
 			_model.putValue(modelName.SMALL_POKER_MSG , history_str);
 			
+			var history_str_mapp:DI = new DI();			
+			history_str_mapp.putValue("WSBWStraight", "STR");
+			history_str_mapp.putValue("WSBWFlush", "FLU");
+			history_str_mapp.putValue("WSBWFullHouse", "FUH");
+			history_str_mapp.putValue("WSBWFourOfAKind", "4K");
+			history_str_mapp.putValue("WSBWStraightFlush", "STF");
+			history_str_mapp.putValue("WSBWRoyalFlush", "RTF");
+			_model.putValue(modelName.HIS_SHORT_MSG , history_str_mapp);
+			
 			var poer_msg:DI = new DI();		
 			poer_msg.putValue("WSBWOnePairBig", "J以上一對");
 			poer_msg.putValue("WSBWTwoPair", "兩對");

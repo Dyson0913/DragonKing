@@ -67,7 +67,7 @@ package View.GameView
 			state.putValue("EndRoundState", gameState.END_ROUND);			
 			_model.putValue("state_mapping", state);
 			
-			_model.putValue("history_win_list", []);
+			
 			_model.putValue("result_Pai_list", []);
 			_model.putValue("game_round", 1);
 			

@@ -385,18 +385,6 @@ package View.ViewComponent
 			//dispatcher(new StringObject("sound_msg","sound" ) );
 			//dispatcher(new StringObject("sound_rebet","sound" ) );
 			
-			//fake hisoty			
-			var playerwin:int = utilFun.Random(2);
-			var playerPoint:int = utilFun.Random(9);			
-			var bankerwin:int = utilFun.Random(2);
-			var isTie:int = utilFun.Random(2);
-			var bankerPoint:int = utilFun.Random(9);			
-			var isPlayPair:int = utilFun.Random(2);			
-			var isbankerPair:int = utilFun.Random(2);							
-			var bigwin:int = -1;
-			dispatcher(new ArrayObject([playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin],"add_history" ) );
-			
-			_HistoryRecoder.update_history();
 			//power bar test
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
 			//dispatcher(new Intobject(utilFun.Random(2), "power_up"));		

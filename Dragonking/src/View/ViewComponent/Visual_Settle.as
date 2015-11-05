@@ -180,8 +180,6 @@ package View.ViewComponent
 				else settle(new Intobject(1, "settle_step"));
 			}
 			
-			//歷史記錄
-			dispatcher(new ArrayObject([playerwin, bankerwin,playerPoint,bankerPoint,isTie,isPlayPair,isbankerPair,bigwin],"add_history" ) );			
 		}
 			
 		[MessageHandler(type="Model.valueObject.Intobject",selector="settle_step")]

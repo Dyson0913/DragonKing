@@ -87,7 +87,7 @@ package ConnectModule.websocket
 			var result:Object ;
 			if (event.message.type === WebSocketMessage.TYPE_UTF8) 
 			{
-				//utilFun.Log("before"+event.message.utf8Data)
+				utilFun.Log("before"+event.message.utf8Data)
 				result = JSON.decode(event.message.utf8Data);			
 			}
 			
@@ -157,8 +157,13 @@ package ConnectModule.websocket
 					case Message.MSG_TYPE_STATE_INFO:
 					{						
 						dispatcher(new ValueObject(  result.game_round, "game_round") );
-						dispatcher(new ValueObject(  result.remain_time, modelName.REMAIN_TIME) );						
-						dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );							
+						dispatcher(new ValueObject(  result.remain_time, modelName.REMAIN_TIME) );
+						if ( _opration.getMappingValue("state_mapping", result.game_state) == gameState.NEW_ROUND)
+						{
+						    dispatcher(new ValueObject(  result.record_list, "history_list") );
+						}
+						
+						dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );
 						dispatcher(new ModelEvent("update_state"));
 					}
 					break;
