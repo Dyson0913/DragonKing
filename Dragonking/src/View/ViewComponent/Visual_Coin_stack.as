@@ -28,6 +28,9 @@ package View.ViewComponent
 		[Inject]
 		public var _Actionmodel:ActionQueue;	
 		
+		//sound name
+		public const soundcoin:String = "sound_coin";
+		
 		//coin seperate to N stack
 		private var _stack_num:int = 1;		
 		
@@ -96,7 +99,7 @@ package View.ViewComponent
 			//TODO  一次一次pop
 			_betCommand.re_bet();
 			
-			dispatcher(new StringObject("sound_coin","sound" ) );
+			play_sound(soundcoin);		
 			
 			//coin動畫
 			stack(_betCommand.Bet_type_betlist(bet_ob["betType"]), GetSingleItem("coinstakeZone",bet_ob["betType"] ),bet_ob["betType"]);	

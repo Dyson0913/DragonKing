@@ -34,6 +34,8 @@ package View.ViewComponent
 		//sound name
 		public const sound_bigwin:String = "sound_bigPoker";
 		public const sound_getpoint:String = "sound_get_point";
+		public const soundBomb:String = "soundBomb";
+		public const soundBombLong:String = "sound_BombLong";		
 		
 		public var _playing:Boolean;
 		
@@ -100,19 +102,41 @@ package View.ViewComponent
 			
 			//phase start
 			win_word(bigwin_frame);
-			odd_present();			
+			
 		}
 		
 		public function win_word(bigwin_frame:int):void
 		{
-			//phase i
+			//phase i  ( sound ,data set ,play)
 			play_sound(sound_bigwin);			
 			GetSingleItem("bigwinmsg").gotoAndStop(bigwin_frame);
 			
-			utilFun.scaleXY(Get("bigwinmsg").container,4.0, 4.0);
+			_model.putValue("Hit_count", 0);
+			pop_effect(1,0.5);			
+		}
+		
+		public function pop_effect(start:Number ,end:Number):void
+		{			
+			_model.putValue("Hit_count", _model.getValue("Hit_count")+1);
+			utilFun.scaleXY(Get("bigwinmsg").container,start, start);
 			Get("bigwinmsg").container.alpha = 0;
-			
-			Tweener.addTween(Get("bigwinmsg").container, { scaleX: 1, scaleY:1, alpha: 1, time:0.5, transition:"easeInQuart", onComplete:this.ready_to_cunt } );	
+			Tweener.addTween(Get("bigwinmsg").container, { time:0.5, scaleX: end, scaleY:end, alpha: 1, transition:"easeInQuart", onComplete:this.hit, onCompleteParams:[start+1,end+0.5]  } );		
+		}
+		
+		public function hit(start:int ,end:int):void
+		{
+			if ( _model.getValue("Hit_count") == 3) 
+			{
+				play_sound(soundBombLong);
+				odd_present();
+				coin_effect();
+				Tweener.addTween(this, {delay:2, transition:"linear",onComplete:this.ready_to_cunt } );
+			}
+			else 
+			{
+				play_sound(soundBomb);			
+				Tweener.addTween(this, {delay:0.1, transition:"linear",onComplete:this.pop_effect, onCompleteParams:[start,end] } );
+			}
 		}
 		
 		public function odd_present():void
@@ -131,7 +155,7 @@ package View.ViewComponent
 		
 		public function ready_to_cunt():void
 		{
-			Tweener.addTween(this, {delay:2, transition:"linear",onComplete:this._cunt } );
+			Tweener.addTween(this, {delay:1, transition:"linear",onComplete:this._cunt } );
 		}
 		
 		public function settlt_FrameSetting(mc:MovieClip, idx:int, data:Array):void
@@ -141,9 +165,8 @@ package View.ViewComponent
 		}
 		
 		public function _cunt():void
-		{					
-			utilFun.Log("_count");
-			//_model.putValue("result_total", 1000);
+		{			
+			//_model.putValue("result_total", 10000);
 			//沒下注,中大獎
 			if ( _model.getValue("result_total") == 0)
 			{
@@ -155,7 +178,7 @@ package View.ViewComponent
 			_model.putValue("TotalJP_amoount", _model.getValue("result_total"));			
 			var s:String = _model.getValue("TotalJP_amoount");
 			var arr:Array = utilFun.frameAdj(s.split(""));
-			utilFun.Log("arr = "+arr);
+			//utilFun.Log("arr = "+arr);
 			var PowerJPNum:MultiObject = Get("bigwin_JP_num");
 			PowerJPNum.CleanList();
 			PowerJPNum.container.x = -45 + (( -91 / 2) * (arr.length - 1));
@@ -167,7 +190,7 @@ package View.ViewComponent
 			PowerJPNum.Create_(arr.length, "bigwin_JP_num");	
 			coin_effect();
 			
-			//N秒內跑完表
+			//停留N秒
 			Tweener.addTween(this, {delay:1, transition:"linear",onComplete:this.num_count } );
 		}
 		
@@ -181,6 +204,7 @@ package View.ViewComponent
 			var PowerJPNum:MultiObject = Get("bigwin_JP_num");			
 			PowerJPNum.ItemList[PowerJPNum.ItemList.length-1].gotoAndPlay(11);			
 			
+			//N秒內跑完表
 			Tweener.addCaller(this, { time:3 , count: PowerJPNum.ItemList.length - 1 , transition:"easeInQuad", onUpdateParams:[10], onUpdate: this.add_carray } );
 			loop_sound(sound_getpoint);
 		}

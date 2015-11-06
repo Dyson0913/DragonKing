@@ -159,13 +159,13 @@ package View.ViewComponent
 			
 			
 			var wintzone:Array = utilFun.Get_restItem(betZone, clean);
-			//utilFun.Log("clean zone =" + clean);
-			//utilFun.Log("wintzone =" + wintzone);
-			//utilFun.Log("result_settle_amount =" + settle_amount);
-			//utilFun.Log("result_zonebet_amount =" + zonebet_amount);
-			//utilFun.Log("result_total =" + total);
-			//utilFun.Log("bigwin =" + bigwin);
-			//utilFun.Log("result_str =" + result_str);
+			utilFun.Log("clean zone =" + clean);
+			utilFun.Log("wintzone =" + wintzone);
+			utilFun.Log("result_settle_amount =" + settle_amount);
+			utilFun.Log("result_zonebet_amount =" + zonebet_amount);
+			utilFun.Log("result_total =" + total);
+			utilFun.Log("bigwin =" + bigwin);
+			utilFun.Log("result_str =" + result_str);
 			
 			//大獎 (排除2對,3條和11以上J對)
 			if ( bigwin!=-1 && bigwin >=2)

@@ -119,6 +119,7 @@ package View.ViewComponent
 			//_fileStream.switch_recode(true);
 			//_fileStream.write();
 			
+			
 			_betCommand.bet_init();			
 			_model.putValue("result_Pai_list", []);
 			_model.putValue("game_round", 1);			
@@ -335,6 +336,9 @@ package View.ViewComponent
 			_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
+			
+			_model.putValue("win_odd", 2) ;
+			
 			_Bigwin_Effect.init();
 			_Bigwin_Effect.debug();
 			//
@@ -355,17 +359,19 @@ package View.ViewComponent
 		
 		public function fake_hisotry():void
 		{
-			var history:Array = _model.getValue("history_win_list");			
+			//{"player_pair": false, "winner": "BetBWPlayer", "banker_pair": false, "point": 4}
+			var arr:Array = [];
 			for ( var i:int = 0; i < 60; i++)
-			{
-				var frame:int = utilFun.Random(4) +2;
-				var point:int = utilFun.Random(9);			
-				var isplayerPair:int = utilFun.Random(2);			
-				var isbankerPair:int = utilFun.Random(2);							
-				var bigs:int = 0;// utilFun.Random(7);
-				history.push([frame, point, isplayerPair, isbankerPair,bigs]);
+			{					
+				var p:int = utilFun.Random(3);
+				var str:String = "";
+				if ( p == 0)  str = "BetBWPlayer";
+				if ( p == 1)  str = "BetBWBanker";
+				if ( p == 2)  str = "None";
+				var ob:Object = { "player_pair": utilFun.Random(2) , "winner": str, "banker_pair": utilFun.Random(2) , "point": utilFun.Random(10) };
+				arr.push(ob);
 			}			
-			_model.putValue("history_win_list",history);
+			 _model.putValue("history_list",arr);
 		}
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "3")]
