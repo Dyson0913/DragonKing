@@ -120,7 +120,7 @@ package View.ViewComponent
 			_model.putValue("Hit_count", _model.getValue("Hit_count")+1);
 			utilFun.scaleXY(Get("bigwinmsg").container,start, start);
 			Get("bigwinmsg").container.alpha = 0;
-			Tweener.addTween(Get("bigwinmsg").container, { time:0.5, scaleX: end, scaleY:end, alpha: 1, transition:"easeInQuart", onComplete:this.hit, onCompleteParams:[start+1,end+0.5]  } );		
+			Tweener.addTween(Get("bigwinmsg").container, { time:0.3, scaleX: end, scaleY:end, alpha: 1, transition:"easeInQuart", onComplete:this.hit, onCompleteParams:[start+1,end+0.5]  } );		
 		}
 		
 		public function hit(start:int ,end:int):void
