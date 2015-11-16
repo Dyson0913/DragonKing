@@ -73,9 +73,6 @@ package View.GameView
 		public var _ProbData:Visual_ProbData;
 		
 		[Inject]
-		public var _PowerUp:Visual_PowerUp;
-		
-		[Inject]
 		public var _progressbar:Visual_progressbar;
 		
 		[Inject]
@@ -101,7 +98,6 @@ package View.GameView
 			
 			_HistoryRecoder.init();
 			_ProbData.init();
-//			_PowerUp.init();
 			_progressbar.init();
 			
 			_gameinfo.init();

@@ -84,6 +84,7 @@ package View.ViewComponent
 			var isTie:int = 0;
 			var isPlayPair:int = 0;
 			var isbankerPair:int = 0;
+			var hintJp:int = -1;
 			
 			var playerPoint:int = pokerUtil.ca_point(_model.getValue(modelName.PLAYER_POKER));
 			var bankerPoint:int = pokerUtil.ca_point(_model.getValue(modelName.BANKER_POKER));
@@ -138,6 +139,29 @@ package View.ViewComponent
 						if( sigwin != bigwin) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );	
 					}
 					
+					//{"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0},
+					//{"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}
+					if( resultob.bet_type =="BetBWBonusTwoPair") 
+					{
+						var extra:int = resultob.bet_amount * resultob.odds;
+						if ( extra > 0)
+						{
+							var array:Array = _model.getValue("power_jp");
+							array[0] = resultob.bet_amount * resultob.odds;
+							hintJp = 1;
+						}
+					}
+					if( resultob.bet_type =="BetBWBonusTripple") 
+					{
+						var extra_two:int = resultob.bet_amount * resultob.odds;
+						if ( extra_two )
+						{
+							var array:Array = _model.getValue("power_jp");
+							array[1] = resultob.bet_amount * resultob.odds;
+							hintJp = 1;
+						}
+					}
+					
 				}
 				
 				//總押注和贏分
@@ -176,7 +200,7 @@ package View.ViewComponent
 			{
 				//2對,3條集氣吧
 				//if ( sigwin == 0 || sigwin == 1) dispatcher(new Intobject(sigwin, "power_up"));			
-				if ( _betCommand.check_jp() > 0 && (sigwin ==1 || sigwin ==0)) dispatcher(new Intobject(sigwin, "power_up"));
+				if ( hintJp !=-1 && (sigwin ==1 || sigwin ==0)) dispatcher(new Intobject(sigwin, "power_up"));
 				else settle(new Intobject(1, "settle_step"));
 			}
 			

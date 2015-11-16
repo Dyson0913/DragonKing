@@ -138,8 +138,8 @@ package View.ViewComponent
 			progress_effect(GetSingleItem("powerbar_"+kind, 1)["_colorbar"],GetSingleItem("powerbar_" + kind, 4), move_dis, 1, kind);
 			
 			var acumu:Array = _model.getValue("power_jp");			
-			if ( kind == 0) acumu[kind] += ( _betCommand.check_jp() * 0.05);
-			else acumu[kind] += ( _betCommand.check_jp() * 0.1);
+			//if ( kind == 0) acumu[kind] += ( _betCommand.check_jp() * 0.05);
+			//else acumu[kind] += ( _betCommand.check_jp() * 0.1);
 			
 			//utilFun.Log("acu_jp = " + acumu[kind]);
 			GetSingleItem("powerbar_" + kind, 3).getChildByName("Dy_Text").text =  acumu[kind];

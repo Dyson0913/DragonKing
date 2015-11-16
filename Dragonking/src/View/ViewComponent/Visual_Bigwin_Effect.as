@@ -234,7 +234,7 @@ package View.ViewComponent
 			if ( toIn <= 10) 
 			{
 				//utilFun.Log("add carry over");
-				//settle(new Intobject(1, "settle_step"));
+				dispatcher(new Intobject(1, "settle_step"));
 				PowerJPNum.ItemList[PowerJPNum.ItemList.length - 1].gotoAndStop(10);				
 				pause_sound(sound_getpoint);				
 				return;

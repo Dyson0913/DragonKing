@@ -284,9 +284,15 @@ package Command
 			}			
 			return arr;
 		}
+				
 		
 		public function check_jp():Number
 		{
+			//var array:Array = _model.getValue("power_jp");
+			//for ( var i:int = 0;i< array.length
+			//
+			//return 
+			
 			var name_to_idx:DI = _model.getValue("Bet_name_to_idx");
 			var check_zone:Array = ["BetBWPlayer", "BetBWBanker"];
 					

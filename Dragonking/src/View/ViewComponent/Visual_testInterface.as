@@ -90,9 +90,6 @@ package View.ViewComponent
 		public var _loader:Visual_Loder;
 		
 		[Inject]
-		public var _PowerUp:Visual_PowerUp;
-		
-		[Inject]
 		public var _progressbar:Visual_progressbar;
 		
 		[Inject]
@@ -248,7 +245,7 @@ package View.ViewComponent
 		
 			//================================================settle info
 			//_settle.init();
-			_PowerUp.init();
+			
 			
 			dispatcher(new ModelEvent("clearn"));
 			dispatcher(new ModelEvent("hide"));
@@ -321,8 +318,7 @@ package View.ViewComponent
 			_poker.init();
 			
 			//_poker.prob_cal();
-			//return;
-			_PowerUp.init();
+			//return;			
 			
 			dispatcher(new ModelEvent("hide"));			
 			//dispatcher(new ModelEvent("display"));
