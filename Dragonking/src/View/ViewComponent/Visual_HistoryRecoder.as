@@ -71,6 +71,7 @@ package View.ViewComponent
 			{
 				GetSingleItem("historyball", i).gotoAndStop(1);
 				GetSingleItem("historyball", i)["_Text"].text = "";
+				GetSingleItem("historyball", i)["_Special"].text = "";
 				GetSingleItem("historyball", i)["_pair"].gotoAndStop(1);
 			}
 			
@@ -90,7 +91,7 @@ package View.ViewComponent
 			{
 				var str:DI = _model.getValue(modelName.HIS_SHORT_MSG);	
 				mc.gotoAndStop(5);
-				mc["_Text"].text = str.getValue( info.winner);
+				mc["_Special"].text = str.getValue( info.winner);				
 				return;
 			}
 			
