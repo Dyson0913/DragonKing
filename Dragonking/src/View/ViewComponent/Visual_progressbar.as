@@ -50,6 +50,7 @@ package View.ViewComponent
 			powerbar_0.Create_(5, "powerbar_0");
 			powerbar_0.ItemList[0]["bg"].gotoAndStop(2);
 			powerbar_0.ItemList[1]["_colorbar"].gotoAndStop(2);
+			powerbar_0.ItemList[2].gotoAndStop(2);
 			powerbar_0.ItemList[2].visible = false;
 			_text.textSetting_s(powerbar_0.ItemList[3], [ { size:22, align:_text.align_left } , ""]);
 			
@@ -62,6 +63,7 @@ package View.ViewComponent
 			powerbar_1.Create_(5, "powerbar_1");
 			powerbar_1.ItemList[0]["bg"].gotoAndStop(1);
 			powerbar_1.ItemList[1]["_colorbar"].gotoAndStop(1);
+			powerbar_1.ItemList[2].gotoAndStop(1);
 			powerbar_1.ItemList[2].visible = false;
 			_text.textSetting_s(powerbar_1.ItemList[3], [ { size:22, align:_text.align_left } , ""]);
 			
@@ -135,12 +137,9 @@ package View.ViewComponent
 			//control
 			GetSingleItem("powerbar_" + kind, 2).visible = true;			
 			GetSingleItem("powerbar_" + kind, 4).gotoAndPlay(2);
-			progress_effect(GetSingleItem("powerbar_"+kind, 1)["_colorbar"],GetSingleItem("powerbar_" + kind, 4), move_dis, 1, kind);
+			progress_effect(GetSingleItem("powerbar_"+kind, 1)["_colorbar"],GetSingleItem("powerbar_" + kind, 4), move_dis, 2, kind);
 			
 			var acumu:Array = _model.getValue("power_jp");			
-			//if ( kind == 0) acumu[kind] += ( _betCommand.check_jp() * 0.05);
-			//else acumu[kind] += ( _betCommand.check_jp() * 0.1);
-			
 			//utilFun.Log("acu_jp = " + acumu[kind]);
 			GetSingleItem("powerbar_" + kind, 3).getChildByName("Dy_Text").text =  acumu[kind];
 			

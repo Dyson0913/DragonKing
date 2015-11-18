@@ -31,9 +31,7 @@ package Res
 		public static const prob_square:String = "prob";
 		
 		public static const PowerJP:String = "Power_JP";
-		public static const PowerJP_Num:String = "Power_JP_Num";
-		
-		public static const powerbar_name:String = "power_bar_name";
+		public static const PowerJP_Num:String = "Power_JP_Num";		
 		
 		
 		

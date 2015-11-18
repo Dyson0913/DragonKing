@@ -67,23 +67,15 @@ package View.ViewComponent
 			var name_to_idx:DI = _model.getValue("Bet_name_to_idx");
 			var idx_to_result_idx:DI = _model.getValue("idx_to_result_idx");
 			var betZone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);
-			var bigwin:int = -1;
-			var pigwin:int = -1;
+			var bigwin:int = -1;			
 			var sigwin:int = -1;
-			
-			var result_str:Array = [];
+						
 			var settle_amount:Array = [0,0,0,0,0,0];
 			var zonebet_amount:Array = [0, 0, 0, 0, 0, 0];			
 			var total:int = 0;
 			
-			var odd:int = -1;
-			var playerwin:int = 0;
-			var bankerwin:int = 0;
-			var winst:String = "";
-			
-			var isTie:int = 0;
-			var isPlayPair:int = 0;
-			var isbankerPair:int = 0;
+			var odd:int = -1;			
+			var winst:String = "";			
 			var hintJp:int = -1;
 			
 			var playerPoint:int = pokerUtil.ca_point(_model.getValue(modelName.PLAYER_POKER));
@@ -98,45 +90,20 @@ package View.ViewComponent
 				if ( resultob.win_state == "WSLost") clean.push (name_to_idx.getValue(resultob.bet_type));
 				else
 				{					
-					
 					if ( resultob.bet_type == "BetBWPlayer" ) 
-					{
-						playerwin = 1;
+					{						
 						//大獎
 						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin")
 						{						
-							bigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state)		
-							if( pigwin != bigwin) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );						
-						}
-						else result_str.push("閒贏");
+							bigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state);
+						}						
 						winst = resultob.win_state;
 						odd = resultob.odds;
 					}
-					if ( resultob.bet_type == "BetBWBanker") 
-					{
-						bankerwin = 1;						
-						//大獎
-						if ( resultob.win_state != "WSBWNormalWin" && resultob.win_state !="WSWin")
-						{						
-							pigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state)		
-							if( pigwin != bigwin) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );						
-						}
-						else result_str.push("莊贏");
-						winst = resultob.win_state;
-					}
 					
-					if ( resultob.bet_type == "BetBWTiePoint" ) 
-					{
-						isTie = 1;
-						result_str.push("和");
-					}
-					if ( resultob.bet_type == "BetBWPlayerPair" ) isPlayPair = 1;
-					if ( resultob.bet_type == "BetBWBankerPair" ) isbankerPair = 1;
 					if ( resultob.bet_type == "BetBWSpecial" ) 
 					{						
-						
-						sigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state)		
-						if( sigwin != bigwin) result_str.push( _opration.getMappingValue(modelName.BIG_POKER_TEXT, resultob.win_state) );	
+						sigwin = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state);						
 					}
 					
 					//{"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0},
@@ -150,6 +117,7 @@ package View.ViewComponent
 							array[0] = resultob.bet_amount * resultob.odds;
 							hintJp = 1;
 						}
+						continue;
 					}
 					if( resultob.bet_type =="BetBWBonusTripple") 
 					{
@@ -160,6 +128,7 @@ package View.ViewComponent
 							array[1] = resultob.bet_amount * resultob.odds;
 							hintJp = 1;
 						}
+						continue;
 					}
 					
 				}
@@ -168,16 +137,13 @@ package View.ViewComponent
 				settle_amount[ idx_to_result_idx.getValue( name_to_idx.getValue(resultob.bet_type) )] =  resultob.settle_amount;
 				zonebet_amount[ idx_to_result_idx.getValue( name_to_idx.getValue(resultob.bet_type)) ]  = resultob.bet_amount;
 				total += resultob.settle_amount;
-			}
-			
-			if( sigwin == -1) result_str.push("無特殊牌型");
+			}			
 			
 			
 			
 			_model.putValue("result_settle_amount",settle_amount);
 			_model.putValue("result_zonebet_amount",zonebet_amount);
-			_model.putValue("result_total", total);
-			_model.putValue("result_str_list", result_str);
+			_model.putValue("result_total", total);			
 			_model.putValue("winstr", winst);
 			_model.putValue("win_odd", odd);
 			
@@ -188,8 +154,7 @@ package View.ViewComponent
 			utilFun.Log("result_settle_amount =" + settle_amount);
 			utilFun.Log("result_zonebet_amount =" + zonebet_amount);
 			utilFun.Log("result_total =" + total);
-			utilFun.Log("bigwin =" + bigwin);
-			utilFun.Log("result_str =" + result_str);
+			utilFun.Log("bigwin =" + bigwin);			
 			
 			//大獎 (排除2對,3條和11以上J對)
 			if ( bigwin!=-1 && bigwin >=2)
@@ -198,8 +163,7 @@ package View.ViewComponent
 			}
 			else
 			{
-				//2對,3條集氣吧
-				//if ( sigwin == 0 || sigwin == 1) dispatcher(new Intobject(sigwin, "power_up"));			
+				//2對,3條集氣吧				
 				if ( hintJp !=-1 && (sigwin ==1 || sigwin ==0)) dispatcher(new Intobject(sigwin, "power_up"));
 				else settle(new Intobject(1, "settle_step"));
 			}
