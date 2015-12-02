@@ -370,9 +370,9 @@ package View.ViewComponent
 		
 		public function prob_cal():void
 		{
-			var arr:Array = utilFun.Random_N(80, 6);
-			arr.push(utilFun.Random(6));
-			_model.putValue("percent_prob",arr);
+			//var arr:Array = utilFun.Random_N(80, 6);
+			//arr.push(utilFun.Random(6));
+			//_model.putValue("percent_prob",arr);
 			return;
 			
 			var ppoker:Array =   _model.getValue(modelName.PLAYER_POKER);
@@ -420,7 +420,7 @@ package View.ViewComponent
 			//pokerUtil.Check_FourOfAKind_prob(num_amount,rest_poker_num,freedowm);
 			//pokerUtil.Check_Flush_prob(color_amount,rest_poker_num,freedowm);
 			//pokerUtil.Check_Straight_prob(num_amount,rest_poker_num,freedowm);
-			pokerUtil.Check_FullHouse_prob(num_amount,rest_poker_num,freedowm);
+			//pokerUtil.Check_FullHouse_prob(num_amount,rest_poker_num,freedowm);
 			
 			
 			

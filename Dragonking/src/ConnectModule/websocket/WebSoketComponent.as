@@ -131,7 +131,11 @@ package ConnectModule.websocket
 					case Message.MSG_TYPE_GAME_OPEN_INFO:
 					{				
 						var card:Array = result.card_list;
-						var card_type:String = result.card_type;
+						var card_type:String = result.card_type;						
+						_model.putValue("percent_prob", result.cards_bigwin_prob);
+						//why can get
+						//dispatcher(new ArrayObject(tt, "percent_prob"));
+						
 						var mypoker:Array =[];
 						if ( card_type == "Player")
 						{										

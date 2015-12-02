@@ -78,8 +78,12 @@ package View.ViewComponent
 			put_to_lsit(powerbar_0);
 			put_to_lsit(powerbar_1);		
 			
-			//_tool.SetControlMc(powerbar_0.ItemList[4]);
-			//add(_tool);
+			var powerbar_name:MultiObject = create("powerbar_name",  [powerbar_name]);
+			powerbar_name.container.x = 1312;
+			powerbar_name.container.y = 398;
+			powerbar_name.Create_(1, "powerbar_name");
+			
+			put_to_lsit(powerbar_name);		
 		}		
 		
 		//mode -> (contorl ?)->view 
