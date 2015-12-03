@@ -71,7 +71,7 @@ package View.ViewComponent
 			//_model.putValue("percent_prob", [0,0,0,0,0,100]);
 			var percentlist:Array = sin_ki_formula(_model.getValue("percent_prob"));			
 			var len:int = percentlist.length;
-			utilFun.Log("prob_update =" + percentlist);
+			//utilFun.Log("prob_update =" + percentlist);
 			
 			var sort_percent:Array = [];			
 			for (var k:int = 0; k < len ; k++)
@@ -92,9 +92,9 @@ package View.ViewComponent
 				}
 			}
 			
-		    utilFun.Log("hiest = " + hiest);			
+		    //utilFun.Log("hiest = " + hiest);			
 			var real:Array = _model.getValue("percent_prob")
-			utilFun.Log("real = " + real);			
+			//utilFun.Log("real = " + real);			
 			for ( var i:int = 0; i < len; i ++ )
 			{				
 				var real_per:Number = 	real[i];
@@ -141,16 +141,21 @@ package View.ViewComponent
 			for ( var i:int = 0; i < len; i++)
 			{
 				raw_data[i]  = raw_data[i]  / total ;
-				
-				//one kind match
-				if ( raw_data[i] == 1) return raw_data;
 			}
 			//utilFun.Log("per q =" + raw_data);
 			
+			//one kind match
 			for ( var i:int = 0; i < len; i++)
 			{
-				
-				if ( raw_data [i] != 0)   raw_data[i] = Math.min( 0.9,  raw_data[i]  + 0.3 );
+				if ( raw_data[i] == 1 && total == 1000) return raw_data;
+			}
+			
+			for ( var i:int = 0; i < len; i++)
+			{				
+				if ( raw_data [i] != 0) 
+				{
+					raw_data[i] = Math.min( 0.9,  raw_data[i]  + 0.3 );
+				}
 			}
 			return raw_data;
 		}
@@ -168,7 +173,9 @@ package View.ViewComponent
 			
 			mc["_probBar"].gotoAndStop(2);		
 			
-			mc["_Text"].text = per.toFixed(2) + "%";
+			if ( per == 100) mc["_Text"].text = per.toFixed(0) + "%";
+			else mc["_Text"].text = per.toFixed(2) + "%";
+			
 			mc["_Text"].textColor = 0xFFDD00;
 			
 			//position follow
