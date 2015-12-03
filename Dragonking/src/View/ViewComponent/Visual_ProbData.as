@@ -68,28 +68,18 @@ package View.ViewComponent
 		
 		public function prob_update():void
 		{
-			var percentlist:Array = _model.getValue("percent_prob");	
-			utilFun.Log("prob_update =" + percentlist);
-			var total:Number = 0;
-			var len:int = percentlist.length;
-			for ( var i:int = 0; i < len; i++)
-			{
-				total += percentlist[i];
-			}
-			utilFun.Log("total =" + total);
-			var relative_percent:Array = [];
-			var sort_percent:Array = [];
 			
+			var percentlist:Array = sin_ki_formula(_model.getValue("percent_prob"));
+			var len:int = percentlist.length;
+			utilFun.Log("prob_update =" + percentlist);
+			
+			var sort_percent:Array = [];			
 			for (var k:int = 0; k < len ; k++)
 			{
-				var num:Number =0;
-				if ( total != 0) num = (percentlist[k]  / total) ;
-				relative_percent.push ( num);				
+				var num:Number = percentlist[k];				
 				sort_percent.push( { "idx":k, "num": num } );
 			}
-			sort_percent.sort(order);
-			
-			//utilFun.Log("after prob_update =" + relative_percent);
+			sort_percent.sort(order);			
 			
 			var hiest:int = -1;	
 			for ( var j:int = 0; j < len ; j++)
@@ -103,10 +93,12 @@ package View.ViewComponent
 			}
 			
 		    //utilFun.Log("hiest = " + hiest);			
+			var real:Array = _model.getValue("percent_prob")
+			utilFun.Log("real = " + real);			
 			for ( var i:int = 0; i < len; i ++ )
 			{				
-				var real_per:Number = 	percentlist[i];
-				var gowithd:int =  125 * ( relative_percent[i]);
+				var real_per:Number = 	real[i];
+				var gowithd:int =  125 * ( percentlist[i]);
 				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), real_per, 5,hiest == i] } );
 			}
 		}
@@ -119,6 +111,45 @@ package View.ViewComponent
 			if ( a["num"] >b["num"]) return -1;
 			else if ( a["num"] < b["num"]) return 1;
 			else return 0;			
+		}
+		
+		private function sin_ki_formula(data:Array):Array
+		{
+			var raw_data:Array = [];
+			raw_data = data.concat();
+			var len:int = raw_data.length;
+			for ( var i:int = 0; i < len; i++)
+			{				
+				raw_data[i] *= 10000;
+			}
+			//utilFun.Log("after 10000 =" + raw_data);
+			for ( var i:int = 0; i < len; i++)
+			{				
+				raw_data[i] = Math.sqrt(raw_data[i] ) *10 ;
+			}
+			//utilFun.Log("first q =" + raw_data);
+			var total:Number = 0;
+			for ( var i:int = 0; i < len; i++)
+			{
+				raw_data[i] = Math.sqrt(raw_data[i] ) * 10 ;
+				total += raw_data[i];
+			}
+			//utilFun.Log("swc q =" + raw_data);
+			//utilFun.Log("total q =" + total);
+			if ( total == 0) return raw_data;
+			
+			for ( var i:int = 0; i < len; i++)
+			{
+				raw_data[i]  = raw_data[i]  / total ;
+			}
+			//utilFun.Log("per q =" + raw_data);
+			
+			for ( var i:int = 0; i < len; i++)
+			{
+				//Math.min( 0.9 - raw_data[i], 0.3)
+				raw_data[i]  = raw_data[i]  + 0.4 ;
+			}
+			return raw_data;
 		}
 		
 		public function percent(mc:MovieClip,per:Number,start:int ,hist:Boolean ):void
@@ -134,10 +165,10 @@ package View.ViewComponent
 			
 			mc["_probBar"].gotoAndStop(2);
 			
-			var p:Number = (parseInt( mc["_Text"].text) +start );
-			if (p >= per) p = per;
+			//var p:Number = (parseInt( mc["_Text"].text) +start );
+			//if (p >= per) p = per;
 			
-			mc["_Text"].text = p.toString() + "%";
+			mc["_Text"].text = per.toFixed(2) + "%";
 			mc["_Text"].textColor = 0xFFDD00;
 			
 			//position follow
