@@ -68,8 +68,8 @@ package View.ViewComponent
 		
 		public function prob_update():void
 		{
-			
-			var percentlist:Array = sin_ki_formula(_model.getValue("percent_prob"));
+			//_model.putValue("percent_prob", [0,0,0,0,0,100]);
+			var percentlist:Array = sin_ki_formula(_model.getValue("percent_prob"));			
 			var len:int = percentlist.length;
 			utilFun.Log("prob_update =" + percentlist);
 			
@@ -92,14 +92,14 @@ package View.ViewComponent
 				}
 			}
 			
-		    //utilFun.Log("hiest = " + hiest);			
+		    utilFun.Log("hiest = " + hiest);			
 			var real:Array = _model.getValue("percent_prob")
 			utilFun.Log("real = " + real);			
 			for ( var i:int = 0; i < len; i ++ )
 			{				
 				var real_per:Number = 	real[i];
-				var gowithd:int =  125 * ( percentlist[i]);
-				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), real_per, 5,hiest == i] } );
+				var gowithd:Number =  243 * ( percentlist[i]);
+				Tweener.addTween(GetSingleItem("prob", i)["_mask"], { width:gowithd, time:1, onUpdate:this.percent, onUpdateParams:[GetSingleItem("prob", i), real_per,hiest == i] } );
 			}
 		}
 		
@@ -141,18 +141,21 @@ package View.ViewComponent
 			for ( var i:int = 0; i < len; i++)
 			{
 				raw_data[i]  = raw_data[i]  / total ;
+				
+				//one kind match
+				if ( raw_data[i] == 1) return raw_data;
 			}
 			//utilFun.Log("per q =" + raw_data);
 			
 			for ( var i:int = 0; i < len; i++)
 			{
-				//Math.min( 0.9 - raw_data[i], 0.3)
-				raw_data[i]  = raw_data[i]  + 0.4 ;
+				
+				if ( raw_data [i] != 0)   raw_data[i] = Math.min( 0.9,  raw_data[i]  + 0.3 );
 			}
 			return raw_data;
 		}
 		
-		public function percent(mc:MovieClip,per:Number,start:int ,hist:Boolean ):void
+		public function percent(mc:MovieClip,per:Number ,hist:Boolean ):void
 		{
 			
 			if ( !hist) 
@@ -161,12 +164,9 @@ package View.ViewComponent
 				mc["_probBar"].gotoAndStop(1);
 				return;
 			}			
-			if ( mc["_Text"].text == "") mc["_Text"].text = "1";
+			//if ( mc["_Text"].text == "") mc["_Text"].text = "1";
 			
-			mc["_probBar"].gotoAndStop(2);
-			
-			//var p:Number = (parseInt( mc["_Text"].text) +start );
-			//if (p >= per) p = per;
+			mc["_probBar"].gotoAndStop(2);		
 			
 			mc["_Text"].text = per.toFixed(2) + "%";
 			mc["_Text"].textColor = 0xFFDD00;
