@@ -111,12 +111,14 @@ package View.ViewComponent
 		
 		public function init():void
 		{			
-			_debug.init();
+			
 			
 			//_fileStream.switch_recode(true);
 			//_fileStream.write();
 			
+			_model.putValue("test_init", false);
 			
+			_debug.init();			
 			_betCommand.bet_init();			
 			_model.putValue("result_Pai_list", []);
 			_model.putValue("game_round", 1);			
@@ -130,13 +132,9 @@ package View.ViewComponent
 			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			script_list.Post_CustomizedData = [4, 100, 100];			
-			script_list.Create_(script_list.CustomizedData.length -1, "script_list");// , 0, 0, script_list.CustomizedData.length - 1, 100, 20, "Btn_");			
+			script_list.Create_(script_list.CustomizedData.length -1, "script_list");
 			
-			
-			
-			_model.putValue("Script_idx", 0);			
-			//_tool.y = 200;
-			//add(_tool);
+			_model.putValue("Script_idx", 0);
 			
 		}				
 		
@@ -144,42 +142,29 @@ package View.ViewComponent
 		{
 			utilFun.Log("script_list_test=" + idx);
 			_model.putValue("Script_idx", idx);		
-			
+			view_init();
 			dispatcher(new TestEvent(_model.getValue("Script_idx").toString()));
 			
 			
 			return true;
 		}
-	
 		
-		public function _script_item_test(e:Event, idx:int):Boolean
+		public function view_init():void		
 		{
+			if ( _model.getValue("test_init")) return;
+			changeBG(ResName.Bet_Scene);
+			_progressbar.init();
 			
-			_model.putValue("Script_item_idx", idx);
-			
-			utilFun.Log("scirpt_id = "+ _model.getValue("Script_idx") + _model.getValue("Script_item_idx"));	
-			var str:String = _model.getValue("Script_idx").toString() + _model.getValue("Script_item_idx").toString();			
-			
-			dispatcher(new TestEvent(str));
-			
-			return true;		
-			//================================================command btn
-			//_btn.init();			
-			
-		}			
-		
+			_progressbar.debug();
+			_model.putValue("test_init",true);
+		}
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "0")]
 		public function betScript():void
-		{
-			//var fakePacket:Object = {"game_state": "EndRoundState", "timestamp": 1443082690.19736, "remain_time": 3, "game_type": "BigWin", "game_round": 105, "cards_info": {"banker_card_list": ["ks", "6c"], "river_card_list": ["9d", "2d"], "player_card_list": ["5s", "7s"]}, "game_id": "BigWin-1", "message_type": "MsgBPInitialInfo", "id": "cacfe8a8629411e5b345f23c9189e2a9"}
-			//_MsgModel.push(fakePacket);	
-			//return;
-			
-			changeBG(ResName.Bet_Scene);
+		{		
 			
 			//_PowerUp.init();
-			_progressbar.init();
+			
 			
 			//=============================================gameinfo			
 			_gameinfo.init();

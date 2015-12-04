@@ -44,26 +44,29 @@ package View.ViewComponent
 			//two_pair
 			var powerbar_0:MultiObject = create("powerbar_0",  [powerbar,bar_continue, powerbar_tail,ResName.TextInfo,ResName.contractpower]);
 			powerbar_0.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			powerbar_0.Post_CustomizedData = [[0, 0], [12.35,4], [8.4, 3.5], [315.35, -1],[-60, -20]];
+			powerbar_0.Post_CustomizedData = [[0, 0], [12.35,4], [8.4, 3.5], [315.35, -1],[-10, -5]];
 			powerbar_0.container.x = 1302;
 			powerbar_0.container.y = 430;
 			powerbar_0.Create_(5, "powerbar_0");
 			powerbar_0.ItemList[0]["bg"].gotoAndStop(2);
 			powerbar_0.ItemList[1]["_colorbar"].gotoAndStop(2);
 			powerbar_0.ItemList[2].gotoAndStop(2);
+			utilFun.scaleXY(powerbar_0.ItemList[4], 0.6, 0.6);
 			powerbar_0.ItemList[2].visible = false;
+			//powerbar_0.ItemList[4].gotoAndStop(2);
 			_text.textSetting_s(powerbar_0.ItemList[3], [ { size:22, align:_text.align_left } , ""]);
 			
 			//3條
 			var powerbar_1:MultiObject = create("powerbar_1",  [powerbar,bar_continue, powerbar_tail,ResName.TextInfo,ResName.contractpower]);
 			powerbar_1.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			powerbar_1.Post_CustomizedData = [[0, 0], [12.35,4], [8.4, 3.5], [315.35, -1],[-60,-20]];
+			powerbar_1.Post_CustomizedData = [[0, 0], [12.35,4], [8.4, 3.5], [315.35, -1],[-10,-5]];
 			powerbar_1.container.x = 1302;
 			powerbar_1.container.y = 390;
 			powerbar_1.Create_(5, "powerbar_1");
 			powerbar_1.ItemList[0]["bg"].gotoAndStop(1);
 			powerbar_1.ItemList[1]["_colorbar"].gotoAndStop(1);
 			powerbar_1.ItemList[2].gotoAndStop(1);
+			utilFun.scaleXY(powerbar_1.ItemList[4], 0.6, 0.6);
 			powerbar_1.ItemList[2].visible = false;
 			_text.textSetting_s(powerbar_1.ItemList[3], [ { size:22, align:_text.align_left } , ""]);
 			
@@ -97,21 +100,23 @@ package View.ViewComponent
 		}
 		
 		//view
-		public function progress_effect(mc:DisplayObjectContainer,effect:DisplayObjectContainer,move_dis:Number,rasingtime:int,kind:int):void
+		public function progress_effect(mc:DisplayObjectContainer,effect:DisplayObjectContainer,move_dis:Number,rasingtime:Number,kind:int):void
 		{			
-			Tweener.addTween(mc, { x:move_dis, time:rasingtime, onUpdate:this.update, onUpdateParams:[mc,effect],onComplete:this.progress_finish, onCompleteParams:[kind] } );			
+			Tweener.addTween(mc, { x:move_dis, time:rasingtime, transition:"linear",onUpdate:this.update, onUpdateParams:[mc,effect],onComplete:this.progress_finish, onCompleteParams:[kind] } );			
 		}	
 		
 		public function update(mc:DisplayObjectContainer,effect:DisplayObjectContainer):void
 		{
-			effect.x = mc.x+320 -60;
-			effect.y = mc.y -20;
+			effect.x = mc.x + 280;
+			effect.y = mc.y -5;
 		}
 		
 		public function progress_finish(kind:int):void
 		{			
 			var arr:Array = _model.getValue("power_idx");
 			var idx:int  = arr[kind];
+			
+			GetSingleItem("powerbar_" + kind, 4).gotoAndStop(1);
 			
 			if ( idx != 5)
 			{
@@ -141,7 +146,7 @@ package View.ViewComponent
 			//control
 			GetSingleItem("powerbar_" + kind, 2).visible = true;			
 			GetSingleItem("powerbar_" + kind, 4).gotoAndPlay(2);
-			progress_effect(GetSingleItem("powerbar_"+kind, 1)["_colorbar"],GetSingleItem("powerbar_" + kind, 4), move_dis, 2, kind);
+			progress_effect(GetSingleItem("powerbar_"+kind, 1)["_colorbar"],GetSingleItem("powerbar_" + kind, 4), move_dis, 1, kind);
 			
 			var acumu:Array = _model.getValue("power_jp");			
 			//utilFun.Log("acu_jp = " + acumu[kind]);
