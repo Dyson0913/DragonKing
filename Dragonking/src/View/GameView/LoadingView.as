@@ -65,6 +65,7 @@ package View.GameView
 			state.putValue("EndBetState", gameState.END_BET);
 			state.putValue("OpenState", gameState.START_OPEN);
 			state.putValue("EndRoundState", gameState.END_ROUND);			
+			state.putValue("StartBetState", gameState.START_BET);			
 			_model.putValue("state_mapping", state);
 			
 			

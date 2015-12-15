@@ -60,6 +60,13 @@ package View.ViewComponent
 	
 		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
 		public function display():void
+		{
+			Get("Historytable").container.visible = true;			
+			update_history();
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
+		public function star_bet():void
 		{			
 			Get("Historytable").container.visible = true;			
 			update_history();

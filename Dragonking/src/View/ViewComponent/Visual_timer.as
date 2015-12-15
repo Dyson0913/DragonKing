@@ -54,7 +54,7 @@ package View.ViewComponent
 			
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
 		public function display():void
 		{			
 			Get(modelName.REMAIN_TIME).container.visible = true;			

@@ -54,6 +54,7 @@ package View.ViewComponent
 			GetSingleItem("paytable_baridx").gotoAndStop(1);
 		}
 		
+	
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function opencard_parse():void
 		{

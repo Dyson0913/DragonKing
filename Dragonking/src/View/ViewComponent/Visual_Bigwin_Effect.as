@@ -231,10 +231,11 @@ package View.ViewComponent
 			PowerJPNum.ItemList[PowerJPNum.ItemList.length-1].gotoAndPlay(11);			
 			
 			
-			if ( toIn <= 10) 
+			
+			if ( toIn <= 0) 
 			{
 				//utilFun.Log("add carry over");
-				dispatcher(new Intobject(1, "settle_step"));
+				dispatcher(new Intobject(1, "settle_step"));				
 				PowerJPNum.ItemList[PowerJPNum.ItemList.length - 1].gotoAndStop(10);				
 				pause_sound(sound_getpoint);				
 				return;

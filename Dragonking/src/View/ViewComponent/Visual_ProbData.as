@@ -47,6 +47,13 @@ package View.ViewComponent
 			Get("prob").container.visible = false;
 		}
 		
+		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
+		public function pay():void
+		{
+			Get("prob").container.visible = false;
+		}
+		
+		
 		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
 		public function opencard_parse():void
 		{

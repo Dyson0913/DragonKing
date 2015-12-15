@@ -54,14 +54,19 @@ package View.ViewComponent
 			put_to_lsit(highpayrate);
 		}		
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
-		public function display():void
-		{			
+			[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
+		public function star_bet():void
+		{
 			var betzone:MultiObject = Get("betzone");
 			betzone.mousedown = _betCommand.empty_reaction;			
 			betzone.rollout = _betCommand.empty_reaction;
 			betzone.rollover = _betCommand.empty_reaction;
 			
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		public function display():void
+		{					
 			Get("tableitem").container.visible = true;
 			GetSingleItem("highpayrate").gotoAndStop(1);
 			Get("highpayrate").container.x = 783;

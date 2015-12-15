@@ -110,7 +110,13 @@ package ConnectModule.websocket
 						{
 						    dispatcher(new ValueObject(  result.record_list, "history_list") );
 						}
+						if ( _opration.getMappingValue("state_mapping", result.game_state) == gameState.START_BET) 
+						{
+							dispatcher(new ValueObject(  result.record_list, "history_list") );							
+						}
+						
 						dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );	
+						
 						
 						dispatcher( new ValueObject(result.cards_info["player_card_list"], modelName.PLAYER_POKER) );
 						dispatcher( new ValueObject(result.cards_info["banker_card_list"], modelName.BANKER_POKER) );
@@ -163,12 +169,22 @@ package ConnectModule.websocket
 					break;
 					
 					case Message.MSG_TYPE_STATE_INFO:
-					{						
+					{												
 						dispatcher(new ValueObject(  result.game_round, "game_round") );
 						dispatcher(new ValueObject(  result.remain_time, modelName.REMAIN_TIME) );
+						
 						if ( _opration.getMappingValue("state_mapping", result.game_state) == gameState.NEW_ROUND)
 						{
 						    dispatcher(new ValueObject(  result.record_list, "history_list") );
+						}
+						
+						dispatcher(new ValueObject(  result.game_round, "game_round") );						
+						
+						if ( _opration.getMappingValue("state_mapping", result.game_state) == gameState.START_BET ) 
+						{
+							//收到startBet 再更新時間
+							dispatcher(new ValueObject(  result.game_round, "game_round") );
+							dispatcher(new ValueObject(  result.remain_time, modelName.REMAIN_TIME) );							
 						}
 						
 						dispatcher(new ValueObject(  _opration.getMappingValue("state_mapping", result.game_state) , modelName.GAMES_STATE) );

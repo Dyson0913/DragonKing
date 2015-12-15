@@ -42,7 +42,7 @@ package View.ViewComponent
 			playerzone_s.Create_(avaliblezone_s.length, "betzone_s");
 		}		
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
 		public function display():void
 		{
 			var betzone:MultiObject = Get("betzone_s");
