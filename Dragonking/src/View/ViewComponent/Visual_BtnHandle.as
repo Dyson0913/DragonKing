@@ -101,7 +101,7 @@ package View.ViewComponent
 		}
 		
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function display():void
 		{			
 			utilFun.Log("_betCommand.need_rebet() ="+_betCommand.need_rebet());

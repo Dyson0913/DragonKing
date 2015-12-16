@@ -65,7 +65,7 @@ package View.ViewComponent
 			mc["_coin"].gotoAndStop(idx+1);
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function display_coin():void
 		{			
 			_regular.FadeIn(_coin.container, 0, 1, null);			

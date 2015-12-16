@@ -41,7 +41,7 @@ package View.ViewComponent
 			put_to_lsit(pro);	
 		}
 	
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function display():void
 		{			
 			Get("prob").container.visible = false;

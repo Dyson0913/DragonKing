@@ -157,7 +157,7 @@ package View.ViewComponent
 			//_progressbar.init();
 			
 			
-			//_HistoryRecoder.init();
+			_HistoryRecoder.init();
 			
 			//_progressbar.debug();
 			_model.putValue("test_init",true);

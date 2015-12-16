@@ -21,7 +21,7 @@ package Model
 		}
 		
 		//start recoding
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function recoding():void
 		{
 			if ( CONFIG::release ) return;

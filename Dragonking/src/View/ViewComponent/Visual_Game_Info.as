@@ -134,7 +134,7 @@ package View.ViewComponent
 			GetSingleItem("betlimit").visible = false;
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function show():void
 		{
 			Get("betlimit").container.visible = true;
