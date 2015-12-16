@@ -105,7 +105,7 @@ package View.ViewComponent
 		
 		
 		
-		//[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		//[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function show():void
 		{
 			apper();

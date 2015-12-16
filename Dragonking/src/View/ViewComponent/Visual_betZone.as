@@ -54,7 +54,7 @@ package View.ViewComponent
 			put_to_lsit(highpayrate);
 		}		
 		
-			[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
 		public function star_bet():void
 		{
 			var betzone:MultiObject = Get("betzone");
@@ -64,7 +64,7 @@ package View.ViewComponent
 			
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "display")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function display():void
 		{					
 			Get("tableitem").container.visible = true;
