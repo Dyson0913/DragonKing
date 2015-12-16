@@ -27,6 +27,11 @@ package View.ViewComponent
 	 */
 	public class Visual_Game_Info  extends VisualHandler
 	{
+		public const betlimit:String = "bet_limit";
+		public const betstaticarrow:String = "betstatic_arrow";
+		
+		public const realtimeinfo:String = "realtime_info";
+		public const betstaticarrow_right:String = "betstatic_arrow_right";
 		
 		public function Visual_Game_Info() 
 		{
@@ -53,7 +58,7 @@ package View.ViewComponent
 			game_info_data.container.x = 372;
 			game_info_data.container.y = 90;
 			
-			var betlimit:MultiObject = create("betlimit",  [ResName.betlimit, ResName.betstaticarrow]);
+			var betlimit:MultiObject = create("betlimit",  [betlimit, betstaticarrow]);
 			betlimit.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 0]);
 			betlimit.mousedown = local;
 			betlimit.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
@@ -62,7 +67,7 @@ package View.ViewComponent
 			betlimit.container.y = 120;	
 			betlimit.Create_(2, "betlimit");
 			
-			var realtimeinfo:MultiObject = create("realtimeinfo", [ResName.realtimeinfo, ResName.betstaticarrow_right]);	
+			var realtimeinfo:MultiObject = create("realtimeinfo", [realtimeinfo, betstaticarrow_right]);	
 			realtimeinfo.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 0]);
 			realtimeinfo.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			realtimeinfo.Post_CustomizedData = [[0, 0], [7, 164]];

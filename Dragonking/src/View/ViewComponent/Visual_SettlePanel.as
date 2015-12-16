@@ -57,7 +57,7 @@ package View.ViewComponent
 			settletable_zone_bet.container.x = -360;
 			settletable_zone_bet.container.y = settletable_zone.container.y;		
 			settletable_zone_bet.CustomizedFun = _text.textSetting;
-			settletable_zone_bet.CustomizedData = [ { size:18,align:_text.align_right,color:0xFF0000 }, "100", "100", "1000", "0", "200", "100000","0"];
+			settletable_zone_bet.CustomizedData = [ { size:24,align:_text.align_right,color:0xFF0000 }, "100", "100", "1000", "0", "200", "100000","0"];
 			settletable_zone_bet.Post_CustomizedData = [7, 30, 32];
 			settletable_zone_bet.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			settletable_zone_bet.Create_(7, "settletable_zone_bet");
@@ -94,7 +94,8 @@ package View.ViewComponent
 			put_to_lsit(settletable_zone);
 			put_to_lsit(settletable_zone_bet);
 			put_to_lsit(settletable_zone_settle);
-			//put_to_lsit(settletable_desh);
+			
+			state_parse([gameState.END_BET,gameState.START_OPEN,gameState.END_ROUND]);
 		}		
 		
 		public function sprite_idx_setting_player(mc:*, idx:int, data:Array):void
@@ -108,29 +109,27 @@ package View.ViewComponent
 		
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
-		public function display():void
-		{				
-			Get("settletable").container.visible = false;
-			GetSingleItem("settletable_title", 2).visible = false;
-			Get("settletable_zone_settle").container.visible = false;
-		}
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function opencard_parse():void
+		override public function appear():void
 		{
-			Get("settletable").container.visible = true;			
+			Get("settletable").container.visible = true;
+			
+			//得分 列先hide
 			GetSingleItem("settletable_title", 2).visible = false;
 			Get("settletable_zone_settle").container.visible = false;
 			
-			//var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
+			var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
 			var mylist:Array = _betCommand.bet_zone_amount();
 			var font:Array = [{size:24,align:_text.align_right,color:0xFF0000}];
 			font = font.concat(mylist);
-			//utilFun.Log("font = "+mylist);
+			utilFun.Log("font = "+mylist);
 			Get("settletable_zone_bet").CustomizedData = font;
 			Get("settletable_zone_bet").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
 		}
+		
+		override public function disappear():void
+		{			
+			Get("settletable").container.visible = false;			
+		}		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "show_settle_table")]
 		public function show_settle():void

@@ -34,6 +34,9 @@ package View.ViewComponent
 		//coin seperate to N stack
 		private var _stack_num:int = 1;		
 		
+		public const Betcoin:String = "Bet_coin";
+		public const Wincoin:String = "Win_coin";
+		
 		public function Visual_Coin_stack() 
 		{
 			
@@ -51,24 +54,17 @@ package View.ViewComponent
 			coinstack.Create_(avaliblezone.length, "coinstakeZone");
 			
 			
-							
-			//
-			//_tool.SetControlMc(coinstack.ItemList[5]);
-			//_tool.SetControlMc(coinstack.container);
-			//_tool.y  = 200;
-			//add(_tool);		
+			state_parse([gameState.START_BET]);
 			
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
-		public function display():void
+		override public function appear():void
 		{
 			Get("coinstakeZone").container.visible = true;
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function timer_hide():void
-		{
+		override public function disappear():void
+		{			
 			Get("coinstakeZone").container.visible = false;
 		}
 		
@@ -86,8 +82,6 @@ package View.ViewComponent
 			a.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			a.Post_CustomizedData =  _model.getValue(modelName.COIN_STACK_XY);
 			a.customized();
-			
-			
 		}
 				
 		[MessageHandler(type = "Model.ModelEvent", selector = "updateCoin")]
@@ -142,7 +136,7 @@ package View.ViewComponent
 			secoin.CustomizedFun = coinput;
 			secoin.CustomizedData = Allcoin;
 			secoin.setContainer(contain);
-			secoin.Create_by_list( Allcoin.length-1, [ResName.Betcoin] , 0 +shiftx+ (cointype * shX) , 0+shifty +shY, 1, 0, coinshY, "Bet_1");			
+			secoin.Create_by_list( Allcoin.length-1, [Betcoin] , 0 +shiftx+ (cointype * shX) , 0+shifty +shY, 1, 0, coinshY, "Bet_1");			
 		}
 		
 		public function coinput(mc:MovieClip, idx:int, betlist_with_type_in_first:Array):void
@@ -177,7 +171,7 @@ package View.ViewComponent
 			secoin.container.x = path[0];
 			secoin.container.y = path[1];
 			contain.addChild(secoin.container);
-			secoin.Create_by_list( Allcoin.length - 1, [ResName.Wincoin] , 0  , 0, 1, 0, -5, "Bet_"+bettype);			
+			secoin.Create_by_list( Allcoin.length - 1, [Wincoin] , 0  , 0, 1, 0, -5, "Bet_"+bettype);			
 			
 			return secoin;
 		}	
@@ -193,7 +187,7 @@ package View.ViewComponent
 			secoin.container.x = path[0];
 			secoin.container.y = path[1];
 			contain.addChild(secoin.container);
-			secoin.Create_by_list( 1, [ResName.Wincoin] , 0  , 0, 1, 0, -5, "Bet_");			
+			secoin.Create_by_list( 1, [Wincoin] , 0  , 0, 1, 0, -5, "Bet_");			
 			
 			return secoin;
 		}	

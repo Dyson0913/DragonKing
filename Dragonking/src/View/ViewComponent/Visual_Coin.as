@@ -31,6 +31,8 @@ package View.ViewComponent
 		
 		private var _coin:MultiObject;
 		
+		public const Betcoin:String = "Bet_coin";
+		
 		public function Visual_Coin() 
 		{
 			
@@ -45,19 +47,14 @@ package View.ViewComponent
 			_coin.container.y = 1000;
 			_coin.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,2,0]);
 			_coin.CustomizedFun = ocin_setup;			
-			_coin.Create_by_list(5,  [ResName.Betcoin], 0 , 0, 5, 85, 0, "Coin_");
+			_coin.Create_by_list(5,  [Betcoin], 0 , 0, 5, 85, 0, "Coin_");
 			_coin.rollout = excusive_rollout;
 			_coin.rollover = excusive_select_action;
 			_coin.mousedown = betSelect;
 			_coin.ItemList[0].y -= 20;
 			_coin.ItemList[0].gotoAndStop(2);
 			
-			//_tool.SetControlMc(coinstack.ItemList[7]);
-			//_tool.SetControlMc(_coin.container);
-			//_tool.y = 200;
-			//add(_tool);	
-			
-			
+			state_parse([gameState.START_BET]);
 		}
 		
 		public function ocin_setup(mc:MovieClip, idx:int, data:Array):void
@@ -65,17 +62,14 @@ package View.ViewComponent
 			mc["_coin"].gotoAndStop(idx+1);
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
-		public function display_coin():void
-		{			
-			_regular.FadeIn(_coin.container, 0, 1, null);			
+		override public function appear():void
+		{
+			_regular.FadeIn(_coin.container, 0, 1, null);	
 		}
 		
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function hide_coin():void
+		override public function disappear():void
 		{			
-			_regular.Fadeout(_coin.container, 0, 1);			
+			_regular.Fadeout(_coin.container, 0, 1);
 		}
 		
 		public function excusive_rollout(e:Event, idx:int):Boolean

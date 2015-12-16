@@ -14,10 +14,7 @@ package View.ViewComponent
 	import View.Viewutil.MultiObject;
 	import Res.ResName;
 	import caurina.transitions.Tweener;
-	
-	import flash.text.TextFormat;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormatAlign;
+	import View.GameView.gameState;
 	
 	/**
 	 * hintmsg present way
@@ -31,6 +28,10 @@ package View.ViewComponent
 		[Inject]
 		public var _betCommand:BetCommand;
 		
+		public const playerScore:String = "PlayerScore";
+		public const bankerScore:String = "BankerScore";
+		public const TieScore:String = "tieScore";
+		
 		public function Visual_Settle() 
 		{
 			
@@ -38,25 +39,30 @@ package View.ViewComponent
 		
 		public function init():void
 		{
-			var zoneCon:MultiObject = create("zone", [ResName.playerScore, ResName.bankerScore, ResName.TieScore]);
+			var zoneCon:MultiObject = create("zone", [playerScore, bankerScore, TieScore]);
 			zoneCon.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			zoneCon.Post_CustomizedData = [[0, 0], [1018, 0], [560, 0]];
 			zoneCon.Create_(3, "zone");
 			zoneCon.container.x = 358;
-			zoneCon.container.y = 560;		
+			zoneCon.container.y = 560;
 			
 			put_to_lsit(zoneCon);
 			
+			state_parse([gameState.END_ROUND]);
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
-		public function Clean():void
+		override public function appear():void
 		{
-			setFrame("zone", 1);			
+			round_();
 		}
+		
+		override public function disappear():void
+		{			
+			setFrame("zone", 1);
+		}	
 		
 		//move to model command to parse ,then send event
-		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
+		//[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
 		public function round_():void
 		{
 			var result_list:Array = _model.getValue(modelName.ROUND_RESULT);

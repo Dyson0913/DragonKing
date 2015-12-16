@@ -160,13 +160,6 @@ package View.ViewComponent
 			
 		}
 		
-	//	[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
-		public function settle_parse():void
-		{
-			
-		}
-		
-		
 	}
 
 }

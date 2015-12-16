@@ -16,6 +16,7 @@ package View.ViewComponent
 	import View.Viewutil.*;
 	import Res.ResName;
 	import caurina.transitions.Tweener;
+	import View.GameView.gameState;
 	
 	/**
 	 * Paytable present way
@@ -23,6 +24,7 @@ package View.ViewComponent
 	 */
 	public class Visual_ProbData  extends VisualHandler
 	{
+		public const prob_square:String = "prob";
 		
 		public function Visual_ProbData() 
 		{
@@ -31,38 +33,30 @@ package View.ViewComponent
 		
 		public function init():void
 		{			
-			var pro:MultiObject = create("prob",  [ResName.prob_square]);	
+			var pro:MultiObject = create("prob",  [prob_square]);	
 			pro.container.x = 384;
 			pro.container.y =  176;
 			pro.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
 			pro.Post_CustomizedData = [6, 50, 50];
 			pro.Create_(6, "prob");
 			
-			put_to_lsit(pro);	
-		}
-	
-		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
-		public function display():void
-		{			
-			Get("prob").container.visible = false;
+			put_to_lsit(pro);
+			
+			state_parse([gameState.END_BET,gameState.START_OPEN]);
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
-		public function pay():void
-		{
-			Get("prob").container.visible = false;
-		}
-		
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function opencard_parse():void
+		override public function appear():void
 		{
 			Get("prob").container.visible = true;
 			
 			var zero:Array = utilFun.Random_N(0, 6);
 			_model.putValue("percent_prob",zero);
 			prob_update();
-			
+		}
+		
+		override public function disappear():void
+		{			
+			Get("prob").container.visible = false;
 		}
 		
 		[MessageHandler(type = "Model.valueObject.Intobject",selector="caculate_prob")]
@@ -190,11 +184,7 @@ package View.ViewComponent
 			//mc["_Text"].x = po;
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
-		public function settle_parse():void
-		{			
-			Get("prob").container.visible = false;		
-		}
+		
 		
 	}
 
