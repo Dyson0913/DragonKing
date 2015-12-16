@@ -18,7 +18,7 @@ package View.ViewComponent
 	import View.Viewutil.*;
 	import Res.ResName;
 	import caurina.transitions.Tweener;
-	
+	import View.GameView.gameState;
 
 	
 	/**
@@ -27,12 +27,6 @@ package View.ViewComponent
 	 */
 	public class Visual_Game_Info  extends VisualHandler
 	{
-		
-		[Inject]
-		public var _betCommand:BetCommand;
-		
-		[Inject]
-		public var _text:Visual_Text;
 		
 		public function Visual_Game_Info() 
 		{
@@ -84,7 +78,23 @@ package View.ViewComponent
 			
 			utilFun.SetTime(triger, 2);
 			
+			state_parse([gameState.NEW_ROUND]);
 		}
+		
+		override public function appear():void
+		{
+			Get("betlimit").container.visible = true;
+			Get("realtimeinfo").container.visible = true;
+			
+			var round_code:int = _model.getValue("game_round");			
+			GetSingleItem("game_title_info_data", 0).getChildByName("Dy_Text").text = round_code.toString();
+		}
+		
+		override public function disappear():void
+		{
+			Get("betlimit").container.visible = false;
+			Get("realtimeinfo").container.visible = false;
+		}	
 		
 		private function triger():void
 		{
@@ -134,29 +144,7 @@ package View.ViewComponent
 			GetSingleItem("betlimit").visible = false;
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
-		public function show():void
-		{
-			Get("betlimit").container.visible = true;
-			Get("realtimeinfo").container.visible = true;
-			
-			utilFun.Log("show display="+_model.getValue("game_round"));
-			
-			//utilFun.Clear_ItemChildren(GetSingleItem("game_title_info_data"));			
-			var round_code:int = _model.getValue("game_round");// _opration.operator("game_round", DataOperation.add, 1);
-			utilFun.Log("game_round ="+_model.getValue("game_round"));
-			//var textfi:TextField = _text.dynamic_text(round_code.toString(),{size:18});
-			//GetSingleItem("game_title_info_data").addChild(textfi);	
-			GetSingleItem("game_title_info_data", 0).getChildByName("Dy_Text").text = round_code.toString();
-			
-		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function opencard_parse():void
-		{
-			Get("betlimit").container.visible = false;
-			Get("realtimeinfo").container.visible = false;
-		}
 		
 	}
 

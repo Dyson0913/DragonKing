@@ -24,10 +24,7 @@ package View.ViewComponent
 	 * @author ...
 	 */
 	public class Visual_Settle  extends VisualHandler
-	{
-		[Inject]
-		public var _text:Visual_Text;
-		
+	{		
 		[Inject]
 		public var _Bigwin_Effect:Visual_Bigwin_Effect;
 		
@@ -165,13 +162,13 @@ package View.ViewComponent
 			{
 				//2對,3條集氣吧				
 				if ( hintJp !=-1 && (sigwin ==1 || sigwin ==0)) dispatcher(new Intobject(sigwin, "power_up"));
-				else settle(new Intobject(1, "settle_step"));
+				else settles(new Intobject(1, "settle_step"));
 			}
 			
 		}
 			
 		[MessageHandler(type="Model.valueObject.Intobject",selector="settle_step")]
-		public function settle(v:Intobject):void
+		public function settles(v:Intobject):void
 		{
 			//patytable提示框			
 			dispatcher(new StringObject(_model.getValue("winstr"), "winstr_hint"));

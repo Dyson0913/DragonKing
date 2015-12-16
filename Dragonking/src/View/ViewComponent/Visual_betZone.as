@@ -55,7 +55,7 @@ package View.ViewComponent
 		}		
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
-		public function star_bet():void
+		public function star2_bet():void
 		{
 			var betzone:MultiObject = Get("betzone");
 			betzone.mousedown = _betCommand.empty_reaction;			

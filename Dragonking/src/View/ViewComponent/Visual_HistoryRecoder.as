@@ -16,22 +16,15 @@ package View.ViewComponent
 	import View.Viewutil.*;
 	import Res.ResName;
 	import caurina.transitions.Tweener;
-	
+	import View.GameView.gameState;
 	/**
 	 * Paytable present way
 	 * @author Dyson0913
 	 */
 	public class Visual_HistoryRecoder  extends VisualHandler
 	{
-		
-		[Inject]
-		public var _betCommand:BetCommand;
-		
-		[Inject]
-		public var _gameinfo:Visual_Game_Info;
-		
-		[Inject]
-		public var _text:Visual_Text;
+		public const historytable:String = "history_table";
+		public const historyball:String = "history_ball";
 		
 		public function Visual_HistoryRecoder() 
 		{
@@ -41,13 +34,13 @@ package View.ViewComponent
 		public function init():void
 		{
 			//歷史記錄
-			var historytable:MultiObject = create("Historytable", [ResName.historytable]);
+			var historytable:MultiObject = create("Historytable", [historytable]);
 			historytable.container.x = 1290;
 			historytable.container.y =  140;
 			historytable.Create_(1, "Historytable");
 			
 			//結果歷史記錄		
-			var historyball:MultiObject = create("historyball",  [ResName.historyball] ,   historytable.container);
+			var historyball:MultiObject = create("historyball",  [historyball] ,   historytable.container);
 			historyball.container.x = 6.5;
 			historyball.container.y = 8.7;
 			historyball.Post_CustomizedData = [6, 37.8, 37.9 ];
@@ -55,22 +48,21 @@ package View.ViewComponent
 			historyball.Create_(60, "historyball");
 			
 			put_to_lsit(historytable);	
-			put_to_lsit(historyball);			
+			put_to_lsit(historyball);
+			
+			state_parse([gameState.NEW_ROUND, gameState.START_BET]);
 		}
-	
-		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
-		public function display():void
+		
+		override public function appear():void
 		{
-			Get("Historytable").container.visible = true;			
+			Get("Historytable").container.visible = true;
 			update_history();
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
-		public function star_bet():void
-		{			
-			Get("Historytable").container.visible = true;			
-			update_history();
-		}
+		override public function disappear():void
+		{
+			Get("Historytable").container.visible = false;	
+		}		
 		
 		public function update_history():void
 		{			
@@ -113,13 +105,6 @@ package View.ViewComponent
 			else if( info.banker_pair) mc["_pair"].gotoAndStop(2);
 			else if ( info.player_pair) mc["_pair"].gotoAndStop(3);
 		}
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "hide")]
-		public function opencard_parse():void
-		{
-			Get("Historytable").container.visible = false;
-		}
-		
 	}
 
 }

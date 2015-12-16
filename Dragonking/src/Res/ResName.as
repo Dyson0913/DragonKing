@@ -35,9 +35,7 @@ package Res
 		
 		
 		
-		
-		public static const historytable:String = "history_table";
-		public static const historyball:String = "history_ball";		
+			
 		
 		public static const powerbar:String = "power_bar";
 		public static const power_bar3:String = "power_bar_3";
@@ -69,9 +67,6 @@ package Res
 		public static const ruletable:String = "rule_table";
 		
 		public static const emptymc:String = "Emptymc";
-		
-		public static const paytablemain:String = "paytable_main"		
-		public static const paytable_baridx:String = "paytable_bar_idx";
 		
 		public function ResName() 
 		{
