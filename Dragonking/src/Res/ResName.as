@@ -43,7 +43,7 @@ package Res
 		public static const contractpower:String = "contract_power";
 		
 		
-		public static const Timer:String = "countDowntimer";		
+		
 		
 		public static const betzone_player:String = "playerzone";
 		public static const betzone_banker:String = "bankerzone";
@@ -52,19 +52,14 @@ package Res
 		public static const betzone_player_pari:String = "playerzone_pair";		
 		public static const special_Zone:String = "specialzone";		
 		
-		public static const bet_tableitem:String = "bet_table_item";		
+		
 		public static const open_tableitem:String = "open_table_item";
-		public static const highpayrate:String = "high_payrate";
+		
 		
 		
 		public static const playerScore:String = "PlayerScore";
 		public static const bankerScore:String = "BankerScore";
 		public static const TieScore:String = "tieScore";	
-		
-		public static const rebet_btn:String = "btn_rebet";
-		public static const betcancel_btn:String = "btn_betcancel";
-		public static const paytable_btn:String = "btn_paytable";
-		public static const ruletable:String = "rule_table";
 		
 		public static const emptymc:String = "Emptymc";
 		

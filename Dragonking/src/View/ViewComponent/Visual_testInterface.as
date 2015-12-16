@@ -148,11 +148,10 @@ package View.ViewComponent
 		public function start_bet():void
 		{		
 			fake_hisotry();
+			_model.putValue(modelName.REMAIN_TIME, 20);
+			
 			_model.putValue(modelName.GAMES_STATE,gameState.START_BET);			
 			dispatcher(new ModelEvent("update_state"));
-			
-			//_btn.debug();
-			
 			
 			//dispatcher(new StringObject("WSBWTwoPair", "winstr_hint"));
 		}	
@@ -173,20 +172,9 @@ package View.ViewComponent
 			_model.putValue(modelName.RIVER_POKER, []);		
 			_model.putValue("scirpt_pai", ["1s","2d","3s","5c","6h","9d"]);				
 			
-			//
-			//=============================================paytable
-			//fake_hisotry();
-			//_paytable.init();
-			//
-			//_paytable.opencard_parse();
 			//_settle_panel.init();
 			//
-			//_ProbData.init();
-//
-			//=============================================Hintmsg
-			//_hint.init();
-			//_model.putValue(modelName.GAMES_STATE,gameState.END_BET);
-			//_hint.hide();			
+			//_ProbData.init();	
 		//
 			//================================================poker
 			//_poker.init();
@@ -247,17 +235,8 @@ package View.ViewComponent
 			_model.putValue(modelName.BANKER_POKER, ["2d","9s"]);		
 			_model.putValue(modelName.RIVER_POKER, []);		
 			//
-			//
-			//=============================================Hintmsg
-			//_hint.init();			
+			//	
 			//_settle_panel.init();
-			//
-			//
-			//=============================================paytable
-			//fake_hisotry();
-			//_paytable.init();				
-			//
-			//
 			//_poker.init();
 			
 			//_poker.prob_cal();
@@ -380,22 +359,14 @@ package View.ViewComponent
 			_gameinfo.init();
 			
 			//================================================betzone
-			//_betzone.init();			
+			_betzone.init();			
 			//_coin_stack.init();
 			//_coin.init();
-			//_sencer.init();
-			//
-			//=============================================Hintmsg
-			_hint.init();
-			//
-			//================================================timer
-			//_model.putValue(modelName.REMAIN_TIME, 20);					
-			//_timer.init();
-			//
-			//_btn.init();
+			_sencer.init();
 			
-		
-			
+			_hint.init();			
+			_timer.init();			
+			_btn.init();
 			
 			//_progressbar.debug();
 			_model.putValue("test_init",true);

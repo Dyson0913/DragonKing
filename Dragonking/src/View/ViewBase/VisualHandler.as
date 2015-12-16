@@ -4,6 +4,7 @@ package View.ViewBase
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import Model.Model;
 	import Command.*;
 	import Interface.ViewComponentInterface;
@@ -111,6 +112,11 @@ package View.ViewBase
 				GetSingleItem(name, i).gotoAndStop(frame);
 			}
 		}
+		
+		public function empty_reaction(e:Event, idx:int):Boolean
+		{			
+			return true;
+		}	
 		
 		protected function changeBG(name:String):void
 		{
