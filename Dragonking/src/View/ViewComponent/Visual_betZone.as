@@ -68,7 +68,12 @@ package View.ViewComponent
 			
 			pull();
 			
-			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone", 5), 25, 25, 1, 3);			
+			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone", 5), 25, 25, 1, 3);
+			
+			var betzone:MultiObject = Get("betzone");
+			betzone.mousedown = _betCommand.empty_reaction;			
+			betzone.rollout = _betCommand.empty_reaction;
+			betzone.rollover = _betCommand.empty_reaction;			
 		}
 		
 		override public function disappear():void
@@ -85,16 +90,7 @@ package View.ViewComponent
 			
 			GetSingleItem("highpayrate").gotoAndStop(2);			
 			Tweener.pauseTweens(Get("highpayrate"));	
-		}
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
-		public function star2_bet():void
-		{
-			var betzone:MultiObject = Get("betzone");
-			betzone.mousedown = _betCommand.empty_reaction;			
-			betzone.rollout = _betCommand.empty_reaction;
-			betzone.rollover = _betCommand.empty_reaction;			
-		}	
+		}		
 		
 		public function pull():void
 		{

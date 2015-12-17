@@ -323,25 +323,25 @@ package View.ViewComponent
 			if ( _model.getValue("test_init")) return;
 			changeBG(ResName.Bet_Scene);
 			
-			_progressbar.init();
-			_ProbData.init();
-			
-			_paytable.init();
 			_HistoryRecoder.init();
-			_gameinfo.init();			
+			_ProbData.init();
+			_progressbar.init();
 			
-			_settle_panel.init();
-			_betzone.init();			
+			_gameinfo.init();
+			_paytable.init();
+			_settle_panel.init();			
+			_timer.init();		
+			_hint.init();			
+			
+			_betzone.init();
 			_coin_stack.init();
 			_coin.init();
-			_sencer.init();
-			
-			_hint.init();			
-			_timer.init();			
-			_btn.init();
-			
 			_poker.init();
-			_settle.init();	
+			
+			_settle.init();
+			_sencer.init();	
+			
+			_btn.init();
 			
 			//_progressbar.debug();
 			_model.putValue("test_init",true);
