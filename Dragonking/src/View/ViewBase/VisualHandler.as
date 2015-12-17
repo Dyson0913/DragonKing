@@ -157,7 +157,7 @@ package View.ViewBase
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
-		public function state_update():void
+		public function new_round():void
 		{			
 			if ( _my_appear_state.indexOf(gameState.NEW_ROUND) !=-1) appear();
 			else disappear();

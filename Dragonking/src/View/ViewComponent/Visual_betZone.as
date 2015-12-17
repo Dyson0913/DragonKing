@@ -56,12 +56,18 @@ package View.ViewComponent
 			put_to_lsit(tableitem);
 			put_to_lsit(highpayrate);
 			
-			state_parse([gameState.START_BET]);
+			state_parse([gameState.NEW_ROUND,gameState.START_BET]);
 		}		
 		
 		override public function appear():void
-		{
+		{	
 			Get("tableitem").container.visible = true;
+			GetSingleItem("highpayrate").gotoAndStop(2);
+			
+			
+			var state:int = _model.getValue(modelName.GAMES_STATE);			
+			if ( state  == gameState.NEW_ROUND) return;
+			
 			GetSingleItem("highpayrate").gotoAndStop(1);
 			Get("highpayrate").container.x = 783;
 			Get("highpayrate").container.y = 575;
