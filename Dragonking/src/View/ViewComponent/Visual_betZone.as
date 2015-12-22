@@ -21,9 +21,6 @@ package View.ViewComponent
 		public const bet_tableitem:String = "bet_table_item";
 		public const highpayrate:String = "high_payrate";
 		
-		[Inject]
-		public var _betCommand:BetCommand;	
-		
 		public function Visual_betZone() 
 		{
 			
@@ -77,17 +74,17 @@ package View.ViewComponent
 			_regular.Twinkle_by_JumpFrame(GetSingleItem("betzone", 5), 25, 25, 1, 3);
 			
 			var betzone:MultiObject = Get("betzone");
-			betzone.mousedown = _betCommand.empty_reaction;			
-			betzone.rollout = _betCommand.empty_reaction;
-			betzone.rollover = _betCommand.empty_reaction;			
+			betzone.mousedown = empty_reaction;
+			betzone.rollout = empty_reaction;
+			betzone.rollover = empty_reaction;
 		}
 		
 		override public function disappear():void
 		{			
 			var betzone:MultiObject = Get("betzone");
 			betzone.mousedown = null;
-			betzone.rollout = _betCommand.empty_reaction;
-			betzone.rollover = _betCommand.empty_reaction;
+			betzone.rollout = empty_reaction;
+			betzone.rollover = empty_reaction;
 			
 			setFrame("betzone", 1);
 			

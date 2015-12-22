@@ -1,12 +1,6 @@
 package View.ViewComponent 
-{
-	import asunit.errors.AbstractError;
-	import caurina.transitions.properties.DisplayShortcuts;
+{			
 	import flash.display.MovieClip;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.text.TextFormat;
-	import View.ViewBase.Visual_Text;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -14,9 +8,8 @@ package View.ViewComponent
 	import Command.*;
 	
 	import View.Viewutil.*;
-	import Res.ResName;
-	import caurina.transitions.Tweener;
 	import View.GameView.gameState;
+	
 	/**
 	 * Paytable present way
 	 * @author Dyson0913

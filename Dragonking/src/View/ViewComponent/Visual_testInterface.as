@@ -3,14 +3,8 @@ package View.ViewComponent
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.geom.Point;
-	import flash.geom.Transform;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
-	import flash.text.TextField;
-	import util.math.Path_Generator;
-	import View.ViewBase.Visual_Text;
+	import flash.events.Event;	
+	import util.math.Path_Generator;	
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -18,17 +12,17 @@ package View.ViewComponent
 	import Command.*;
 	import View.Viewutil.*;
 	
-	import flash.display.DisplayObjectContainer;
+	
 	import flash.display.MovieClip;
 	import View.GameView.*;
 	import Res.ResName;
 	import caurina.transitions.Tweener;
-	import flash.events.MouseEvent;
-	import flash.geom.Matrix;
+	import flash.events.MouseEvent;	
 	import com.adobe.serialization.json.JSON;
+	
 	/**
 	 * testinterface to fun quick test
-	 * @author ...
+	 * @author Dyson0913
 	 */
 	public class Visual_testInterface  extends VisualHandler
 	{		
@@ -120,18 +114,26 @@ package View.ViewComponent
 			_model.putValue("result_Pai_list", []);
 			_model.putValue("game_round", 1);			
 			
+			var script:DI = new DI();
+			script.putValue("新局",0);
+			script.putValue("開始下注",1);
+			script.putValue("停止下注",2);
+			script.putValue("開牌",3);
+			script.putValue("結算",4);
+			script.putValue("封包",5);
+			
+			_model.putValue("name_map", script);
+			
 			//腳本
 			var script_list:MultiObject = create("script_list", [ResName.TextInfo]);	
 			script_list.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
 			script_list.stop_Propagation = true;
 			script_list.mousedown = script_list_test;
-			script_list.CustomizedData = [ { size:18 }, "新局","開始下注", "停止下注","開牌", "結算"];
+			script_list.CustomizedData = [ { size:18 },"新局","開始下注", "停止下注","開牌", "結算","封包"];
 			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			script_list.Post_CustomizedData = [5, 100, 100];			
-			script_list.Create_(script_list.CustomizedData.length -1, "script_list");
-			
-			_model.putValue("Script_idx", 0);
+			script_list.Create_(script_list.CustomizedData.length -1, "script_list");			
 			
 		}				
 		
@@ -226,38 +228,7 @@ package View.ViewComponent
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
-			
-			//_model.putValue("win_odd", 2) ;
-			//
-			//_Bigwin_Effect.init();
-			//_Bigwin_Effect.debug();
-			//
-			//順子			
-			//var fakePacket:Object = {"result_list": [{"bet_attr": "BetAttrMain", "bet_amount": 100, "odds": 2, "win_state": "WSBWStraight", "real_win_amount": 100, "bet_type": "BetBWPlayer", "settle_amount": 200}, {"bet_attr": "BetAttrMain", "bet_amount": 100, "odds": 2, "win_state": "WSBWStraight", "real_win_amount": 100, "bet_type": "BetBWBanker", "settle_amount": 200}, {"bet_attr": "BetAttrSide", "bet_amount": 100, "odds": 9, "win_state": "WSWin", "real_win_amount": 800, "bet_type": "BetBWTiePoint", "settle_amount": 900}, {"bet_attr": "BetAttrSide", "bet_amount": 100, "odds": 5, "win_state": "WSBWStraight", "real_win_amount": 400, "bet_type": "BetBWSpecial", "settle_amount": 500}, {"bet_attr": "BetAttrSide", "bet_amount": 100, "odds": 0, "win_state": "WSLost", "real_win_amount": -100, "bet_type": "BetBWPlayerPair", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 100, "odds": 0, "win_state": "WSLost", "real_win_amount": -100, "bet_type": "BetBWBankerPair", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 200, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 200, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}], "game_state": "EndRoundState", "game_result_id": "351965", "timestamp": 1447818541.783871, "remain_time": 9, "game_type": "BigWin", "id": "4e53cdba8da711e589d3f23c9189e2a9", "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "game_round": 36}
-			//full + 和
-			var fakePacket:Object = {"result_list": [{"bet_type": "BetBWPlayer", "settle_amount": 0, "odds": 4, "win_state": "WSBWFullHouse", "bet_amount": 0}, {"bet_type": "BetBWBanker", "settle_amount": 0, "odds": 4, "win_state": "WSBWFullHouse", "bet_amount": 0}, {"bet_type": "BetBWTiePoint", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWSpecial", "settle_amount": 0, "odds": 11, "win_state": "WSBWFullHouse", "bet_amount": 0}, {"bet_type": "BetBWPlayerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}, {"bet_type": "BetBWBankerPair", "settle_amount": 0, "odds": 0, "win_state": "WSLost", "bet_amount": 0}], "game_state": "EndRoundState", "game_result_id": "302523", "timestamp": 1443767410.186916, "remain_time": 9, "game_type": "BigWin", "game_round": 131, "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "id": "07bac7b668cf11e5a9aef23c9189e2a9"}
-			//
-			//同花
-			//var fakePacket:Object = { "result_list":[ { "odds":3, "bet_attr":"BetAttrMain", "bet_amount":100, "settle_amount":300, "real_win_amount":200, "bet_type":"BetBWPlayer", "win_state":"WSBWFlush" },
-			                                                                 //{ "odds":3, "bet_attr":"BetAttrMain", "bet_amount":100, "settle_amount":300, "real_win_amount":200, "bet_type":"BetBWBanker", "win_state":"WSBWFlush" },
-																			 //{ "odds":0, "bet_attr":"BetAttrSide", "bet_amount":100, "settle_amount":0, "real_win_amount": -100, "bet_type":"BetBWTiePoint", "win_state":"WSLost" },
-																			 //{ "odds":6, "bet_attr":"BetAttrSide", "bet_amount":100, "settle_amount":600, "real_win_amount":500, "bet_type":"BetBWSpecial", "win_state":"WSBWFlush" },
-																			 //{ "odds":0, "bet_attr":"BetAttrSide", "bet_amount":100, "settle_amount":0, "real_win_amount": -100, "bet_type":"BetBWPlayerPair", "win_state":"WSLost" },
-																			 //{ "odds":0, "bet_attr":"BetAttrSide", "bet_amount":100, "settle_amount":0, "real_win_amount": -100, "bet_type":"BetBWBankerPair", "win_state":"WSLost" }, 
-																			 //{ "odds":0, "bet_attr":"BetAttrBonus", "bet_amount":200, "settle_amount":0, "real_win_amount":0, "bet_type":"BetBWBonusTripple", "win_state":"WSLost" },
-																			 //{ "odds":0, "bet_attr":"BetAttrBonus", "bet_amount":200, "settle_amount":0, "real_win_amount":0, "bet_type":"BetBWBonusTwoPair", "win_state":"WSLost" } ], 
-																			 //"game_state":"EndRoundState", 
-																			 //"game_result_id":"403290", 
-																			 //"id":"2be19dbaa2de11e5ae48f23c9189e2a9", 
-																			 //"game_type":"BigWin", 
-																			 //"timestamp":1450151080.731446, 
-																			 //"game_id":"BigWin-1",
-																			 //"message_type":"MsgBPEndRound",
-																			 //"remain_time":9, 
-																			 //"game_round":9 } 
-			//
-			//
-			//二對
+			//full + 和			
 			var fakePacket:Object = {"result_list": [{"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 1.95, "win_state": "WSBWNormalWin", "real_win_amount": 0, "bet_type": "BetBWPlayer", "settle_amount": 0}, {"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBanker", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWTiePoint", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWSpecial", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWPlayerPair", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBankerPair", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}], "game_state": "EndRoundState", "game_result_id": "405996", "timestamp": 1450259923.729869, "remain_time": 9, "game_type": "BigWin", "id": "975d27dca3db11e5ae48f23c9189e2a9", "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "game_round": 1605}
 			
 			_MsgModel.push(fakePacket);	
@@ -285,9 +256,10 @@ package View.ViewComponent
 			 _model.putValue("history_list",arr);
 		}
 		
-		//[MessageHandler(type = "View.Viewutil.TestEvent", selector = "3")]
-		//public function pack_sim():void
-		//{
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "5")]
+		public function pack_sim():void
+		{
+			_fileStream.load();
 			//dispatcher(new Intobject(utilFun.Random(2), "power_up"));
 			//fake_hisotry();
 			//dispatcher(new ModelEvent("start_bet"));
@@ -307,14 +279,22 @@ package View.ViewComponent
 			//power bar test
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
 			//dispatcher(new Intobject(utilFun.Random(2), "power_up"));		
-		//}
+		}
 		
 		public function script_list_test(e:Event, idx:int):Boolean
-		{
-			utilFun.Log("script_list_test=" + idx);
-			_model.putValue("Script_idx", idx);		
+		{			
+			
+			var clickname:String = GetSingleItem("script_list", idx).getChildByName("Dy_Text").text;
+			var idx:int = _opration.getMappingValue("name_map",clickname);
+			if (clickname == "封包") 
+			{
+				dispatcher(new TestEvent(idx.toString()));
+				return true;
+			}
+			
+			
 			view_init();
-			dispatcher(new TestEvent(_model.getValue("Script_idx").toString()));
+			dispatcher(new TestEvent(idx.toString()));
 			return true;
 		}
 		
