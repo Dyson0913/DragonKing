@@ -117,7 +117,7 @@ package View.ViewComponent
 			GetSingleItem("settletable_title", 2).visible = false;
 			Get("settletable_zone_settle").container.visible = false;
 			
-			var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
+			//var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
 			var mylist:Array = _betCommand.bet_zone_amount();
 			var font:Array = [{size:24,align:_text.align_right,color:0xFF0000}];
 			font = font.concat(mylist);
@@ -141,8 +141,7 @@ package View.ViewComponent
 			Get("settletable_zone_settle").container.visible = true;	
 			
 			//押注
-			var zone_amount:Array = _model.getValue("result_zonebet_amount");
-			zone_amount.push(_betCommand.all_betzone_totoal());		
+			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
 			var font:Array = [ { size:24, align:_text.align_right, color:0xFF0000 } ];			
 			font = font.concat(zone_amount);			
 			utilFun.Log("font1 = "+font);			
@@ -152,8 +151,7 @@ package View.ViewComponent
 			
 			//總結
 			var settle_amount:Array = _model.getValue("result_settle_amount");			
-			var font2:Array = [ { size:24, align:_text.align_right } ];
-			settle_amount.push(_model.getValue("result_total"));
+			var font2:Array = [ { size:24, align:_text.align_right } ];			
 			font2 = font2.concat(settle_amount);			
 			utilFun.Log("font2 = " + font2);			
 			Get("settletable_zone_settle").CustomizedFun = _text.colortextSetting;

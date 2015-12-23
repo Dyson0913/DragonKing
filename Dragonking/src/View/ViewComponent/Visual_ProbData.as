@@ -124,13 +124,13 @@ package View.ViewComponent
 				raw_data[i] *= 10000;
 			}
 			//utilFun.Log("after 10000 =" + raw_data);
-			for ( var i:int = 0; i < len; i++)
+			for (  i = 0; i < len; i++)
 			{				
 				raw_data[i] = Math.sqrt(raw_data[i] ) *10 ;
 			}
 			//utilFun.Log("first q =" + raw_data);
 			var total:Number = 0;
-			for ( var i:int = 0; i < len; i++)
+			for (  i = 0; i < len; i++)
 			{
 				raw_data[i] = Math.sqrt(raw_data[i] ) * 10 ;
 				total += raw_data[i];
@@ -139,19 +139,19 @@ package View.ViewComponent
 			//utilFun.Log("total q =" + total);
 			if ( total == 0) return raw_data;
 			
-			for ( var i:int = 0; i < len; i++)
+			for ( i= 0; i < len; i++)
 			{
 				raw_data[i]  = raw_data[i]  / total ;
 			}
 			//utilFun.Log("per q =" + raw_data);
 			
 			//one kind match
-			for ( var i:int = 0; i < len; i++)
+			for ( i= 0; i < len; i++)
 			{
 				if ( raw_data[i] == 1 && total == 1000) return raw_data;
 			}
 			
-			for ( var i:int = 0; i < len; i++)
+			for (  i = 0; i < len; i++)
 			{				
 				if ( raw_data [i] != 0) 
 				{

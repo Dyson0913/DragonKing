@@ -327,7 +327,7 @@ package View.ViewComponent
 			
 			_btn.init();
 			
-			//_progressbar.debug();
+			//s_progressbar.debug();
 			_model.putValue("test_init",true);
 		}
 		

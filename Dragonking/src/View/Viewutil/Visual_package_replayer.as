@@ -70,20 +70,23 @@ package View.Viewutil
 		{
 			init();
 			
-			_packlist = replayinfo.Value;			
-			
-			GetSingleItem("replay_interface", 3).getChildByName("Dy_Text").text = "frame:" + _pack_idx.toString();
+			_packlist = replayinfo.Value;
 		}
 		
 		public function interface_click(e:Event, idx:int):Boolean
 		{
+			GetSingleItem("replay_interface", 3).getChildByName("Dy_Text").text = "frame:" + _pack_idx.toString();
 			play_frame()
+			
+			
 			if ( idx == 0) _pack_idx = Math.min(0, _pack_idx -1);
-			if ( idx == 1 || idx ==2) 
+			if ( idx == 1 || idx == 2) 
 			{
 				_pack_idx += 1;				
 				_pack_idx %= _packlist.length;	
 			}		
+			
+			
 			
 			return true;
 		}
@@ -91,7 +94,7 @@ package View.Viewutil
 		public function play_frame():void
 		{
 			var fakePacket:Object  = _packlist[_pack_idx]; 
-			GetSingleItem("replay_interface", 3).getChildByName("Dy_Text").text = "frame:" + _pack_idx.toString();
+			
 			_MsgModel.push(fakePacket);			
 		
 		}

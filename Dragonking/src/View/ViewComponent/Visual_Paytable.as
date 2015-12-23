@@ -62,14 +62,10 @@ package View.ViewComponent
 		}	
 		
 		[MessageHandler(type = "Model.valueObject.StringObject",selector="winstr_hint")]
-		public function win_frame_hint(winstr:StringObject):void
+		public function win_frame_hint():void
 		{
-			var wintype:String = winstr.Value;
-			utilFun.Log("winst = " + wintype);
-			
-			if ( wintype == "") return ;
-			if (wintype ==  "WSWin" || wintype == "WSBWNormalWin")  return;
-			if (wintype ==  "WSBWOnePairBig")  return;
+			var wintype:String = _model.getValue("winstr");
+			utilFun.Log("winst = " + wintype);		
 			
 			var y:int = 0;
 			if (wintype == "WSBWStraight") y = 7;
@@ -79,13 +75,7 @@ package View.ViewComponent
 			if ( wintype == "WSBWStraightFlush") y = 3;
 			if ( wintype == "WSBWRoyalFlush") y = 2;			
 			
-			GetSingleItem("paytable_baridx").gotoAndStop(y);
-			
-			//utilFun.Log("GetSingleItem =" + GetSingleItem("pay_text"));						
-			//GetSingleItem("pay_text",y).getChildByName("Dy_Text").textColor = 0xFFFF00;			
-			//GetSingleItem("pay_mark",y).getChildByName("Dy_Text").textColor = 0xFFFF00;			
-			//GetSingleItem("pay_odd",y).getChildByName("Dy_Text").textColor = 0xFFFF00;
-			
+			GetSingleItem("paytable_baridx").gotoAndStop(y);			
 		}
 		
 		

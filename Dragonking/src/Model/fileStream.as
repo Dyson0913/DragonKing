@@ -94,12 +94,8 @@ package Model
 			//utilFun.Log("data = "+utf8Str); 
 			var result:Object  = JSON.decode(utf8Str);
 			
-			var arr:Array = result.packlist;
-			utilFun.Log("data one = "+arr.length); 
-			utilFun.Log("data one = " + arr[0]); 
-			
 			//create package interface
-			dispatcher( new ArrayObject(arr, "replay_pack"));
+			dispatcher( new ArrayObject( result.packlist, "replay_pack"));
 			
         }
 		

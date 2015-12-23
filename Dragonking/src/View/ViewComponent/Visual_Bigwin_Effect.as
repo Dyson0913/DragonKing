@@ -93,8 +93,14 @@ package View.ViewComponent
 			pause_sound(sound_getpoint);
 		}
 		
-		public function hitbigwin(bigwin_frame:int):void
+		[MessageHandler(type = "Model.ModelEvent", selector = "settle_bigwin")]
+		public function hitbigwin():void
 		{
+			var bigwin_frame:int = _model.getValue("bigwin");			
+			
+			//patytable提示框
+			dispatcher(new ModelEvent("winstr_hint"));		
+			
 			_playing = true;
 			
 			//phase start

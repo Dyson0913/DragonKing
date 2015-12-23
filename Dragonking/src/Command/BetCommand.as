@@ -3,6 +3,7 @@ package Command
 	import ConnectModule.websocket.WebSoketInternalMsg;
 	import flash.events.Event;
 	import Model.*;
+	import Model.valueObject.Intobject;
 	import Model.valueObject.StringObject;
 	import util.DI;
 	import util.utilFun;
@@ -287,14 +288,19 @@ package Command
 		
 		public function bet_zone_amount():Array
 		{
+			var zone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);
 			var mylist:Array = [];
-			var zone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);			
-			var total:int = 0;
 			for ( var i:int = 0; i < zone.length; i++)
+			{
+				mylist.push(0);
+			}
+			
+			var total:int = 0;
+			for (  i = 0; i < zone.length; i++)
 			{				
 				var map:int = _opration.getMappingValue("idx_to_result_idx", zone[i]);
 				var amount:int = get_total_bet(zone[i]);
-				mylist.splice(map, 0, amount);
+				mylist.splice(map, 1, amount);
 				total += amount;
 			}
 			mylist.push(total);
@@ -338,6 +344,146 @@ package Command
 		public function get_my_betlist():Array
 		{		
 			return _Bet_info.getValue("self");		
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
+		public function settle_data_parse():void
+		{
+			var settle_amount:Array = [];
+			var zonebet_amount:Array = [];			
+			
+			_model.putValue("clean_zone", []);
+			_model.putValue("bigwin",null);
+			_model.putValue("sigwin",-1);
+			_model.putValue("win_odd", -1);
+			_model.putValue("winstr", "");
+			_model.putValue("hintJp", -1);
+			
+			var total_bet:int = 0;
+			var total_settle:int = 0;
+			var result_list:Array = _model.getValue(modelName.ROUND_RESULT);
+			var betZone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);			
+			var num:int = betZone.length;	
+			for ( var i:int = 0; i < num; i++)
+			{
+				var resultob:Object = result_list[i];				
+				utilFun.Log("bet_type=" + resultob.bet_type  + "  " + resultob.win_state );
+				
+				var betzon_idx:int = _opration.getMappingValue("Bet_name_to_idx", resultob.bet_type);
+				
+				check_lost(resultob, betzon_idx);
+				check_bingWin(resultob);
+				check_specail(resultob);
+				if ( check_powerbar(resultob) ) continue;
+				
+				//總押注和贏分
+				var display_idx:int = _opration.getMappingValue("idx_to_result_idx", betzon_idx);
+				settle_amount[ display_idx] =  resultob.settle_amount;				
+				zonebet_amount[ display_idx ]  = resultob.bet_amount;				
+				total_settle += resultob.settle_amount;
+				total_bet += resultob.bet_amount;
+			}			
+			
+			settle_amount.push(total_settle);
+			zonebet_amount.push(total_bet);
+			
+			_model.putValue("result_settle_amount",settle_amount);
+			_model.putValue("result_zonebet_amount",zonebet_amount);
+			_model.putValue("result_total", total_settle);
+			_model.putValue("result_total_bet", total_bet);
+			
+			utilFun.Log("result_settle_amount =" + settle_amount);
+			utilFun.Log("result_zonebet_amount =" + zonebet_amount);
+			utilFun.Log("total_settle =" + total_settle);
+			utilFun.Log("zonebet_amount =" + zonebet_amount);
+			
+			if ( _model.getValue("bigwin") != null)
+			{
+				dispatcher(new ModelEvent("settle_bigwin"));
+			}
+			else 	if ( _model.getValue("hintJp") != -1)
+			{				
+				dispatcher(new Intobject(_model.getValue("sigwin"), "power_up"));
+			}
+			else
+			{
+				dispatcher(new Intobject(1, "settle_step"));
+			}
+			
+		}
+		
+		public function check_lost(resultob:Object,betzon_idx:int):void
+		{
+			if ( resultob.win_state == "WSLost") 
+			{
+				var clean:Array = _model.getValue("clean_zone");
+				clean.push (betzon_idx);
+				_model.putValue("clean_zone",clean);
+			}
+			
+		}
+		
+		public function check_bingWin(resultob:Object):void
+		{
+			//bigwin condition  type:player,winstat:!WSBWNormalWin && !WSWin
+			//winst: winste  odd:result.odds		
+			//大獎
+			if ( resultob.bet_type == "BetBWPlayer" ) 
+			{						
+				//大獎 (排除2對,3條和11以上J對)
+				if ( resultob.win_state != "WSBWNormalWin" && 
+				      resultob.win_state != "WSBWOnePairBig" &&  
+					  resultob.win_state != "WSBWTwoPair" &&
+					  resultob.win_state != "WSBWTripple" &&
+					  resultob.win_state !="WSWin")
+				{						
+					var bigwin:int = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state);
+					_model.putValue("bigwin", bigwin);
+					_model.putValue("winstr", bigwin);
+					_model.putValue("win_odd",resultob.odds);
+				}				
+			}			
+		}
+		
+		public function check_specail(resultob:Object):void
+		{
+			if ( resultob.bet_type == "BetBWSpecial" ) 
+			{
+				_model.putValue("sigwin",_opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state));						
+			}
+		}
+		
+		public function check_powerbar(resultob:Object):Boolean
+		{
+			//special condition
+			//{"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0},
+			//{"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}
+			var no_recode:Boolean = false;
+			if( resultob.bet_type =="BetBWBonusTwoPair") 
+			{
+				var extra:int = resultob.bet_amount * resultob.odds;
+				if ( extra > 0)
+				{
+					var array:Array = _model.getValue("power_jp");
+					array[0] = resultob.bet_amount * resultob.odds;
+					_model.putValue("hintJp", 1);
+					
+				}				
+				no_recode = true;
+			}
+			if( resultob.bet_type =="BetBWBonusTripple") 
+			{
+				var extra_two:int = resultob.bet_amount * resultob.odds;
+				if ( extra_two )
+				{
+					var array2:Array = _model.getValue("power_jp");
+					array2[1] = resultob.bet_amount * resultob.odds;
+					_model.putValue("hintJp", 1);
+					
+				}				
+				no_recode = true;
+			}
+			return no_recode;
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
