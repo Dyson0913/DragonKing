@@ -14,10 +14,10 @@ package Model
 	 */
 	public class fileStream 
 	{
-		private var _recodeData:Array = [];
+		[MessageDispatcher]
+        public var dispatcher:Function;
 		
-		private var _packlist:Array = [];
-		private var _pack_idx:int = 0;
+		private var _recodeData:Array = [];
 		
 		public var _start:Boolean = false;
 		
@@ -87,9 +87,7 @@ package Model
         } 
 		
 		public function onComplete(evt:Event):void 
-        { 
-			_packlist.length = 0;
-			_pack_idx = 0;
+        { 			
             //utilFun.Log("File was successfully loaded."); 
 			var ba:ByteArray = ByteArray(_openfile.data); 
 			var utf8Str:String = ba.readMultiByte(ba.length, 'utf8');
@@ -100,16 +98,10 @@ package Model
 			utilFun.Log("data one = "+arr.length); 
 			utilFun.Log("data one = " + arr[0]); 
 			
+			//create package interface
+			dispatcher( new ArrayObject(arr, "replay_pack"));
 			
-        } 
-		
-		public function pack_play():void
-		{			
-			var fakePacket:Object  = _packlist[_pack_idx]; 
-			_MsgModel.push(fakePacket);			
-			_pack_idx += 1;
-			_pack_idx %= _packlist.length;			
-		}
+        }
 		
 		public function switch_recode(recode:Boolean):void
 		{

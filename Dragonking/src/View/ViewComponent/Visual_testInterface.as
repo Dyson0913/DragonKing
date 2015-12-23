@@ -132,7 +132,7 @@ package View.ViewComponent
 			script_list.CustomizedData = [ { size:18 },"新局","開始下注", "停止下注","開牌", "結算","封包"];
 			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
-			script_list.Post_CustomizedData = [5, 100, 100];			
+			script_list.Post_CustomizedData = [6, 100, 100];			
 			script_list.Create_(script_list.CustomizedData.length -1, "script_list");			
 			
 		}				
@@ -288,6 +288,10 @@ package View.ViewComponent
 			var idx:int = _opration.getMappingValue("name_map",clickname);
 			if (clickname == "封包") 
 			{
+				view_init();
+				_model.putValue(modelName.GAMES_STATE,gameState.NEW_ROUND);			
+				dispatcher(new ModelEvent("update_state"));
+			
 				dispatcher(new TestEvent(idx.toString()));
 				return true;
 			}
