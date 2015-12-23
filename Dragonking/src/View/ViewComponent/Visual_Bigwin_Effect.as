@@ -71,14 +71,20 @@ package View.ViewComponent
 			
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
 		public function Clean():void
+		{
+			hide();
+		}
+		
+		public function hide():void
 		{
 			_playing = false;
 			setFrame("bigwinmsg", 1);
 			setFrame("bigwinfire", 1);
 			setFrame("bigwin_JP_num", 12);
 		}
+		
 		
 		public function stop():void
 		{
@@ -240,7 +246,8 @@ package View.ViewComponent
 				//utilFun.Log("add carry over");
 				dispatcher(new Intobject(1, "settle_step"));				
 				PowerJPNum.ItemList[PowerJPNum.ItemList.length - 1].gotoAndStop(10);				
-				pause_sound(sound_getpoint);				
+				pause_sound(sound_getpoint);	
+				utilFun.SetTime(hide, 2);
 				return;
 			}
 			

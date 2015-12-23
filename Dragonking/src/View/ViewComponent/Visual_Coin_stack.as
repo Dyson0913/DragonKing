@@ -66,9 +66,10 @@ package View.ViewComponent
 		override public function disappear():void
 		{			
 			Get("coinstakeZone").container.visible = false;
+			
+			Clean_poker();
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
 		public function Clean_poker():void
 		{
 			//TODO why not 
