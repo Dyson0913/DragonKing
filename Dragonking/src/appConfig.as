@@ -55,6 +55,8 @@ package
 		public var _replayer:Visual_package_replayer = new Visual_package_replayer();
 		
 		//visual
+		public var _bg:Visual_bg = new Visual_bg();
+		public var _strem:Visual_stream = new Visual_stream();
 		public var _pokerhandler:Visual_poker = new Visual_poker();
 		public var _timer:Visual_timer = new Visual_timer();
 		public var _hint:Visual_Hintmsg = new Visual_Hintmsg();		

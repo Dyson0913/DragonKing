@@ -8,6 +8,7 @@ package View.GameView
 	import flash.events.Event;
 	import flash.events.MouseEvent;	
 	import flash.text.TextField;
+	import Model.valueObject.ArrayObject;
 	import Model.valueObject.Intobject;
 	import Model.valueObject.StringObject;
 	import Res.ResName;
@@ -36,6 +37,9 @@ package View.GameView
 		
 		[Inject]
 		public var _sound:SoundCommand;
+		
+		[Inject]
+		public var _strem:Visual_stream;
 		
 		[Inject]
 		public var _test:Visual_testInterface;
@@ -78,7 +82,24 @@ package View.GameView
 			super.EnterView(View);
 			var view:MultiObject = prepare("_view", new MultiObject() , this);
 			view.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "a_");
-					
+			
+			_strem.init();
+			
+			var jsonob:Object = {
+												  "online":{
+															 "stream_link":[{"stream_name":"pa_stream","strem_url":"192.168.1.136/live/","channel_ID":"livestream","size":{"itemwidth":320,"itemheight":240}}]
+														   },
+												 "development":{
+															 "stream_link":[
+															                          {"stream_name":"big_stream", "strem_url":"192.168.1.136/live/", "channel_ID":"livestream", "size": { "itemwidth":320, "itemheight":240 }},
+															                          {"stream_name":"test", "strem_url":"184.72.239.149/vod", "channel_ID":"BigBuckBunny_115k.mov", "size": { "itemwidth":320, "itemheight":240 }}
+																					]
+															
+															   }
+												}
+			dispatcher(new ArrayObject([1, jsonob], "urlLoader_complete"));
+			dispatcher(new StringObject("test", "stream_connect"));
+			
 			utilFun.SetTime(connet, 0.1);
 			//_test.init();
 			

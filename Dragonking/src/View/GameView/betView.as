@@ -82,6 +82,9 @@ package View.GameView
 		[Inject]
 		public var _Version:Visual_Version;
 		
+		[Inject]
+		public var _bg:Visual_bg;
+		
 		public function betView()  
 		{
 			utilFun.Log("betView");
@@ -100,6 +103,7 @@ package View.GameView
 			var view:MultiObject = prepare("_view", new MultiObject() , this);
 			view.Create_by_list(1, [ResName.Bet_Scene], 0, 0, 1, 0, 0, "a_");	
 			
+			_bg.init();
 			_Version.init();
 			
 			_HistoryRecoder.init();

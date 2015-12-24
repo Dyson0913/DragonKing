@@ -99,6 +99,9 @@ package View.ViewComponent
 		[Inject]
 		public var _Version:Visual_Version;
 		
+		[Inject]
+		public var _bg:Visual_bg;
+		
 		private var _single_test_flag:int;
 		static public var Num:int = 0;
 		public const history:int = Num++;
@@ -328,6 +331,7 @@ package View.ViewComponent
 			if ( _model.getValue("test_init")) return;
 			changeBG(ResName.Bet_Scene);
 			
+			_bg.init();
 			_Version.init();
 			_HistoryRecoder.init();
 			_ProbData.init();

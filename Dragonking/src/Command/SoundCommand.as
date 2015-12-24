@@ -93,11 +93,13 @@ package Command
 			
 			if ( CMD[0] == "MUTE")
 			{
+				dispatcher(new ModelEvent("MUTE"));
 				_mute = true;				
 			}
 			
 			if ( CMD[0] == "RESUME")
 			{
+				dispatcher(new ModelEvent("RESUME"));
 				_mute = false;				
 			}
 		}
