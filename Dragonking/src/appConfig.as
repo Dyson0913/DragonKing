@@ -1,5 +1,6 @@
 package  
 {
+	import asunit.runner.Version;
 	import com.hexagonstar.util.debug.Debug;
 	import Command.*;
 	import flash.display.MovieClip;
@@ -11,6 +12,7 @@ package
 	import View.ViewBase.ViewBase;
 	import ConnectModule.websocket.WebSoketComponent;
 	import View.ViewBase.Visual_Text;
+	import View.ViewBase.Visual_Version;
 	import View.ViewComponent.*;
 	import View.Viewutil.*;
 	
@@ -49,6 +51,7 @@ package
 		//util
 		public var _path:Path_Generator = new Path_Generator();
 		public var _debug:Visual_debugTool = new Visual_debugTool();
+		public var _Version:Visual_Version = new Visual_Version();
 		public var _replayer:Visual_package_replayer = new Visual_package_replayer();
 		
 		//visual

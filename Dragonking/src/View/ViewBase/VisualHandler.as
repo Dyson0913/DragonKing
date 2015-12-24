@@ -123,7 +123,7 @@ package View.ViewBase
 			var view:MultiObject = Get("_view");
 			view.CleanList();
 			view.resList = [name];
-			view.Create_(1, "_view");
+			view.Create_(1);
 		}
 		
 		protected function add(item:*):void

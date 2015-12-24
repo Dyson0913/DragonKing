@@ -50,7 +50,7 @@ package View.ViewComponent
 			_coin.CustomizedData = [0, 1, 2, 3, 4];
 			_coin.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			_coin.Post_CustomizedData = [5, 85, 0];
-			_coin.Create_(5, "CoinOb");
+			_coin.Create_(5);
 			_coin.rollout = excusive_rollout;
 			_coin.rollover = excusive_select_action;
 			_coin.mousedown = betSelect;

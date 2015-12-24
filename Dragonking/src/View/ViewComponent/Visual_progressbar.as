@@ -44,7 +44,7 @@ package View.ViewComponent
 			powerbar_0.Post_CustomizedData = [[0, 0], [12.35,4], [8.4, 3.5], [315.35, -1],[-10, -5]];
 			powerbar_0.container.x = 1302;
 			powerbar_0.container.y = 430;
-			powerbar_0.Create_(5, "powerbar_0");
+			powerbar_0.Create_(5);
 			powerbar_0.ItemList[0]["bg"].gotoAndStop(2);
 			powerbar_0.ItemList[1]["_colorbar"].gotoAndStop(2);
 			powerbar_0.ItemList[2].gotoAndStop(2);
@@ -59,7 +59,7 @@ package View.ViewComponent
 			powerbar_1.Post_CustomizedData = [[0, 0], [12.35,4], [8.4, 3.5], [315.35, -1],[-10,-5]];
 			powerbar_1.container.x = 1302;
 			powerbar_1.container.y = 390;
-			powerbar_1.Create_(5, "powerbar_1");
+			powerbar_1.Create_(5);
 			powerbar_1.ItemList[0]["bg"].gotoAndStop(1);
 			powerbar_1.ItemList[1]["_colorbar"].gotoAndStop(1);
 			powerbar_1.ItemList[2].gotoAndStop(1);
@@ -70,7 +70,7 @@ package View.ViewComponent
 			var PowerJP:MultiObject = create("Power_JP",  [PowerJP]);
 			PowerJP.container.x = 969;
 			PowerJP.container.y = 433;			
-			PowerJP.Create_(1, "Power_JP");
+			PowerJP.Create_(1);
 			PowerJP.container.visible = false;
 			
 			var PowerJPNum:MultiObject = create("Power_JP_num",  [PowerJP_Num], Get("Power_JP").container);
@@ -81,7 +81,7 @@ package View.ViewComponent
 			var powerbar_name:MultiObject = create("powerbar_name",  [powerbar_name]);
 			powerbar_name.container.x = 1312;
 			powerbar_name.container.y = 398;
-			powerbar_name.Create_(1, "powerbar_name");
+			powerbar_name.Create_(1);
 			
 			put_to_lsit(powerbar_name);		
 		}		
@@ -175,7 +175,7 @@ package View.ViewComponent
 			PowerJPNum.CustomizedFun = _regular.FrameSetting;
 			PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			PowerJPNum.Post_CustomizedData = [arr.length, 57, 10];
-			PowerJPNum.Create_(arr.length, "Power_JP_num");					
+			PowerJPNum.Create_(arr.length);					
 			_regular.Call(this, { onComplete:this.showok,onCompleteParams:[kind] }, 4, 1, 1, "linear");			
 			play_sound("sound_bigPoker");
 		}

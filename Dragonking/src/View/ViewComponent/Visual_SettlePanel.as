@@ -29,7 +29,7 @@ package View.ViewComponent
 		public function init():void
 		{
 			var settletable:MultiObject = create("settletable",  [ResName.emptymc]);
-			settletable.Create_(1, "settletable");	
+			settletable.Create_(1);	
 			settletable.container.x = 1240;
 			settletable.container.y = 90;
 			settletable.container.visible = false;
@@ -41,7 +41,7 @@ package View.ViewComponent
 			settletable_title.Post_CustomizedData = [[0,0],[150,0],[270,0]];
 			settletable_title.CustomizedFun = _text.textSetting;
 			settletable_title.CustomizedData = [{size:22}, "投注內容","押分","得分"];
-			settletable_title.Create_(3, "settletable_title");
+			settletable_title.Create_(3);
 			GetSingleItem("settletable_title", 2).visible = false;
 			
 			var settletable_zone:MultiObject = create("settletable_zone", [ResName.TextInfo], settletable.container);		
@@ -51,7 +51,7 @@ package View.ViewComponent
 			settletable_zone.CustomizedData = [ { size:22 }, "莊", "閒", "和", "莊對", "閒對", "特殊牌型", "合計"];
 			settletable_zone.Post_CustomizedData = [7, 30, 32];
 			settletable_zone.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-			settletable_zone.Create_(7, "settletable_zone");
+			settletable_zone.Create_(7);
 			
 			var settletable_zone_bet:MultiObject = create("settletable_zone_bet", [ResName.TextInfo], settletable.container);		
 			settletable_zone_bet.container.x = -360;
@@ -60,7 +60,7 @@ package View.ViewComponent
 			settletable_zone_bet.CustomizedData = [ { size:24,align:_text.align_right,color:0xFF0000 }, "100", "100", "1000", "0", "200", "100000","0"];
 			settletable_zone_bet.Post_CustomizedData = [7, 30, 32];
 			settletable_zone_bet.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-			settletable_zone_bet.Create_(7, "settletable_zone_bet");
+			settletable_zone_bet.Create_(7);
 			
 			
 			var settletable_zone_settle:MultiObject = create("settletable_zone_settle",  [ResName.TextInfo], settletable.container);		
@@ -70,7 +70,7 @@ package View.ViewComponent
 			settletable_zone_settle.CustomizedData = [ { size:18,align:_text.align_right }, "0", "0", "1000", "0", "0", "100000", "10000"];
 			settletable_zone_settle.Post_CustomizedData = [7, 30, 32];
 			settletable_zone_settle.Posi_CustzmiedFun = _regular.Posi_Colum_first_Setting;
-			settletable_zone_settle.Create_(7, "settletable_zone_settle");
+			settletable_zone_settle.Create_(7);
 			settletable_zone_settle.container.visible = false;
 			
 			//var settletable_desh:MultiObject = create("settletable_desh", [ResName.TextInfo], settletable.container);		
@@ -117,13 +117,14 @@ package View.ViewComponent
 			GetSingleItem("settletable_title", 2).visible = false;
 			Get("settletable_zone_settle").container.visible = false;
 			
-			//var mylist:Array = [];// ["0", "0", "0", "0", "0", "0", "0", "0"];
+			
 			var mylist:Array = _betCommand.bet_zone_amount();
 			var font:Array = [{size:24,align:_text.align_right,color:0xFF0000}];
-			font = font.concat(mylist);
-			utilFun.Log("font = "+mylist);
-			Get("settletable_zone_bet").CustomizedData = font;
-			Get("settletable_zone_bet").Create_by_list(mylist.length, [ResName.TextInfo], 0 , 0, 1, 0, 30, "Bet_");	
+			font = font.concat(mylist);			
+			var zone_bet:MultiObject = Get("settletable_zone_bet");
+			zone_bet.CleanList();
+			zone_bet.CustomizedData = font;
+			zone_bet.Create_(7);			
 		}
 		
 		override public function disappear():void
@@ -143,20 +144,22 @@ package View.ViewComponent
 			//押注
 			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
 			var font:Array = [ { size:24, align:_text.align_right, color:0xFF0000 } ];			
-			font = font.concat(zone_amount);			
-			utilFun.Log("font1 = "+font);			
-			Get("settletable_zone_bet").CustomizedFun = _text.textSetting;
-			Get("settletable_zone_bet").CustomizedData = font;
-			Get("settletable_zone_bet").Create_(zone_amount.length, "settletable_zone_bet");
+			font = font.concat(zone_amount);
+			var zone_bet:MultiObject = Get("settletable_zone_bet");
+			zone_bet.CleanList();
+			zone_bet.CustomizedData = font;
+			zone_bet.Create_(zone_amount.length);
 			
 			//總結
 			var settle_amount:Array = _model.getValue("result_settle_amount");			
 			var font2:Array = [ { size:24, align:_text.align_right } ];			
 			font2 = font2.concat(settle_amount);			
-			utilFun.Log("font2 = " + font2);			
-			Get("settletable_zone_settle").CustomizedFun = _text.colortextSetting;
-			Get("settletable_zone_settle").CustomizedData = font2;
-			Get("settletable_zone_settle").Create_(settle_amount.length, "settletable_zone_settle");
+			utilFun.Log("font2 = " + font2);
+			var zone_settle:MultiObject = Get("settletable_zone_settle");
+			zone_settle.CleanList();
+			zone_settle.CustomizedFun = _text.colortextSetting;
+			zone_settle.CustomizedData = font2;
+			zone_settle.Create_(settle_amount.length);
 			
 			if ( _betCommand.all_betzone_totoal() == 0) return;
 			

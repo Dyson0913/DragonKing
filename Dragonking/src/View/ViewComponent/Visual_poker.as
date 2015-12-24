@@ -37,7 +37,7 @@ package View.ViewComponent
 		public function init():void
 		{			
 			var table_hint:MultiObject = create("table_hint", [open_tableitem]);						
-			table_hint.Create_(1, "table_hint");
+			table_hint.Create_(1);
 			table_hint.container.x = 200;
 			table_hint.container.y = 567;	
 			table_hint.container.visible = false;
@@ -46,7 +46,7 @@ package View.ViewComponent
 			var playerCon:MultiObject = create(modelName.PLAYER_POKER, pokerkind);
 			playerCon.Post_CustomizedData = [2, 204, 0];
 			playerCon.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;			
-			playerCon.Create_(2, "playerpoker");
+			playerCon.Create_(2);
 			playerCon.container.x = 259;
 			playerCon.container.y = 634;
 			playerCon.container.alpha = 0;
@@ -54,7 +54,7 @@ package View.ViewComponent
 			var bankerCon:MultiObject =  create(modelName.BANKER_POKER, pokerkind);
 			bankerCon.Post_CustomizedData = [2, 204, 0];
 			bankerCon.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;			
-			bankerCon.Create_(2, "bankerpoker");
+			bankerCon.Create_(2);
 			bankerCon.container.x = 1277;
 			bankerCon.container.y = 634;
 			bankerCon.container.alpha = 0;
@@ -62,13 +62,13 @@ package View.ViewComponent
 			var riverCon:MultiObject = create(modelName.RIVER_POKER, pokerkind);
 			riverCon.Post_CustomizedData = [2, 204, 0];
 			riverCon.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;		
-			riverCon.Create_(2,"riverpoker");
+			riverCon.Create_(2);
 			riverCon.container.x = 774;
 			riverCon.container.y = 634;
 			riverCon.container.alpha = 0;
 			
 			var mipoker:MultiObject =  create("mipoker", [Mipoker_zone]);	
-			mipoker.Create_(1, "mipoker");
+			mipoker.Create_(1);
 			mipoker.container.x = 740;
 			mipoker.container.y = 570;
 			mipoker.container.alpha = 0;
@@ -102,19 +102,19 @@ package View.ViewComponent
 			
 			var playerCon:MultiObject = Get(modelName.PLAYER_POKER);
 			playerCon.CleanList();				
-			playerCon.Create_(2, "playerpoker");
+			playerCon.Create_(2);
 			Tweener.pauseTweens(playerCon.container);
 			playerCon.container.alpha = 0;				
 			
 			var bankerCon:MultiObject = Get(modelName.BANKER_POKER);
 			bankerCon.CleanList();			    
-			bankerCon.Create_(2, "bankerpoker");
+			bankerCon.Create_(2);
 			Tweener.pauseTweens(bankerCon.container);
 			bankerCon.container.alpha = 0;
 			
 			var riverCon:MultiObject = Get(modelName.RIVER_POKER);
 			riverCon.CleanList();				
-			riverCon.Create_(2, "riverpoker");
+			riverCon.Create_(2);
 			Tweener.pauseTweens(riverCon.container);
 			riverCon.container.alpha = 0;
 			

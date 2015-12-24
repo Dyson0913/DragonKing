@@ -5,6 +5,7 @@ package View.ViewComponent
 	import flash.display.Sprite;
 	import flash.events.Event;	
 	import util.math.Path_Generator;	
+	import View.ViewBase.Visual_Version;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
@@ -95,6 +96,9 @@ package View.ViewComponent
 		[Inject]
 		public var _Bigwin_Effect:Visual_Bigwin_Effect;
 		
+		[Inject]
+		public var _Version:Visual_Version;
+		
 		private var _single_test_flag:int;
 		static public var Num:int = 0;
 		public const history:int = Num++;
@@ -139,7 +143,7 @@ package View.ViewComponent
 			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			script_list.Post_CustomizedData = [6, 100, 50];			
-			script_list.Create_(script_list.CustomizedData.length -1, "script_list");			
+			script_list.Create_(script_list.CustomizedData.length -1);			
 			
 		}				
 		
@@ -324,6 +328,7 @@ package View.ViewComponent
 			if ( _model.getValue("test_init")) return;
 			changeBG(ResName.Bet_Scene);
 			
+			_Version.init();
 			_HistoryRecoder.init();
 			_ProbData.init();
 			_progressbar.init();

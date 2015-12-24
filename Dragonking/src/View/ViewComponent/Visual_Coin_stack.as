@@ -51,7 +51,7 @@ package View.ViewComponent
 			coinstack.container.y = 898 ;
 			coinstack.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			coinstack.Post_CustomizedData =  coin_xy;
-			coinstack.Create_(avaliblezone.length, "coinstakeZone");
+			coinstack.Create_(avaliblezone.length);
 			
 			
 			state_parse([gameState.START_BET]);

@@ -43,7 +43,7 @@ package View.ViewComponent
 			playerzone_s.container.y = 662;
 			playerzone_s.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			playerzone_s.Post_CustomizedData = zone_xy;
-			playerzone_s.Create_(avaliblezone_s.length, "betzone_s");
+			playerzone_s.Create_(avaliblezone_s.length);
 			
 			state_parse([gameState.START_BET]);
 		}		

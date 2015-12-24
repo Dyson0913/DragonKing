@@ -36,7 +36,7 @@ package View.ViewComponent
 			var zoneCon:MultiObject = create("zone", [playerScore, bankerScore, TieScore]);
 			zoneCon.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			zoneCon.Post_CustomizedData = [[0, 0], [1018, 0], [560, 0]];
-			zoneCon.Create_(3, "zone");
+			zoneCon.Create_(3);
 			zoneCon.container.x = 358;
 			zoneCon.container.y = 560;
 			

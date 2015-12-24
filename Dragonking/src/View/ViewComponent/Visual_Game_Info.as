@@ -45,7 +45,7 @@ package View.ViewComponent
 			bet.CustomizedData = [{size:22,color:0xCCCCCC}, "局號:"];
 			bet.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			bet.Post_CustomizedData = [[0,0]];
-			bet.Create_(bet.CustomizedData.length - 1, "game_title_info");
+			bet.Create_(bet.CustomizedData.length - 1);
 			bet.container.x = 292;
 			bet.container.y = 88;
 			
@@ -54,7 +54,7 @@ package View.ViewComponent
 			game_info_data.CustomizedData = [{size:18,color:0xCCCCCC},_model.getValue("game_round").toString()];
 			game_info_data.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			game_info_data.Post_CustomizedData = [[0,0]];
-			game_info_data.Create_(1, "game_title_info_data");
+			game_info_data.Create_(1);
 			game_info_data.container.x = 372;
 			game_info_data.container.y = 90;
 			
@@ -65,7 +65,7 @@ package View.ViewComponent
 			betlimit.Post_CustomizedData = [[0,0],[194,164]];
 			betlimit.container.x = -12;
 			betlimit.container.y = 120;	
-			betlimit.Create_(2, "betlimit");
+			betlimit.Create_(2);
 			
 			var realtimeinfo:MultiObject = create("realtimeinfo", [realtimeinfo, betstaticarrow_right]);	
 			realtimeinfo.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [0, 0, 2, 0]);
@@ -74,7 +74,7 @@ package View.ViewComponent
 			realtimeinfo.mousedown = local_reverse;
 			realtimeinfo.container.x = 1719;
 			realtimeinfo.container.y = 120;	
-			realtimeinfo.Create_(2, "realtimeinfo");	
+			realtimeinfo.Create_(2);	
 			
 			put_to_lsit(bet);
 			put_to_lsit(game_info_data);

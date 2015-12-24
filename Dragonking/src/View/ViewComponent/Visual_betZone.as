@@ -32,7 +32,7 @@ package View.ViewComponent
 			var tableitem:MultiObject = create("tableitem", [bet_tableitem]);	
 			tableitem.container.x = 193;
 			tableitem.container.y = 655;
-			tableitem.Create_(1, "tableitem");
+			tableitem.Create_(1);
 			
 			var avaliblezone:Array = _model.getValue(modelName.AVALIBLE_ZONE);
 			var zone_xy:Array = _model.getValue(modelName.AVALIBLE_ZONE_XY);						
@@ -44,10 +44,10 @@ package View.ViewComponent
 			pz.container.y = 662;
 			pz.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			pz.Post_CustomizedData = zone_xy;
-			pz.Create_(avaliblezone.length, "betzone");
+			pz.Create_(avaliblezone.length);
 			
 			var highpayrate:MultiObject = create("highpayrate", [highpayrate]);	
-			highpayrate.Create_(1, "highpayrate");
+			highpayrate.Create_(1);
 			
 			put_to_lsit(pz);
 			put_to_lsit(tableitem);
