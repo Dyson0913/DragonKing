@@ -95,6 +95,11 @@ package View.ViewComponent
 		[Inject]
 		public var _Bigwin_Effect:Visual_Bigwin_Effect;
 		
+		private var _single_test_flag:int;
+		static public var Num:int = 0;
+		public const history:int = Num++;
+		public const powerbar:int = Num++;
+		
 		public function Visual_testInterface() 
 		{
 			
@@ -121,6 +126,7 @@ package View.ViewComponent
 			script.putValue("開牌",3);
 			script.putValue("結算",4);
 			script.putValue("封包",5);
+			script.putValue("單一功能測試",6);
 			
 			_model.putValue("name_map", script);
 			
@@ -129,10 +135,10 @@ package View.ViewComponent
 			script_list.MouseFrame = utilFun.Frametype(MouseBehavior.ClickBtn);			
 			script_list.stop_Propagation = true;
 			script_list.mousedown = script_list_test;
-			script_list.CustomizedData = [ { size:18 },"新局","開始下注", "停止下注","開牌", "結算","封包"];
+			script_list.CustomizedData = [ { size:18 },"新局","開始下注", "停止下注","開牌", "結算","封包","單一功能測試"];
 			script_list.CustomizedFun = _text.textSetting;			
 			script_list.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
-			script_list.Post_CustomizedData = [6, 100, 100];			
+			script_list.Post_CustomizedData = [6, 100, 50];			
 			script_list.Create_(script_list.CustomizedData.length -1, "script_list");			
 			
 		}				
@@ -152,9 +158,7 @@ package View.ViewComponent
 			_model.putValue(modelName.REMAIN_TIME, 20);
 			
 			_model.putValue(modelName.GAMES_STATE,gameState.START_BET);			
-			dispatcher(new ModelEvent("update_state"));
-			
-			//dispatcher(new StringObject("WSBWTwoPair", "winstr_hint"));
+			dispatcher(new ModelEvent("update_state"));			
 		}	
 		
 		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "2")]
@@ -229,7 +233,7 @@ package View.ViewComponent
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
 			//full + 和			
-			var fakePacket:Object = {"result_list": [{"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 1.95, "win_state": "WSBWNormalWin", "real_win_amount": 0, "bet_type": "BetBWPlayer", "settle_amount": 0}, {"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBanker", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWTiePoint", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWSpecial", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWPlayerPair", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBankerPair", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}], "game_state": "EndRoundState", "game_result_id": "405996", "timestamp": 1450259923.729869, "remain_time": 9, "game_type": "BigWin", "id": "975d27dca3db11e5ae48f23c9189e2a9", "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "game_round": 1605}
+			var fakePacket:Object = {"result_list": [{"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 1.95, "win_state": "WSBWFlush", "real_win_amount": 0, "bet_type": "BetBWPlayer", "settle_amount": 0}, {"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBanker", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWTiePoint", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWSpecial", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWPlayerPair", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBankerPair", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}], "game_state": "EndRoundState", "game_result_id": "405996", "timestamp": 1450259923.729869, "remain_time": 9, "game_type": "BigWin", "id": "975d27dca3db11e5ae48f23c9189e2a9", "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "game_round": 1605}
 			
 			_MsgModel.push(fakePacket);	
 			//
@@ -237,8 +241,6 @@ package View.ViewComponent
 			_model.putValue(modelName.GAMES_STATE,gameState.END_ROUND);			
 			dispatcher(new ModelEvent("update_state"));
 		}
-		
-		
 		
 		public function fake_hisotry():void
 		{			
@@ -260,11 +262,27 @@ package View.ViewComponent
 		public function pack_sim():void
 		{
 			_fileStream.load();
-			//dispatcher(new Intobject(utilFun.Random(2), "power_up"));
-			//fake_hisotry();
-			//dispatcher(new ModelEvent("start_bet"));
-			//return;
-			//dispatcher(new Intobject(modelName.Hud, ViewCommand.ADD)) ;			
+		}
+		
+		[MessageHandler(type = "View.Viewutil.TestEvent", selector = "6")]
+		public function sim_fun():void
+		{
+			_single_test_flag = powerbar;
+			switch(_single_test_flag)
+			{
+				case history:
+				{					
+					fake_hisotry();						
+				}
+				break;
+				
+				case powerbar:
+				{					
+					dispatcher(new Intobject(utilFun.Random(2), "power_up"));
+				}
+				break;
+			}
+			
 			//pack test
 			//_loader.init();
 			//_replayer.set_mission_id(_loader.getToken());
@@ -275,10 +293,9 @@ package View.ViewComponent
 			//dispatcher(new StringObject("sound_coin","sound" ) );
 			//dispatcher(new StringObject("sound_msg","sound" ) );
 			//dispatcher(new StringObject("sound_rebet","sound" ) );
-			//
-			//power bar test
+			
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 0);
-			//dispatcher(new Intobject(utilFun.Random(2), "power_up"));		
+			
 		}
 		
 		public function script_list_test(e:Event, idx:int):Boolean
@@ -326,6 +343,7 @@ package View.ViewComponent
 			_sencer.init();	
 			
 			_btn.init();
+			_Bigwin_Effect.init();
 			
 			//s_progressbar.debug();
 			_model.putValue("test_init",true);

@@ -80,15 +80,7 @@ package View.ViewComponent
 			put_to_lsit(mipoker);
 			
 			state_parse([gameState.END_BET,gameState.START_OPEN,gameState.END_ROUND]);
-		}
-		
-		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
-		public function Clean_poker():void
-		{			
-			
-			
-			
-		}
+		}	
 		
 		override public function appear():void
 		{

@@ -153,8 +153,8 @@ package View.ViewComponent
 		
 		
 		private function triger():void
-		{
-			dispatcher(new StringObject("sound_Powerup_poker","sound" ) );
+		{			
+			play_sound("sound_Powerup_poker");
 		}
 		
 		private function bigwin_show(kind:int):void
@@ -162,6 +162,8 @@ package View.ViewComponent
 			Get("Power_JP").container.visible = true;
 			var acumu:Array = _model.getValue("power_jp");
 			var s:String = acumu[kind].toString();
+			
+			//var arr:Array = [1, 0, 0, 0, 0];
 			var arr:Array = utilFun.frameAdj(s.split(""));					
 			
 			
@@ -174,9 +176,8 @@ package View.ViewComponent
 			PowerJPNum.Posi_CustzmiedFun = _regular.Posi_Row_first_Setting;
 			PowerJPNum.Post_CustomizedData = [arr.length, 57, 10];
 			PowerJPNum.Create_(arr.length, "Power_JP_num");					
-			_regular.Call(this, { onComplete:this.showok,onCompleteParams:[kind] }, 4, 1, 1, "linear");
-			dispatcher(new StringObject("sound_bigPoker", "sound" ) );
-			
+			_regular.Call(this, { onComplete:this.showok,onCompleteParams:[kind] }, 4, 1, 1, "linear");			
+			play_sound("sound_bigPoker");
 		}
 		
 		

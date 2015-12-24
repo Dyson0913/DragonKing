@@ -353,17 +353,16 @@ package Command
 			var zonebet_amount:Array = [];			
 			
 			_model.putValue("clean_zone", []);
-			_model.putValue("bigwin",null);
-			_model.putValue("sigwin",-1);
+			_model.putValue("bigwin",null);			
 			_model.putValue("win_odd", -1);
 			_model.putValue("winstr", "");
-			_model.putValue("hintJp", -1);
+			_model.putValue("hit_powerJp", -1);
 			
 			var total_bet:int = 0;
 			var total_settle:int = 0;
 			var result_list:Array = _model.getValue(modelName.ROUND_RESULT);
 			var betZone:Array = _model.getValue(modelName.AVALIBLE_ZONE_IDX);			
-			var num:int = betZone.length;	
+			var num:int = result_list.length;	
 			for ( var i:int = 0; i < num; i++)
 			{
 				var resultob:Object = result_list[i];				
@@ -373,7 +372,7 @@ package Command
 				
 				check_lost(resultob, betzon_idx);
 				check_bingWin(resultob);
-				check_specail(resultob);
+				//check_specail(resultob);
 				if ( check_powerbar(resultob) ) continue;
 				
 				//總押注和贏分
@@ -401,9 +400,9 @@ package Command
 			{
 				dispatcher(new ModelEvent("settle_bigwin"));
 			}
-			else 	if ( _model.getValue("hintJp") != -1)
+			else 	if ( _model.getValue("hit_powerJp") != -1)
 			{				
-				dispatcher(new Intobject(_model.getValue("sigwin"), "power_up"));
+				dispatcher(new Intobject(_model.getValue("hit_powerJp"), "power_up"));
 			}
 			else
 			{
@@ -418,9 +417,8 @@ package Command
 			{
 				var clean:Array = _model.getValue("clean_zone");
 				clean.push (betzon_idx);
-				_model.putValue("clean_zone",clean);
-			}
-			
+				_model.putValue("clean_zone", clean);				
+			}			
 		}
 		
 		public function check_bingWin(resultob:Object):void
@@ -428,14 +426,14 @@ package Command
 			//bigwin condition  type:player,winstat:!WSBWNormalWin && !WSWin
 			//winst: winste  odd:result.odds		
 			//大獎
-			if ( resultob.bet_type == "BetBWPlayer" ) 
+			if ( resultob.bet_type == "BetBWPlayer") 
 			{						
 				//大獎 (排除2對,3條和11以上J對)
-				if ( resultob.win_state != "WSBWNormalWin" && 
-				      resultob.win_state != "WSBWOnePairBig" &&  
+				if (  resultob.win_state != "WSBWOnePairBig" &&  
 					  resultob.win_state != "WSBWTwoPair" &&
 					  resultob.win_state != "WSBWTripple" &&
-					  resultob.win_state !="WSWin")
+					  resultob.win_state != "WSBWNormalWin" && 
+					  resultob.win_state != "WSLost" )
 				{						
 					var bigwin:int = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state);
 					_model.putValue("bigwin", bigwin);
@@ -447,10 +445,7 @@ package Command
 		
 		public function check_specail(resultob:Object):void
 		{
-			if ( resultob.bet_type == "BetBWSpecial" ) 
-			{
-				_model.putValue("sigwin",_opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.win_state));						
-			}
+			
 		}
 		
 		public function check_powerbar(resultob:Object):Boolean
@@ -459,34 +454,22 @@ package Command
 			//{"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0},
 			//{"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}
 			var no_recode:Boolean = false;
-			if( resultob.bet_type =="BetBWBonusTwoPair") 
+			if ( resultob.bet_type != "BetBWBonusTwoPair" &&  (resultob.bet_type != "BetBWBonusTripple") ) return no_recode;
+			
+			var extra:int = resultob.bet_amount * resultob.odds;			
+			var idx:int = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.bet_type);
+			if ( extra > 0)
 			{
-				var extra:int = resultob.bet_amount * resultob.odds;
-				if ( extra > 0)
-				{
-					var array:Array = _model.getValue("power_jp");
-					array[0] = resultob.bet_amount * resultob.odds;
-					_model.putValue("hintJp", 1);
-					
-				}				
-				no_recode = true;
+				var array:Array = _model.getValue("power_jp");
+				array[idx] = extra;
+				_model.putValue("hit_powerJp", idx);				
 			}
-			if( resultob.bet_type =="BetBWBonusTripple") 
-			{
-				var extra_two:int = resultob.bet_amount * resultob.odds;
-				if ( extra_two )
-				{
-					var array2:Array = _model.getValue("power_jp");
-					array2[1] = resultob.bet_amount * resultob.odds;
-					_model.putValue("hintJp", 1);
-					
-				}				
-				no_recode = true;
-			}
+			
+			no_recode = true;
 			return no_recode;
 		}
 		
-		[MessageHandler(type = "Model.ModelEvent", selector = "clearn")]
+		[MessageHandler(type = "Model.ModelEvent", selector = "start_bet")]
 		public function Clean_bet():void
 		{
 			save_bet();

@@ -67,8 +67,7 @@ package View.ViewComponent
 			
 			put_to_lsit(bigwinfire);
 			put_to_lsit(bigwinCon);
-			put_to_lsit(PowerJPNum);
-			
+			put_to_lsit(PowerJPNum);			
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "new_round")]
@@ -84,7 +83,6 @@ package View.ViewComponent
 			setFrame("bigwinfire", 1);
 			setFrame("bigwin_JP_num", 12);
 		}
-		
 		
 		public function stop():void
 		{
@@ -117,7 +115,7 @@ package View.ViewComponent
 		public function win_word(bigwin_frame:int):void
 		{
 			//phase i  ( sound ,data set ,play)
-			play_sound(sound_bigwin);			
+			play_sound(sound_bigwin);
 			GetSingleItem("bigwinmsg").gotoAndStop(bigwin_frame);
 			
 			_model.putValue("Hit_count", 0);
