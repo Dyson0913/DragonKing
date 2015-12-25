@@ -11,8 +11,8 @@ package View.ViewBase
 	import Model.valueObject.ArrayObject;
 	import Model.valueObject.StringObject;
 	import util.*;
-	import Model.*;	
-	import View.Viewutil.*
+	import Model.*;
+	import View.Viewutil.*;
 	import View.GameView.gameState;
 	/**
 	 * handle display item how to presentation
@@ -87,7 +87,7 @@ package View.ViewBase
 		protected function Del(name:*):void
 		{			
 			_viewcom.currentViewDI.Del(name);
-		}	
+		}
 		
 		protected function Get(name:*):*
 		{			
@@ -116,7 +116,7 @@ package View.ViewBase
 		public function empty_reaction(e:Event, idx:int):Boolean
 		{			
 			return true;
-		}	
+		}
 		
 		protected function changeBG(name:String):void
 		{
