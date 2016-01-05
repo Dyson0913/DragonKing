@@ -54,8 +54,9 @@ package View.ViewComponent
 			_coin.rollout = excusive_rollout;
 			_coin.rollover = excusive_select_action;
 			_coin.mousedown = betSelect;
-			_coin.ItemList[0].y -= 20;
-			_coin.ItemList[0].gotoAndStop(2);
+			_coin.ItemList[2].y -= 20;
+			_coin.ItemList[2].gotoAndStop(2);			
+			_coin.ItemList[2]["_coin"].gotoAndStop(3);
 			
 			state_parse([gameState.START_BET]);
 		}

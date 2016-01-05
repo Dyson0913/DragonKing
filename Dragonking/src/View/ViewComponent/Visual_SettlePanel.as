@@ -119,7 +119,7 @@ package View.ViewComponent
 			
 			
 			var mylist:Array = _betCommand.bet_zone_amount();
-			var font:Array = [{size:24,align:_text.align_right,color:0xFF0000}];
+			var font:Array = [{size:24,align:_text.align_right,color:0xFFFFFF}];
 			font = font.concat(mylist);			
 			var zone_bet:MultiObject = Get("settletable_zone_bet");
 			zone_bet.CleanList();
@@ -143,7 +143,7 @@ package View.ViewComponent
 			
 			//押注
 			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
-			var font:Array = [ { size:24, align:_text.align_right, color:0xFF0000 } ];			
+			var font:Array = [ { size:24, align:_text.align_right, color:0xFFFFFF } ];			
 			font = font.concat(zone_amount);
 			var zone_bet:MultiObject = Get("settletable_zone_bet");
 			zone_bet.CleanList();

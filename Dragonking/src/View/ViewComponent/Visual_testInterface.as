@@ -113,12 +113,7 @@ package View.ViewComponent
 		}
 		
 		public function init():void
-		{			
-			
-			
-			//_fileStream.switch_recode(true);
-			//_fileStream.write();
-			
+		{
 			_model.putValue("test_init", false);
 			
 			_debug.init();			
