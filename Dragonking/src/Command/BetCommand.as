@@ -456,8 +456,11 @@ package Command
 			var no_recode:Boolean = false;
 			if ( resultob.bet_type != "BetBWBonusTwoPair" &&  (resultob.bet_type != "BetBWBonusTripple") ) return no_recode;
 			
-			var extra:int = resultob.bet_amount * resultob.odds;			
-			var idx:int = _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.bet_type);
+			var extra:int = resultob.bet_amount * resultob.odds;
+			
+			var idx:int = 0;// _opration.getMappingValue(modelName.BIG_POKER_MSG, resultob.bet_type);
+			if ( resultob.bet_type == "BetBWBonusTwoPair" ) idx = 0;
+			if ( resultob.bet_type == "BetBWBonusTripple" ) idx = 1;
 			if ( extra > 0)
 			{
 				var array:Array = _model.getValue("power_jp");
