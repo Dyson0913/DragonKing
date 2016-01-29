@@ -18,8 +18,13 @@ package View.ViewComponent
 	 */
 	public class Visual_betZone  extends VisualHandler
 	{	
+		[Inject]
+		public var _betCommand:BetCommand;		
+		
 		public const bet_tableitem:String = "bet_table_item";
 		public const highpayrate:String = "high_payrate";
+		
+		public const rebet_btn:String = "btn_rebet";
 		
 		public function Visual_betZone() 
 		{
@@ -49,9 +54,23 @@ package View.ViewComponent
 			var highpayrate:MultiObject = create("highpayrate", [highpayrate]);	
 			highpayrate.Create_(1);
 			
+			//rebet
+			var mylist:Array = [ rebet_btn];
+			var mybtn_group:MultiObject = create("mybtn_group", mylist);
+			mybtn_group.MouseFrame = utilFun.Frametype(MouseBehavior.Customized,[1,2,3,1]);
+			mybtn_group.container.x = 1710;
+			mybtn_group.container.y = 950;		
+			mybtn_group.Create_(mylist.length);
+			mybtn_group.rollout = empty_reaction;
+			mybtn_group.rollover = empty_reaction;
+			mybtn_group.mousedown = rebet_fun;
+			mybtn_group.mouseup = empty_reaction;
+			
 			put_to_lsit(pz);
 			put_to_lsit(tableitem);
 			put_to_lsit(highpayrate);
+			
+			
 			
 			state_parse([gameState.NEW_ROUND,gameState.START_BET]);
 		}		
@@ -77,6 +96,10 @@ package View.ViewComponent
 			betzone.mousedown = empty_reaction;
 			betzone.rollout = empty_reaction;
 			betzone.rollover = empty_reaction;
+			
+			utilFun.Log("_betCommand.need_rebet() ="+_betCommand.need_rebet());
+			if ( !_betCommand.need_rebet() ) can_not_rebet();
+			else can_rebet();
 		}
 		
 		override public function disappear():void
@@ -93,6 +116,9 @@ package View.ViewComponent
 			
 			GetSingleItem("highpayrate").gotoAndStop(2);			
 			Tweener.pauseTweens(Get("highpayrate"));	
+			
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.container.visible = false;
 		}		
 		
 		public function pull():void
@@ -104,6 +130,38 @@ package View.ViewComponent
 		{
 			_regular.moveTo(Get("highpayrate").container, Get("highpayrate").container.x, Get("highpayrate").container.y + 10, 1, 0, pull);
 		}
+		
+		public function rebet_fun(e:Event, idx:int):Boolean
+		{			
+			can_not_rebet();
+			
+			_betCommand.re_bet();
+			dispatcher(new StringObject("sound_rebet","sound" ) );
+			return false;
+		}
+		
+		public function can_rebet():void
+		{
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.container.visible = true;
+			betzone.ItemList[0].gotoAndStop(1);
+			betzone.rollout = empty_reaction;
+			betzone.rollover = empty_reaction;
+			betzone.mousedown = rebet_fun;
+			betzone.mouseup = empty_reaction;
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "can_not_rebet")]
+		public function can_not_rebet():void
+		{
+			var betzone:MultiObject = Get("mybtn_group");
+			betzone.container.visible = false;
+			betzone.ItemList[0].gotoAndStop(4);
+			betzone.rollout = null;
+			betzone.rollover = null;
+			betzone.mousedown = null;
+			betzone.mouseup = null;
+		}		
 		
 	}
 

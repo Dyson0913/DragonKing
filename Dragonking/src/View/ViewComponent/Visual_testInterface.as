@@ -102,6 +102,9 @@ package View.ViewComponent
 		[Inject]
 		public var _bg:Visual_bg;
 		
+		[Inject]
+		public var _strem:Visual_stream;
+		
 		private var _single_test_flag:int;
 		static public var Num:int = 0;
 		public const history:int = Num++;
@@ -349,7 +352,27 @@ package View.ViewComponent
 			_btn.init();
 			_Bigwin_Effect.init();
 			
-			//s_progressbar.debug();
+			_strem.init();
+			
+			var jsonob:Object = {
+												  "online":{
+															 "stream_link":[{"stream_name":"pa_stream","strem_url":"192.168.1.136/live/","channel_ID":"livestream","size":{"itemwidth":320,"itemheight":240}}]
+														   },
+												 "development":{
+															 "stream_link":[
+															                          {"stream_name":"big_stream", "strem_url":"192.168.1.136/live/", "channel_ID":"livestream", "size": { "itemwidth":320, "itemheight":240 }},
+															                          {"stream_name":"test1", "strem_url":"184.72.239.149/vod", "channel_ID":"BigBuckBunny_115k.mov", "size": { "itemwidth":320, "itemheight":240 }},
+																					  {"stream_name":"live1", "strem_url":"52.69.102.66/live", "channel_ID":" /livestream", "size": { "itemwidth":800, "itemheight":600 }},
+																					   {"stream_name":"live2", "strem_url":"52.69.102.66/live", "channel_ID":" /lw2", "size": { "itemwidth":800, "itemheight":600 }}
+																					 
+																					]
+															
+															   }
+												}
+			dispatcher(new ArrayObject([1, jsonob], "urlLoader_complete"));
+			dispatcher(new StringObject("live1", "stream_connect"));
+			
+			//_progressbar.debug();
 			_model.putValue("test_init",true);
 		}
 		

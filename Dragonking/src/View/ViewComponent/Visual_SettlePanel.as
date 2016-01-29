@@ -119,6 +119,13 @@ package View.ViewComponent
 			
 			
 			var mylist:Array = _betCommand.bet_zone_amount();
+			
+			//會計符號
+			for ( var i:int = 0; i < mylist.length; i++)
+			{
+				mylist[i] = utilFun.Accounting_Num(mylist[i]);
+			}
+			
 			var font:Array = [{size:24,align:_text.align_right,color:0xFFFFFF}];
 			font = font.concat(mylist);			
 			var zone_bet:MultiObject = Get("settletable_zone_bet");
@@ -142,7 +149,14 @@ package View.ViewComponent
 			Get("settletable_zone_settle").container.visible = true;	
 			
 			//押注
-			var zone_amount:Array = _model.getValue("result_zonebet_amount");			
+			var zone_amount:Array = _model.getValue("result_zonebet_amount");
+			
+			//會計符號
+			for ( var i:int = 0; i < zone_amount.length; i++)
+			{
+				zone_amount[i] = utilFun.Accounting_Num(zone_amount[i]);
+			}
+			
 			var font:Array = [ { size:24, align:_text.align_right, color:0xFFFFFF } ];			
 			font = font.concat(zone_amount);
 			var zone_bet:MultiObject = Get("settletable_zone_bet");
@@ -151,7 +165,14 @@ package View.ViewComponent
 			zone_bet.Create_(zone_amount.length);
 			
 			//總結
-			var settle_amount:Array = _model.getValue("result_settle_amount");			
+			var settle_amount:Array = _model.getValue("result_settle_amount");
+			
+			//會計符號
+			for ( var i:int = 0; i < settle_amount.length; i++)
+			{
+				settle_amount[i] = utilFun.Accounting_Num(settle_amount[i]);
+			}
+			
 			var font2:Array = [ { size:24, align:_text.align_right } ];			
 			font2 = font2.concat(settle_amount);			
 			utilFun.Log("font2 = " + font2);

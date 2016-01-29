@@ -62,7 +62,7 @@ package
 			
 			//no thing ,ok
 			_context  = ActionScriptContextBuilder.build(appConfig);
-			
+
 			addChild(_context.getObjectByType(LoadingView) as LoadingView);			
 			addChild(_context.getObjectByType(betView) as betView);
 			addChild(_context.getObjectByType(HudView) as HudView);			

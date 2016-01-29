@@ -85,6 +85,9 @@ package View.GameView
 		[Inject]
 		public var _bg:Visual_bg;
 		
+		[Inject]
+		public var _strem:Visual_stream;
+		
 		public function betView()  
 		{
 			utilFun.Log("betView");
@@ -126,6 +129,36 @@ package View.GameView
 			
 			_btn.init();
 			_Bigwin_Effect.init();
+			
+			_strem.init();
+			
+			var jsonob:Object = {
+												  "online":{
+															 "stream_link":[{"stream_name":"pa_stream","strem_url":"192.168.1.136/live/","channel_ID":"livestream","size":{"itemwidth":320,"itemheight":240}}]
+														   },
+												 "development":{
+															 "stream_link":[
+															                          {"stream_name":"big_stream", "strem_url":"192.168.1.136/live/", "channel_ID":"livestream", "size": { "itemwidth":320, "itemheight":240 }},
+															                          {"stream_name":"test1", "strem_url":"184.72.239.149/vod", "channel_ID":"BigBuckBunny_115k.mov", "size": { "itemwidth":320, "itemheight":240 }},
+																					  {"stream_name":"test2", "strem_url":"cp67126.edgefcs.net/ondemand/", "channel_ID":"mp4:mediapm/ovp/content/test/video/spacealonehd_sounas_640_300.mp4", "size": { "itemwidth":320, "itemheight":240 }},
+																					  {"stream_name":"live1", "strem_url":"52.69.102.66/live", "channel_ID":" /livestream", "size": { "itemwidth":800, "itemheight":600 }},
+																					   {"stream_name":"live2", "strem_url":"52.69.102.66/live", "channel_ID":" /lw2", "size": { "itemwidth":800, "itemheight":600 }}
+																					]
+															
+															   }
+												}
+												
+												if ( CONFIG::debug ) 
+												{													
+													dispatcher(new ArrayObject([1, jsonob], "urlLoader_complete"));
+													dispatcher(new StringObject("live1", "stream_connect"));
+												}
+												else
+												{
+													//整合好再開放
+													//dispatcher(new ArrayObject([1, jsonob], "urlLoader_complete"));
+													//dispatcher(new StringObject("live1", "stream_connect"));
+												}
 			
 			//dispatcher(new StringObject("Soun_Bet_BGM","Music" ) );
 		}

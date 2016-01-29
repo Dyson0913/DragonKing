@@ -1,12 +1,14 @@
 package View.ViewComponent 
 {
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.display.Sprite;
 	import View.ViewBase.VisualHandler;
 	import Model.valueObject.*;
 	import Model.*;
 	import util.*;
 	import Command.*;
+	import View.Viewutil.*;
 	
 	import View.Viewutil.MultiObject;
 	import Res.ResName;
@@ -53,8 +55,35 @@ package View.ViewComponent
 			_model.putValue("stream_ID", new DI());
 			_model.putValue("stream_name", new DI());			
 			_model.putValue("size", new DI());
+			
+			var btn_change:MultiObject = create("btn_change", ["btn_rebet"]);
+			btn_change.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [1,2,3,1]);
+			btn_change.mousedown = null;
+			btn_change.mouseup = changeSteam;
+			btn_change.rollout = null;
+			btn_change.rollover = null;
+			btn_change.container.x = 1120;
+			btn_change.container.y = 155;
+			btn_change.CustomizedFun = changeBtnSetting;
+			btn_change.CustomizedData = [];
+			btn_change.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
+			btn_change.Post_CustomizedData = [[0, 0], [50, 0]];
+			btn_change.Create_(2);
+			
 		}
 		
+		private function changeBtnSetting(mc:*, idx:int, data:Array):void
+		{
+			utilFun.scaleXY(mc, 0.3, 0.3);
+		}
+		
+		private function changeSteam(e:Event, idx:int):Boolean
+		{
+			disconnect();
+			hide();
+			dispatcher(new StringObject("live" + (idx+1), "stream_connect"));
+			return true;
+		}
 		
 		[MessageHandler(type="Model.valueObject.ArrayObject",selector="urlLoader_complete")]
 		public function config_Setting(token:ArrayObject):void
@@ -70,7 +99,7 @@ package View.ViewComponent
 					_model.getValue("stream_url").putValue(idx, config[i].strem_url);
 					_model.getValue("stream_ID").putValue(idx,config[i].channel_ID);
 					//for mapping					
-					_model.getValue("stream_name").putValue(config[i].stream_name,idx);
+					_model.getValue("stream_name").putValue(config[i].stream_name, idx);				
 					_model.getValue("stream_container").putValue(idx, new stream_mask());
 					
 					var ob:Object = { "width":config[i].size.itemwidth, "height":config[i].size.itemheight };					
@@ -102,14 +131,13 @@ package View.ViewComponent
             nc.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
             nc.connect("rtmp://"+link);          
 			
-			
-			
 		}
 		
 		[MessageHandler(type = "Model.ModelEvent", selector = "stream_disconnect")]
 		public function disconnect():void
 		{				
 			netStreamObj.close();			
+			vid.clear();
 			clearInterval(intervalID);
 		}
 		
@@ -163,13 +191,18 @@ package View.ViewComponent
                 netStreamObj.play(ID);				
                 vid.attachNetStream(netStreamObj);
 				
-				var sp:Sprite = _model.getValue("stream_container").getValue(idx.toString());
-				sp.x = 800;
-				sp.y = 200;
-				sp.addChild(vid);
-				//var mask:MovieClip = utilFun.GetClassByString("stream_mask");
-				//mask.addChild(sp);
+				var size:Object = _model.getValue("size").getValue(idx);
+				var sp:stream_mask = _model.getValue("stream_container").getValue(idx.toString());
+				sp.x = 705;
+				sp.y = 153;
+			
+				vid.width =  size.width;
+                vid.height = size.height;
+				
+				sp.addChild(vid);				
 				add(sp);
+				sp.visible = true;
+				
 				GetSingleItem("_view").parent.parent.setChildIndex(sp, 1);
                 intervalID = setInterval(playback, 1000);
 				
@@ -186,12 +219,12 @@ package View.ViewComponent
 		
 		private function playback():void
 		{
-			utilFun.Log((++counter) + " Buffer length: " + netStreamObj.bufferLength);
+			//utilFun.Log((++counter) + " Buffer length: " + netStreamObj.bufferLength);
 			
 				var idx:int = _model.getValue("current_Serial");
 			var sp:Sprite = _model.getValue("stream_container").getValue(idx.toString());
 			//GetSingleItem("_view").parent.parent.setChildIndex(sp, 1);
-			utilFun.Log("sp order = " + GetSingleItem("_view").parent.parent.getChildIndex(sp));
+			//utilFun.Log("sp order = " + GetSingleItem("_view").parent.parent.getChildIndex(sp));
 		}
 
 		public function asyncErrorHandler(event:AsyncErrorEvent):void
@@ -210,6 +243,13 @@ package View.ViewComponent
 
 		public function received_Meta (data:Object):void
 		{
+			utilFun.Log("hello high=" + data.height);
+			utilFun.Log("hello width="+ data.width);
+			
+			utilFun.Log("hello vid width=" + vid.width );
+			utilFun.Log("hello vid high="+ vid.height );
+			
+			//vid.height = size.itemheight;		
 			//var _stageW:int = stage.stageWidth;
 			//var _stageH:int = stage.stageHeight;
 			//var _aspectH:int;
