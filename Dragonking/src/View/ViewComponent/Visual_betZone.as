@@ -96,10 +96,6 @@ package View.ViewComponent
 			betzone.mousedown = empty_reaction;
 			betzone.rollout = empty_reaction;
 			betzone.rollover = empty_reaction;
-			
-			utilFun.Log("_betCommand.need_rebet() ="+_betCommand.need_rebet());
-			if ( !_betCommand.need_rebet() ) can_not_rebet();
-			else can_rebet();
 		}
 		
 		override public function disappear():void
@@ -117,8 +113,8 @@ package View.ViewComponent
 			GetSingleItem("highpayrate").gotoAndStop(2);			
 			Tweener.pauseTweens(Get("highpayrate"));	
 			
-			var betzone:MultiObject = Get("mybtn_group");
-			betzone.container.visible = false;
+			var mybtn:MultiObject = Get("mybtn_group");
+			mybtn.container.visible = false;
 		}		
 		
 		public function pull():void
@@ -140,6 +136,7 @@ package View.ViewComponent
 			return false;
 		}
 		
+		[MessageHandler(type = "Model.ModelEvent", selector = "can_rebet")]
 		public function can_rebet():void
 		{
 			var betzone:MultiObject = Get("mybtn_group");

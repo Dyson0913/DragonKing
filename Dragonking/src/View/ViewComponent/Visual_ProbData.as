@@ -42,7 +42,7 @@ package View.ViewComponent
 			
 			put_to_lsit(pro);
 			
-			state_parse([gameState.END_BET,gameState.START_OPEN]);
+			state_parse([gameState.END_BET, gameState.START_OPEN]);
 		}
 		
 		override public function appear():void
@@ -50,7 +50,10 @@ package View.ViewComponent
 			Get("prob").container.visible = true;
 			
 			var zero:Array = utilFun.Random_N(0, 6);
-			_model.putValue("percent_prob",zero);
+			_model.putValue("percent_prob", zero);
+			
+			_model.putValue("five_percent_prob",zero);
+			
 			prob_update();
 		}
 		

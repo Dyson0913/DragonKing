@@ -28,6 +28,9 @@ package View.ViewComponent
 		[Inject]
 		public var _Actionmodel:ActionQueue;	
 		
+		[Inject]
+		public var _betTimer:Visual_betTimer;
+		
 		//sound name
 		public const soundcoin:String = "sound_coin";
 		
@@ -91,12 +94,35 @@ package View.ViewComponent
 			var bet_ob:Object = _Actionmodel.excutionMsg();			
 			_Actionmodel.dropMsg();
 			//TODO  一次一次pop
-			_betCommand.re_bet();
+			//_betCommand.re_bet();
 			
 			//coin動畫
-			stack(_betCommand.Bet_type_betlist(bet_ob["betType"]), GetSingleItem("coinstakeZone", bet_ob["betType"] ), bet_ob["betType"]);	
-			play_sound(soundcoin);		
+			stack(_betCommand.Bet_type_betlist(bet_ob["betType"]), GetSingleItem("coinstakeZone", bet_ob["betType"] ), bet_ob["betType"]);
+			
+			//顯示下注倒數
+			_betTimer.TimerStart(bet_ob["betType"]);
+			
+			play_sound(soundcoin);	
 		}		
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "refreshCoin")]
+		public function refreshCoin(msg:ModelEvent):void
+		{
+			var betType:int = msg.Value;
+			
+			//coin動畫
+			stack(_betCommand.Bet_type_betlist(betType), GetSingleItem("coinstakeZone",betType ),betType);	
+		}
+		
+		[MessageHandler(type = "Model.ModelEvent", selector = "refreshMutiCoin")]
+		public function refreshMutiCoin(msg:ModelEvent):void
+		{
+			var betTypes:Array = msg.Value[0];
+			for each(var betType:int in betTypes) {
+				//coin動畫
+				stack(_betCommand.Bet_type_betlist(betType), GetSingleItem("coinstakeZone",betType ),betType);	
+			}
+		}
 		
 		public function stack(Allcoin:Array,contain:DisplayObjectContainer,bettype:int):void
 		{			
@@ -106,11 +132,33 @@ package View.ViewComponent
 			var shX:int = 0;
 			var coinshY:int = -5;		
 			
+			var allCoin:Array = getAllcoinData(bettype);
 			for (var i:int = 0; i < _stack_num ; i++)
 			{				
 				//每疊coin 的multiobject
-				createcoin(i, Allcoin.concat(), contain,shY,shX,coinshY,bettype);
-			}			
+				//createcoin(i, Allcoin.concat(), contain,shY,shX,coinshY,bettype);
+				createcoin(i, allCoin, contain,shY,shX,coinshY,bettype);
+			}	
+		}
+		
+		//籌碼面額換算
+		public function getAllcoinData(betType:int):Array {
+			var total:int = _betCommand.get_total_bet(betType);			
+			var allcoinData:Array = [];
+			var coin:Array = _model.getValue("coin_list").concat();
+			//由大到小
+			coin.reverse();
+			
+			for each(var chipValue:int in coin){
+				var coinNum:int = total / chipValue;
+				for (var i:int = 0; i < coinNum; i++ ) {
+					allcoinData.push(chipValue);
+				}
+				
+				total = total % chipValue;
+			}
+			
+			return allcoinData;
 		}
 		
 		public function createcoin(cointype:int, Allcoin:Array, contain:DisplayObjectContainer ,shY:int,shX:int,coinshY:int,bettype:int):void

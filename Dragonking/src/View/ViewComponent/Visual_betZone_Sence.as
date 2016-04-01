@@ -21,7 +21,7 @@ package View.ViewComponent
 	{		
 		
 		[Inject]
-		public var _betCommand:BetCommand;	
+		public var _betCommand:BetCommand;
 		
 		public function Visual_betZone_Sence() 
 		{
@@ -31,7 +31,7 @@ package View.ViewComponent
 		public function init():void
 		{			
 			var zone_xy:Array = _model.getValue(modelName.AVALIBLE_ZONE_XY);			
-			var avaliblezone_s:Array = _model.getValue(modelName.AVALIBLE_ZONE_S);
+			var avaliblezone_s:Array = _model.getValue(modelName.AVALIBLE_ZONE_S);			
 			
 			var playerzone_s:MultiObject = create("betzone_s", avaliblezone_s);
 			playerzone_s.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [1, 1, 2, 1]);
@@ -46,7 +46,7 @@ package View.ViewComponent
 			playerzone_s.Create_(avaliblezone_s.length);
 			
 			state_parse([gameState.START_BET]);
-		}		
+		}			
 		
 		override public function appear():void
 		{
@@ -55,6 +55,8 @@ package View.ViewComponent
 			betzone.mouseup = bet_sencer;
 			betzone.rollout = bet_sencer;
 			betzone.rollover = bet_sencer;	
+			
+		
 		}
 		
 		override public function disappear():void
@@ -63,7 +65,7 @@ package View.ViewComponent
 			betzone.mousedown = null;
 			betzone.mouseup = null;
 			betzone.rollout = null;
-			betzone.rollover = null;
+			betzone.rollover = null;		
 		}
 		
 		public function bet_sencer(e:Event,idx:int):Boolean
@@ -72,7 +74,7 @@ package View.ViewComponent
 			if ( e.type == MouseEvent.MOUSE_DOWN)
 			{
 				//玩家手動第一次下注,取消上一局的betinfo
-				utilFun.Log("bet_sencer = "+_betCommand.need_rebet());
+				//utilFun.Log("bet_sencer = "+_betCommand.need_rebet());
 				if ( _betCommand.need_rebet() )
 				{
 					_betCommand.clean_hisotry_bet();
@@ -80,7 +82,7 @@ package View.ViewComponent
 				
 				if ( CONFIG::debug ) 
 				{				
-					_betCommand.betTypeMain(e, idx);
+					_betCommand.bet_local(e, idx);
 				}		
 				else
 				{				

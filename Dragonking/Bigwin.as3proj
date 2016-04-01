@@ -62,6 +62,7 @@
     <element path="lib\dependencies\spicelib-xml-mapper-3.0.2.swc" />
     <element path="lib\LibGen.swc" />
     <element path="lib\SoundAS.swc" />
+    <element path="lib\asuuid.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

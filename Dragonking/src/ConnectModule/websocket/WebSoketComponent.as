@@ -43,6 +43,9 @@ package ConnectModule.websocket
 		[Inject]
 		public var _opration:DataOperation;
 		
+		[Inject]
+		public var _betCommand:BetCommand;
+		
 		private var websocket:WebSocket;
 		
 		public function WebSoketComponent() 
@@ -72,7 +75,15 @@ package ConnectModule.websocket
 			}
 			else if ( event.type == WebSocketEvent.CLOSED)
 			{
-				utilFun.Log("Connected  DK close="+ event.type );
+				utilFun.Log("Connected  DK close=" + event.type );
+				if (_model.getValue("lobby_disconnect") ==  false) {
+					//通知大廳遊戲斷線
+					var lobbyevent:Function =  _model.getValue(modelName.HandShake_chanel);			
+					if ( lobbyevent != null)
+					{
+						lobbyevent(_model.getValue(modelName.Client_ID), ["GameDisconnect"]);			
+					}		
+				}
 			}
 		}
 		
@@ -145,7 +156,7 @@ package ConnectModule.websocket
 						var mypoker:Array =[];
 						if ( card_type == "Player")
 						{										
-							mypoker = _model.getValue(modelName.PLAYER_POKER);										
+							mypoker = _model.getValue(modelName.PLAYER_POKER);	
 							mypoker.push(card[0]);
 							_model.putValue(modelName.PLAYER_POKER, mypoker);										
 							dispatcher(new Intobject(modelName.PLAYER_POKER, "poker_mi"));
@@ -153,7 +164,14 @@ package ConnectModule.websocket
 						}
 						else if ( card_type == "Banker")
 						{							
-							mypoker = _model.getValue(modelName.BANKER_POKER);										
+							mypoker = _model.getValue(modelName.BANKER_POKER);			
+							
+							//存莊家開第二張牌的機率
+							if(mypoker.length == 1){
+								var five_percent_prob:Array = _model.getValue("five_percent_prob");
+								_model.putValue("five_percent_prob", result.cards_bigwin_prob);
+							}
+							
 							mypoker.push( card[0]);										
 							_model.putValue(modelName.BANKER_POKER, mypoker);									
 							dispatcher(new Intobject(modelName.BANKER_POKER, "poker_mi"));
@@ -161,7 +179,7 @@ package ConnectModule.websocket
 						else if ( card_type == "River")
 						{							
 							mypoker = _model.getValue(modelName.RIVER_POKER);										
-							mypoker.push( card[0]);										
+							mypoker.push( card[0]);		
 							_model.putValue(modelName.RIVER_POKER, mypoker);										
 							dispatcher(new Intobject(modelName.RIVER_POKER, "poker_mi"));
 						}
@@ -197,13 +215,12 @@ package ConnectModule.websocket
 						
 						if (result.result == 0)
 						{
-							dispatcher( new WebSoketInternalMsg(WebSoketInternalMsg.BETRESULT));							
-							dispatcher(new ModelEvent("updateCoin"));
+
 						}
 						else
 						{						
-							_actionqueue.dropMsg();
-							//error handle
+							//下注失敗處理
+							_betCommand.cleanBetUUID(result.id);
 						}
 					}	
 					break;

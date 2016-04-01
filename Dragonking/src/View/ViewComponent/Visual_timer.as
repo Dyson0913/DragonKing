@@ -23,6 +23,12 @@ package View.ViewComponent
 		
 		public var Waring_sec:int = 7;
 		
+		[Inject]
+		public var _betCommand:BetCommand;
+		
+		[Inject]
+		public var _betTimer:Visual_betTimer;
+		
 		public function Visual_timer() 
 		{
 			
@@ -73,6 +79,27 @@ package View.ViewComponent
 			if ( time < 0) return;
 			if ( time <= Waring_sec ) dispatcher(new StringObject("sound_final", "sound" ) );
 			
+			if (time == 0) {
+				//注區停止押注
+				var betzone:MultiObject = Get("betzone_s");
+				betzone.mousedown = null;
+				betzone.mouseup = null;
+				betzone.rollout = null;
+				betzone.rollover = null;
+			
+				 //TODO move to bet_timer 停止上一個timer
+				 _betTimer.send_bet(_betTimer.current_idx);
+				//var preTimerIdx:int = _betTimer.StopCurrentTimer();
+				//
+				//utilFun.Log("preTimerIdx:" + preTimerIdx);
+			//
+				//送出最後一張還在計時的注單
+				//if (preTimerIdx > -1 ) {
+					//hide取消鈕
+					//GetSingleItem("coin_cancel", preTimerIdx).visible = false;
+					//_betCommand.sendBet(preTimerIdx);
+				//}
+			}
 			
 			Text_setting_way(time);
 		}

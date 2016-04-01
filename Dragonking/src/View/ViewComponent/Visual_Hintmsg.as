@@ -35,7 +35,7 @@ package View.ViewComponent
 			var hintmsg:MultiObject = create(modelName.HINT_MSG, [Hint]);
 			hintmsg.Create_(1);
 			hintmsg.container.x = 960.3;
-			hintmsg.container.y = 439.3;			
+			hintmsg.container.y = 509.3;
 			
 			state_parse([gameState.START_BET]);
 		}

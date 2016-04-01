@@ -69,6 +69,8 @@ package View.GameView
 			state.putValue("StartBetState", gameState.START_BET);			
 			_model.putValue("state_mapping", state);			
 			
+			_model.putValue("lobby_disconnect", false);
+			
 			dispatcher(new Intobject(modelName.Loading, ViewCommand.SWITCH));			
 		}
 		
@@ -80,10 +82,16 @@ package View.GameView
 			var view:MultiObject = prepare("_view", new MultiObject() , this);
 			view.Create_by_list(1, [ResName.emptymc], 0, 0, 1, 0, 0, "a_");
 			
-			utilFun.SetTime(connet, 0.1);
-			//_test.init();
+				if ( CONFIG::debug ) 
+				{				
+					_test.init();
 			
-			
+				}		
+				else
+				{				
+					utilFun.SetTime(connet, 0.1);
+				}
+				
 		}
 		private function connet():void
 		{	

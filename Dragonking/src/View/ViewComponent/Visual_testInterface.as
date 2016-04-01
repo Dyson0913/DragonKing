@@ -105,6 +105,9 @@ package View.ViewComponent
 		[Inject]
 		public var _strem:Visual_stream;
 		
+		[Inject]
+		public var _betTimer:Visual_betTimer;
+		
 		private var _single_test_flag:int;
 		static public var Num:int = 0;
 		public const history:int = Num++;
@@ -238,7 +241,7 @@ package View.ViewComponent
 			//_betCommand.bet_local(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false), 1);
 			
 			//full + 和			
-			var fakePacket:Object = {"result_list": [{"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 1.95, "win_state": "WSBWFlush", "real_win_amount": 0, "bet_type": "BetBWPlayer", "settle_amount": 0}, {"bet_attr": "BetAttrMain", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBanker", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWTiePoint", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWSpecial", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWPlayerPair", "settle_amount": 0}, {"bet_attr": "BetAttrSide", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBankerPair", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTripple", "settle_amount": 0}, {"bet_attr": "BetAttrBonus", "bet_amount": 0, "odds": 0, "win_state": "WSLost", "real_win_amount": 0, "bet_type": "BetBWBonusTwoPair", "settle_amount": 0}], "game_state": "EndRoundState", "game_result_id": "405996", "timestamp": 1450259923.729869, "remain_time": 9, "game_type": "BigWin", "id": "975d27dca3db11e5ae48f23c9189e2a9", "game_id": "BigWin-1", "message_type": "MsgBPEndRound", "game_round": 1605}
+			var fakePacket:Object = {"timestamp":1454401685.258399,"result_list":[{"bet_amount":0,"bet_attr":"BetAttrMain","odds":2,"real_win_amount":0,"bet_type":"BetBWPlayer","settle_amount":0,"win_state":"WSBWStraight"},{"bet_amount":0,"bet_attr":"BetAttrMain","odds":2,"real_win_amount":0,"bet_type":"BetBWBanker","settle_amount":0,"win_state":"WSBWStraight"},{"bet_amount":0,"bet_attr":"BetAttrSide","odds":9,"real_win_amount":0,"bet_type":"BetBWTiePoint","settle_amount":0,"win_state":"WSWin"},{"bet_amount":0,"bet_attr":"BetAttrSide","odds":5,"real_win_amount":0,"bet_type":"BetBWSpecial","settle_amount":0,"win_state":"WSBWStraight"},{"bet_amount":0,"bet_attr":"BetAttrSide","odds":0,"real_win_amount":0,"bet_type":"BetBWPlayerPair","settle_amount":0,"win_state":"WSLost"},{"bet_amount":0,"bet_attr":"BetAttrSide","odds":0,"real_win_amount":0,"bet_type":"BetBWBankerPair","settle_amount":0,"win_state":"WSLost"},{"bet_amount":0,"bet_attr":"BetAttrBonus","odds":0,"real_win_amount":0,"bet_type":"BetBWBonusTripple","settle_amount":0,"win_state":"WSLost"},{"bet_amount":0,"bet_attr":"BetAttrBonus","odds":0,"real_win_amount":0,"bet_type":"BetBWBonusTwoPair","settle_amount":0,"win_state":"WSLost"}],"game_state":"EndRoundState","id":"e19c438ec98611e58f9ef23c9189e2a9","remain_time":9,"game_result_id":"485880","message_type":"MsgBPEndRound","game_round":2224,"game_type":"BigWin","game_id":"BigWin-1"}
 			
 			_MsgModel.push(fakePacket);	
 			//
@@ -352,6 +355,8 @@ package View.ViewComponent
 			_btn.init();
 			_Bigwin_Effect.init();
 			
+			_betTimer.init();
+			
 			_strem.init();
 			
 			var jsonob:Object = {
@@ -362,8 +367,8 @@ package View.ViewComponent
 															 "stream_link":[
 															                          {"stream_name":"big_stream", "strem_url":"192.168.1.136/live/", "channel_ID":"livestream", "size": { "itemwidth":320, "itemheight":240 }},
 															                          {"stream_name":"test1", "strem_url":"184.72.239.149/vod", "channel_ID":"BigBuckBunny_115k.mov", "size": { "itemwidth":320, "itemheight":240 }},
-																					  {"stream_name":"live1", "strem_url":"52.69.102.66/live", "channel_ID":" /livestream", "size": { "itemwidth":800, "itemheight":600 }},
-																					   {"stream_name":"live2", "strem_url":"52.69.102.66/live", "channel_ID":" /lw2", "size": { "itemwidth":800, "itemheight":600 }}
+																					  {"stream_name":"live1", "strem_url":"52.69.102.66/live", "channel_ID":" /BW", "size": { "itemwidth":800, "itemheight":600 }},
+																					   {"stream_name":"live2", "strem_url":"52.69.102.66/live", "channel_ID":" /BW1", "size": { "itemwidth":800, "itemheight":600 }}
 																					 
 																					]
 															

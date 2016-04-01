@@ -153,7 +153,16 @@ package View.ViewComponent
 			
 			var mypoker:Array =   _model.getValue(type.Value);
 			var pokerid:int = pokerUtil.pokerTrans(mypoker[mypoker.length - 1]);		
-			if ( mypoker.length == 2 && type.Value != modelName.RIVER_POKER )
+			
+			//機率大於0公牌第二要咪
+			var percentlist:Array = _model.getValue("five_percent_prob");			
+			var prob_sum:int = 0;
+			for (var i:int = 0; i < percentlist.length; i ++ )
+			{
+				prob_sum += percentlist[i];
+			}
+
+			if ( mypoker.length == 2 && (type.Value != modelName.RIVER_POKER || prob_sum  > 0 ) )
 			{	
 				
 				Get("mipoker").CleanList();		

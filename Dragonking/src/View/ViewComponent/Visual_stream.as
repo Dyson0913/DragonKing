@@ -54,34 +54,51 @@ package View.ViewComponent
 			_model.putValue("stream_url", new DI());
 			_model.putValue("stream_ID", new DI());
 			_model.putValue("stream_name", new DI());			
-			_model.putValue("size", new DI());
+			_model.putValue("size", new DI());		
 			
-			var btn_change:MultiObject = create("btn_change", ["btn_rebet"]);
-			btn_change.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [1,2,3,1]);
+			
+			
+			var btn_change:MultiObject = create("btn_change", ["btn_stream"]);
+			//btn_change.MouseFrame = utilFun.Frametype(MouseBehavior.Customized, [1,2,3,1]);
 			btn_change.mousedown = null;
 			btn_change.mouseup = changeSteam;
 			btn_change.rollout = null;
 			btn_change.rollover = null;
-			btn_change.container.x = 1120;
+			btn_change.container.x = 720;
 			btn_change.container.y = 155;
 			btn_change.CustomizedFun = changeBtnSetting;
 			btn_change.CustomizedData = [];
 			btn_change.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
-			btn_change.Post_CustomizedData = [[0, 0], [50, 0]];
-			btn_change.Create_(2);
+			btn_change.Post_CustomizedData = [[0, 0], [390, 0],[440,0]];
+			btn_change.Create_(3);
+			
+			var ani_dealer:MultiObject = create("dealer", ["dealer"]);
+			ani_dealer.Create_(1);
+			
+			//_tool.SetControlMc(btn_change.ItemList[1]);
+			//_tool.y = 500;
+			//add(_tool);
 			
 		}
 		
 		private function changeBtnSetting(mc:*, idx:int, data:Array):void
 		{
-			utilFun.scaleXY(mc, 0.3, 0.3);
+			mc.gotoAndStop(idx+1);
 		}
 		
 		private function changeSteam(e:Event, idx:int):Boolean
 		{
+			var ani_dealer:MultiObject = Get("dealer");
+			if ( idx == 0) 
+			{
+				ani_dealer.container.visible = true;
+				return false;
+			}
+			else ani_dealer.container.visible = false;
+			
 			disconnect();
 			hide();
-			dispatcher(new StringObject("live" + (idx+1), "stream_connect"));
+			dispatcher(new StringObject("live" + idx, "stream_connect"));
 			return true;
 		}
 		
