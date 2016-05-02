@@ -70,10 +70,7 @@ package View.ViewComponent
 			btn_change.CustomizedData = [];
 			btn_change.Posi_CustzmiedFun = _regular.Posi_xy_Setting;
 			btn_change.Post_CustomizedData = [[0, 0], [390, 0],[440,0]];
-			btn_change.Create_(3);
-			
-			var ani_dealer:MultiObject = create("dealer", ["dealer"]);
-			ani_dealer.Create_(1);
+			btn_change.Create_(3);	
 			
 			//_tool.SetControlMc(btn_change.ItemList[1]);
 			//_tool.y = 500;

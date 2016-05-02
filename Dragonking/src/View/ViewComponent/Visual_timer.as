@@ -86,19 +86,9 @@ package View.ViewComponent
 				betzone.mouseup = null;
 				betzone.rollout = null;
 				betzone.rollover = null;
-			
-				 //TODO move to bet_timer 停止上一個timer
-				 _betTimer.send_bet(_betTimer.current_idx);
-				//var preTimerIdx:int = _betTimer.StopCurrentTimer();
-				//
-				//utilFun.Log("preTimerIdx:" + preTimerIdx);
-			//
+				
 				//送出最後一張還在計時的注單
-				//if (preTimerIdx > -1 ) {
-					//hide取消鈕
-					//GetSingleItem("coin_cancel", preTimerIdx).visible = false;
-					//_betCommand.sendBet(preTimerIdx);
-				//}
+				_betTimer.send_bet(_betTimer.current_idx);			
 			}
 			
 			Text_setting_way(time);

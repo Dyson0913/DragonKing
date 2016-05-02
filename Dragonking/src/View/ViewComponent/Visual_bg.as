@@ -55,6 +55,9 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.valueObject.Intobject", selector = "poker_mi")]
 		public function poker_mi(type:Intobject):void
 		{			
+			var po:Array = _model.getValue(modelName.RIVER_POKER);
+			if ( po.length == 2) 	return;
+			
 			utilFun.SetTime(gotodealer, 0.5);
 		}
 		
@@ -77,6 +80,7 @@ package View.ViewComponent
 		[MessageHandler(type = "Model.ModelEvent", selector = "round_result")]
 		public function settle_():void
 		{
+			utilFun.Log("-----------into settle_")
 			gotoframe(4);
 		}
 		
